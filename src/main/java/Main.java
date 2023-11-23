@@ -1,4 +1,5 @@
-import gui.*;
+import view.GamePanel;
+
 import javax.swing.*;
 
 public class Main {
