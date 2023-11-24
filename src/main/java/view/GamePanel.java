@@ -1,7 +1,8 @@
 package view;
 
 import controller.KeyHandler;
-import entity.Player;
+import model.entity.Player;
+import model.tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,19 +11,26 @@ public class GamePanel extends JPanel implements Runnable{
 
     //SCREEN SETTINGS
     final int originalTileSize = 16;
-    final int scale = 3;
+    final int scale = 2;
 
     public final int tileSize = originalTileSize * scale; //48*48
-    final int maxScreenCol = 16; //16 default
-    final int maxScreenRow = 12; //12 default
-    final int screenWidth = tileSize * maxScreenCol; //768 pixels
-    final int screenHeight = tileSize * maxScreenRow;//576 pixels
+    public final int maxScreenCol = 20; //16 default
+    public final int maxScreenRow = 16; //12 default
+    public final int screenWidth = tileSize * maxScreenCol; //768 pixels
+    public final int screenHeight = tileSize * maxScreenRow;//576 pixels
+
+    //WORLD SETTINGS
+    public final int maxWorldCol = 99; //99
+    public final int maxWorldRow = 74; //74
+    public final int worldWidth = tileSize * maxWorldCol;
+    public final int worldHeigth = tileSize * maxWorldRow;
 
     int FPS = 60;
 
+    TileManager tileManager= new TileManager(this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
-    Player player = new Player(this, keyH);
+    public Player player = new Player(this, keyH);
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -77,7 +85,8 @@ public class GamePanel extends JPanel implements Runnable{
         player.update();
     }
 
-    private void updateMapLogic() {
+    private void updateMapLogic(){
+
     }
 
 
@@ -85,7 +94,9 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
+        tileManager.draw(g2);
         player.draw(g2);
+
         g2.dispose();
     }
 
