@@ -87,7 +87,7 @@ public class TMXReader {
                 listaInsiemi.add(codici);
                 insiemeCodici.addAll(codici);
             }
-            /* COLLISIONI Estrae le informazioni sugli oggetti
+            // COLLISIONI Estrae le informazioni sugli oggetti
             NodeList objectGroupList = doc.getElementsByTagName("objectgroup");
             for (int i = 0; i < objectGroupList.getLength(); i++) {
                 Element objectGroupElement = (Element) objectGroupList.item(i);
@@ -116,7 +116,7 @@ public class TMXReader {
                     System.out.println("Height: " + objectHeight);
                 }
             }
-             */
+
         } catch (Exception e) {
             e.printStackTrace();
         }

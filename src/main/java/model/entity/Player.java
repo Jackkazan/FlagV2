@@ -29,8 +29,8 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = tileSize*11;
-        worldY = tileSize*38;
+        worldX = tileSize*3;
+        worldY = tileSize*4;
         speed = 4;
         direction = "down";
     }
@@ -65,6 +65,8 @@ public class Player extends Entity {
             }
 
         }
+
+        //COLLISIONI
     }
 
     public void getPlayerImage() {
@@ -106,8 +108,8 @@ public class Player extends Entity {
         return null;
     }
 
-    @Override
-    public void setPosition(int x, int y) {
-        super.setPosition(x, y);
+    public void setPosition (int x, int y){
+        this.worldX = tileSize * x;
+        this.worldY = tileSize * y;
     }
 }

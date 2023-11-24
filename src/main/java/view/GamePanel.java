@@ -27,8 +27,12 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
     public Player player = new Player(this, keyH);
+
+    //settare posizione iniziale 11,38
     TileManager tileManagerZonaIniziale= new TileManager(this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
+    //settare posizione iniziale 5,5
     TileManager tileManagerCasettaIniziale = new TileManager(this, "src/main/resources/Map/StanzaIntroduzione/Casetta_Iniziale.tmx");
+
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -92,7 +96,8 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
-        tileManagerZonaIniziale.draw(g2);
+        tileManagerCasettaIniziale.draw(g2);
+        //tileManagerZonaIniziale.draw(g2);
         player.draw(g2);
 
         g2.dispose();

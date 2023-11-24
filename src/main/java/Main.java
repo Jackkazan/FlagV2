@@ -1,4 +1,3 @@
-import model.toolTMX.TMXReader;
 import view.GamePanel;
 import javax.swing.*;
 

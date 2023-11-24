@@ -20,10 +20,11 @@ public class TileManager {
 
     int maxMapCol;
     int maxMapRow;
-    //int mapWidth = tileSize * maxMapCol;
-    //int mapHeigth = tileSize * maxMapRow;
+    // int mapWidth = tileSize * maxMapCol;
+    // int mapHeigth = tileSize * maxMapRow;
 
     public TileManager(GamePanel gp, String pathTMXMap){
+
 
         this.gp = gp;
         TMXReader readMap = new TMXReader(pathTMXMap);
