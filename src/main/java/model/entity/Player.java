@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
+import static view.GamePanel.tileSize;
+
 public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
@@ -20,15 +22,15 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
 
-        screenX = gp.screenWidth/2 - (gp.tileSize/2);
-        screenY = gp.screenHeight/2 - (gp.tileSize/2);
+        screenX = gp.screenWidth/2 - (tileSize/2);
+        screenY = gp.screenHeight/2 - (tileSize/2);
         setDefaultValues();
         getPlayerImage();
     }
 
     public void setDefaultValues() {
-        worldX = gp.tileSize*11;
-        worldY = gp.tileSize*38;
+        worldX = tileSize*11;
+        worldY = tileSize*38;
         speed = 4;
         direction = "down";
     }
@@ -99,9 +101,13 @@ public class Player extends Entity {
         };
 
         if (images != null) {
-            g2.drawImage(images[spriteNum], screenX, screenY, gp.tileSize+16, gp.tileSize+16, null);
+            g2.drawImage(images[spriteNum], screenX, screenY, tileSize+16, tileSize+16, null);
         }
         return null;
     }
 
+    @Override
+    public void setPosition(int x, int y) {
+        super.setPosition(x, y);
+    }
 }

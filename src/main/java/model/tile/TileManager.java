@@ -1,5 +1,6 @@
 package model.tile;
 
+import model.entity.Player;
 import model.toolTMX.TMXReader;
 import view.GamePanel;
 
@@ -8,12 +9,19 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static view.GamePanel.tileSize;
+
 public class TileManager {
     GamePanel gp;
     HashMap<Integer, BufferedImage> mappaSprite;
     ArrayList<String> listaMatrici;
     int numLayer;
     int mapTileNum[][][];
+
+    int maxMapCol;
+    int maxMapRow;
+    //int mapWidth = tileSize * maxMapCol;
+    //int mapHeigth = tileSize * maxMapRow;
 
     public TileManager(GamePanel gp, String pathTMXMap){
 
@@ -22,7 +30,10 @@ public class TileManager {
         mappaSprite= readMap.getMappaSprite();
         listaMatrici = readMap.getListaMatrici();
         numLayer=readMap.getNumLayer();
-        mapTileNum = new int[numLayer][gp.maxWorldCol][gp.maxWorldRow];
+        maxMapCol = readMap.getMapWidth();
+        maxMapRow = readMap.getMapHeigth();
+        mapTileNum = new int[numLayer][maxMapCol][maxMapRow];
+
         for(int i=0;i<numLayer;i++)
             loadMap(listaMatrici.get(i).split("\n"), i);
 
@@ -30,10 +41,10 @@ public class TileManager {
 
     public void loadMap(String[] righeStringa, int layerIndex){
 
-        // Determina il numero di colonne assumendo che ogni riga abbia la stessa lunghezza
+        // Determina il numero di colonne della matrice
         int colonne = righeStringa[0].split(",").length;
 
-        // Crea la matrice
+        // Crea la matrice temporanea
         int[][] matrice = new int[righeStringa.length][colonne];
 
         // Riempire la matrice con i valori convertiti da stringa a int
@@ -52,25 +63,25 @@ public class TileManager {
             int worldCol=0;
             int worldRow=0;
 
-            while(worldCol< gp.maxWorldCol && worldRow <gp.maxWorldRow){
+            while(worldCol< maxMapCol && worldRow <maxMapRow){
 
                 int tileNum = mapTileNum[layerIndex][worldRow][worldCol];
 
-                int worldX = worldCol * gp.tileSize;
-                int worldY = worldRow * gp.tileSize;
+                int worldX = worldCol * tileSize;
+                int worldY = worldRow * tileSize;
                 int screenX = worldX - gp.player.worldX + gp.player.screenX;
                 int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-                if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                        worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                        worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                        worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
+                if(worldX + tileSize > gp.player.worldX - gp.player.screenX &&
+                        worldX - tileSize < gp.player.worldX + gp.player.screenX &&
+                        worldY + tileSize > gp.player.worldY - gp.player.screenY &&
+                        worldY - tileSize < gp.player.worldY + gp.player.screenY){
 
-                    g2.drawImage(mappaSprite.get(tileNum), screenX, screenY, gp.tileSize, gp.tileSize, null);
+                    g2.drawImage(mappaSprite.get(tileNum), screenX, screenY, tileSize, tileSize, null);
                 }
 
                 worldCol++;
-                if(worldCol == gp.maxWorldCol){
+                if(worldCol == maxMapCol){
                     worldCol=0;
                     worldRow++;
 

@@ -26,6 +26,8 @@ public class TMXReader {
     private HashMap<Integer, BufferedImage> mappaSprite = new HashMap<>();
     private int tilesetSize;
     private int numLayer;
+    private int mapWidth;
+    private int mapHeigth;
 
 
     public TMXReader(String filePathTMX) {
@@ -36,6 +38,11 @@ public class TMXReader {
 
             // Opzionale, ma consigliato: normalizza il documento
             doc.getDocumentElement().normalize();
+
+            // Estrai le informazioni generali sulla mappa
+            Element mapElement = doc.getDocumentElement();
+            mapWidth = Integer.parseInt(mapElement.getAttribute("width"));
+            mapHeigth = Integer.parseInt(mapElement.getAttribute("height"));
 
             // Estrai le informazioni sui tileset
             NodeList tilesetList = doc.getElementsByTagName("tileset");
@@ -216,5 +223,13 @@ public class TMXReader {
 
     public int getNumLayer() {
         return numLayer;
+    }
+
+    public int getMapWidth() {
+        return mapWidth;
+    }
+
+    public int getMapHeigth() {
+        return mapHeigth;
     }
 }
