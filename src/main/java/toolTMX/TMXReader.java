@@ -116,8 +116,8 @@ public class TMXReader {
         System.out.println("\nIntervalli di ciascun tileset:\n" + intervalli);
         System.out.println("\nLista di percorsi: ");
         for (String percorso : listaPercorsiTilesets) System.out.println(percorso);
-        for(String matrice : listaMatrici){
-            System.out.println("\n"+ matrice);
+        for (String matrice : listaMatrici) {
+            System.out.println("\n" + matrice);
         }
 
         int codiciPassati = 0;
@@ -195,5 +195,9 @@ public class TMXReader {
                 e.printStackTrace();
             }
         }
+    }
+
+    public ArrayList<String> getListaMatrici() {
+        return listaMatrici;
     }
 }
