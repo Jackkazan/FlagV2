@@ -32,8 +32,8 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = tileSize*3;
-        worldY = tileSize*4;
+        worldX = tileSize*18;
+        worldY = tileSize*38;
         speed = 4;
         direction = "down";
     }
@@ -125,7 +125,7 @@ public class Player extends Entity {
 
     private boolean collidesWithObjects(int nextX, int nextY) {
         // Verifica la collisione con gli oggetti di collisione della mappa corrente
-        for (CollisionObject collisionObject : gp.tileManagerCasettaIniziale.getCollisionMap()) {
+        for (CollisionObject collisionObject : currentCollisionMap) {
             if (checkCollision(nextX, nextY, collisionObject)) {
                 return true; // Collisione rilevata
             }

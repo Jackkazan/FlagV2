@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="15">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="18">
  <tileset firstgid="1" name="furniture" tilewidth="16" tileheight="16" tilecount="1024" columns="64">
   <image source="../../Tileset/Houses_and_Interiors/furniture.png" width="1024" height="256"/>
  </tileset>
@@ -86,12 +86,12 @@
 </data>
  </layer>
  <objectgroup id="16" name="Collisioni">
-  <object id="1" x="0" y="0" width="13.75" height="160.25"/>
-  <object id="8" x="144" y="0.25" width="16" height="160"/>
+  <object id="1" x="0" y="0" width="12.0833" height="160.25"/>
+  <object id="8" x="142" y="0.25" width="18" height="160"/>
   <object id="9" x="14.25" y="-0.25" width="129.75" height="36"/>
   <object id="10" x="15.75" y="49.5833" width="24.1667" height="30.8333"/>
   <object id="11" x="96.6667" y="58.75" width="15.3333" height="9.83333"/>
-  <object id="12" x="113.417" y="55.6667" width="30.5833" height="37.3333"/>
+  <object id="12" x="113.417" y="53.6667" width="30.5833" height="39.3333"/>
   <object id="13" x="14.25" y="144.833" width="50.25" height="15.1667"/>
   <object id="14" x="95.75" y="144.583" width="48" height="15.6667"/>
  </objectgroup>

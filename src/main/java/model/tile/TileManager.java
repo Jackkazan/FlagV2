@@ -38,6 +38,7 @@ public class TileManager {
         //matrice a tre livelli che memorizzerà la matrice di ciascun layer
         mapTileNum = new int[numLayer][maxMapCol][maxMapRow];
         collisionMap = readMap.getCollisionObjects();
+        gp.getPlayer().setCurrentCollisionMap(collisionMap);
 
         for(int i=0;i<numLayer;i++)
             loadMap(listaMatrici.get(i).split("\n"), i);
