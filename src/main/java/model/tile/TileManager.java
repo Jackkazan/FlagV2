@@ -1,5 +1,6 @@
 package model.tile;
 
+import model.collisioni.CollisionObject;
 import model.entity.Player;
 import model.toolTMX.TMXReader;
 import view.GamePanel;
@@ -16,7 +17,9 @@ public class TileManager {
     HashMap<Integer, BufferedImage> mappaSprite;
     ArrayList<String> listaMatrici;
     int numLayer;
-    int mapTileNum[][][];
+    int[][][] mapTileNum;
+
+    ArrayList<CollisionObject> collisionMap;
 
     int maxMapCol;
     int maxMapRow;
@@ -25,7 +28,6 @@ public class TileManager {
 
     public TileManager(GamePanel gp, String pathTMXMap){
 
-
         this.gp = gp;
         TMXReader readMap = new TMXReader(pathTMXMap);
         mappaSprite= readMap.getMappaSprite();
@@ -33,7 +35,9 @@ public class TileManager {
         numLayer=readMap.getNumLayer();
         maxMapCol = readMap.getMapWidth();
         maxMapRow = readMap.getMapHeigth();
+        //matrice a tre livelli che memorizzerà la matrice di ciascun layer
         mapTileNum = new int[numLayer][maxMapCol][maxMapRow];
+        collisionMap = readMap.getCollisionObjects();
 
         for(int i=0;i<numLayer;i++)
             loadMap(listaMatrici.get(i).split("\n"), i);
@@ -77,7 +81,6 @@ public class TileManager {
                         worldX - tileSize < gp.player.worldX + gp.player.screenX &&
                         worldY + tileSize > gp.player.worldY - gp.player.screenY &&
                         worldY - tileSize < gp.player.worldY + gp.player.screenY){
-
                     g2.drawImage(mappaSprite.get(tileNum), screenX, screenY, tileSize, tileSize, null);
                 }
 
@@ -89,5 +92,9 @@ public class TileManager {
                 }
             }
         }
+    }
+
+    public ArrayList<CollisionObject> getCollisionMap() {
+        return collisionMap;
     }
 }

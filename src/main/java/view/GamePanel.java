@@ -11,7 +11,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     //SCREEN SETTINGS
     static final int originalTileSize = 16;
-    static final int scale = 2;
+    public static final int scale = 2;
 
     static public final int tileSize = originalTileSize * scale; //48*48
     public final int maxScreenCol = 25; //16 default
@@ -29,9 +29,9 @@ public class GamePanel extends JPanel implements Runnable{
     public Player player = new Player(this, keyH);
 
     //settare posizione iniziale 11,38
-    TileManager tileManagerZonaIniziale= new TileManager(this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
+    TileManager tileManagerZonaIniziale = new TileManager(this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
     //settare posizione iniziale 5,5
-    TileManager tileManagerCasettaIniziale = new TileManager(this, "src/main/resources/Map/StanzaIntroduzione/Casetta_Iniziale.tmx");
+    public TileManager tileManagerCasettaIniziale = new TileManager(this, "src/main/resources/Map/StanzaIntroduzione/Casetta_Iniziale.tmx");
 
 
     public GamePanel(){
@@ -96,8 +96,10 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
-        tileManagerCasettaIniziale.draw(g2);
         //tileManagerZonaIniziale.draw(g2);
+
+        tileManagerCasettaIniziale.draw(g2);
+        player.setCurrentCollisionMap(tileManagerCasettaIniziale.getCollisionMap());
         player.draw(g2);
 
         g2.dispose();

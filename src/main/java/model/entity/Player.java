@@ -1,12 +1,14 @@
 package model.entity;
 
 import controller.KeyHandler;
+import model.collisioni.CollisionObject;
 import view.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import static view.GamePanel.tileSize;
@@ -17,6 +19,7 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
+    private ArrayList<CollisionObject> currentCollisionMap;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -38,22 +41,29 @@ public class Player extends Entity {
     public void update() {
 
         if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+            int nextX = worldX;
+            int nextY = worldY;
 
             if (keyH.upPressed) {
                 direction = "up";
-                worldY -= speed;
+                nextY -= speed;
             }
             if (keyH.downPressed) {
                 direction = "down";
-                worldY += speed;
+                nextY += speed;
             }
             if (keyH.leftPressed) {
                 direction = "left";
-                worldX -= speed;
+                nextX -= speed;
             }
             if (keyH.rightPressed) {
                 direction = "right";
-                worldX += speed;
+                nextX += speed;
+            }
+
+            if (!collidesWithObjects(nextX, nextY)) {
+                worldX = nextX;
+                worldY = nextY;
             }
 
             //alternatore di sprite
@@ -102,7 +112,7 @@ public class Player extends Entity {
             default -> null;
         };
 
-        if (images != null) {
+        if (images != null && !collidesWithObjects(worldX, worldY)) {
             g2.drawImage(images[spriteNum], screenX, screenY, tileSize+16, tileSize+16, null);
         }
         return null;
@@ -111,5 +121,31 @@ public class Player extends Entity {
     public void setPosition (int x, int y){
         this.worldX = tileSize * x;
         this.worldY = tileSize * y;
+    }
+
+    private boolean collidesWithObjects(int nextX, int nextY) {
+        // Verifica la collisione con gli oggetti di collisione della mappa corrente
+        for (CollisionObject collisionObject : gp.tileManagerCasettaIniziale.getCollisionMap()) {
+            if (checkCollision(nextX, nextY, collisionObject)) {
+                return true; // Collisione rilevata
+            }
+        }
+        return false; // Nessuna collisione rilevata
+    }
+
+    private boolean checkCollision(int x, int y, CollisionObject collisionObject) {
+        double objectX = collisionObject.getX() * gp.scale;
+        double objectY = collisionObject.getY() * gp.scale;
+        double objectWidth = collisionObject.getWidth() * gp.scale;
+        double objectHeight = collisionObject.getHeight() * gp.scale;
+
+        return x < objectX + objectWidth &&
+                x + tileSize > objectX &&
+                y < objectY + objectHeight &&
+                y + tileSize > objectY;
+    }
+
+    public void setCurrentCollisionMap(ArrayList<CollisionObject> collisionMap) {
+        this.currentCollisionMap = collisionMap;
     }
 }

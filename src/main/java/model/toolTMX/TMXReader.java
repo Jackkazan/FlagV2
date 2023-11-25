@@ -1,6 +1,7 @@
 package model.toolTMX;
 
 
+import model.collisioni.CollisionObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -15,6 +16,7 @@ import java.util.*;
 
 public class TMXReader {
 
+    private ArrayList<CollisionObject> collisionObjects;
     private ArrayList<String> listaMatrici = new ArrayList<>();
     private Set<Integer> insiemeCodici = new TreeSet<>();
     private List<Set<Integer>> listaInsiemi = new ArrayList<>();
@@ -31,6 +33,7 @@ public class TMXReader {
 
 
     public TMXReader(String filePathTMX) {
+        this.collisionObjects = new ArrayList<>();
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -102,18 +105,21 @@ public class TMXReader {
                 NodeList objectList = objectGroupElement.getElementsByTagName("object");
                 for (int j = 0; j < objectList.getLength(); j++) {
                     Element objectElement = (Element) objectList.item(j);
-                    int objectId = Integer.parseInt(objectElement.getAttribute("id"));
                     double objectX = Double.parseDouble(objectElement.getAttribute("x"));
                     double objectY = Double.parseDouble(objectElement.getAttribute("y"));
                     double objectWidth = Double.parseDouble(objectElement.getAttribute("width"));
                     double objectHeight = Double.parseDouble(objectElement.getAttribute("height"));
 
+                    collisionObjects.add(new CollisionObject(objectX, objectY, objectWidth, objectHeight));
+                    /*
                     System.out.println("Object " + j + ":");
                     System.out.println("ID: " + objectId);
                     System.out.println("X: " + objectX);
                     System.out.println("Y: " + objectY);
                     System.out.println("Width: " + objectWidth);
                     System.out.println("Height: " + objectHeight);
+
+                     */
                 }
             }
 
@@ -231,5 +237,9 @@ public class TMXReader {
 
     public int getMapHeigth() {
         return mapHeigth;
+    }
+
+    public ArrayList<CollisionObject> getCollisionObjects() {
+        return collisionObjects;
     }
 }

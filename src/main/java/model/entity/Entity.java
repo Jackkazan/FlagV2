@@ -18,5 +18,8 @@ public class Entity {
     public int spriteCounter = 0;
     public int spriteNum = 3;
 
-
+    public void setPosition (int x, int y){
+        this.worldX = tileSize * x;
+        this.worldY = tileSize * y;
+    }
 }
