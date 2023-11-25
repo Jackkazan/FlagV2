@@ -792,7 +792,7 @@
   <object id="22" x="431.25" y="673.583" width="24.1667" height="30.8333"/>
   <object id="23" x="512.167" y="682.75" width="15.3333" height="9.83333"/>
   <object id="24" x="528.917" y="677.667" width="30.5833" height="39.3333"/>
-  <object id="25" x="429.75" y="768.833" width="50.25" height="15.1667"/>
-  <object id="26" x="511.25" y="768.583" width="48" height="15.6667"/>
+  <object id="25" x="429.75" y="768.833" width="42.25" height="15.1667"/>
+  <object id="26" x="515.583" y="768.583" width="43.6667" height="15.6667"/>
  </objectgroup>
 </map>

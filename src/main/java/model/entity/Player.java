@@ -148,4 +148,10 @@ public class Player extends Entity {
     public void setCurrentCollisionMap(ArrayList<CollisionObject> collisionMap) {
         this.currentCollisionMap = collisionMap;
     }
+
+    public boolean onTransitionPoint(int targetX, int targetY, int tolerance) {
+        int playerTileX = worldX / tileSize;
+        int playerTileY = worldY / tileSize;
+        return Math.abs(playerTileX - targetX) <= tolerance && Math.abs(playerTileY - targetY) <= tolerance;
+    }
 }

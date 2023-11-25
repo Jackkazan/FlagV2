@@ -2,6 +2,7 @@ package view;
 
 import controller.KeyHandler;
 import model.entity.Player;
+import model.tile.MapManager;
 import model.tile.TileManager;
 
 import javax.swing.*;
@@ -19,8 +20,6 @@ public class GamePanel extends JPanel implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol; //768 pixels
     public final int screenHeight = tileSize * maxScreenRow;//576 pixels
 
-
-
     int FPS = 60;
 
 
@@ -28,13 +27,13 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread;
     public Player player = new Player(this, keyH);
 
-    //settare posizione iniziale 18,38
+    //settare posizione iniziale 30,50
     public TileManager tileManagerZonaIniziale = new TileManager(this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
 
-    //settare posizione iniziale 5,5
+    //settare posizione iniziale 29,43
     public TileManager tileManagerCasettaIniziale = new TileManager(this, "src/main/resources/Map/StanzaIntroduzione/Casetta_Iniziale.tmx");
 
-
+    MapManager mapManager = new MapManager(player, tileManagerCasettaIniziale, tileManagerZonaIniziale);
 
 
     public GamePanel(){
@@ -88,6 +87,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void update(){
 
         player.update();
+        mapManager.manageTransitions();
     }
 
     private void updateMapLogic(){
@@ -100,13 +100,13 @@ public class GamePanel extends JPanel implements Runnable{
 
         Graphics2D g2 = (Graphics2D) g;
 
-
-        tileManagerCasettaIniziale.draw(g2);
-        player.setCurrentCollisionMap(tileManagerCasettaIniziale.getCollisionMap());
+        //tileManagerCasettaIniziale.draw(g2);
+        //player.setCurrentCollisionMap(tileManagerCasettaIniziale.getCollisionMap());
 
         //tileManagerZonaIniziale.draw(g2);
         //player.setCurrentCollisionMap(tileManagerZonaIniziale.getCollisionMap());
 
+        mapManager.draw(g2);
         player.draw(g2);
 
         g2.dispose();
