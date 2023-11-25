@@ -28,11 +28,12 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread;
     public Player player = new Player(this, keyH);
 
+    //settare posizione iniziale 18,38
+    public TileManager tileManagerZonaIniziale = new TileManager(this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
 
     //settare posizione iniziale 5,5
     public TileManager tileManagerCasettaIniziale = new TileManager(this, "src/main/resources/Map/StanzaIntroduzione/Casetta_Iniziale.tmx");
-    //settare posizione iniziale 11,38
-    public TileManager tileManagerZonaIniziale = new TileManager(this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
+
 
 
 
@@ -100,11 +101,11 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D) g;
 
 
-        //tileManagerCasettaIniziale.draw(g2);
-        //player.setCurrentCollisionMap(tileManagerCasettaIniziale.getCollisionMap());
+        tileManagerCasettaIniziale.draw(g2);
+        player.setCurrentCollisionMap(tileManagerCasettaIniziale.getCollisionMap());
 
-        tileManagerZonaIniziale.draw(g2);
-        player.setCurrentCollisionMap(tileManagerZonaIniziale.getCollisionMap());
+        //tileManagerZonaIniziale.draw(g2);
+        //player.setCurrentCollisionMap(tileManagerZonaIniziale.getCollisionMap());
 
         player.draw(g2);
 
