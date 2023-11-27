@@ -13,13 +13,27 @@ import java.util.Objects;
 
 import static view.GamePanel.tileSize;
 
-public class Player extends Entity {
-    GamePanel gamePanel;
-    KeyHandler keyHandler;
+public class Player {
+    private GamePanel gamePanel;
+    private KeyHandler keyHandler;
+
+    private int x;
+    private int y;
+    private int speed;
 
     private final int screenX;
     private final int screenY;
     private ArrayList<CollisionObject> currentCollisionMap;
+
+    private BufferedImage
+            up1, up2, up3, up4,
+            down1, down2, down3, down4,
+            left1, left2, left3, left4,
+            right1, right2, right3, right4;
+    private String direction;
+
+    private int spriteCounter = 0;
+    private int spriteNum = 3;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         this.gamePanel = gamePanel;
@@ -31,7 +45,6 @@ public class Player extends Entity {
         getEntityImage();
     }
 
-    @Override
     public void setDefaultValues() {
         x = tileSize*29;
         y = tileSize*43;
@@ -39,7 +52,6 @@ public class Player extends Entity {
         direction = "down";
     }
 
-    @Override
     public void update() {
 
         if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed) {
@@ -86,7 +98,6 @@ public class Player extends Entity {
         //COLLISIONI
     }
 
-    @Override
     public void getEntityImage() {
         try {
             up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/moveUpCharacter0.png")));
@@ -127,7 +138,6 @@ public class Player extends Entity {
         return null;
     }
 
-    @Override
     public boolean collidesWithObjects(int nextX, int nextY) {
         // Verifica la collisione con gli oggetti di collisione della mappa corrente
         for (CollisionObject collisionObject : currentCollisionMap) {
@@ -138,7 +148,6 @@ public class Player extends Entity {
         return false; // Nessuna collisione rilevata
     }
 
-    @Override
     public boolean checkCollision(int x, int y, CollisionObject collisionObject) {
         double objectX = collisionObject.getX() * gamePanel.getScale();
         double objectY = collisionObject.getY() * gamePanel.getScale();
@@ -151,16 +160,21 @@ public class Player extends Entity {
                 y + tileSize > objectY;
     }
 
-    @Override
     public void setCurrentCollisionMap(ArrayList<CollisionObject> collisionMap) {
         this.currentCollisionMap = collisionMap;
     }
 
-    @Override
     public boolean onTransitionPoint(int targetX, int targetY, int tolerance) {
         int playerTileX = x / tileSize;
         int playerTileY = y / tileSize;
         return Math.abs(playerTileX - targetX) <= tolerance && Math.abs(playerTileY - targetY) <= tolerance;
+    }
+
+    // COLLISION
+    private Rectangle collisionArea = new Rectangle(0, 0, 48, 48);
+
+    public Rectangle getCollisionArea() {
+        return collisionArea;
     }
 
     public int getScreenX() {
@@ -169,5 +183,17 @@ public class Player extends Entity {
 
     public int getScreenY() {
         return this.screenY;
+    }
+
+    public int getX() {
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
+    }
+
+    public int getSpeed() {
+        return this.speed;
     }
 }

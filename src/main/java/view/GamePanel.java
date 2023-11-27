@@ -1,12 +1,15 @@
 package view;
 
 import controller.KeyHandler;
+import model.entity.Entity;
 import model.entity.Player;
 import model.tile.MapManager;
 import model.tile.TileManager;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class GamePanel extends JPanel implements Runnable{
 
@@ -34,6 +37,25 @@ public class GamePanel extends JPanel implements Runnable{
     public TileManager tileManagerCasettaIniziale = new TileManager(this, "src/main/resources/Map/StanzaIntroduzione/Casetta_Iniziale.tmx");
 
     MapManager mapManager = new MapManager(player, tileManagerCasettaIniziale, tileManagerZonaIniziale);
+
+    String path_1 = "/player/moveUpCharacter0.png";
+    String path_2 = "/player/moveUpCharacter1.png";
+    String path_3 = "/player/moveDownCharacter_0.png";
+    String path_4 = "/player/moveDownCharacter_1.png";
+
+
+    String path_5 = "/player/moveLeftCharacter0.png";
+    String path_6 ="/player/moveLeftCharacter1.png";
+    String path_7 ="/player/moveRightCharacter0.png";
+    String path_8 ="/player/moveRightCharacter1.png";
+
+    Entity npc = new Entity.EntityBuilder(this, 928, 1376)
+            .setName("NPC")
+            .setSpeed(3)
+            .setEntityImage(path_1, path_2, path_3,
+                    path_4, path_5, path_6, path_7, path_8)
+            .build();
+
 
 
     public GamePanel(){
@@ -102,6 +124,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         mapManager.draw(graphics2D);
         player.draw(graphics2D);
+        npc.draw(graphics2D);
         drawToTempScreen();
         graphics2D.dispose();
     }
