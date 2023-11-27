@@ -100,16 +100,51 @@ public class GamePanel extends JPanel implements Runnable{
 
         Graphics2D g2 = (Graphics2D) g;
 
-        //tileManagerCasettaIniziale.draw(g2);
-        //player.setCurrentCollisionMap(tileManagerCasettaIniziale.getCollisionMap());
-
-        //tileManagerZonaIniziale.draw(g2);
-        //player.setCurrentCollisionMap(tileManagerZonaIniziale.getCollisionMap());
-
         mapManager.draw(g2);
         player.draw(g2);
+        drawToTempScreen(g2);
 
         g2.dispose();
+
+        Toolkit.getDefaultToolkit().sync();
+    }
+
+
+    private void drawDebugInfo(Graphics2D graphics2D, long drawStart) {
+        long drawEnd = System.nanoTime();
+        long passedTime = drawEnd - drawStart;
+        int x = 10;
+        int y = 400;
+        int lineHeight = 20;
+
+        graphics2D.setFont(new Font("Arial", Font.PLAIN, 20));
+        graphics2D.setColor(Color.WHITE);
+
+        graphics2D.drawString("WorldX: " + player.getX(), x, y);
+        y += lineHeight;
+        graphics2D.drawString("WorldY: " + player.getY(), x, y);
+        y += lineHeight;
+        graphics2D.drawString("Col: " + (player.getX() + 48) / tileSize, x, y);
+        y += lineHeight;
+        graphics2D.drawString("Row: " + (player.getY() + 48) / tileSize, x, y);
+        y += lineHeight;
+        graphics2D.drawString("Draw Time: " + passedTime, x, y);
+
+        System.out.println("Draw Time: "+ passedTime);
+    }
+
+    public void drawToTempScreen(Graphics2D g2d) {
+
+        // DEBUG
+        long drawStart = 0;
+        if (keyH.isShowDebugText()) {
+            drawStart = System.nanoTime();
+        }
+
+        // DEBUG
+        if (keyH.isShowDebugText()) {
+            drawDebugInfo(g2d, drawStart);
+        }
     }
 
     public Player getPlayer() {

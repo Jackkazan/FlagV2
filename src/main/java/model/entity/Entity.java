@@ -22,4 +22,13 @@ public class Entity {
         this.worldX = tileSize * x;
         this.worldY = tileSize * y;
     }
+
+    public int getX() {
+        return worldX;
+
+    }
+
+    public int getY() {
+        return worldY;
+    }
 }

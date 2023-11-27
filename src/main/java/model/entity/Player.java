@@ -154,4 +154,6 @@ public class Player extends Entity {
         int playerTileY = worldY / tileSize;
         return Math.abs(playerTileX - targetX) <= tolerance && Math.abs(playerTileY - targetY) <= tolerance;
     }
+    
+
 }
