@@ -821,8 +821,8 @@
   <object id="15" x="1150" y="811.333" width="38" height="20.6667">
    <ellipse/>
   </object>
-  <object id="16" x="450.545" y="704.364" width="24.1818" height="75.3409"/>
+  <object id="16" x="450.545" y="704.364" width="21.3693" height="75.3409"/>
   <object id="17" x="515.455" y="704.364" width="25.2727" height="76.25"/>
-  <object id="19" x="475.636" y="704" width="39.0909" height="55.0227"/>
+  <object id="19" x="472.199" y="704" width="42.5284" height="24.6477"/>
  </objectgroup>
 </map>
