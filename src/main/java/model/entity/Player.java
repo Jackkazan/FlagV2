@@ -14,57 +14,64 @@ import java.util.Objects;
 import static view.GamePanel.tileSize;
 
 public class Player extends Entity {
-    GamePanel gp;
-    KeyHandler keyH;
+    GamePanel gamePanel;
+    KeyHandler keyHandler;
 
-    public final int screenX;
-    public final int screenY;
+    private final int screenX;
+    private final int screenY;
     private ArrayList<CollisionObject> currentCollisionMap;
 
-    public Player(GamePanel gp, KeyHandler keyH) {
-        this.gp = gp;
-        this.keyH = keyH;
+    public Player(GamePanel gamePanel, KeyHandler keyHandler) {
+        this.gamePanel = gamePanel;
+        this.keyHandler = keyHandler;
 
-        screenX = gp.screenWidth/2 - (tileSize/2);
-        screenY = gp.screenHeight/2 - (tileSize/2);
+        screenX = gamePanel.getScreenWidth()/2 - (tileSize/2);
+        screenY = gamePanel.getScreenHeight()/2 - (tileSize/2);
         setDefaultValues();
-        getPlayerImage();
+        getEntityImage();
     }
 
+    @Override
     public void setDefaultValues() {
-        worldX = tileSize*29;
-        worldY = tileSize*43;
+        x = tileSize*29;
+        y = tileSize*43;
         speed = 4;
         direction = "down";
     }
 
+    @Override
     public void update() {
 
-        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
-            int nextX = worldX;
-            int nextY = worldY;
+        if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed) {
+            int nextX = x;
+            int nextY = y;
 
-            if (keyH.upPressed) {
+            if (keyHandler.upPressed) {
                 direction = "up";
                 nextY -= speed;
             }
-            if (keyH.downPressed) {
+            if (keyHandler.downPressed) {
                 direction = "down";
                 nextY += speed;
             }
-            if (keyH.leftPressed) {
+            if (keyHandler.leftPressed) {
                 direction = "left";
                 nextX -= speed;
             }
-            if (keyH.rightPressed) {
+            if (keyHandler.rightPressed) {
                 direction = "right";
                 nextX += speed;
             }
 
             if (!collidesWithObjects(nextX, nextY)) {
-                worldX = nextX;
-                worldY = nextY;
+                x = nextX;
+                y = nextY;
             }
+            double length = Math.sqrt(nextX * nextX + nextY * nextY);
+
+            // Normalizza il vettore
+            nextX /= length;
+            nextY /= length;
 
             //alternatore di sprite
             spriteCounter++;
@@ -79,7 +86,8 @@ public class Player extends Entity {
         //COLLISIONI
     }
 
-    public void getPlayerImage() {
+    @Override
+    public void getEntityImage() {
         try {
             up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/moveUpCharacter0.png")));
             up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/moveUpCharacter1.png")));
@@ -103,7 +111,8 @@ public class Player extends Entity {
         }
     }
 
-    public BufferedImage draw(Graphics2D g2) {
+
+    public BufferedImage draw(Graphics2D graphics2D) {
         BufferedImage[] images = switch (direction) {
             case "up" -> new BufferedImage[]{up1, up2, up3, up4};
             case "down" -> new BufferedImage[]{down1, down2, down3, down4};
@@ -112,18 +121,14 @@ public class Player extends Entity {
             default -> null;
         };
 
-        if (images != null && !collidesWithObjects(worldX, worldY)) {
-            g2.drawImage(images[spriteNum], screenX, screenY, tileSize+16, tileSize+16, null);
+        if (images != null && !collidesWithObjects(x, y)) {
+            graphics2D.drawImage(images[spriteNum], screenX, screenY, tileSize+16, tileSize+16, null);
         }
         return null;
     }
 
-    public void setPosition (int x, int y){
-        this.worldX = tileSize * x;
-        this.worldY = tileSize * y;
-    }
-
-    private boolean collidesWithObjects(int nextX, int nextY) {
+    @Override
+    public boolean collidesWithObjects(int nextX, int nextY) {
         // Verifica la collisione con gli oggetti di collisione della mappa corrente
         for (CollisionObject collisionObject : currentCollisionMap) {
             if (checkCollision(nextX, nextY, collisionObject)) {
@@ -133,11 +138,12 @@ public class Player extends Entity {
         return false; // Nessuna collisione rilevata
     }
 
-    private boolean checkCollision(int x, int y, CollisionObject collisionObject) {
-        double objectX = collisionObject.getX() * gp.scale;
-        double objectY = collisionObject.getY() * gp.scale;
-        double objectWidth = collisionObject.getWidth() * gp.scale;
-        double objectHeight = collisionObject.getHeight() * gp.scale;
+    @Override
+    public boolean checkCollision(int x, int y, CollisionObject collisionObject) {
+        double objectX = collisionObject.getX() * gamePanel.getScale();
+        double objectY = collisionObject.getY() * gamePanel.getScale();
+        double objectWidth = collisionObject.getWidth() * gamePanel.getScale();
+        double objectHeight = collisionObject.getHeight() * gamePanel.getScale();
 
         return x < objectX + objectWidth &&
                 x + tileSize > objectX &&
@@ -145,15 +151,23 @@ public class Player extends Entity {
                 y + tileSize > objectY;
     }
 
+    @Override
     public void setCurrentCollisionMap(ArrayList<CollisionObject> collisionMap) {
         this.currentCollisionMap = collisionMap;
     }
 
+    @Override
     public boolean onTransitionPoint(int targetX, int targetY, int tolerance) {
-        int playerTileX = worldX / tileSize;
-        int playerTileY = worldY / tileSize;
+        int playerTileX = x / tileSize;
+        int playerTileY = y / tileSize;
         return Math.abs(playerTileX - targetX) <= tolerance && Math.abs(playerTileY - targetY) <= tolerance;
     }
-    
 
+    public int getScreenX() {
+        return this.screenX;
+    }
+
+    public int getScreenY() {
+        return this.screenY;
+    }
 }

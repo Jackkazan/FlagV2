@@ -12,20 +12,20 @@ public class GamePanel extends JPanel implements Runnable{
 
     //SCREEN SETTINGS
     static final int originalTileSize = 16;
-    public static final int scale = 2;
+    private static final int scale = 2;
 
     static public final int tileSize = originalTileSize * scale; //48*48
-    public final int maxScreenCol = 25; //16 default
-    public final int maxScreenRow = 19; //12 default
-    public final int screenWidth = tileSize * maxScreenCol; //768 pixels
-    public final int screenHeight = tileSize * maxScreenRow;//576 pixels
-
+    private final int maxScreenCol = 25; //16 default
+    private final int maxScreenRow = 19; //12 default
+    private final int screenWidth = tileSize * maxScreenCol; //768 pixels
+    private final int screenHeight = tileSize * maxScreenRow;//576 pixels
+    private Graphics2D graphics2D;
     int FPS = 60;
 
 
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
-    public Player player = new Player(this, keyH);
+    private Player player = new Player(this, keyH);
 
     //settare posizione iniziale 30,50
     public TileManager tileManagerZonaIniziale = new TileManager(this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
@@ -98,18 +98,29 @@ public class GamePanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        Graphics2D g2 = (Graphics2D) g;
+        this.graphics2D = (Graphics2D) g;
 
-        mapManager.draw(g2);
-        player.draw(g2);
-        drawToTempScreen(g2);
-
-        g2.dispose();
-
-        Toolkit.getDefaultToolkit().sync();
+        mapManager.draw(graphics2D);
+        player.draw(graphics2D);
+        drawToTempScreen();
+        graphics2D.dispose();
     }
 
+    public void drawToTempScreen() {
 
+        // DEBUG
+        long drawStart = 0;
+        if (keyH.isShowDebugText()) {
+            drawStart = System.nanoTime();
+        }
+
+        // DEBUG
+        if (keyH.isShowDebugText()) {
+            drawDebugInfo(graphics2D, drawStart);
+        }
+    }
+
+    //DEBUG
     private void drawDebugInfo(Graphics2D graphics2D, long drawStart) {
         long drawEnd = System.nanoTime();
         long passedTime = drawEnd - drawStart;
@@ -120,34 +131,40 @@ public class GamePanel extends JPanel implements Runnable{
         graphics2D.setFont(new Font("Arial", Font.PLAIN, 20));
         graphics2D.setColor(Color.WHITE);
 
-        graphics2D.drawString("WorldX: " + player.getX(), x, y);
+        graphics2D.drawString("X: " + player.getX(), x, y);
         y += lineHeight;
-        graphics2D.drawString("WorldY: " + player.getY(), x, y);
+        graphics2D.drawString("Y: " + player.getY(), x, y);
         y += lineHeight;
-        graphics2D.drawString("Col: " + (player.getX() + 48) / tileSize, x, y);
+        graphics2D.drawString("Col: " + (player.getX() + player.getCollisionArea().x) / tileSize, x, y);
         y += lineHeight;
-        graphics2D.drawString("Row: " + (player.getY() + 48) / tileSize, x, y);
+        graphics2D.drawString("Row: " + (player.getY() + player.getCollisionArea().y) / tileSize, x, y);
         y += lineHeight;
         graphics2D.drawString("Draw Time: " + passedTime, x, y);
-
-        System.out.println("Draw Time: "+ passedTime);
-    }
-
-    public void drawToTempScreen(Graphics2D g2d) {
-
-        // DEBUG
-        long drawStart = 0;
-        if (keyH.isShowDebugText()) {
-            drawStart = System.nanoTime();
-        }
-
-        // DEBUG
-        if (keyH.isShowDebugText()) {
-            drawDebugInfo(g2d, drawStart);
-        }
     }
 
     public Player getPlayer() {
-        return player;
+        return this.player;
     }
+
+    public Graphics2D getGraphics2D() {
+        return this.graphics2D;
+    }
+
+    public int getMaxScreenCol() {
+        return this.maxScreenCol;
+    }
+
+    public int getMaxScreenRow() {
+        return this.maxScreenRow;
+    }
+
+    public int getScreenWidth() {
+        return this.screenWidth;
+    }
+
+    public int getScreenHeight() {
+        return this.screenHeight;
+    }
+
+    public int getScale() { return this.scale; }
 }

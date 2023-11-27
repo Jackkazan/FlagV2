@@ -13,32 +13,33 @@ import java.util.HashMap;
 import static view.GamePanel.tileSize;
 
 public class TileManager {
-    GamePanel gp;
-    HashMap<Integer, BufferedImage> mappaSprite;
-    ArrayList<String> listaMatrici;
-    int numLayer;
-    int[][][] mapTileNum;
+    private GamePanel gamePanel;
+    private HashMap<Integer, BufferedImage> mappaSprite;
+    private ArrayList<String> listaMatrici;
+    private int numLayer;
+    private int[][][] mapTileNum;
 
-    ArrayList<CollisionObject> collisionMap;
-
-    int maxMapCol;
-    int maxMapRow;
+    private ArrayList<CollisionObject> collisionMap;
+    private String currentMap;
+    private int maxMapCol;
+    private int maxMapRow;
     // int mapWidth = tileSize * maxMapCol;
     // int mapHeigth = tileSize * maxMapRow;
 
-    public TileManager(GamePanel gp, String pathTMXMap){
+    public TileManager(GamePanel gamePanel, String pathTMXMap){
 
-        this.gp = gp;
+        this.gamePanel = gamePanel;
+        this.currentMap = pathTMXMap;
         TMXReader readMap = new TMXReader(pathTMXMap);
-        mappaSprite= readMap.getMappaSprite();
-        listaMatrici = readMap.getListaMatrici();
-        numLayer=readMap.getNumLayer();
-        maxMapCol = readMap.getMapWidth();
-        maxMapRow = readMap.getMapHeigth();
+        this.mappaSprite= readMap.getMappaSprite();
+        this.listaMatrici = readMap.getListaMatrici();
+        this.numLayer=readMap.getNumLayer();
+        this.maxMapCol = readMap.getMapWidth();
+        this.maxMapRow = readMap.getMapHeigth();
         //matrice a tre livelli che memorizzerà la matrice di ciascun layer
-        mapTileNum = new int[numLayer][maxMapCol][maxMapRow];
-        collisionMap = readMap.getCollisionObjects();
-        gp.getPlayer().setCurrentCollisionMap(collisionMap);
+        this.mapTileNum = new int[numLayer][maxMapCol][maxMapRow];
+        this.collisionMap = readMap.getCollisionObjects();
+        TileManager.this.gamePanel.getPlayer().setCurrentCollisionMap(collisionMap);
 
         for(int i=0;i<numLayer;i++)
             loadMap(listaMatrici.get(i).split("\n"), i);
@@ -75,13 +76,13 @@ public class TileManager {
 
                 int worldX = worldCol * tileSize;
                 int worldY = worldRow * tileSize;
-                int screenX = worldX - gp.player.worldX + gp.player.screenX;
-                int screenY = worldY - gp.player.worldY + gp.player.screenY;
+                int screenX = worldX - gamePanel.getPlayer().getX() + gamePanel.getPlayer().getScreenX();
+                int screenY = worldY - gamePanel.getPlayer().getY() + gamePanel.getPlayer().getScreenY();
 
-                if(worldX + tileSize > gp.player.worldX - gp.player.screenX &&
-                        worldX - tileSize < gp.player.worldX + gp.player.screenX &&
-                        worldY + tileSize > gp.player.worldY - gp.player.screenY &&
-                        worldY - tileSize < gp.player.worldY + gp.player.screenY){
+                if(worldX + tileSize > gamePanel.getPlayer().getX() - gamePanel.getPlayer().getScreenX() &&
+                        worldX - tileSize < gamePanel.getPlayer().getX() + gamePanel.getPlayer().getScreenX() &&
+                        worldY + tileSize > gamePanel.getPlayer().getY() - gamePanel.getPlayer().getScreenY() &&
+                        worldY - tileSize < gamePanel.getPlayer().getY() + gamePanel.getPlayer().getScreenY()){
                     g2.drawImage(mappaSprite.get(tileNum), screenX, screenY, tileSize, tileSize, null);
                 }
 
@@ -96,6 +97,10 @@ public class TileManager {
     }
 
     public ArrayList<CollisionObject> getCollisionMap() {
-        return collisionMap;
+        return this.collisionMap;
+    }
+
+    public String getCurrentMap() {
+        return this.currentMap;
     }
 }

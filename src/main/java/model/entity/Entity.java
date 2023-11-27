@@ -1,13 +1,17 @@
 package model.entity;
 
+import model.collisioni.CollisionObject;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import static view.GamePanel.tileSize;
 
-public class Entity {
-    public int worldX, worldY;
-    public int speed;
-
+public abstract class Entity {
+    protected int x, y;
+    protected int speed;
+    private String entity;
     public BufferedImage
             up1, up2, up3, up4,
             down1, down2, down3, down4,
@@ -18,17 +22,46 @@ public class Entity {
     public int spriteCounter = 0;
     public int spriteNum = 3;
 
-    public void setPosition (int x, int y){
-        this.worldX = tileSize * x;
-        this.worldY = tileSize * y;
-    }
+    // COLLISION
+    private Rectangle collisionArea = new Rectangle(0, 0, 48, 48);
+    private int collisionDefaultX, collisionDefaultY;
+    private boolean collisionOn = false;
+
+
+
+    public abstract void setDefaultValues();
+
+    public abstract void update();
+    public abstract void getEntityImage();
 
     public int getX() {
-        return worldX;
-
+        return this.x;
     }
 
     public int getY() {
-        return worldY;
+        return this.y;
+    }
+
+    public int getSpeed() {
+        return this.speed;
+    }
+
+    public Rectangle getCollisionArea() {
+        return collisionArea;
+    }
+    public abstract boolean collidesWithObjects(int nextX, int nextY);
+    public abstract boolean checkCollision(int x, int y, CollisionObject collisionObject);
+    public abstract void setCurrentCollisionMap(ArrayList<CollisionObject> collisionMap);
+    public abstract boolean onTransitionPoint(int targetX, int targetY, int tolerance);
+    public int getCollisionDefaultX() {
+        return collisionDefaultX;
+    }
+
+    public int getCollisionDefaultY() {
+        return collisionDefaultY;
+    }
+
+    public boolean isCollisionOn() {
+        return collisionOn;
     }
 }
