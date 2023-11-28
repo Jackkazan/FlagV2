@@ -38,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     MapManager mapManager = new MapManager(player, tileManagerCasettaIniziale, tileManagerZonaIniziale);
 
-    String path_1 = "/player/moveUpCharacter0.png";
+    /*String path_1 = "/player/moveUpCharacter0.png";
     String path_2 = "/player/moveUpCharacter1.png";
     String path_3 = "/player/moveDownCharacter_0.png";
     String path_4 = "/player/moveDownCharacter_1.png";
@@ -50,11 +50,16 @@ public class GamePanel extends JPanel implements Runnable{
     String path_8 ="/player/moveRightCharacter1.png";
 
 
+     */
+
     Entity npc = new Entity.EntityBuilder(this, 34*tileSize, 58*tileSize)
             .setName("NPC")
             .setSpeed(3)
-            .setEntityImage(path_1, path_2, path_3,
+            .setEntityImage("/player/moveUpCharacter0.png")
+            /*, path_2, path_3,
                     path_4, path_5, path_6, path_7, path_8)
+
+             */
             .build();
 
 

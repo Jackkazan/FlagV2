@@ -39,7 +39,6 @@ public class Entity {
     public static class EntityBuilder{
         private Entity entity;
 
-
         public EntityBuilder(GamePanel gamePanel,int x, int y){
             this.entity = new Entity();
             this.entity.gamePanel = gamePanel;
@@ -56,19 +55,22 @@ public class Entity {
             this.entity.speed = speed;
             return this;
         }
-        public EntityBuilder setEntityImage(String path_up1, String path_up2,
+        public EntityBuilder setEntityImage(String path_up1 )/*, String path_up2,
                                    String path_down1, String path_down2,
                                    String path_left1, String path_left2,
-                                   String path_right1, String path_right2) {
+                                   String path_right1, String path_right2)
+                                    */{
             try {
                 this.entity.up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up1)));
-                this.entity.up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up2)));
+                /*this.entity.up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up2)));
                 this.entity.down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down1)));
                 this.entity.down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down2)));
                 this.entity.left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left1)));
                 this.entity.left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left2)));
                 this.entity.right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right1)));
                 this.entity.right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right2)));
+
+                 */
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -85,10 +87,15 @@ public class Entity {
 
     public BufferedImage draw(Graphics2D graphics2D) {
         if (up1 != null ) {
-            graphics2D.drawImage(up1, this.x, this.y, tileSize+16, tileSize+16, null);
+            int screenX = this.x - gamePanel.getPlayer().getX() + gamePanel.getPlayer().getScreenX();
+            int screenY = this.y - gamePanel.getPlayer().getY() + gamePanel.getPlayer().getScreenY();
+            graphics2D.drawImage(up1, screenX, screenY, tileSize + 16, tileSize + 16, null);
         }
         return null;
     }
+
+
+
 
 
     //Futura """"AI""""
