@@ -124,6 +124,7 @@ public class Entity {
             case "right" -> new BufferedImage[]{right1, right2, right3, right4};
             default -> null;
         };
+
         int screenX = this.x - gamePanel.getPlayer().getX() + gamePanel.getPlayer().getScreenX();
         int screenY = this.y - gamePanel.getPlayer().getY() + gamePanel.getPlayer().getScreenY();
 
