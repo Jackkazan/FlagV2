@@ -30,16 +30,17 @@ public class MapManager {
     }
 
     public void manageTransitions(){
-        if(currentMap==tileManagerCasettaIniziale && player.onTransitionPoint(19, 42, 1)){
+        if(currentMap==tileManagerCasettaIniziale && player.onTransitionPoint(18, 42, 1)){
             setMap(tileManagerZonaIniziale);
         }
-        if(currentMap == tileManagerZonaIniziale && player.onTransitionPoint(19,41,1)){
+        if(currentMap == tileManagerZonaIniziale && player.onTransitionPoint(18,41,1)){
             setMap(tileManagerCasettaIniziale);
         }
 
 
         //questo è a caso, devo implementarlo per bene
         if(currentMap == tileManagerZonaIniziale && player.onTransitionPoint(64,66,3)){
+            // Avvia l'animazione quando cambi mappa
             //setMap(nuovaMappa);
             player.teleport(19,48);
         }
@@ -60,4 +61,5 @@ public class MapManager {
     public TileManager getTileManagerZonaIniziale() {
         return tileManagerZonaIniziale;
     }
+
 }

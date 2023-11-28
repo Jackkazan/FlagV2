@@ -9,6 +9,8 @@ import model.tile.TileManager;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Objects;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -25,17 +27,14 @@ public class GamePanel extends JPanel implements Runnable{
     private Graphics2D graphics2D;
     int FPS = 60;
 
-
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
     private Player player = new Player(this, keyH);
 
-    //settare posizione iniziale 30,50
+    //mappe
     public TileManager tileManagerZonaIniziale = new TileManager(this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
-
-    //settare posizione iniziale 29,43
     public TileManager tileManagerCasettaIniziale = new TileManager(this, "src/main/resources/Map/StanzaIntroduzione/Casetta_Iniziale.tmx");
-
+    //gestore mappe
     MapManager mapManager = new MapManager(this, player, tileManagerCasettaIniziale, tileManagerZonaIniziale);
 
     String path_up1 = "/npc/VecchiettaDown_0.png";;
@@ -56,10 +55,10 @@ public class GamePanel extends JPanel implements Runnable{
     String path_right4= "/npc/VecchiettaDown_0.png";;
 
 
-    Entity npc = new Entity.EntityBuilder(this, 34*tileSize, 52*tileSize)
-            .setName("NPC")
+    Entity npc = new Entity.EntityBuilder(this, 22*tileSize, 46*tileSize)
+            .setName("Vecchietta")
             .setSpeed(3)
-            .setSpeedChangeSprite(20)
+            .setSpeedChangeSprite(40)
             .setSpriteNumLess1(3)
             .setDefaultDirection("down")
             .setContainedMap(tileManagerZonaIniziale)
@@ -70,6 +69,7 @@ public class GamePanel extends JPanel implements Runnable{
             .build();
 
 
+    //transizione
 
 
     public GamePanel(){
@@ -142,6 +142,7 @@ public class GamePanel extends JPanel implements Runnable{
         npc.draw(graphics2D);
         drawToTempScreen();
         graphics2D.dispose();
+
     }
 
     public void drawToTempScreen() {
@@ -209,4 +210,7 @@ public class GamePanel extends JPanel implements Runnable{
     public MapManager getMapManager() {
         return mapManager;
     }
+
+
+    //transizione animata -------------------------------------------------------------------------------
 }
