@@ -36,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable{
     //settare posizione iniziale 29,43
     public TileManager tileManagerCasettaIniziale = new TileManager(this, "src/main/resources/Map/StanzaIntroduzione/Casetta_Iniziale.tmx");
 
-    MapManager mapManager = new MapManager(player, tileManagerCasettaIniziale, tileManagerZonaIniziale);
+    MapManager mapManager = new MapManager(this, player, tileManagerCasettaIniziale, tileManagerZonaIniziale);
 
     String path_up1 = "/npc/VecchiettaDown_0.png";;
     String path_up2= "/npc/VecchiettaDown_0.png";;
@@ -61,6 +61,7 @@ public class GamePanel extends JPanel implements Runnable{
             .setSpeed(3)
             .setSpriteNum(3)
             .setDefaultDirection("down")
+            .setContainedMap(tileManagerZonaIniziale)
             .setEntityImage(path_up1, path_up2, path_up3, path_up4,
                     path_down1, path_down2, path_down3, path_down4,
                     path_left1, path_left2, path_left3, path_left4,
@@ -203,4 +204,8 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public int getScale() { return this.scale; }
+
+    public MapManager getMapManager() {
+        return mapManager;
+    }
 }

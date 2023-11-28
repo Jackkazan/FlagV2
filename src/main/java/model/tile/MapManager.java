@@ -1,6 +1,7 @@
 package model.tile;
 
 import model.entity.Player;
+import view.GamePanel;
 
 import java.awt.*;
 
@@ -12,8 +13,10 @@ public class MapManager {
     //tutte le mappe
     private TileManager tileManagerCasettaIniziale;
     private TileManager tileManagerZonaIniziale;
+    GamePanel gamePanel;
 
-    public MapManager(Player player, TileManager tileManagerCasettaIniziale, TileManager tileManagerZonaIniziale) {
+    public MapManager(GamePanel gamePanel, Player player, TileManager tileManagerCasettaIniziale, TileManager tileManagerZonaIniziale) {
+        this.gamePanel = gamePanel;
         this.player = player;
         this.tileManagerZonaIniziale = tileManagerZonaIniziale;//Mappa iniziale
         this.tileManagerCasettaIniziale = tileManagerCasettaIniziale;
@@ -39,4 +42,15 @@ public class MapManager {
         currentMap.draw(g2);
     }
 
+    public TileManager getCurrentMap() {
+        return currentMap;
+    }
+
+    public TileManager getTileManagerCasettaIniziale() {
+        return tileManagerCasettaIniziale;
+    }
+
+    public TileManager getTileManagerZonaIniziale() {
+        return tileManagerZonaIniziale;
+    }
 }

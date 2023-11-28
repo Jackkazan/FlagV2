@@ -1,6 +1,8 @@
 package model.entity;
 
 import model.collisioni.CollisionObject;
+import model.tile.MapManager;
+import model.tile.TileManager;
 import view.GamePanel;
 
 import javax.imageio.ImageIO;
@@ -34,6 +36,8 @@ public class Entity {
     private int spriteCounter = 0;
     private GamePanel gamePanel;
 
+    private TileManager tileManager;
+
     private Entity(){
     }
 
@@ -63,6 +67,11 @@ public class Entity {
         }
         public EntityBuilder setDefaultDirection(String direction){
             this.entity.direction = direction;
+            return this;
+        }
+
+        public EntityBuilder setContainedMap(TileManager tileManager){
+            this.entity.tileManager = tileManager;
             return this;
         }
         public EntityBuilder setEntityImage(String path_up1 , String path_up2, String path_up3,String path_up4,
@@ -118,7 +127,7 @@ public class Entity {
         int screenX = this.x - gamePanel.getPlayer().getX() + gamePanel.getPlayer().getScreenX();
         int screenY = this.y - gamePanel.getPlayer().getY() + gamePanel.getPlayer().getScreenY();
 
-        if (images != null ){
+        if (images != null && gamePanel.getMapManager().getCurrentMap() == this.tileManager ){
             graphics2D.drawImage(images[spriteNum], screenX, screenY, tileSize + 16, tileSize + 16, null);
         }
 
