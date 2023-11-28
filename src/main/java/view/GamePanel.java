@@ -38,28 +38,33 @@ public class GamePanel extends JPanel implements Runnable{
 
     MapManager mapManager = new MapManager(player, tileManagerCasettaIniziale, tileManagerZonaIniziale);
 
-    /*String path_1 = "/player/moveUpCharacter0.png";
-    String path_2 = "/player/moveUpCharacter1.png";
-    String path_3 = "/player/moveDownCharacter_0.png";
-    String path_4 = "/player/moveDownCharacter_1.png";
+    String path_up1 = "/npc/VecchiettaDown_0.png";;
+    String path_up2= "/npc/VecchiettaDown_0.png";;
+    String path_up3= "/npc/VecchiettaDown_0.png";;
+    String path_up4= "/npc/VecchiettaDown_0.png";;
+    String path_down1 = "/npc/VecchiettaDown_0.png";
+    String path_down2 ="/npc/VecchiettaDown_1.png";
+    String path_down3 ="/npc/VecchiettaDown_2.png";
+    String path_down4 ="/npc/VecchiettaDown_3.png";
+    String path_left1= "/npc/VecchiettaDown_0.png";;
+    String path_left2= "/npc/VecchiettaDown_0.png";;
+    String path_left3= "/npc/VecchiettaDown_0.png";;
+    String path_left4= "/npc/VecchiettaDown_0.png";;
+    String path_right1= "/npc/VecchiettaDown_0.png";;
+    String path_right2= "/npc/VecchiettaDown_0.png";;
+    String path_right3= "/npc/VecchiettaDown_0.png";;
+    String path_right4= "/npc/VecchiettaDown_0.png";;
 
 
-    String path_5 = "/player/moveLeftCharacter0.png";
-    String path_6 ="/player/moveLeftCharacter1.png";
-    String path_7 ="/player/moveRightCharacter0.png";
-    String path_8 ="/player/moveRightCharacter1.png";
-
-
-     */
-
-    Entity npc = new Entity.EntityBuilder(this, 34*tileSize, 58*tileSize)
+    Entity npc = new Entity.EntityBuilder(this, 34*tileSize, 52*tileSize)
             .setName("NPC")
             .setSpeed(3)
-            .setEntityImage("/player/moveUpCharacter0.png")
-            /*, path_2, path_3,
-                    path_4, path_5, path_6, path_7, path_8)
-
-             */
+            .setSpriteNum(3)
+            .setDefaultDirection("down")
+            .setEntityImage(path_up1, path_up2, path_up3, path_up4,
+                    path_down1, path_down2, path_down3, path_down4,
+                    path_left1, path_left2, path_left3, path_left4,
+                    path_right1, path_right2, path_right3, path_right4)
             .build();
 
 
@@ -116,6 +121,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void update(){
 
         player.update();
+        npc.update();
         mapManager.manageTransitions();
     }
 

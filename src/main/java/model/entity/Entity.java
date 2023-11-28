@@ -23,15 +23,16 @@ public class Entity {
     private int xPlayer;
     private int yPlayer;
     private int speed;
+
+    private int spriteNum;
     private BufferedImage
-            up1, up2, down1, down2,
-            left1, left2, right1, right2;
-    private String direction = "down";
+            up1, up2, up3, up4,
+            down1, down2, down3, down4,
+            left1, left2, left3, left4,
+            right1, right2, right3, right4;
+    private String direction;
     private int spriteCounter = 0;
-    private int spriteNum = 3;
     private GamePanel gamePanel;
-    private final int screenX = 800;
-    private final int screenY = 608;
 
     private Entity(){
     }
@@ -55,22 +56,43 @@ public class Entity {
             this.entity.speed = speed;
             return this;
         }
-        public EntityBuilder setEntityImage(String path_up1 )/*, String path_up2,
-                                   String path_down1, String path_down2,
-                                   String path_left1, String path_left2,
-                                   String path_right1, String path_right2)
-                                    */{
+
+        public EntityBuilder setSpriteNum(int numSpriteEachDirection){
+            this.entity.spriteNum = numSpriteEachDirection;
+            return this;
+        }
+        public EntityBuilder setDefaultDirection(String direction){
+            this.entity.direction = direction;
+            return this;
+        }
+        public EntityBuilder setEntityImage(String path_up1 , String path_up2, String path_up3,String path_up4,
+                                   String path_down1, String path_down2, String path_down3, String path_down4,
+                                   String path_left1, String path_left2, String path_left3, String path_left4,
+                                   String path_right1, String path_right2, String path_right3, String path_right4)
+                                    {
             try {
                 this.entity.up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up1)));
-                /*this.entity.up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up2)));
+                this.entity.up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up2)));
+                this.entity.up3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up3)));
+                this.entity.up4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up4)));
+
                 this.entity.down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down1)));
                 this.entity.down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down2)));
+                this.entity.down3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down3)));
+                this.entity.down4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down4)));
+
+
                 this.entity.left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left1)));
                 this.entity.left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left2)));
+                this.entity.left3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left3)));
+                this.entity.left4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left4)));
+
+
                 this.entity.right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right1)));
                 this.entity.right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right2)));
+                this.entity.right3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right3)));
+                this.entity.right4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right4)));
 
-                 */
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -86,11 +108,20 @@ public class Entity {
 
 
     public BufferedImage draw(Graphics2D graphics2D) {
-        if (up1 != null ) {
-            int screenX = this.x - gamePanel.getPlayer().getX() + gamePanel.getPlayer().getScreenX();
-            int screenY = this.y - gamePanel.getPlayer().getY() + gamePanel.getPlayer().getScreenY();
-            graphics2D.drawImage(up1, screenX, screenY, tileSize + 16, tileSize + 16, null);
+        BufferedImage[] images = switch (direction) {
+            case "up" -> new BufferedImage[]{up1, up2, up3, up4};
+            case "down" -> new BufferedImage[]{down1, down2, down3, down4};
+            case "left" -> new BufferedImage[]{left1, left2, left3, left4};
+            case "right" -> new BufferedImage[]{right1, right2, right3, right4};
+            default -> null;
+        };
+        int screenX = this.x - gamePanel.getPlayer().getX() + gamePanel.getPlayer().getScreenX();
+        int screenY = this.y - gamePanel.getPlayer().getY() + gamePanel.getPlayer().getScreenY();
+
+        if (images != null ){
+            graphics2D.drawImage(images[spriteNum], screenX, screenY, tileSize + 16, tileSize + 16, null);
         }
+
         return null;
     }
 
@@ -114,5 +145,15 @@ public class Entity {
 
     public int getSpeed() {
         return this.speed;
+    }
+
+    public void update(){
+        //alternatore di sprite
+        spriteCounter++;
+        //più è alto, più è lento
+        if (spriteCounter > 15) {
+            spriteNum = (spriteNum + 1) % 4;
+            spriteCounter = 0;
+        }
     }
 }
