@@ -49,12 +49,14 @@ public class GamePanel extends JPanel implements Runnable{
     String path_7 ="/player/moveRightCharacter0.png";
     String path_8 ="/player/moveRightCharacter1.png";
 
+
     Entity npc = new Entity.EntityBuilder(this, 928, 1376)
             .setName("NPC")
             .setSpeed(3)
             .setEntityImage(path_1, path_2, path_3,
                     path_4, path_5, path_6, path_7, path_8)
             .build();
+
 
 
 
