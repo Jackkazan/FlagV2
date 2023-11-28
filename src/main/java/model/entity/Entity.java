@@ -84,8 +84,8 @@ public class Entity {
 
 
     public BufferedImage draw(Graphics2D graphics2D) {
-        if (up1 != null) {
-            graphics2D.drawImage(up1, this.y, this.x, tileSize+16, tileSize+16, null);
+        if (up1 != null ) {
+            graphics2D.drawImage(up1, this.x, this.y, tileSize+16, tileSize+16, null);
         }
         return null;
     }

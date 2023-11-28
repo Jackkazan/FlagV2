@@ -94,12 +94,6 @@ public class TMXReader {
             NodeList objectGroupList = doc.getElementsByTagName("objectgroup");
             for (int i = 0; i < objectGroupList.getLength(); i++) {
                 Element objectGroupElement = (Element) objectGroupList.item(i);
-                int objectGroupId = Integer.parseInt(objectGroupElement.getAttribute("id"));
-                String objectGroupName = objectGroupElement.getAttribute("name");
-
-                System.out.println("Object Group " + i + ":");
-                System.out.println("ID: " + objectGroupId);
-                System.out.println("Name: " + objectGroupName);
 
                 // Estrae gli oggetti all'interno del gruppo
                 NodeList objectList = objectGroupElement.getElementsByTagName("object");
@@ -111,15 +105,6 @@ public class TMXReader {
                     double objectHeight = Double.parseDouble(objectElement.getAttribute("height"));
 
                     collisionObjects.add(new CollisionObject(objectX, objectY, objectWidth, objectHeight));
-                    /*
-                    System.out.println("Object " + j + ":");
-                    System.out.println("ID: " + objectId);
-                    System.out.println("X: " + objectX);
-                    System.out.println("Y: " + objectY);
-                    System.out.println("Width: " + objectWidth);
-                    System.out.println("Height: " + objectHeight);
-
-                     */
                 }
             }
 
@@ -127,6 +112,7 @@ public class TMXReader {
             e.printStackTrace();
         }
 
+        /*
         System.out.println("Lista di insiemi con i codici:");
         for (Set<Integer> set : listaInsiemi) System.out.println(set);
         System.out.println("\nInsieme con tutti i " + insiemeCodici.size() + " codici del file TMX:\n" + insiemeCodici);
@@ -136,6 +122,8 @@ public class TMXReader {
         for (String matrice : listaMatrici) {
             System.out.println("\n" + matrice);
         }
+
+         */
 
         int codiciPassati = 0;
 
