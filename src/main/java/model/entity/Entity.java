@@ -25,6 +25,7 @@ public class Entity {
     private int xPlayer;
     private int yPlayer;
     private int speed;
+    private int speedChangeSprite;
 
     private int spriteNum;
     private BufferedImage
@@ -60,8 +61,13 @@ public class Entity {
             this.entity.speed = speed;
             return this;
         }
+        public EntityBuilder setSpeedChangeSprite(int speedChangeSprite){
+            this.entity.speedChangeSprite = speedChangeSprite;
+            return this;
+        }
 
-        public EntityBuilder setSpriteNum(int numSpriteEachDirection){
+
+        public EntityBuilder setSpriteNumLess1(int numSpriteEachDirection){
             this.entity.spriteNum = numSpriteEachDirection;
             return this;
         }
@@ -161,9 +167,11 @@ public class Entity {
         //alternatore di sprite
         spriteCounter++;
         //più è alto, più è lento
-        if (spriteCounter > 15) {
+        if (spriteCounter > speedChangeSprite) {
             spriteNum = (spriteNum + 1) % 4;
             spriteCounter = 0;
         }
     }
+
+
 }

@@ -59,7 +59,8 @@ public class GamePanel extends JPanel implements Runnable{
     Entity npc = new Entity.EntityBuilder(this, 34*tileSize, 52*tileSize)
             .setName("NPC")
             .setSpeed(3)
-            .setSpriteNum(3)
+            .setSpeedChangeSprite(20)
+            .setSpriteNumLess1(3)
             .setDefaultDirection("down")
             .setContainedMap(tileManagerZonaIniziale)
             .setEntityImage(path_up1, path_up2, path_up3, path_up4,

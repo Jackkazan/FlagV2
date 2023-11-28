@@ -30,11 +30,18 @@ public class MapManager {
     }
 
     public void manageTransitions(){
-        if(currentMap==tileManagerCasettaIniziale && player.onTransitionPoint(30, 47, 1)){
+        if(currentMap==tileManagerCasettaIniziale && player.onTransitionPoint(19, 42, 1)){
             setMap(tileManagerZonaIniziale);
         }
-        if(currentMap == tileManagerZonaIniziale && player.onTransitionPoint(30,46,1)){
+        if(currentMap == tileManagerZonaIniziale && player.onTransitionPoint(19,41,1)){
             setMap(tileManagerCasettaIniziale);
+        }
+
+
+        //questo è a caso, devo implementarlo per bene
+        if(currentMap == tileManagerZonaIniziale && player.onTransitionPoint(64,66,3)){
+            //setMap(nuovaMappa);
+            player.teleport(19,48);
         }
     }
 

@@ -46,8 +46,8 @@ public class Player {
     }
 
     public void setDefaultValues() {
-        x = tileSize*29;
-        y = tileSize*43;
+        x = tileSize*17;
+        y = tileSize*38;
         speed = 4;
         direction = "down";
     }
@@ -169,6 +169,12 @@ public class Player {
         int playerTileY = y / tileSize;
         return Math.abs(playerTileX - targetX) <= tolerance && Math.abs(playerTileY - targetY) <= tolerance;
     }
+
+    public void teleport(int targetX, int targetY) {
+        x = tileSize * targetX;
+        y = tileSize * targetY;
+    }
+
 
     // COLLISION
     private Rectangle collisionArea = new Rectangle(0, 0, 48, 48);
