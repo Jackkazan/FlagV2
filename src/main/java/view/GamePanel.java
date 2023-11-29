@@ -37,35 +37,32 @@ public class GamePanel extends JPanel implements Runnable{
     //gestore mappe
     MapManager mapManager = new MapManager(this, player, tileManagerCasettaIniziale, tileManagerZonaIniziale);
 
-    String path_up1 = "/npc/VecchiettaDown_0.png";;
-    String path_up2= "/npc/VecchiettaDown_0.png";;
-    String path_up3= "/npc/VecchiettaDown_0.png";;
-    String path_up4= "/npc/VecchiettaDown_0.png";;
+    String path_up1 = "/npc/VecchiettaUp_0.png";
+    String path_up2= "/npc/VecchiettaUp_1.png";
+
     String path_down1 = "/npc/VecchiettaDown_0.png";
     String path_down2 ="/npc/VecchiettaDown_1.png";
-    String path_down3 ="/npc/VecchiettaDown_2.png";
-    String path_down4 ="/npc/VecchiettaDown_3.png";
-    String path_left1= "/npc/VecchiettaDown_0.png";;
-    String path_left2= "/npc/VecchiettaDown_0.png";;
-    String path_left3= "/npc/VecchiettaDown_0.png";;
-    String path_left4= "/npc/VecchiettaDown_0.png";;
-    String path_right1= "/npc/VecchiettaDown_0.png";;
-    String path_right2= "/npc/VecchiettaDown_0.png";;
-    String path_right3= "/npc/VecchiettaDown_0.png";;
-    String path_right4= "/npc/VecchiettaDown_0.png";;
+
+    String path_left1= "/npc/VecchiettaLeft_0.png";
+    String path_left2= "/npc/VecchiettaLeft_1.png";
+
+    String path_right1= "/npc/VecchiettaRight_0.png";
+    String path_right2= "/npc/VecchiettaRight_1.png";
+
 
 
     Entity npc = new Entity.EntityBuilder(this, 22*tileSize, 46*tileSize)
             .setName("Vecchietta")
             .setSpeed(3)
             .setSpeedChangeSprite(40)
-            .setSpriteNumLess1(3)
+            .setSpriteNumLess1(1)
+            .setTotalSprite(8)
             .setDefaultDirection("down")
             .setContainedMap(tileManagerZonaIniziale)
-            .setEntityImage(path_up1, path_up2, path_up3, path_up4,
-                    path_down1, path_down2, path_down3, path_down4,
-                    path_left1, path_left2, path_left3, path_left4,
-                    path_right1, path_right2, path_right3, path_right4)
+            .set8EntityImage(path_up1, path_up2,
+                    path_down1, path_down2,
+                    path_left1, path_left2,
+                    path_right1, path_right2)
             .build();
 
 
