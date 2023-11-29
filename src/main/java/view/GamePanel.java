@@ -2,6 +2,7 @@ package view;
 
 import controller.KeyHandler;
 import model.entity.Entity;
+import model.entity.NPCCreator;
 import model.entity.Player;
 import model.tile.MapManager;
 import model.tile.TileManager;
@@ -11,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.Objects;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -37,34 +39,7 @@ public class GamePanel extends JPanel implements Runnable{
     //gestore mappe
     MapManager mapManager = new MapManager(this, player, tileManagerCasettaIniziale, tileManagerZonaIniziale);
 
-    String path_up1 = "/npc/VecchiettaUp_0.png";
-    String path_up2= "/npc/VecchiettaUp_1.png";
-
-    String path_down1 = "/npc/VecchiettaDown_0.png";
-    String path_down2 ="/npc/VecchiettaDown_1.png";
-
-    String path_left1= "/npc/VecchiettaLeft_0.png";
-    String path_left2= "/npc/VecchiettaLeft_1.png";
-
-    String path_right1= "/npc/VecchiettaRight_0.png";
-    String path_right2= "/npc/VecchiettaRight_1.png";
-
-
-
-    Entity npc = new Entity.EntityBuilder(this, 22*tileSize, 46*tileSize)
-            .setName("Vecchietta")
-            .setSpeed(3)
-            .setSpeedChangeSprite(40)
-            .setSpriteNumLess1(1)
-            .setTotalSprite(8)
-            .setDefaultDirection("down")
-            .setContainedMap(tileManagerZonaIniziale)
-            .set8EntityImage(path_up1, path_up2,
-                    path_down1, path_down2,
-                    path_left1, path_left2,
-                    path_right1, path_right2)
-            .build();
-
+    List<Entity> npcList = NPCCreator.createNPCs(this, mapManager);
 
     //transizione
 
@@ -120,7 +95,9 @@ public class GamePanel extends JPanel implements Runnable{
     public void update(){
 
         player.update();
-        npc.update();
+        for (Entity npc : npcList) {
+            npc.update();
+        }
         mapManager.manageTransitions();
     }
 
@@ -135,8 +112,10 @@ public class GamePanel extends JPanel implements Runnable{
         this.graphics2D = (Graphics2D) g;
 
         mapManager.draw(graphics2D);
+        for (Entity npc : npcList) {
+            npc.draw(graphics2D);
+        }
         player.draw(graphics2D);
-        npc.draw(graphics2D);
         drawToTempScreen();
         graphics2D.dispose();
 
