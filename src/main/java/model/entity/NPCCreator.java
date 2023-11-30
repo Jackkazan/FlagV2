@@ -10,7 +10,6 @@ import static view.GamePanel.tileSize;
 
 public class NPCCreator {
 
-
     public static List<Entity> createNPCs(GamePanel gamePanel, MapManager mapManager) {
         List<Entity> npcList = new ArrayList<>();
         // Inizializza le entità e aggiungile alla lista

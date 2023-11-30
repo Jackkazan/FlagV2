@@ -58,6 +58,15 @@ public class Player {
             int nextX = x;
             int nextY = y;
 
+            if (keyHandler.rightPressed) {
+                direction = "right";
+                nextX += speed;
+            }
+
+            if (keyHandler.leftPressed) {
+                direction = "left";
+                nextX -= speed;
+            }
             if (keyHandler.upPressed) {
                 direction = "up";
                 nextY -= speed;
@@ -65,14 +74,6 @@ public class Player {
             if (keyHandler.downPressed) {
                 direction = "down";
                 nextY += speed;
-            }
-            if (keyHandler.leftPressed) {
-                direction = "left";
-                nextX -= speed;
-            }
-            if (keyHandler.rightPressed) {
-                direction = "right";
-                nextX += speed;
             }
 
             if (!collidesWithObjects(nextX, nextY)) {

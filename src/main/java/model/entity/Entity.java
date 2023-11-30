@@ -21,9 +21,6 @@ public class Entity {
     //Coordinate spawn npc
     private int x;
     private int y;
-    //Coordinate player for collision
-    private int xPlayer;
-    private int yPlayer;
     private int speed;
     private int speedChangeSprite;
 
