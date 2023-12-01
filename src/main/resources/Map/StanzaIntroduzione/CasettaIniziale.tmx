@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="9">
+ <tileset firstgid="1" name="Props" tilewidth="16" tileheight="16" tilecount="625" columns="25">
+  <image source="../../Tileset/Pixel_Crawler_FREE_1.8/Environment/Dungeon_Prison/Assets/Props.png" width="400" height="400"/>
+ </tileset>
+ <tileset firstgid="626" name="interiors" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="../../Tileset/Houses_and_Interiors/interiors.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="4722" name="furniture" tilewidth="16" tileheight="16" tilecount="1024" columns="64">
+  <image source="../../Tileset/Houses_and_Interiors/furniture.png" width="1024" height="256"/>
+ </tileset>
+ <tileset firstgid="5746" name="map_effect2" tilewidth="16" tileheight="16" tilecount="48" columns="6">
+  <image source="../../Tileset/Pipoya_RPG_Tileset_16x16/Effect/map_effect2.png" width="96" height="128"/>
+ </tileset>
+ <tileset firstgid="5794" name="tiledpinterest" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
+  <image source="../../Tileset/Pinterest/Tileset_Completo_Case_e_Esterni/tiled.png" width="512" height="512"/>
+ </tileset>
+ <layer id="2" name="Tile Layer 1" width="10" height="10">
+  <data encoding="csv">
+3152,3152,3152,3152,3152,3152,3152,3152,3152,3152,
+3152,3152,3152,3152,1788,1789,3152,3152,3152,3152,
+3152,3152,3152,3152,1852,1853,3152,3152,3152,3152,
+3152,3152,3152,3152,3152,3152,3152,3152,3152,3152,
+3152,3152,3152,3152,3152,3152,3152,3152,3152,3152,
+3152,3152,3152,3152,3152,3152,3152,3152,3152,3152,
+3152,3152,3152,3152,3152,3152,3152,3152,3152,3152,
+3152,3152,3152,3152,3152,3152,3152,3152,3152,3152,
+3152,3152,3152,3152,3152,3152,3152,3152,3152,3152,
+3152,3152,3152,3152,3152,3152,3152,3152,3152,3152
+</data>
+ </layer>
+ <layer id="3" name="Tile Layer 2" width="10" height="10">
+  <data encoding="csv">
+693,694,695,696,697,694,695,696,697,710,
+757,761,761,761,1660,1661,761,761,761,774,
+757,825,825,825,1724,1725,825,825,825,774,
+757,886,886,886,886,886,886,886,886,774,
+757,0,0,0,0,0,0,0,0,774,
+757,0,0,0,0,0,0,0,0,774,
+757,0,0,0,0,0,0,0,0,774,
+1589,0,0,0,0,0,0,0,0,1606,
+1653,0,0,0,1664,1665,0,0,0,1670,
+1717,1590,1590,1590,1728,1729,1590,1590,1605,1734
+</data>
+ </layer>
+ <layer id="4" name="Tile Layer 3" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,6306,6307,0,0,0,0,
+0,5056,5057,0,6306,6307,5340,55,56,0,
+0,5120,5121,0,6306,6307,5404,80,81,0,
+0,5184,5185,0,0,0,5468,80,81,0,
+0,0,0,0,0,0,0,105,106,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="5" name="Tile Layer 4" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,5758,0,
+0,0,0,0,0,0,0,0,5764,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="7" name="Livello di oggetti 1">
+  <object id="1" x="6.16667" y="5.66665" width="5.0833" height="149.5"/>
+  <object id="2" x="141.167" y="5.58365" width="12" height="147.583"/>
+  <object id="3" x="13.4167" y="7.66665" width="129.75" height="28.75"/>
+  <object id="4" x="14.9167" y="50.2496" width="24.1667" height="30.8333"/>
+  <object id="5" x="95.8337" y="59.4167" width="15.3333" height="9.83333"/>
+  <object id="6" x="112.584" y="54.3337" width="30.5833" height="39.3333"/>
+  <object id="7" x="12.1667" y="145.5" width="43.5" height="10.1667"/>
+  <object id="8" x="99.2497" y="145.25" width="43.6667" height="11.1667"/>
+ </objectgroup>
+</map>
