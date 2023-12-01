@@ -1,4 +1,4 @@
-package model;
+package model.items;
 
 import view.GamePanel;
 

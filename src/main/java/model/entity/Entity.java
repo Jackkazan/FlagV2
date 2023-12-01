@@ -1,7 +1,6 @@
 package model.entity;
 
 import model.collisioni.CollisionObject;
-import model.tile.MapManager;
 import model.tile.TileManager;
 import view.GamePanel;
 
@@ -9,7 +8,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
 
 import static view.GamePanel.tileSize;
@@ -34,11 +32,17 @@ public class Entity {
     private int spriteCounter = 0;
 
     private int totalSprite;
+
+    private Rectangle collisionArea;
     private GamePanel gamePanel;
 
     private TileManager tileManager;
 
     private Entity() {
+    }
+
+    public Rectangle getCollisionArea() {
+        return collisionArea;
     }
 
     public static class EntityBuilder {
@@ -68,6 +72,11 @@ public class Entity {
 
         public EntityBuilder setSpeedChangeSprite(int speedChangeSprite) {
             this.entity.speedChangeSprite = speedChangeSprite;
+            return this;
+        }
+
+        public EntityBuilder setCollisionArea(int larghezza, int altezza) {
+            this.entity.collisionArea = new Rectangle(entity.x, entity.y, larghezza, altezza);
             return this;
         }
 
@@ -188,7 +197,7 @@ public class Entity {
     }
 
     public void update() {
-
+        collisionArea.setLocation(x, y);
         if (totalSprite == 16) {
             //alternatore di sprite
             spriteCounter++;

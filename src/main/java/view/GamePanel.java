@@ -101,10 +101,6 @@ public class GamePanel extends JPanel implements Runnable{
         mapManager.manageTransitions();
     }
 
-    private void updateMapLogic(){
-
-    }
-
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -187,6 +183,9 @@ public class GamePanel extends JPanel implements Runnable{
         return mapManager;
     }
 
+    public List<Entity> getNpcList() {
+        return npcList;
+    }
 
-    //transizione animata -------------------------------------------------------------------------------
+//transizione animata -------------------------------------------------------------------------------
 }

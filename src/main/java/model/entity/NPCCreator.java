@@ -28,9 +28,10 @@ public class NPCCreator {
 
         Entity vecchietta = new Entity.EntityBuilder(gamePanel, 22*tileSize, 46*tileSize)
                 .setName("Vecchietta")
-                .setSpeed(3)
+                .setSpeed(2)
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
+                .setCollisionArea(32,32)
                 .setTotalSprite(8)
                 .setDefaultDirection("down")
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())

@@ -76,10 +76,12 @@ public class Player {
                 nextY += speed;
             }
 
-            if (!collidesWithObjects(nextX, nextY)) {
+            if (!collidesWithObjects(nextX, nextY) && !collidesWithEntities(nextX,nextY)) {
                 x = nextX;
                 y = nextY;
+
             }
+
             double length = Math.sqrt(nextX * nextX + nextY * nextY);
 
             // Normalizza il vettore
@@ -142,14 +144,14 @@ public class Player {
     public boolean collidesWithObjects(int nextX, int nextY) {
         // Verifica la collisione con gli oggetti di collisione della mappa corrente
         for (CollisionObject collisionObject : currentCollisionMap) {
-            if (checkCollision(nextX, nextY, collisionObject)) {
+            if (checkCollisionObject(nextX, nextY, collisionObject)) {
                 return true; // Collisione rilevata
             }
         }
         return false; // Nessuna collisione rilevata
     }
 
-    public boolean checkCollision(int x, int y, CollisionObject collisionObject) {
+    public boolean checkCollisionObject(int x, int y, CollisionObject collisionObject) {
         double objectX = collisionObject.getX() * gamePanel.getScale();
         double objectY = collisionObject.getY() * gamePanel.getScale();
         double objectWidth = collisionObject.getWidth() * gamePanel.getScale();
@@ -161,6 +163,29 @@ public class Player {
                 y + tileSize > objectY;
     }
 
+    //------------------------------------------------------
+    // Aggiungi questo nuovo metodo per verificare la collisione con le entità
+    public boolean collidesWithEntities(int nextX, int nextY) {
+        // Verifica la collisione con le entità della lista npcList
+        for (Entity npc : gamePanel.getNpcList()) {
+            if (checkCollisionRectangle(nextX, nextY, npc.getCollisionArea())) {
+                return true; // Collisione rilevata
+            }
+        }
+        return false; // Nessuna collisione rilevata
+    }
+    // Aggiungi questo nuovo metodo per verificare la collisione con i CollisionObject
+    private boolean checkCollisionRectangle(int x, int y, Rectangle collisionArea) {
+        double objectX = collisionArea.getX();
+        double objectY = collisionArea.getY();
+        double objectWidth = collisionArea.getWidth();
+        double objectHeight = collisionArea.getHeight();
+
+        return x < objectX + objectWidth &&
+                x + tileSize > objectX &&
+                y < objectY + objectHeight &&
+                y + tileSize > objectY;
+    }
     public void setCurrentCollisionMap(ArrayList<CollisionObject> collisionMap) {
         this.currentCollisionMap = collisionMap;
     }
