@@ -4,6 +4,8 @@ import controller.KeyHandler;
 import model.entity.Entity;
 import model.entity.NPCCreator;
 import model.entity.Player;
+import model.items.KeyItems;
+import model.items.ObjectsCreator;
 import model.tile.MapManager;
 import model.tile.TileManager;
 
@@ -42,7 +44,9 @@ public class GamePanel extends JPanel implements Runnable{
     //gestore mappe
     MapManager mapManager = new MapManager(this, player, tileManagerCasettaIniziale, tileManagerZonaIniziale);
 
-    List<Entity> npcList = NPCCreator.createNPCs(this, mapManager);
+    List<Entity> npcList = NPCCreator.createNPCs(this, mapManager, keyH);
+
+    List<KeyItems> keyItemsList = ObjectsCreator.createObjects(this, mapManager, keyH);
 
     //transizione
 
@@ -101,6 +105,9 @@ public class GamePanel extends JPanel implements Runnable{
         for (Entity npc : npcList) {
             npc.update();
         }
+        for( KeyItems items : keyItemsList){
+            items.update();
+        }
         mapManager.manageTransitions();
     }
 
@@ -117,6 +124,9 @@ public class GamePanel extends JPanel implements Runnable{
         mapManager.draw(bufferGraphics);
         for (Entity npc : npcList) {
             npc.draw(bufferGraphics);
+        }
+        for (KeyItems items : keyItemsList) {
+            items.draw(bufferGraphics);
         }
         player.draw(bufferGraphics);
         drawToTempScreen();
@@ -205,5 +215,11 @@ public class GamePanel extends JPanel implements Runnable{
         return npcList;
     }
 
-//transizione animata -------------------------------------------------------------------------------
+    public List<KeyItems> getKeyItemsList() {
+        return keyItemsList;
+    }
+
+
+
+    //transizione animata -------------------------------------------------------------------------------
 }

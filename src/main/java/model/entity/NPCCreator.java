@@ -1,5 +1,6 @@
 package model.entity;
 
+import controller.KeyHandler;
 import model.tile.MapManager;
 import view.GamePanel;
 
@@ -10,7 +11,7 @@ import static view.GamePanel.tileSize;
 
 public class NPCCreator {
 
-    public static List<Entity> createNPCs(GamePanel gamePanel, MapManager mapManager) {
+    public static List<Entity> createNPCs(GamePanel gamePanel, MapManager mapManager, KeyHandler keyH) {
         List<Entity> npcList = new ArrayList<>();
         // Inizializza le entità e aggiungile alla lista
 

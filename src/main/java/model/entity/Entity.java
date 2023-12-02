@@ -38,12 +38,7 @@ public class Entity {
 
     private TileManager tileManager;
 
-    private Entity() {
-    }
-
-    public Rectangle getCollisionArea() {
-        return collisionArea;
-    }
+    private Entity() {}
 
     public static class EntityBuilder {
         private Entity entity;
@@ -157,7 +152,6 @@ public class Entity {
         }
     }
 
-
     public BufferedImage draw(Graphics2D graphics2D) {
         BufferedImage[] images = switch (direction) {
             case "up" -> new BufferedImage[]{up1, up2, up3, up4};
@@ -183,19 +177,6 @@ public class Entity {
 
     }
 
-
-    public int getX() {
-        return this.x;
-    }
-
-    public int getY() {
-        return this.y;
-    }
-
-    public int getSpeed() {
-        return this.speed;
-    }
-
     public void update() {
         collisionArea.setLocation(x, y);
         if (totalSprite == 16) {
@@ -217,5 +198,20 @@ public class Entity {
         }
 
 
+    }
+
+    public Rectangle getCollisionArea() {
+        return this.collisionArea;
+    }
+    public int getX() {
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
+    }
+
+    public int getSpeed() {
+        return this.speed;
     }
 }

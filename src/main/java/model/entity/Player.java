@@ -2,6 +2,7 @@ package model.entity;
 
 import controller.KeyHandler;
 import model.collisioni.CollisionObject;
+import model.items.KeyItems;
 import view.GamePanel;
 
 import javax.imageio.ImageIO;
@@ -24,6 +25,11 @@ public class Player {
     private final int screenX;
     private final int screenY;
     private ArrayList<CollisionObject> currentCollisionMap;
+
+    // Nuova area di interazione
+    private Rectangle interactionArea = new Rectangle(0, 0, tileSize*2, tileSize*2);
+
+
 
     private BufferedImage
             up1, up2, up3, up4,
@@ -76,17 +82,17 @@ public class Player {
                 nextY += speed;
             }
 
-            if (!collidesWithObjects(nextX, nextY) && !collidesWithEntities(nextX,nextY)) {
+            // Aggiorna la collisionArea del giocatore
+            collisionArea.setLocation(x, y);
+
+            // Aggiorna la collisionArea dell'area di interazione
+            interactionArea.setLocation(x - 8, y - 8); // Esempio: l'area di interazione è leggermente più grande di quella del giocatore
+
+
+            if (!collidesWithObjects(nextX, nextY) && !collidesWithEntities(nextX,nextY) && !collidesWithItems(nextX,nextY)) {
                 x = nextX;
                 y = nextY;
-
             }
-
-            double length = Math.sqrt(nextX * nextX + nextY * nextY);
-
-            // Normalizza il vettore
-            nextX /= length;
-            nextY /= length;
 
             //alternatore di sprite
             spriteCounter++;
@@ -98,7 +104,6 @@ public class Player {
 
         }
 
-        //COLLISIONI
     }
 
     public void getEntityImage() {
@@ -135,7 +140,7 @@ public class Player {
             default -> null;
         };
 
-        if (images != null && !collidesWithObjects(x, y)) {
+        if (images != null && !collidesWithObjects(x, y) && !collidesWithItems(x,y)) {
             graphics2D.drawImage(images[spriteNum], screenX, screenY, tileSize+16, tileSize+16, null);
         }
         return null;
@@ -164,11 +169,21 @@ public class Player {
     }
 
     //------------------------------------------------------
-    // Aggiungi questo nuovo metodo per verificare la collisione con le entità
+    // metodo per verificare la collisione con le entità
     public boolean collidesWithEntities(int nextX, int nextY) {
         // Verifica la collisione con le entità della lista npcList
         for (Entity npc : gamePanel.getNpcList()) {
             if (checkCollisionRectangle(nextX, nextY, npc.getCollisionArea())) {
+                return true; // Collisione rilevata
+            }
+        }
+        return false; // Nessuna collisione rilevata
+    }
+    public boolean collidesWithItems(int nextX, int nextY) {
+        // Verifica la collisione con gli oggetti della lista keyItemsList
+        for (KeyItems items : gamePanel.getKeyItemsList()) {
+            if (checkCollisionRectangle(nextX, nextY, items.getCollisionArea())) {
+                items.interact();
                 return true; // Collisione rilevata
             }
         }
@@ -186,6 +201,8 @@ public class Player {
                 y < objectY + objectHeight &&
                 y + tileSize > objectY;
     }
+
+
     public void setCurrentCollisionMap(ArrayList<CollisionObject> collisionMap) {
         this.currentCollisionMap = collisionMap;
     }
@@ -227,5 +244,9 @@ public class Player {
 
     public int getSpeed() {
         return this.speed;
+    }
+
+    public Rectangle getInteractionArea() {
+        return interactionArea;
     }
 }
