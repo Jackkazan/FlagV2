@@ -46,8 +46,8 @@ public class Player {
     }
 
     public void setDefaultValues() {
-        x = tileSize*17;
-        y = tileSize*38;
+        x = tileSize*4;
+        y = tileSize*4;
         speed = 4;
         direction = "down";
     }

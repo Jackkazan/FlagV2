@@ -30,20 +30,24 @@ public class MapManager {
     }
 
     public void manageTransitions(){
-        if(currentMap==tileManagerCasettaIniziale && player.onTransitionPoint(18, 42, 1)){
+        if(currentMap==tileManagerCasettaIniziale && player.onTransitionPoint(4, 10, 1)){
             setMap(tileManagerZonaIniziale);
+            player.teleport(18,43);
         }
-        if(currentMap == tileManagerZonaIniziale && player.onTransitionPoint(18,41,1)){
-            setMap(tileManagerCasettaIniziale);
+
+        if(currentMap == tileManagerZonaIniziale){
+            if(player.onTransitionPoint(18,41,1)){
+                setMap(tileManagerCasettaIniziale);
+                player.teleport(4,9);
+            }
+            if(player.onTransitionPoint(64,66,3)) {
+                // Avvia l'animazione quando cambi mappa
+                //setMap(nuovaMappa);
+                player.teleport(19,48);
+            }
         }
 
 
-        //questo è a caso, devo implementarlo per bene
-        if(currentMap == tileManagerZonaIniziale && player.onTransitionPoint(64,66,3)){
-            // Avvia l'animazione quando cambi mappa
-            //setMap(nuovaMappa);
-            player.teleport(19,48);
-        }
     }
 
     public void draw(Graphics2D g2){

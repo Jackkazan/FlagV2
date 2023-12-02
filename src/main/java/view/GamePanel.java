@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,6 +28,8 @@ public class GamePanel extends JPanel implements Runnable{
     private final int screenWidth = tileSize * maxScreenCol; //768 pixels
     private final int screenHeight = tileSize * maxScreenRow;//576 pixels
     private Graphics2D graphics2D;
+    private BufferedImage buffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_RGB);
+
     int FPS = 60;
 
     KeyHandler keyH = new KeyHandler();
@@ -35,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     //mappe
     public TileManager tileManagerZonaIniziale = new TileManager(this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
-    public TileManager tileManagerCasettaIniziale = new TileManager(this, "src/main/resources/Map/StanzaIntroduzione/Casetta_Iniziale.tmx");
+    public TileManager tileManagerCasettaIniziale = new TileManager(this, "src/main/resources/Map/StanzaIntroduzione/CasettaIniziale.tmx");
     //gestore mappe
     MapManager mapManager = new MapManager(this, player, tileManagerCasettaIniziale, tileManagerZonaIniziale);
 
@@ -80,7 +83,7 @@ public class GamePanel extends JPanel implements Runnable{
                 //1 UPDATE: update information character positions
                 update();
                 //2 DRAW: draw the screen with the updated information
-                repaint();
+                paintImmediately(0,0, screenWidth,screenHeight);
                 delta--;
                 drawCount++;
             }
@@ -107,13 +110,24 @@ public class GamePanel extends JPanel implements Runnable{
 
         this.graphics2D = (Graphics2D) g;
 
-        mapManager.draw(graphics2D);
+        // Disegna sulla buffer
+        Graphics2D bufferGraphics = buffer.createGraphics();
+        // Cancella completamente l'immagine del buffer
+        bufferGraphics.clearRect(0, 0, screenWidth, screenHeight);
+        mapManager.draw(bufferGraphics);
         for (Entity npc : npcList) {
-            npc.draw(graphics2D);
+            npc.draw(bufferGraphics);
         }
-        player.draw(graphics2D);
+        player.draw(bufferGraphics);
         drawToTempScreen();
+
+
+        // Copia l'intera immagine buffer sulla schermata
+        g.drawImage(buffer, 0, 0, this);
+
         graphics2D.dispose();
+        // Dispose del bufferGraphics
+        bufferGraphics.dispose();
 
     }
 
@@ -124,11 +138,15 @@ public class GamePanel extends JPanel implements Runnable{
         if (keyH.isShowDebugText()) {
             drawStart = System.nanoTime();
         }
+        // Crea un nuovo Graphics2D per il buffer
+        Graphics2D bufferGraphics = buffer.createGraphics();
 
         // DEBUG
         if (keyH.isShowDebugText()) {
-            drawDebugInfo(graphics2D, drawStart);
+            drawDebugInfo(bufferGraphics, drawStart);
         }
+
+        bufferGraphics.dispose();
     }
 
     //DEBUG
