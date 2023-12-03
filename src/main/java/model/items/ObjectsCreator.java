@@ -11,7 +11,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static model.quests.QuestInitializer.*;
 import static view.GamePanel.tileSize;
 
 public class ObjectsCreator {
@@ -34,21 +33,32 @@ public class ObjectsCreator {
 
         KeyItems collisioneInvisibileCasettaIniziale = new KeyItems.KeyItemsBuilder(gamePanel,4*tileSize,9*tileSize, keyH)
                 .setName("collisioneInvisibileCasettaIniziale")
-                .setStaticImage("/object/muroInvisibile16x16.png")
+                .setStaticImage("/object/spriteInvisibile16x16.png")
                 .setCollisionArea(48,16)
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())
                 .setInteractible(true)
-                .setRelatedQuests( questList.get(1), questList.get(2))
+                .setRelatedQuests(questList.get(1))
+                .build();
+
+        KeyItems portaCasettaIniziale = new KeyItems.KeyItemsBuilder(gamePanel,4*tileSize,7*tileSize, keyH)
+                .setName("portaCasettaIniziale")
+                .setStaticImage("/object/PortaChiusaInterno.png")
+                .setContainedMap(mapManager.getTileManagerCasettaIniziale())
+                .setInteractible(true)
+                .setRelatedQuests(questList.get(1))
+                .setScale(2,3)
                 .build();
 
 
         //aggiunta di tutti gli oggetti alla lista
         objectList.add(keyCasettaIniziale);
         objectList.add(collisioneInvisibileCasettaIniziale);
+        objectList.add(portaCasettaIniziale);
 
 
         keyCasettaIniziale.setInteractionAction(new DisappearAction());
         collisioneInvisibileCasettaIniziale.setInteractionAction(new DisappearAction());
+        portaCasettaIniziale.setInteractionAction(new ChangeAction());
 
 
         return objectList;
@@ -60,16 +70,36 @@ public class ObjectsCreator {
         public void performAction(KeyItems keyItems){
             //se le quest prima di interagire con questo oggetto sono state fatte
             if(keyItems.questListIsDone()){
-                // Implementa l'azione rimozione dalla lista
+                // Implementa l'azione di nascondere
                 System.out.println("Sto nascondendo " + keyItems.getName());
                 keyItems.setInteractable(false);
-                keyItems.setStaticImage("/object/muroInvisibile16x16.png");
-                keyItems.setCollisionArea(new Rectangle(0, 0, 0, 0));
+                keyItems.setStaticImage("/object/spriteInvisibile16x16.png");
+                keyItems.setCollisionArea(new Rectangle(0,0,0,0));
 
-                //setta le quest come fatte
+                //se si ha interagito con la chiave allora la si è presa
                 if(keyItems.getName().equals("keyCasettaIniziale")){
                     questList.get(1).setDone();
+                }
+
+                if(keyItems.getName().equals("collisioneInvisibileCasettaIniziale")) {
                     questList.get(2).setDone();
+                }
+            }
+            // pannello comunicativo che ti dice che non puoi ancora passare/prendere
+            else System.out.println("Devi fare qualcosa prima");
+        }
+    }
+
+    public static class ChangeAction implements InteractionAction {
+        @Override
+        public void performAction(KeyItems keyItems){
+            //se le quest prima di interagire con questo oggetto sono state fatte
+            if(keyItems.questListIsDone()) {
+                // Implementa l'azione rimozione dalla lista
+                System.out.println("Sto cambiando " + keyItems.getName());
+                keyItems.setInteractable(false);
+                if (keyItems.getName().equals("portaCasettaIniziale")) {
+                    keyItems.setStaticImage("/object/portaApertaInterno.png");
                 }
             }
             // pannello comunicativo che ti dice che non puoi ancora passare/prendere

@@ -138,10 +138,11 @@ public class GamePanel extends JPanel implements Runnable{
         for (Entity npc : npcList) {
             npc.draw(bufferGraphics);
         }
+        player.draw(bufferGraphics);
         for (KeyItems items : keyItemsList) {
             items.draw(bufferGraphics);
         }
-        player.draw(bufferGraphics);
+
         drawToTempScreen();
 
 

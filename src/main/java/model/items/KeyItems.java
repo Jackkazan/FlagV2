@@ -35,6 +35,9 @@ public class KeyItems {
     private boolean isInteractable = false;
     private List<Quest> relatedQuests= new ArrayList<>();
 
+    private int scaleWidth = 1;
+    private int scaleHeigth = 1;
+
     private GamePanel gamePanel;
     private TileManager tileManager;
 
@@ -85,6 +88,12 @@ public class KeyItems {
 
         public KeyItemsBuilder setRelatedQuests(Quest... quests) {
             this.keyItems.relatedQuests.addAll(Arrays.asList(quests));
+            return this;
+        }
+        // Metodo per impostare il fattore di scala
+        public KeyItemsBuilder setScale(int scaleWidth, int scaleHeigth) {
+            this.keyItems.scaleWidth = scaleWidth;
+            this.keyItems.scaleHeigth = scaleHeigth;
             return this;
         }
 
@@ -161,14 +170,16 @@ public class KeyItems {
         else{
             if(staticImage != null && gamePanel.getMapManager().getCurrentMap() == this.tileManager)
          {
-            graphics2D.drawImage(staticImage, screenX, screenY, tileSize, tileSize, null);
+            graphics2D.drawImage(staticImage, screenX, screenY, tileSize*scaleWidth, tileSize*scaleHeigth, null);
         }
     }
         return null;
     }
 
     public void update() {
-        collisionArea.setLocation(x, y);
+
+        if(collisionArea != null)
+            collisionArea.setLocation(x, y);
         // animazione se succede evento o altro
         interact();
 
@@ -178,7 +189,7 @@ public class KeyItems {
         // Verifica se il giocatore è nelle vicinanze e ha premuto il tasto "E"
         if (this.isInteractable && this.tileManager == gamePanel.getMapManager().getCurrentMap() && isPlayerNearby()) {
             if(keyH.interactPressed && interactionAction != null) {
-                System.out.println("Ho interagioto con "+this.name);
+                //System.out.println("Ho interagioto con "+this.name);
                 interactionAction.performAction(this);
             }
         }
@@ -188,8 +199,8 @@ public class KeyItems {
 
     private boolean isPlayerNearby() {
         // Puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
-        if(gamePanel.getPlayer().getInteractionArea().intersects(this.collisionArea)){
-            System.out.println("Sto collidendo con "+ this.name);
+        if(this.collisionArea!= null && gamePanel.getPlayer().getInteractionArea().intersects(this.collisionArea)){
+            //System.out.println("Sto collidendo con "+ this.name);
             return true;
         }
         else return false;

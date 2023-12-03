@@ -182,7 +182,7 @@ public class Player {
     public boolean collidesWithItems(int nextX, int nextY) {
         // Verifica la collisione con gli oggetti della lista keyItemsList
         for (KeyItems items : gamePanel.getKeyItemsList()) {
-            if (checkCollisionRectangle(nextX, nextY, items.getCollisionArea())) {
+            if (items.getCollisionArea()!=null && checkCollisionRectangle(nextX, nextY, items.getCollisionArea())) {
                 items.interact();
                 return true; // Collisione rilevata
             }
