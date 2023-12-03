@@ -23,6 +23,8 @@ public class KeyItems {
     private String name;
 
     private BufferedImage staticImage;
+    private BufferedImage dynamicImage;
+
 
     private BufferedImage animateImage1, animateImage2, animateImage3, animateImage4;
     private int speedChangeAnimateSprite;
@@ -58,6 +60,14 @@ public class KeyItems {
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public void setScaleWidth(int scaleWidth) {
+        this.scaleWidth = scaleWidth;
+    }
+
+    public void setScaleHeigth(int scaleHeigth) {
+        this.scaleHeigth = scaleHeigth;
     }
 
     public void setCollisionArea(Rectangle collisionArea) {

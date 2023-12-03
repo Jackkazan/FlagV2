@@ -40,8 +40,8 @@ public class ObjectsCreator {
                 .setRelatedQuests(questList.get(1))
                 .build();
 
-        KeyItems portaCasettaIniziale = new KeyItems.KeyItemsBuilder(gamePanel,4*tileSize,7*tileSize, keyH)
-                .setName("portaCasettaIniziale")
+        KeyItems portaCasettaInizialeChiusa = new KeyItems.KeyItemsBuilder(gamePanel,4*tileSize,7*tileSize, keyH)
+                .setName("portaCasettaInizialeChiusa")
                 .setStaticImage("/object/PortaChiusaInterno.png")
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())
                 .setInteractible(true)
@@ -49,17 +49,13 @@ public class ObjectsCreator {
                 .setScale(2,3)
                 .build();
 
-
         //aggiunta di tutti gli oggetti alla lista
         objectList.add(keyCasettaIniziale);
         objectList.add(collisioneInvisibileCasettaIniziale);
-        objectList.add(portaCasettaIniziale);
-
+        objectList.add(portaCasettaInizialeChiusa);
 
         keyCasettaIniziale.setInteractionAction(new DisappearAction());
         collisioneInvisibileCasettaIniziale.setInteractionAction(new DisappearAction());
-        portaCasettaIniziale.setInteractionAction(new ChangeAction());
-
 
         return objectList;
     }
@@ -69,43 +65,30 @@ public class ObjectsCreator {
         @Override
         public void performAction(KeyItems keyItems){
             //se le quest prima di interagire con questo oggetto sono state fatte
-            if(keyItems.questListIsDone()){
+            if(keyItems.questListIsDone()) {
                 // Implementa l'azione di nascondere
                 System.out.println("Sto nascondendo " + keyItems.getName());
-                keyItems.setInteractable(false);
-                keyItems.setStaticImage("/object/spriteInvisibile16x16.png");
-                keyItems.setCollisionArea(new Rectangle(0,0,0,0));
 
-                //se si ha interagito con la chiave allora la si è presa
-                if(keyItems.getName().equals("keyCasettaIniziale")){
+                //se hai interagito con chiave e tutte le quest fin qui sono completate allora prendi la chiave
+                if (keyItems.getName().equals("keyCasettaIniziale")) {
+                    keyItems.setStaticImage("/object/spriteInvisibile16x16.png");
                     questList.get(1).setDone();
-                }
-
-                if(keyItems.getName().equals("collisioneInvisibileCasettaIniziale")) {
-                    questList.get(2).setDone();
-                }
-            }
-            // pannello comunicativo che ti dice che non puoi ancora passare/prendere
-            else System.out.println("Devi fare qualcosa prima");
-        }
-    }
-
-    public static class ChangeAction implements InteractionAction {
-        @Override
-        public void performAction(KeyItems keyItems){
-            //se le quest prima di interagire con questo oggetto sono state fatte
-            if(keyItems.questListIsDone()) {
-                // Implementa l'azione rimozione dalla lista
-                System.out.println("Sto cambiando " + keyItems.getName());
-                keyItems.setInteractable(false);
-                if (keyItems.getName().equals("portaCasettaIniziale")) {
-                    keyItems.setStaticImage("/object/portaApertaInterno.png");
+                    keyItems.setInteractable(false);
+                } else {
+                    //se hai interagito con la collisione della porta e tutte le quest fin qui sono completate allora sblocca la porta
+                    if (keyItems.getName().equals("collisioneInvisibileCasettaIniziale")) {
+                        keyItems.setStaticImage("/object/spriteInvisibile16x16.png");
+                        keyItems.setCollisionArea(new Rectangle(0, 0, 0, 0));
+                        questList.get(2).setDone();
+                        keyItems.setInteractable(false);
+                    }
                 }
             }
             // pannello comunicativo che ti dice che non puoi ancora passare/prendere
             else System.out.println("Devi fare qualcosa prima");
         }
     }
+
 
     public static class TalkToNPCAction implements InteractionAction {
         @Override
