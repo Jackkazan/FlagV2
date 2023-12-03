@@ -2,6 +2,7 @@ package model.items;
 
 import controller.KeyHandler;
 import model.entity.Entity;
+import model.quests.Quest;
 import model.tile.TileManager;
 import view.GamePanel;
 
@@ -10,6 +11,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,12 +33,44 @@ public class KeyItems {
     private Rectangle collisionArea;
 
     private boolean isInteractable = false;
+    private List<Quest> relatedQuests= new ArrayList<>();
 
     private GamePanel gamePanel;
     private TileManager tileManager;
 
+    private InteractionAction interactionAction;
+    // Metodo per impostare l'azione durante la costruzione dell'oggetto
+    public void setInteractionAction(InteractionAction action) {
+        this.interactionAction = action;
+    }
+
+    public void setInteractable(boolean interactable) {
+        this.isInteractable = interactable;
+    }
+
+    public void setStaticImage(String pathImage) {
+        try {
+            this.staticImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(pathImage)));
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void setCollisionArea(Rectangle collisionArea) {
+        this.collisionArea = collisionArea;
+    }
+
     private KeyItems() {}
 
+    public boolean questListIsDone() {
+
+        for(Quest quest : relatedQuests){
+            if(!quest.isDone())
+                return false;
+        }
+        return true;
+    }
 
     public static class KeyItemsBuilder {
         private KeyItems keyItems;
@@ -48,6 +82,12 @@ public class KeyItems {
             this.keyItems.y = y;
             this.keyItems.keyH = keyH;
         }
+
+        public KeyItemsBuilder setRelatedQuests(Quest... quests) {
+            this.keyItems.relatedQuests.addAll(Arrays.asList(quests));
+            return this;
+        }
+
 
         public KeyItemsBuilder setName(String name){
             this.keyItems.name = name;
@@ -137,11 +177,14 @@ public class KeyItems {
     public void interact() {
         // Verifica se il giocatore è nelle vicinanze e ha premuto il tasto "E"
         if (this.isInteractable && this.tileManager == gamePanel.getMapManager().getCurrentMap() && isPlayerNearby()) {
-            if(keyH.interactPressed ) {
-
+            if(keyH.interactPressed && interactionAction != null) {
+                System.out.println("Ho interagioto con "+this.name);
+                interactionAction.performAction(this);
             }
         }
     }
+
+
 
     private boolean isPlayerNearby() {
         // Puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
@@ -168,5 +211,13 @@ public class KeyItems {
         return tileManager;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public List<Quest> getRelatedQuests() {
+        return relatedQuests;
+    }
 }
+
+

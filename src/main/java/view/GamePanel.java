@@ -6,6 +6,8 @@ import model.entity.NPCCreator;
 import model.entity.Player;
 import model.items.KeyItems;
 import model.items.ObjectsCreator;
+import model.quests.Quest;
+import model.quests.QuestInitializer;
 import model.tile.MapManager;
 import model.tile.TileManager;
 
@@ -49,6 +51,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     List<KeyItems> keyItemsList = ObjectsCreator.createObjects(this, mapManager, keyH);
 
+    List<Quest> questList = QuestInitializer.createQuestList();
     //transizione
 
 
@@ -228,7 +231,6 @@ public class GamePanel extends JPanel implements Runnable{
     public List<KeyItems> getKeyItemsList() {
         return keyItemsList;
     }
-
 
 
     //transizione animata -------------------------------------------------------------------------------

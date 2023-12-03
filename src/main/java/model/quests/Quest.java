@@ -5,10 +5,10 @@ public class Quest {
     private String questName;
     private boolean isDone;
 
-    public Quest(String questName){
+    public Quest(String questName, boolean b){
 
         this.questName = questName;
-        this.isDone = false;
+        this.isDone = b;
 
     }
 
@@ -20,4 +20,5 @@ public class Quest {
     public void setDone() {
         isDone = true;
     }
+
 }
