@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -99,15 +100,31 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
-    public void update(){
-
+    public void update() {
         player.update();
+
+        // Creazione di una lista temporanea per gli oggetti da rimuovere
+        List<KeyItems> itemsToRemove = new ArrayList<>();
+
+        // Aggiornamento degli NPC
         for (Entity npc : npcList) {
             npc.update();
         }
-        for( KeyItems items : keyItemsList){
+
+        // Aggiornamento degli oggetti e identificazione di quelli da rimuovere
+        for (KeyItems items : keyItemsList) {
             items.update();
+
+            // Aggiungi gli oggetti da rimuovere alla lista temporanea
+            if (items.shouldBeRemoved()) {
+                itemsToRemove.add(items);
+            }
         }
+
+        // Rimuovi gli oggetti dalla lista principale
+        keyItemsList.removeAll(itemsToRemove);
+
+        // Gestione delle transizioni della mappa
         mapManager.manageTransitions();
     }
 

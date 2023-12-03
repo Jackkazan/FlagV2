@@ -16,6 +16,7 @@ import java.util.Objects;
 import static view.GamePanel.tileSize;
 
 public class KeyItems {
+    private KeyHandler keyH;
     //Name object
     private String name;
 
@@ -30,20 +31,34 @@ public class KeyItems {
     private Rectangle collisionArea;
 
     private boolean isInteractable = false;
+
+    private Runnable interactionAction;
     private GamePanel gamePanel;
     private TileManager tileManager;
+    private boolean shouldRemove = false;
+
+    public boolean shouldBeRemoved() {
+        return shouldRemove;
+    }
+
+    // Metodo che imposta lo stato per indicare che l'oggetto dovrebbe essere rimosso
+    public void setShouldRemove(boolean shouldRemove) {
+        this.shouldRemove = shouldRemove;
+    }
 
 
     private KeyItems() {}
 
+
     public static class KeyItemsBuilder {
         private KeyItems keyItems;
 
-        public KeyItemsBuilder(GamePanel gamePanel, int x, int y){
+        public KeyItemsBuilder(GamePanel gamePanel, int x, int y, KeyHandler keyH){
             this.keyItems = new KeyItems();
             this.keyItems.gamePanel = gamePanel;
             this.keyItems.x = x;
             this.keyItems.y = y;
+            this.keyItems.keyH = keyH;
         }
 
         public KeyItemsBuilder setName(String name){
@@ -73,6 +88,7 @@ public class KeyItems {
             this.keyItems.isInteractable = interactible;
             return this;
         }
+
 
         public KeyItemsBuilder setSpeedChangeAnimateSprite(int speedChangeAnimateSprite) {
             this.keyItems.speedChangeAnimateSprite = speedChangeAnimateSprite;
@@ -133,7 +149,10 @@ public class KeyItems {
     public void interact() {
         // Verifica se il giocatore è nelle vicinanze e ha premuto il tasto "E"
         if (this.isInteractable && this.tileManager == gamePanel.getMapManager().getCurrentMap() && isPlayerNearby()) {
-
+            if(keyH.interactPressed && interactionAction != null) {
+                interactionAction.run();
+                setShouldRemove(true);
+            }
             System.out.println("Sto interagendo con " + this.name);
         }
     }
@@ -145,6 +164,11 @@ public class KeyItems {
             return true;
         }
         else return false;
+    }
+
+    public KeyItems setInteractionAction(Runnable interactionAction) {
+        this.interactionAction = interactionAction;
+        return this;
     }
 
 
