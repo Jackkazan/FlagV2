@@ -6,8 +6,6 @@ import model.tile.MapManager;
 import view.GamePanel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import static view.GamePanel.tileSize;
 
@@ -39,27 +37,7 @@ public class ObjectsCreator {
         objectList.add(collisioneInvisibileCasettaIniziale);
 
 
-
-        // interazioni con gli oggetti
-        keyCasettaIniziale.setInteractionAction(() -> {
-            keyCasettaIniziale.setShouldRemove(true);
-        });
-
-
-        //problema
-        collisioneInvisibileCasettaIniziale.setInteractionAction(() -> {
-            if(!gamePanel.getKeyItemsList().contains(keyCasettaIniziale))
-                collisioneInvisibileCasettaIniziale.setShouldRemove(true);
-            else
-                System.out.println("Trova qualcosa per aprire la porta");
-        });
-
         return objectList;
-    }
-
-    private static void removeItems(List<KeyItems> objectList, KeyItems... itemsToRemove) {
-        List<KeyItems> itemsToRemoveList = Arrays.asList(itemsToRemove);
-        objectList.removeAll(itemsToRemoveList);
     }
 
 }

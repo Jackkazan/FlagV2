@@ -111,18 +111,11 @@ public class GamePanel extends JPanel implements Runnable{
             npc.update();
         }
 
-        // Aggiornamento degli oggetti e identificazione di quelli da rimuovere
+        // Aggiornamento degli oggetti
         for (KeyItems items : keyItemsList) {
             items.update();
-
-            // Aggiungi gli oggetti da rimuovere alla lista temporanea
-            if (items.shouldBeRemoved()) {
-                itemsToRemove.add(items);
-            }
         }
 
-        // Rimuovi gli oggetti dalla lista principale
-        keyItemsList.removeAll(itemsToRemove);
 
         // Gestione delle transizioni della mappa
         mapManager.manageTransitions();

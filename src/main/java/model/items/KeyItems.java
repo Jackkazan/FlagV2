@@ -32,20 +32,8 @@ public class KeyItems {
 
     private boolean isInteractable = false;
 
-    private Runnable interactionAction;
     private GamePanel gamePanel;
     private TileManager tileManager;
-    private boolean shouldRemove = false;
-
-    public boolean shouldBeRemoved() {
-        return shouldRemove;
-    }
-
-    // Metodo che imposta lo stato per indicare che l'oggetto dovrebbe essere rimosso
-    public void setShouldRemove(boolean shouldRemove) {
-        this.shouldRemove = shouldRemove;
-    }
-
 
     private KeyItems() {}
 
@@ -149,28 +137,20 @@ public class KeyItems {
     public void interact() {
         // Verifica se il giocatore è nelle vicinanze e ha premuto il tasto "E"
         if (this.isInteractable && this.tileManager == gamePanel.getMapManager().getCurrentMap() && isPlayerNearby()) {
-            if(keyH.interactPressed && interactionAction != null) {
-                interactionAction.run();
-                setShouldRemove(true);
+            if(keyH.interactPressed ) {
+
             }
-            System.out.println("Sto interagendo con " + this.name);
         }
     }
 
     private boolean isPlayerNearby() {
         // Puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
         if(gamePanel.getPlayer().getInteractionArea().intersects(this.collisionArea)){
-            System.out.println("Sto collidendo!");
+            System.out.println("Sto collidendo con "+ this.name);
             return true;
         }
         else return false;
     }
-
-    public KeyItems setInteractionAction(Runnable interactionAction) {
-        this.interactionAction = interactionAction;
-        return this;
-    }
-
 
     public Rectangle getCollisionArea() {
         return collisionArea;
