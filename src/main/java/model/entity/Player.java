@@ -24,6 +24,8 @@ public class Player {
 
     private final int screenX;
     private final int screenY;
+    private int maxLife = 20;
+    private int currentLife = 20;
     private ArrayList<CollisionObject> currentCollisionMap;
 
     // Nuova area di interazione
@@ -54,6 +56,7 @@ public class Player {
     public void setDefaultValues() {
         x = tileSize*4;
         y = tileSize*4;
+        maxLife = 6;
         speed = 4;
         direction = "down";
     }
@@ -106,6 +109,8 @@ public class Player {
 
     }
 
+
+
     public void getEntityImage() {
         try {
             up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/moveUpCharacter0.png")));
@@ -139,6 +144,7 @@ public class Player {
             case "right" -> new BufferedImage[]{right1, right2, right3, right4};
             default -> null;
         };
+
 
         if (images != null && !collidesWithObjects(x, y) && !collidesWithItems(x,y)) {
             graphics2D.drawImage(images[spriteNum], screenX, screenY, tileSize+16, tileSize+16, null);
@@ -218,12 +224,19 @@ public class Player {
         y = tileSize * targetY;
     }
 
+    public int getMaxLife() {
+        return this.maxLife;
+    }
+
+    public int getCurrentLife() {
+        return this.currentLife;
+    }
 
     // COLLISION
     private Rectangle collisionArea = new Rectangle(0, 0, 48, 48);
 
     public Rectangle getCollisionArea() {
-        return collisionArea;
+        return this.collisionArea;
     }
 
     public int getScreenX() {

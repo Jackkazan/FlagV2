@@ -34,6 +34,7 @@ public class GamePanel extends JPanel implements Runnable{
     private final int screenHeight = tileSize * maxScreenRow;//576 pixels
     private Graphics2D graphics2D;
     private BufferedImage buffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_RGB);
+    private final UI ui = new UI(this);
 
     int FPS = 60;
 
@@ -142,7 +143,7 @@ public class GamePanel extends JPanel implements Runnable{
         for (KeyItems items : keyItemsList) {
             items.draw(bufferGraphics);
         }
-
+        ui.draw(bufferGraphics);
         drawToTempScreen();
 
 
@@ -164,7 +165,6 @@ public class GamePanel extends JPanel implements Runnable{
         }
         // Crea un nuovo Graphics2D per il buffer
         Graphics2D bufferGraphics = buffer.createGraphics();
-
         // DEBUG
         if (keyH.isShowDebugText()) {
             drawDebugInfo(bufferGraphics, drawStart);
