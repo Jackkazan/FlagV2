@@ -42,7 +42,6 @@ public class ObjectsCreator {
                 .setScale(2,3)
                 .build();
 
-        //portaCasettaInizialeChiusa.setCollisionArea(new Rectangle(2*tileSize, 5*tileSize,32,16));
 
 
         //aggiunta di tutti gli oggetti alla lista
@@ -60,7 +59,7 @@ public class ObjectsCreator {
         @Override
         public void performAction(KeyItems keyItems){
             //se le quest prima di interagire con questo oggetto sono state fatte
-            if(keyItems.questListIsDone()) {
+            if(keyItems.questListIsDone()){
                 // Implementa l'azione di nascondere
                 System.out.println("Sto nascondendo " + keyItems.getName());
 
@@ -74,6 +73,7 @@ public class ObjectsCreator {
                 if(keyItems.getName().equals("portaCasettaInizialeChiusa")){
                     keyItems.setStaticImage("/object/portaAperta.png");
                     keyItems.setCollisionArea(new Rectangle(0, 0, 0, 0));
+                    questList.get(2).setDone();
                     keyItems.setInteractable(false);
 
                 }
