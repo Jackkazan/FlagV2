@@ -25,37 +25,32 @@ public class ObjectsCreator {
         KeyItems keyCasettaIniziale = new KeyItems.KeyItemsBuilder(gamePanel, 7*tileSize, 5*tileSize, keyH)
                 .setName("keyCasettaIniziale")
                 .setStaticImage("/object/key.png")
-                .setCollisionArea(16,16)
+                .setCollisionArea(0,0,16,16)
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())
                 .setRelatedQuests(questList.get(0))
                 .setInteractible(true)
                 .build();
 
-        KeyItems collisioneInvisibileCasettaIniziale = new KeyItems.KeyItemsBuilder(gamePanel,4*tileSize,9*tileSize, keyH)
-                .setName("collisioneInvisibileCasettaIniziale")
-                .setStaticImage("/object/spriteInvisibile16x16.png")
-                .setCollisionArea(48,16)
-                .setContainedMap(mapManager.getTileManagerCasettaIniziale())
-                .setInteractible(true)
-                .setRelatedQuests(questList.get(1))
-                .build();
 
         KeyItems portaCasettaInizialeChiusa = new KeyItems.KeyItemsBuilder(gamePanel,4*tileSize,7*tileSize, keyH)
                 .setName("portaCasettaInizialeChiusa")
                 .setStaticImage("/object/PortaChiusaInterno.png")
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())
                 .setInteractible(true)
+                .setCollisionArea(0,0,48,48)
                 .setRelatedQuests(questList.get(1))
                 .setScale(2,3)
                 .build();
 
+        //portaCasettaInizialeChiusa.setCollisionArea(new Rectangle(2*tileSize, 5*tileSize,32,16));
+
+
         //aggiunta di tutti gli oggetti alla lista
         objectList.add(keyCasettaIniziale);
-        objectList.add(collisioneInvisibileCasettaIniziale);
         objectList.add(portaCasettaInizialeChiusa);
 
         keyCasettaIniziale.setInteractionAction(new DisappearAction());
-        collisioneInvisibileCasettaIniziale.setInteractionAction(new DisappearAction());
+        portaCasettaInizialeChiusa.setInteractionAction(new DisappearAction());
 
         return objectList;
     }
@@ -74,14 +69,13 @@ public class ObjectsCreator {
                     keyItems.setStaticImage("/object/spriteInvisibile16x16.png");
                     questList.get(1).setDone();
                     keyItems.setInteractable(false);
-                } else {
-                    //se hai interagito con la collisione della porta e tutte le quest fin qui sono completate allora sblocca la porta
-                    if (keyItems.getName().equals("collisioneInvisibileCasettaIniziale")) {
-                        keyItems.setStaticImage("/object/spriteInvisibile16x16.png");
-                        keyItems.setCollisionArea(new Rectangle(0, 0, 0, 0));
-                        questList.get(2).setDone();
-                        keyItems.setInteractable(false);
-                    }
+                }
+                //se hai interagito con la collisione della porta e tutte le quest fin qui sono completate allora sblocca la porta
+                if(keyItems.getName().equals("portaCasettaInizialeChiusa")){
+                    keyItems.setStaticImage("/object/portaAperta.png");
+                    keyItems.setCollisionArea(new Rectangle(0, 0, 0, 0));
+                    keyItems.setInteractable(false);
+
                 }
             }
             // pannello comunicativo che ti dice che non puoi ancora passare/prendere

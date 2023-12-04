@@ -23,7 +23,6 @@ public class KeyItems {
     private String name;
 
     private BufferedImage staticImage;
-    private BufferedImage dynamicImage;
 
 
     private BufferedImage animateImage1, animateImage2, animateImage3, animateImage4;
@@ -74,6 +73,17 @@ public class KeyItems {
         this.collisionArea = collisionArea;
     }
 
+    public void setCollisionAreaPosition(int x, int y) {
+        if (collisionArea != null) {
+            collisionArea.setLocation(x, y);
+        }
+    }
+
+    public void setCollisionAreaSize(int width, int height) {
+        if (collisionArea != null) {
+            collisionArea.setSize(width, height);
+        }
+    }
     private KeyItems() {}
 
     public boolean questListIsDone() {
@@ -122,8 +132,8 @@ public class KeyItems {
             return this;
         }
 
-        public KeyItemsBuilder setCollisionArea(int larghezza, int altezza) {
-            this.keyItems.collisionArea = new Rectangle(keyItems.x, keyItems.y, larghezza, altezza);
+        public KeyItemsBuilder setCollisionArea(int posX, int posY ,int larghezza, int altezza) {
+            this.keyItems.collisionArea = new Rectangle(posX, posY , larghezza, altezza);
             return this;
         }
 
@@ -210,7 +220,7 @@ public class KeyItems {
     private boolean isPlayerNearby() {
         // Puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
         if(this.collisionArea!= null && gamePanel.getPlayer().getInteractionArea().intersects(this.collisionArea)){
-            //System.out.println("Sto collidendo con "+ this.name);
+            System.out.println("Sto collidendo con "+ this.name);
             return true;
         }
         else return false;
