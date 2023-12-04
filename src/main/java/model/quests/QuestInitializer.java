@@ -9,6 +9,7 @@ public class QuestInitializer {
         Quest appenaSveglio = new Quest("AppenaSveglioTiALziDalLetto", true);
         Quest chiaveRaccoltaCasettaIniziale = new Quest("ChiaveRaccoltaCI", false);
         Quest portaSbloccataCasettaIniziale = new Quest("PortaSbloccataCI", false);
+        Quest parlaConLaVecchietta = new Quest("ParlaConVecchietta", false);
 
 
         //0
@@ -17,6 +18,8 @@ public class QuestInitializer {
         questList.add(chiaveRaccoltaCasettaIniziale);
         //2
         questList.add(portaSbloccataCasettaIniziale);
+        //3
+        questList.add(parlaConLaVecchietta);
 
         return questList;
     }
