@@ -48,14 +48,14 @@ public class ObjectsCreator {
         objectList.add(keyCasettaIniziale);
         objectList.add(portaCasettaInizialeChiusa);
 
-        keyCasettaIniziale.setInteractionAction(new DisappearAction());
-        portaCasettaInizialeChiusa.setInteractionAction(new DisappearAction());
+        keyCasettaIniziale.setInteractionAction(new DisappearOrChangeImageAction());
+        portaCasettaInizialeChiusa.setInteractionAction(new DisappearOrChangeImageAction());
 
         return objectList;
     }
 
     //raccolta oggetti o semplice interazione con scomparsa
-    public static class DisappearAction implements InteractionAction {
+    public static class DisappearOrChangeImageAction implements InteractionAction {
         @Override
         public void performAction(KeyItems keyItems){
             //se le quest prima di interagire con questo oggetto sono state fatte
@@ -72,14 +72,22 @@ public class ObjectsCreator {
                 //se hai interagito con la collisione della porta e tutte le quest fin qui sono completate allora sblocca la porta
                 if(keyItems.getName().equals("portaCasettaInizialeChiusa")){
                     keyItems.setStaticImage("/object/portaAperta.png");
-                    keyItems.setCollisionArea(new Rectangle(0, 0, 0, 0));
+                    keyItems.setCollisionArea(null);        //rimuove collisione della porta
                     questList.get(2).setDone();
                     keyItems.setInteractable(false);
 
                 }
             }
             // pannello comunicativo che ti dice che non puoi ancora passare/prendere
-            else System.out.println("Devi fare qualcosa prima");
+            else{
+
+                //se hai interagito con la collisione della porta ma tutte le quest precedenti non sono state completate
+                if(keyItems.getName().equals("portaCasettaInizialeChiusa")){
+                    System.out.println("La porta è bloccata, guardati attorno, magari puoi trovare qualcosa per aprirla");
+                }
+
+
+            }
         }
     }
 
