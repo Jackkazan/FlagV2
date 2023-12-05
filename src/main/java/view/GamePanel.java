@@ -45,8 +45,10 @@ public class GamePanel extends JPanel implements Runnable{
     //mappe
     public TileManager tileManagerZonaIniziale = new TileManager(this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
     public TileManager tileManagerCasettaIniziale = new TileManager(this, "src/main/resources/Map/StanzaIntroduzione/CasettaIniziale.tmx");
+
+    public TileManager tileManagerVillaggioSud = new TileManager(this,"src/main/resources/Map/VillaggioSud/VillaggioSud.tmx");
     //gestore mappe
-    MapManager mapManager = new MapManager(this, player, tileManagerCasettaIniziale, tileManagerZonaIniziale);
+    MapManager mapManager = new MapManager(this, player, tileManagerCasettaIniziale, tileManagerZonaIniziale, tileManagerVillaggioSud);
 
     List<Entity> npcList = NPCCreator.createNPCs(this, mapManager, keyH);
 
