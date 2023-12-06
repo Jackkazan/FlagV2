@@ -170,14 +170,15 @@ public class TMXReader {
                         // Ottieni lo sprite
                         BufferedImage subImage = originalImage.getSubimage(startX, startY, subimageWidth, subimageHeight);
 
-                        // Salva la sottoregione in un nuovo file PNG
-                        String outputImagePath = "src/main/resources/Sprite/sprite_" + listaCodici.get(j) + ".png";
 
                         mappaSprite.put(listaCodici.get(j), subImage);
 
+                        /*
+                        // Salva la sottoregione in un nuovo file PNG
+                        String outputImagePath = "src/main/resources/Sprite/sprite_" + listaCodici.get(j) + ".png";
 
 
-                        // Creazione dell'oggetto File per rappresentare la cartella
+                        //Creazione dell'oggetto File per rappresentare la cartella
                         File outputFolder = new File("src/main/resources/Sprite/");
                         // Verifica se la cartella esiste, altrimenti la crea
                         if (!outputFolder.exists()) {
@@ -195,6 +196,8 @@ public class TMXReader {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+
+                         */
 
 
                     } else {

@@ -14,14 +14,16 @@ public class MapManager {
     private TileManager tileManagerCasettaIniziale;
     private TileManager tileManagerZonaIniziale;
     private TileManager tileManagerVillaggioSud;
+    private TileManager tileManagerNegozioItemsVillaggioSud;
     GamePanel gamePanel;
 
-    public MapManager(GamePanel gamePanel, Player player, TileManager tileManagerCasettaIniziale, TileManager tileManagerZonaIniziale, TileManager tileManagerVillaggioSud) {
+    public MapManager(GamePanel gamePanel, Player player, TileManager tileManagerCasettaIniziale, TileManager tileManagerZonaIniziale, TileManager tileManagerVillaggioSud, TileManager tileManagerNegozioItemsVillaggioSud) {
         this.gamePanel = gamePanel;
         this.player = player;
         this.tileManagerZonaIniziale = tileManagerZonaIniziale;//Mappa iniziale
         this.tileManagerCasettaIniziale = tileManagerCasettaIniziale;
         this.tileManagerVillaggioSud = tileManagerVillaggioSud;
+        this.tileManagerNegozioItemsVillaggioSud = tileManagerNegozioItemsVillaggioSud;
 
         setMap(tileManagerCasettaIniziale);
     }
@@ -44,15 +46,27 @@ public class MapManager {
             }
             if(player.onTransitionPoint(64,69,3)) {
                 setMap(tileManagerVillaggioSud);
-                player.teleport(41,13);
+                player.teleport(41,11);
             }
         }
         if(currentMap == tileManagerVillaggioSud) {
-            if (player.onTransitionPoint(41, 9, 3)) {
+            if (player.onTransitionPoint(41, 7, 3)) {
                 setMap(tileManagerZonaIniziale);
                 player.teleport(64, 62);
             }
+            if (player.onTransitionPoint(30, 27, 1)) {
+                setMap(tileManagerNegozioItemsVillaggioSud);
+                player.teleport(8, 9);
+            }
         }
+
+        if(currentMap == tileManagerNegozioItemsVillaggioSud){
+            if(player.onTransitionPoint(8, 11, 1)) {
+                setMap(tileManagerVillaggioSud);
+                player.teleport(30, 29);
+            }
+        }
+
 
 
 
