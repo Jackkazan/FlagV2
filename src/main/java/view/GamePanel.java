@@ -233,7 +233,7 @@ public class GamePanel extends JPanel implements Runnable{
         // Disegna le opzioni del menu di pausa
         g2d.setColor(Color.WHITE);
         g2d.setFont(new Font("Arial", Font.BOLD, 24));
-        String pauseText = "Paused";
+        String pauseText = "ENTRA STO TRAPEZIO";
         int textWidth = g2d.getFontMetrics().stringWidth(pauseText);
         int x = (screenWidth - textWidth) / 2;
         int y = screenHeight / 2;
