@@ -14,6 +14,8 @@ public class KeyHandler implements KeyListener {
     private boolean showDebugText = false;
     private boolean pausePressed = false;
     private boolean pauseToggle = true;
+    private boolean attacking = false;
+    private String lastPress;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -37,17 +39,25 @@ public class KeyHandler implements KeyListener {
             showDebugText = !showDebugText;
         }
 
+        if(code == KeyEvent.VK_SPACE){
+            attacking = !attacking;
+        }
+
         if(code == KeyEvent.VK_W){
             upPressed = true;
+            lastPress = "up";
         }
         if(code == KeyEvent.VK_S) {
             downPressed = true;
+            lastPress = "down";
         }
         if(code == KeyEvent.VK_A){
             leftPressed = true;
+            lastPress = "left";
         }
         if(code == KeyEvent.VK_D){
             rightPressed = true;
+            lastPress = "right";
         }
         if(code == KeyEvent.VK_E){
             interactPressed = true;
@@ -68,6 +78,10 @@ public class KeyHandler implements KeyListener {
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
 
+
+        if (code == KeyEvent.VK_SPACE){
+            setIsAttacking(false);
+        }
         if(code == KeyEvent.VK_W){
             upPressed = false;
         }
@@ -93,6 +107,18 @@ public class KeyHandler implements KeyListener {
                 }
             }
         }
+    }
+
+    public void setIsAttacking(boolean attacking) {
+        this.attacking = attacking;
+    }
+
+    public String getLastPress() {
+        return lastPress;
+    }
+
+    public boolean isAttacking(){
+        return attacking;
     }
 
     public boolean isShowDebugText() {

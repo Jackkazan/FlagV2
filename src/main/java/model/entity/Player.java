@@ -7,6 +7,7 @@ import view.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,8 +39,8 @@ public class Player {
             down1, down2, down3, down4,
             left1, left2, left3, left4,
             right1, right2, right3, right4;
+    private BufferedImage attackUp1, attackUp2, attackDown1, attackDown2, attackLeft1, attackLeft2, attackRight1, attackRight2;
     private String direction;
-
     private int spriteCounter = 0;
     private int spriteNum = 3;
 
@@ -50,6 +51,7 @@ public class Player {
         screenX = gamePanel.getScreenWidth()/2 - (tileSize/2);
         screenY = gamePanel.getScreenHeight()/2 - (tileSize/2);
         setDefaultValues();
+        getAttackImages();
         getEntityImage();
     }
 
@@ -71,20 +73,35 @@ public class Player {
                 direction = "right";
                 nextX += speed;
             }
+            if (keyHandler.rightPressed && keyHandler.isAttacking()) {
+                direction = "right&attack";
+            }
 
             if (keyHandler.leftPressed) {
                 direction = "left";
                 nextX -= speed;
             }
+            if (keyHandler.leftPressed && keyHandler.isAttacking()) {
+                direction = "left&attack";
+            }
+
             if (keyHandler.upPressed) {
                 direction = "up";
                 nextY -= speed;
             }
+            if(keyHandler.upPressed && keyHandler.isAttacking()){
+                direction = "up&attack";
+            }
+
+
+
             if (keyHandler.downPressed) {
                 direction = "down";
                 nextY += speed;
             }
-
+            if(keyHandler.downPressed && keyHandler.isAttacking()){
+                direction = "down&attack";
+            }
             // Aggiorna la collisionArea del giocatore
             collisionArea.setLocation(x, y);
 
@@ -110,7 +127,21 @@ public class Player {
     }
 
 
-
+    public void getAttackImages() {
+        try {
+           attackUp1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/images/player/boy_attack_up_1.png")));
+           attackUp2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/images/player/boy_attack_up_2.png")));
+           attackDown1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/images/player/boy_attack_down_1.png")));
+           attackDown2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/images/player/boy_attack_down_2.png")));
+           attackLeft1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/images/player/boy_attack_left_1.png")));
+           attackLeft2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/images/player/boy_attack_left_2.png")));
+           attackRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/images/player/boy_attack_right_1.png")));
+           attackRight2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/images/player/boy_attack_right_2.png")));
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     public void getEntityImage() {
         try {
             up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/moveUpCharacter0.png")));
@@ -135,13 +166,16 @@ public class Player {
         }
     }
 
-
     public BufferedImage draw(Graphics2D graphics2D) {
         BufferedImage[] images = switch (direction) {
             case "up" -> new BufferedImage[]{up1, up2, up3, up4};
             case "down" -> new BufferedImage[]{down1, down2, down3, down4};
             case "left" -> new BufferedImage[]{left1, left2, left3, left4};
             case "right" -> new BufferedImage[]{right1, right2, right3, right4};
+            case "up&attack" -> new BufferedImage[]{attackUp1,attackUp1 , attackUp2, attackUp2};
+            case "down&attack" -> new BufferedImage[]{attackDown1, attackDown1, attackDown2, attackDown2};
+            case "left&attack" -> new BufferedImage[]{attackLeft1, attackLeft1, attackLeft2, attackLeft2};
+            case "right&attack" -> new BufferedImage[]{attackRight1, attackRight1, attackRight2, attackRight2};
             default -> null;
         };
 
@@ -222,6 +256,10 @@ public class Player {
     public void teleport(int targetX, int targetY) {
         x = tileSize * targetX;
         y = tileSize * targetY;
+    }
+
+    public String getDirection() {
+        return this.direction;
     }
 
     public int getMaxLife() {
