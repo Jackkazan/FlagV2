@@ -1,22 +1,27 @@
-package view;
+package model.HUD;
 
 import view.GamePanel;
+import view.UtilityTool;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class OBJ_Heart extends PickUpOnlyObject {
+public class OBJ_Heart {
 
-    private final GamePanel gamePanel;
+    //OBJECT STATS
+    private String name;
+    private int value;
+
+    private GamePanel gamePanel;
+    // IMAGES
+    private BufferedImage image1, image2, image3;
 
     public OBJ_Heart(GamePanel gamePanel) {
-        super(gamePanel);
         this.gamePanel = gamePanel;
-
         setName("Heart");
         setValue(2);
-        setDescription("[" + getName() + "]\nWill restore " + getValue() + " life");
 
         try {
             BufferedImage image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/heart/heart_full.png")));
@@ -31,7 +36,45 @@ public class OBJ_Heart extends PickUpOnlyObject {
             e.printStackTrace();
         }
     }
+    public BufferedImage getImage1() {
+        return this.image1;
+    }
 
+    public int getValue() {
+        return this.value;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setImage1(BufferedImage image1) {
+        this.image1 = image1;
+    }
+
+    public BufferedImage getImage2() {
+        return this.image2;
+    }
+
+    public void setImage2(BufferedImage image2) {
+        this.image2 = image2;
+    }
+
+    public BufferedImage getImage3() {
+        return this.image3;
+    }
+
+    public void setImage3(BufferedImage image3) {
+        this.image3 = image3;
+    }
 //    @Override
 //    public void use() {
 //        gamePanel.playSoundEffect(1);

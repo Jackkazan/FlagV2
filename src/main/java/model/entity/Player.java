@@ -24,8 +24,8 @@ public class Player {
 
     private final int screenX;
     private final int screenY;
-    private int maxLife = 20;
-    private int currentLife = 20;
+    private int maxLife = 10;
+    private int currentLife = 9;
     private ArrayList<CollisionObject> currentCollisionMap;
 
     // Nuova area di interazione
