@@ -1,7 +1,6 @@
 package model.items;
 
 import controller.KeyHandler;
-import model.entity.Entity;
 import model.quests.Quest;
 import model.tile.TileManager;
 import view.GamePanel;
@@ -42,9 +41,9 @@ public class KeyItems {
     private GamePanel gamePanel;
     private TileManager tileManager;
 
-    private InteractionAction interactionAction;
+    private InteractionActionItems interactionAction;
     // Metodo per impostare l'azione durante la costruzione dell'oggetto
-    public void setInteractionAction(InteractionAction action) {
+    public void setInteractionAction(ObjectsCreator.DisappearOrChangeImageAction action) {
         this.interactionAction = action;
     }
 
@@ -52,7 +51,7 @@ public class KeyItems {
         this.isInteractable = interactable;
     }
 
-    public void setStaticImage(String pathImage) {
+    public void setStaticImage(String pathImage){
         try {
             this.staticImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(pathImage)));
 
@@ -185,7 +184,7 @@ public class KeyItems {
             //...............
 
 
-            //-----------------
+            //-----------------.
         }
         else{
             if(staticImage != null && gamePanel.getMapManager().getCurrentMap() == this.tileManager)

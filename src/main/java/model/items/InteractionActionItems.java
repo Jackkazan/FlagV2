@@ -1,5 +1,5 @@
 package model.items;
 
-public interface InteractionAction {
+public interface InteractionActionItems {
     void performAction(KeyItems keyItems);
 }

@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
+import static view.GamePanel.tileSize;
+
 public class UI {
 
     private final GamePanel gamePanel;
@@ -43,16 +45,16 @@ public class UI {
     }
 
     private void drawPlayerLife() {
-        int x = gamePanel.tileSize / 2;
-        int y = gamePanel.tileSize / 2;
+        int x = tileSize / 2;
+        int y = tileSize / 2;
 
         for (int i = 0; i < gamePanel.getPlayer().getMaxLife() / 2; i++) {
             graphics2D.drawImage(heart_blank, x, y, null);
-            x += gamePanel.tileSize;
+            x += tileSize;
         }
 
-        x = gamePanel.tileSize / 2;
-        y = gamePanel.tileSize / 2;
+        x = tileSize / 2;
+        y = tileSize / 2;
 
         for (int i = 0; i < gamePanel.getPlayer().getCurrentLife(); i++) {
             graphics2D.drawImage(heart_half, x, y, null);
@@ -62,7 +64,7 @@ public class UI {
                 graphics2D.drawImage(heart_full, x, y, null);
             }
 
-            x += gamePanel.tileSize;
+            x += tileSize;
         }
     }
 }

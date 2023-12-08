@@ -27,13 +27,14 @@ public class NPCCreator {
         String Vecchietta_right1= "/npc/VecchiettaRight_0.png";
         String Vecchietta_right2= "/npc/VecchiettaRight_1.png";
 
-        Entity vecchietta = new Entity.EntityBuilder(gamePanel, 22*tileSize, 46*tileSize)
+        Entity vecchietta = new Entity.EntityBuilder(gamePanel, 22*tileSize, 46*tileSize, gamePanel.getKeyH())
                 .setName("Vecchietta")
                 .setSpeed(2)
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
                 .setCollisionArea(32,32)
                 .setTotalSprite(8)
+                .setIsInteractble(true)
                 .setDefaultDirection("down")
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
                 .set8EntityImage(Vecchietta_up1, Vecchietta_up2,

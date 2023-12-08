@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
     private boolean pauseMenuVisible = false;
 
 
-    KeyHandler keyH = new KeyHandler(this);
+    private KeyHandler keyH = new KeyHandler(this);
 
     Thread gameThread;
     private Player player = new Player(this, keyH);
@@ -120,10 +120,8 @@ public class GamePanel extends JPanel implements Runnable{
 
 
     public void update() {
-        player.update();
 
-        // Creazione di una lista temporanea per gli oggetti da rimuovere
-        List<KeyItems> itemsToRemove = new ArrayList<>();
+        player.update();
 
         // Aggiornamento degli NPC
         for (Entity npc : npcList) {
@@ -169,7 +167,6 @@ public class GamePanel extends JPanel implements Runnable{
             // Dispose del bufferGraphics
             bufferGraphics.dispose();
         }
-
     }
 
     public void drawToTempScreen() {
@@ -212,15 +209,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void togglePause() {
-        if (isPaused) {
-            // Azioni da eseguire quando il gioco è in pausa
-            pauseMenuVisible = false;
-            // Altre azioni, ad esempio visualizzare un menu di pausa
-        } else {
-            // Azioni da eseguire quando il gioco riprende
-            pauseMenuVisible = true;
-            // Altre azioni, ad esempio chiudere il menu di pausa
-        }
+        pauseMenuVisible = !isPaused;
         isPaused = !isPaused;
     }
 
@@ -284,6 +273,9 @@ public class GamePanel extends JPanel implements Runnable{
         return isPaused;
     }
 
+    public KeyHandler getKeyH() {
+        return keyH;
+    }
 
     //transizione animata -------------------------------------------------------------------------------
 }

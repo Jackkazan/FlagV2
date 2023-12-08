@@ -1,10 +1,13 @@
 package model.entity;
 
+import controller.KeyHandler;
 import model.collisioni.CollisionObject;
+import model.items.InteractionActionItems;
 import model.tile.TileManager;
 import view.GamePanel;
 
 import javax.imageio.ImageIO;
+import javax.swing.plaf.basic.BasicTreeUI;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -22,6 +25,8 @@ public class Entity {
     private int speed;
     private int speedChangeSprite;
 
+    private KeyHandler keyH;
+
     private int spriteNum;
     private BufferedImage
             up1, up2, up3, up4,
@@ -37,17 +42,21 @@ public class Entity {
     private GamePanel gamePanel;
 
     private TileManager tileManager;
+    private boolean isInteractable;
+
+    private InteractionActionEntity interactionAction;
 
     private Entity() {}
 
     public static class EntityBuilder {
         private Entity entity;
 
-        public EntityBuilder(GamePanel gamePanel, int x, int y) {
+        public EntityBuilder(GamePanel gamePanel, int x, int y, KeyHandler keyH) {
             this.entity = new Entity();
             this.entity.gamePanel = gamePanel;
             this.entity.x = x;
             this.entity.y = y;
+            this.entity.keyH = keyH;
         }
 
         public EntityBuilder setName(String name) {
@@ -83,6 +92,11 @@ public class Entity {
 
         public EntityBuilder setDefaultDirection(String direction) {
             this.entity.direction = direction;
+            return this;
+        }
+
+        public EntityBuilder setIsInteractble(boolean isInteractble){
+            this.entity.isInteractable = isInteractble;
             return this;
         }
 
@@ -197,7 +211,34 @@ public class Entity {
             }
         }
 
+        interact();
 
+
+    }
+
+    public void interact() {
+        // Verifica se il giocatore è nelle vicinanze e ha premuto il tasto "E"
+        if (this.isInteractable && this.tileManager == gamePanel.getMapManager().getCurrentMap() && isPlayerNearby()) {
+            if(keyH.interactPressed && interactionAction != null) {
+                //System.out.println("Ho interagioto con "+this.name);
+                interactionAction.performAction(this);
+            }
+        }
+    }
+
+    public void setInteractionAction(InteractionActionEntity action) {
+        this.interactionAction = action;
+    }
+
+
+
+    private boolean isPlayerNearby() {
+        // Puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
+        if(this.collisionArea!= null && gamePanel.getPlayer().getInteractionArea().intersects(this.collisionArea)){
+            System.out.println("Sto collidendo con "+ this.name);
+            return true;
+        }
+        else return false;
     }
 
     public Rectangle getCollisionArea() {

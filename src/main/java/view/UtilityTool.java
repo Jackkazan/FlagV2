@@ -4,6 +4,8 @@ import view.GamePanel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static view.GamePanel.tileSize;
+
 public class UtilityTool {
 
     public static BufferedImage scaleImage(BufferedImage original, int width, int height) {
@@ -26,10 +28,10 @@ public class UtilityTool {
     }
 
     public static boolean isInsidePlayerView(int worldX, int worldY, GamePanel gamePanel) {
-        return worldX + gamePanel.tileSize > gamePanel.getPlayer().getX() - gamePanel.getPlayer().getScreenX()
-                && worldX - gamePanel.tileSize < gamePanel.getPlayer().getX() + gamePanel.getPlayer().getScreenX()
-                && worldY + gamePanel.tileSize > gamePanel.getPlayer().getY() - gamePanel.getPlayer().getScreenY()
-                && worldY - gamePanel.tileSize < gamePanel.getPlayer().getY() + gamePanel.getPlayer().getScreenY();
+        return worldX + tileSize > gamePanel.getPlayer().getX() - gamePanel.getPlayer().getScreenX()
+                && worldX - tileSize < gamePanel.getPlayer().getX() + gamePanel.getPlayer().getScreenX()
+                && worldY + tileSize > gamePanel.getPlayer().getY() - gamePanel.getPlayer().getScreenY()
+                && worldY - tileSize < gamePanel.getPlayer().getY() + gamePanel.getPlayer().getScreenY();
     }
 
     public static void changeAlpha(Graphics2D graphics2D, float alphaValue) {

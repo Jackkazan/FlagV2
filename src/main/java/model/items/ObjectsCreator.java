@@ -31,7 +31,6 @@ public class ObjectsCreator {
                 .setInteractible(true)
                 .build();
 
-
         KeyItems portaCasettaInizialeChiusa = new KeyItems.KeyItemsBuilder(gamePanel,4*tileSize,7*tileSize, keyH)
                 .setName("portaCasettaInizialeChiusa")
                 .setStaticImage("/object/PortaChiusaInterno.png")
@@ -41,7 +40,6 @@ public class ObjectsCreator {
                 .setRelatedQuests(questList.get(1))
                 .setScale(2,3)
                 .build();
-
 
 
         //aggiunta di tutti gli oggetti alla lista
@@ -55,11 +53,13 @@ public class ObjectsCreator {
     }
 
     //raccolta oggetti o semplice interazione con scomparsa
-    public static class DisappearOrChangeImageAction implements InteractionAction {
+    public static class DisappearOrChangeImageAction implements InteractionActionItems {
         @Override
         public void performAction(KeyItems keyItems){
+
             //se le quest prima di interagire con questo oggetto sono state fatte
             if(keyItems.questListIsDone()){
+
                 // Implementa l'azione di nascondere
                 System.out.println("Sto nascondendo " + keyItems.getName());
 
@@ -75,8 +75,8 @@ public class ObjectsCreator {
                     keyItems.setCollisionArea(null);        //rimuove collisione della porta
                     questList.get(2).setDone();
                     keyItems.setInteractable(false);
-
                 }
+
             }
             // pannello comunicativo che ti dice che non puoi ancora passare/prendere
             else{
@@ -85,13 +85,11 @@ public class ObjectsCreator {
                 if(keyItems.getName().equals("portaCasettaInizialeChiusa")){
                     System.out.println("La porta è bloccata, guardati attorno, magari puoi trovare qualcosa per aprirla");
                 }
-
-
             }
         }
     }
 
-
+    /*
     public static class TalkToNPCAction implements InteractionAction {
         @Override
         public void performAction(KeyItems keyItems) {
@@ -99,6 +97,8 @@ public class ObjectsCreator {
             System.out.println("Hai parlato con l'NPC: " + keyItems.getName());
         }
     }
+
+     */
 
 }
 
