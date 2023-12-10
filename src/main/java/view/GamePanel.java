@@ -1,4 +1,4 @@
-package model.view;
+package view;
 
 import model.gameState.GameStateManager;
 import model.quests.Quest;

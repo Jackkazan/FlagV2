@@ -1,4 +1,4 @@
-import model.view.GamePanel;
+import view.GamePanel;
 import javax.swing.*;
 
 public class Main {

@@ -5,13 +5,13 @@ import model.entity.Entity;
 import model.items.KeyItems;
 import model.entity.Player;
 import model.tile.MapManager;
-import model.view.GamePanel;
+import view.GamePanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-import static model.view.GamePanel.tileSize;
+import static view.GamePanel.tileSize;
 
 public class PlayState implements GameState{
     private Player player;
@@ -44,25 +44,25 @@ public class PlayState implements GameState{
 
     @Override
     public void update() {
-        if (keyH.isPaused() && !gsm.isAlreadyPaused()){
+        if (keyH.isPaused() && !gsm.isAlreadyPaused() && !gsm.isInDialogue()){
             gsm.setState(GameStateManager.State.PAUSE);
         }
-
+        if(!gsm.isInDialogue())
             player.update();
 
-            // Aggiornamento degli NPC
-            for (Entity npc : gsm.getNpcList()) {
-                npc.update();
-            }
+        // Aggiornamento degli NPC
+        for (Entity npc : gsm.getNpcList()) {
+            npc.update();
+        }
 
-            // Aggiornamento degli oggetti
-            for (KeyItems items : gsm.getKeyItemsList()) {
-                items.update();
-            }
+        // Aggiornamento degli oggetti
+        for (KeyItems items : gsm.getKeyItemsList()) {
+            items.update();
+        }
 
 
             // Gestione delle transizioni della mappa
-            mapManager.manageTransitions();
+        mapManager.manageTransitions();
     }
 
 

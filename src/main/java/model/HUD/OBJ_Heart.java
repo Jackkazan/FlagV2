@@ -1,7 +1,7 @@
 package model.HUD;
 
-import model.view.GamePanel;
-import model.view.UtilityTool;
+import view.GamePanel;
+import view.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

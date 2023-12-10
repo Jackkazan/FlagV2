@@ -2,9 +2,8 @@ package model.entity;
 
 import controller.KeyHandler;
 import model.gameState.GameStateManager;
-import model.items.KeyItems;
 import model.tile.TileManager;
-import model.view.GamePanel;
+import view.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,7 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-import static model.view.GamePanel.tileSize;
+import static view.GamePanel.tileSize;
 
 //Class for npc and enemy
 public class Entity {
@@ -100,6 +99,10 @@ public class Entity {
 
         public EntityBuilder setIsInteractble(boolean isInteractble){
             this.entity.isInteractable = isInteractble;
+            return this;
+        }
+        public EntityBuilder setInteractionAction(InteractionActionEntity action) {
+            this.entity.interactionAction = action;
             return this;
         }
         public EntityBuilder setScale(int scaleWidth, int scaleHeigth) {
@@ -232,9 +235,7 @@ public class Entity {
         }
     }
 
-    public void setInteractionAction(InteractionActionEntity action) {
-        this.interactionAction = action;
-    }
+
 
     private boolean isPlayerNearby() {
         // Puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
@@ -254,6 +255,10 @@ public class Entity {
 
     public int getY() {
         return this.y;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getSpeed() {

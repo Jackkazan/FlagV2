@@ -1,7 +1,7 @@
 package model.gameState;
 
 import controller.KeyHandler;
-import model.view.GamePanel;
+import view.GamePanel;
 
 import java.awt.*;
 
@@ -25,7 +25,12 @@ public class PauseState implements GameState{
     public void update() {
         //gsm.getPlayState().update();
         if (!keyH.isPaused()){
+            if (gsm.isInDialogue()){
+                gsm.setState(GameStateManager.State.PREVIOUS);
+            }
+            else{
             gsm.setState(GameStateManager.State.PLAY);
+            }
             //gsm.setAlreadyPaused(false);
         }
 

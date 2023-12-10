@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static model.view.GamePanel.tileSize;
+import static view.GamePanel.tileSize;
 
 public class KeyItems {
     private KeyHandler keyH;

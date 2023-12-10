@@ -1,7 +1,7 @@
 package model.gameState;
 
 import controller.KeyHandler;
-import model.view.GamePanel;
+import view.GamePanel;
 
 import java.awt.*;
 

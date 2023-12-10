@@ -1,7 +1,7 @@
 package controller;
 
 import model.gameState.GameStateManager;
-import model.view.GamePanel;
+import view.GamePanel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -11,7 +11,7 @@ public class KeyHandler implements KeyListener {
     private GamePanel gamePanel;
     private GameStateManager gsm;
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, attackPressed, enterPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, spacePressed, enterPressed, yPressed;
 
     private boolean showDebugText = false;
     private boolean isPaused = false;
@@ -40,11 +40,14 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_T) {
                 showDebugText = !showDebugText;
             }
+            if (code == KeyEvent.VK_Y){
+                yPressed = true;
+            }
             if (code == KeyEvent.VK_ENTER)
                 enterPressed = true;
 
             if (code == KeyEvent.VK_SPACE) {
-                attackPressed= true;
+                spacePressed = true;
             }
 
             if (code == KeyEvent.VK_W) {
@@ -75,8 +78,11 @@ public class KeyHandler implements KeyListener {
 
         if (code == KeyEvent.VK_ENTER)
             enterPressed = false;
+        if (code == KeyEvent.VK_Y){
+            yPressed = false;
+        }
         if (code == KeyEvent.VK_SPACE){
-            attackPressed = false;
+            spacePressed = false;
         }
         if(code == KeyEvent.VK_W){
             upPressed = false;

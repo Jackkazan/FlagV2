@@ -8,12 +8,10 @@ import model.items.KeyItems;
 import model.items.ObjectsCreator;
 import model.tile.MapManager;
 import model.tile.TileManager;
-import model.view.GamePanel;
+import view.GamePanel;
 
 import java.awt.*;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 public class GameStateManager {
 
@@ -23,11 +21,13 @@ public class GameStateManager {
     private GameState pauseState;
 
     private GameState currentState;
+    private GameState previousState;
 
     private GamePanel gp;
     KeyHandler keyH;
 
     private boolean alreadyPaused = false;
+    private boolean inDialogue = false;
     Player player;
     public TileManager tileManagerZonaIniziale;
     public TileManager tileManagerCasettaIniziale;
@@ -64,7 +64,7 @@ public class GameStateManager {
         this.keyItemsList = ObjectsCreator.createObjects(this, mapManager, keyH);
     }
 
-    public enum State{MENU, PLAY, PAUSE};
+    public enum State{MENU, PLAY, PAUSE, PREVIOUS};
 
     public void setState(State state) {
         switch (state) {
@@ -80,8 +80,25 @@ public class GameStateManager {
                 //currentState = pauseState;
                 currentState = new PauseState(gp, this, keyH);
                 break;
+            case PREVIOUS:
+                currentState = previousState;
+
             // Add more cases for additional states as needed
         }
+    }
+    public void setDialogueState(Entity entity){
+        currentState = new DialogueState(gp, this , keyH, entity);
+        inDialogue = true;
+
+    }
+    public void dialoguePause(){
+        previousState = currentState;
+        setState(State.PAUSE);
+    }
+    public void exitDialogue(){
+        this.setState(GameStateManager.State.PLAY);
+        this.inDialogue = false;
+        this.previousState = null;
     }
     public void update() {
         currentState.update();
@@ -134,4 +151,10 @@ public class GameStateManager {
     public void setAlreadyPaused(boolean alreadyPaused) {
         this.alreadyPaused = alreadyPaused;
     }
+
+    public boolean isInDialogue() {
+        return inDialogue;
+    }
+
+
 }

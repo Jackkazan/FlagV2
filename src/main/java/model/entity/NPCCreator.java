@@ -3,12 +3,12 @@ package model.entity;
 import controller.KeyHandler;
 import model.gameState.GameStateManager;
 import model.tile.MapManager;
-import model.view.GamePanel;
+import view.GamePanel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static model.view.GamePanel.tileSize;
+import static view.GamePanel.tileSize;
 
 public class NPCCreator {
 
@@ -37,6 +37,7 @@ public class NPCCreator {
                 .setTotalSprite(8)
                 .setScale(2,3)
                 .setIsInteractble(true)
+                .setInteractionAction(new NpcDialogue(gsm))
                 .setDefaultDirection("down")
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
                 .set8EntityImage(Vecchietta_up1, Vecchietta_up2,

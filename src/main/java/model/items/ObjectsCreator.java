@@ -10,7 +10,7 @@ import model.tile.MapManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import static model.view.GamePanel.tileSize;
+import static view.GamePanel.tileSize;
 
 public class ObjectsCreator {
 

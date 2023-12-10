@@ -3,14 +3,14 @@ package model.tile;
 import model.gameState.GameStateManager;
 import model.collisioni.CollisionObject;
 import model.toolTMX.TMXReader;
-import model.view.GamePanel;
+import view.GamePanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static model.view.GamePanel.tileSize;
+import static view.GamePanel.tileSize;
 
 public class TileManager {
     private GamePanel gamePanel;

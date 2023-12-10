@@ -4,7 +4,7 @@ import controller.KeyHandler;
 import model.gameState.GameStateManager;
 import model.collisioni.CollisionObject;
 import model.items.KeyItems;
-import model.view.GamePanel;
+import view.GamePanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.imageio.ImageIO;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import javax.swing.Timer;
 
-import static model.view.GamePanel.tileSize;
+import static view.GamePanel.tileSize;
 
 public class Player {
     private GamePanel gamePanel;
@@ -72,7 +72,7 @@ public class Player {
     }
 
     public void update() {
-        if (keyHandler.attackPressed && !isAttacking && attackAnimationCompleted) {
+        if (keyHandler.spacePressed && !isAttacking && attackAnimationCompleted) {
             isAttacking = true;
             attackAnimationCompleted = false;
             attack();
