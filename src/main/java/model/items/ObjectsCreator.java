@@ -2,27 +2,26 @@ package model.items;
 
 
 import controller.KeyHandler;
+import model.gameState.GameStateManager;
 import model.quests.Quest;
 import model.quests.QuestInitializer;
 import model.tile.MapManager;
-import view.GamePanel;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static view.GamePanel.tileSize;
+import static model.view.GamePanel.tileSize;
 
 public class ObjectsCreator {
 
     static List<Quest> questList = QuestInitializer.createQuestList();
 
 
-    public static List<KeyItems> createObjects(GamePanel gamePanel, MapManager mapManager, KeyHandler keyH) {
+    public static List<KeyItems> createObjects(GameStateManager gsm, MapManager mapManager, KeyHandler keyH) {
         List<KeyItems> objectList = new ArrayList<>();
 
         //inizializzazione oggetti
-        KeyItems keyCasettaIniziale = new KeyItems.KeyItemsBuilder(gamePanel, 7*tileSize, 5*tileSize, keyH)
+        KeyItems keyCasettaIniziale = new KeyItems.KeyItemsBuilder(gsm, 7*tileSize, 5*tileSize, keyH)
                 .setName("keyCasettaIniziale")
                 .setStaticImage("/object/key.png")
                 .setCollisionArea(0,0,16,16)
@@ -31,7 +30,7 @@ public class ObjectsCreator {
                 .setInteractible(true)
                 .build();
 
-        KeyItems portaCasettaInizialeChiusa = new KeyItems.KeyItemsBuilder(gamePanel,4*tileSize,7*tileSize, keyH)
+        KeyItems portaCasettaInizialeChiusa = new KeyItems.KeyItemsBuilder(gsm,4*tileSize,7*tileSize, keyH)
                 .setName("portaCasettaInizialeChiusa")
                 .setStaticImage("/object/PortaChiusaInterno.png")
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())

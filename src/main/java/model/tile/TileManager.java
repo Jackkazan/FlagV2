@@ -1,19 +1,20 @@
 package model.tile;
 
+import model.gameState.GameStateManager;
 import model.collisioni.CollisionObject;
-import model.entity.Player;
 import model.toolTMX.TMXReader;
-import view.GamePanel;
+import model.view.GamePanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static view.GamePanel.tileSize;
+import static model.view.GamePanel.tileSize;
 
 public class TileManager {
     private GamePanel gamePanel;
+    private GameStateManager gsm;
     private HashMap<Integer, BufferedImage> mappaSprite;
     private ArrayList<String> listaMatrici;
     private int numLayer;
@@ -26,9 +27,10 @@ public class TileManager {
     // int mapWidth = tileSize * maxMapCol;
     // int mapHeigth = tileSize * maxMapRow;
 
-    public TileManager(GamePanel gamePanel, String pathTMXMap){
+    public TileManager(GamePanel gamePanel, GameStateManager gsm, String pathTMXMap){
 
         this.gamePanel = gamePanel;
+        this.gsm = gsm;
         this.currentMap = pathTMXMap;
         TMXReader readMap = new TMXReader(pathTMXMap);
         this.mappaSprite= readMap.getMappaSprite();
@@ -39,7 +41,7 @@ public class TileManager {
         //matrice a tre livelli che memorizzerà la matrice di ciascun layer
         this.mapTileNum = new int[numLayer][maxMapCol][maxMapRow];
         this.collisionMap = readMap.getCollisionObjects();
-        TileManager.this.gamePanel.getPlayer().setCurrentCollisionMap(collisionMap);
+        gsm.getPlayer().setCurrentCollisionMap(collisionMap);
 
         for(int i=0;i<numLayer;i++)
             loadMap(listaMatrici.get(i).split("\n"), i);
@@ -76,13 +78,13 @@ public class TileManager {
 
                 int worldX = worldCol * tileSize;
                 int worldY = worldRow * tileSize;
-                int screenX = worldX - gamePanel.getPlayer().getX() + gamePanel.getPlayer().getScreenX();
-                int screenY = worldY - gamePanel.getPlayer().getY() + gamePanel.getPlayer().getScreenY();
+                int screenX = worldX - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
+                int screenY = worldY - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
 
-                if(worldX + tileSize > gamePanel.getPlayer().getX() - gamePanel.getPlayer().getScreenX() &&
-                        worldX - tileSize < gamePanel.getPlayer().getX() + gamePanel.getPlayer().getScreenX() &&
-                        worldY + tileSize > gamePanel.getPlayer().getY() - gamePanel.getPlayer().getScreenY() &&
-                        worldY - tileSize < gamePanel.getPlayer().getY() + gamePanel.getPlayer().getScreenY()){
+                if(worldX + tileSize > gsm.getPlayer().getX() - gsm.getPlayer().getScreenX() &&
+                        worldX - tileSize < gsm.getPlayer().getX() + gsm.getPlayer().getScreenX() &&
+                        worldY + tileSize > gsm.getPlayer().getY() - gsm.getPlayer().getScreenY() &&
+                        worldY - tileSize < gsm.getPlayer().getY() + gsm.getPlayer().getScreenY()){
                     g2.drawImage(mappaSprite.get(tileNum), screenX, screenY, tileSize, tileSize, null);
                 }
 

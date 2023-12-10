@@ -1,9 +1,9 @@
 package model.items;
 
 import controller.KeyHandler;
+import model.gameState.GameStateManager;
 import model.quests.Quest;
 import model.tile.TileManager;
-import view.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static view.GamePanel.tileSize;
+import static model.view.GamePanel.tileSize;
 
 public class KeyItems {
     private KeyHandler keyH;
@@ -38,7 +38,7 @@ public class KeyItems {
     private int scaleWidth = 1;
     private int scaleHeigth = 1;
 
-    private GamePanel gamePanel;
+    private GameStateManager gsm;
     private TileManager tileManager;
 
     private InteractionActionItems interactionAction;
@@ -97,9 +97,9 @@ public class KeyItems {
     public static class KeyItemsBuilder {
         private KeyItems keyItems;
 
-        public KeyItemsBuilder(GamePanel gamePanel, int x, int y, KeyHandler keyH){
+        public KeyItemsBuilder(GameStateManager gsm, int x, int y, KeyHandler keyH){
             this.keyItems = new KeyItems();
-            this.keyItems.gamePanel = gamePanel;
+            this.keyItems.gsm = gsm;
             this.keyItems.x = x;
             this.keyItems.y = y;
             this.keyItems.keyH = keyH;
@@ -174,8 +174,8 @@ public class KeyItems {
 
     public BufferedImage draw(Graphics2D graphics2D){
 
-        int screenX = this.x - gamePanel.getPlayer().getX() + gamePanel.getPlayer().getScreenX();
-        int screenY = this.y - gamePanel.getPlayer().getY() + gamePanel.getPlayer().getScreenY();
+        int screenX = this.x - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
+        int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
 
 
         // se succede qualcosa l'immagine può cambiare avviando animazione o altro
@@ -187,7 +187,7 @@ public class KeyItems {
             //-----------------.
         }
         else{
-            if(staticImage != null && gamePanel.getMapManager().getCurrentMap() == this.tileManager)
+            if(staticImage != null && gsm.getMapManager().getCurrentMap() == this.tileManager)
          {
             graphics2D.drawImage(staticImage, screenX, screenY, tileSize*scaleWidth, tileSize*scaleHeigth, null);
         }
@@ -206,7 +206,7 @@ public class KeyItems {
 
     public void interact() {
         // Verifica se il giocatore è nelle vicinanze e ha premuto il tasto "E"
-        if (this.isInteractable && this.tileManager == gamePanel.getMapManager().getCurrentMap() && isPlayerNearby()) {
+        if (this.isInteractable && this.tileManager == gsm.getMapManager().getCurrentMap() && isPlayerNearby()) {
             if(keyH.interactPressed && interactionAction != null) {
                 //System.out.println("Ho interagioto con "+this.name);
                 interactionAction.performAction(this);
@@ -218,7 +218,7 @@ public class KeyItems {
 
     private boolean isPlayerNearby() {
         // Puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
-        if(this.collisionArea!= null && gamePanel.getPlayer().getInteractionArea().intersects(this.collisionArea)){
+        if(this.collisionArea!= null && gsm.getPlayer().getInteractionArea().intersects(this.collisionArea)){
             System.out.println("Sto collidendo con "+ this.name);
             return true;
         }

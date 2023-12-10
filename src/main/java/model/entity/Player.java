@@ -1,30 +1,33 @@
 package model.entity;
 
 import controller.KeyHandler;
+import model.gameState.GameStateManager;
 import model.collisioni.CollisionObject;
 import model.items.KeyItems;
-import view.GamePanel;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
+import model.view.GamePanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import javax.swing.Timer;
 
-import static view.GamePanel.tileSize;
+import static model.view.GamePanel.tileSize;
 
 public class Player {
     private GamePanel gamePanel;
+    private GameStateManager gsm;
     private KeyHandler keyHandler;
 
     private int x;
     private int y;
     private int speed;
+
+    private boolean isAttacking = false;
+    private boolean attackAnimationCompleted = true;
 
     private final int screenX;
     private final int screenY;
@@ -35,8 +38,7 @@ public class Player {
     // Nuova area di interazione
     private Rectangle interactionArea = new Rectangle(0, 0, tileSize*2, tileSize*2);
 
-    private boolean isAttacking = false;
-    private boolean attackAnimationCompleted = true;
+
 
     private BufferedImage
             up1, up2, up3, up4,
@@ -48,9 +50,11 @@ public class Player {
     private int spriteCounter = 0;
     private int spriteNum = 3;
 
-    public Player(GamePanel gamePanel, KeyHandler keyHandler) {
+    public Player(GamePanel gamePanel, GameStateManager gsm, KeyHandler keyHandler) {
         this.gamePanel = gamePanel;
+        this.gsm = gsm;
         this.keyHandler = keyHandler;
+
 
         screenX = gamePanel.getScreenWidth()/2 - (tileSize/2);
         screenY = gamePanel.getScreenHeight()/2 - (tileSize/2);
@@ -97,7 +101,7 @@ public class Player {
                     direction = "down";
                     nextY += speed;
                 }
-                
+
                 // Aggiorna la collisionArea del giocatore
                 collisionArea.setLocation(x, y);
 
@@ -122,7 +126,6 @@ public class Player {
         }
 
     }
-
     private void attack() {
         switch (direction) {
             case "left" -> direction = "left&attack";
@@ -147,7 +150,6 @@ public class Player {
         timer.start();
 
     }
-
     private void updateAttackAnimation() {
         //alternatore di sprite
         spriteCounter++;
@@ -263,7 +265,6 @@ public class Player {
         }
         return null;
     }
-
     public boolean collidesWithObjects(int nextX, int nextY) {
         // Verifica la collisione con gli oggetti di collisione della mappa corrente
         for (CollisionObject collisionObject : currentCollisionMap) {
@@ -290,7 +291,7 @@ public class Player {
     // metodo per verificare la collisione con le entità
     public boolean collidesWithEntities(int nextX, int nextY) {
         // Verifica la collisione con le entità della lista npcList
-        for (Entity npc : gamePanel.getNpcList()) {
+        for (Entity npc : gsm.getNpcList()) {
             if (checkCollisionRectangle(nextX, nextY, npc.getCollisionArea())) {
                 return true; // Collisione rilevata
             }
@@ -299,7 +300,7 @@ public class Player {
     }
     public boolean collidesWithItems(int nextX, int nextY) {
         // Verifica la collisione con gli oggetti della lista keyItemsList
-        for (KeyItems items : gamePanel.getKeyItemsList()) {
+        for (KeyItems items : gsm.getKeyItemsList()) {
             if (items.getCollisionArea()!=null && checkCollisionRectangle(nextX, nextY, items.getCollisionArea())) {
                 items.interact();
                 return true; // Collisione rilevata

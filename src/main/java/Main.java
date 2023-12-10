@@ -1,4 +1,4 @@
-import view.GamePanel;
+import model.view.GamePanel;
 import javax.swing.*;
 
 public class Main {
@@ -10,6 +10,7 @@ public class Main {
         window.setTitle("2D Adventure");
 
         GamePanel gamePanel = new GamePanel();
+
         window.add(gamePanel);
 
         window.pack();
