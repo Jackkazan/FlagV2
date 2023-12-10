@@ -245,7 +245,7 @@ public class Player {
             }
             case "up&attack" -> {
                 offsetX = -16;
-                offsetY = -80;
+                offsetY = -76;
                 offsetWidth = 48;
                 offsetHeight = 96;
             }
