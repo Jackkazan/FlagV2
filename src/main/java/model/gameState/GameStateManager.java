@@ -27,6 +27,7 @@ public class GameStateManager {
     private GamePanel gp;
     KeyHandler keyH;
 
+    private boolean alreadyPaused = false;
     Player player;
     public TileManager tileManagerZonaIniziale;
     public TileManager tileManagerCasettaIniziale;
@@ -47,8 +48,7 @@ public class GameStateManager {
     public GameStateManager(GamePanel gp) {
         this.gp = gp;
         this.keyH = new KeyHandler(this);
-        this.menuState = new MenuState(gp, this);
-        this.currentState = menuState;
+        this.currentState = new MenuState(gp, this);
 
     }
     public void Init(){
@@ -69,7 +69,7 @@ public class GameStateManager {
     public void setState(State state) {
         switch (state) {
             case MENU:
-                currentState = menuState;
+                currentState = new MenuState(gp, this);
                 break;
             case PLAY:
                 if(this.playState == null)
@@ -125,5 +125,13 @@ public class GameStateManager {
 
     public KeyHandler getKeyH() {
         return keyH;
+    }
+
+    public boolean isAlreadyPaused() {
+        return alreadyPaused;
+    }
+
+    public void setAlreadyPaused(boolean alreadyPaused) {
+        this.alreadyPaused = alreadyPaused;
     }
 }

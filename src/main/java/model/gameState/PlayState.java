@@ -44,10 +44,10 @@ public class PlayState implements GameState{
 
     @Override
     public void update() {
-        if (keyH.isPaused()){
+        if (keyH.isPaused() && !gsm.isAlreadyPaused()){
             gsm.setState(GameStateManager.State.PAUSE);
         }
-        else {
+
             player.update();
 
             // Aggiornamento degli NPC
@@ -63,7 +63,6 @@ public class PlayState implements GameState{
 
             // Gestione delle transizioni della mappa
             mapManager.manageTransitions();
-        }
     }
 
 

@@ -14,15 +14,19 @@ public class PauseState implements GameState{
 
 
     public PauseState(GamePanel gp, GameStateManager gsm, KeyHandler keyH) {
+        System.out.println("costruttore pausestate");
         this.gp = gp;
         this.gsm = gsm;
         this.keyH = keyH;
+        gsm.setAlreadyPaused(true);
     }
 
     @Override
     public void update() {
+        //gsm.getPlayState().update();
         if (!keyH.isPaused()){
             gsm.setState(GameStateManager.State.PLAY);
+            //gsm.setAlreadyPaused(false);
         }
 
     }

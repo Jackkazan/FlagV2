@@ -29,18 +29,18 @@ public class MenuState implements GameState{
 
     @Override
     public void draw(Graphics g) {
-        this.g2 = (Graphics2D)g;
-        g2.setColor(new Color(0, 0, 0, 150));
-        g2.fillRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
+        //this.g2 = (Graphics2D)g;
+        g.setColor(new Color(0, 0, 0, 150));
+        g.fillRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
 
 
-        g2.setColor(Color.WHITE);
-        g2.setFont(new Font("Arial", Font.BOLD, 24));
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 24));
         String menuText = "Menu";
-        int textWidth = g2.getFontMetrics().stringWidth(menuText);
+        int textWidth = g.getFontMetrics().stringWidth(menuText);
         int x = (gp.getScreenWidth()- textWidth) / 2;
         int y = gp.getScreenHeight()/ 2;
-        g2.drawString(menuText, x, y);
+        g.drawString(menuText, x, y);
 
 
     }
