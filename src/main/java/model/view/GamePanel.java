@@ -3,6 +3,7 @@ package model.view;
 import model.gameState.GameStateManager;
 import model.quests.Quest;
 import model.quests.QuestInitializer;
+import model.sound.Sound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,9 @@ public class GamePanel extends JPanel implements Runnable{
     private final int screenWidth = tileSize * maxScreenCol; //768 pixels
     private final int screenHeight = tileSize * maxScreenRow;//576
     private GameStateManager gsm;
+
+    //9/11
+    Sound sound = new Sound();
 
 
 
@@ -42,7 +46,8 @@ public class GamePanel extends JPanel implements Runnable{
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
         this.setFocusable(true);
-
+        //9/11
+        this.playMusic(0);
     }
 
     public void startGameThread(){
@@ -96,6 +101,23 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
         gsm.draw(g);
 
+    }
+
+    //9/11
+    public void playMusic(int i) {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    //9/11
+    public void stopMusic(){
+        sound.stop();
+    }
+    //9/11
+    public void playSE(int i){
+        sound.setFile(i);
+        sound.play();
     }
 
     public int getMaxScreenCol() {
