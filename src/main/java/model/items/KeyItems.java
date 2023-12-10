@@ -23,7 +23,7 @@ public class KeyItems {
 
     private BufferedImage staticImage;
 
-
+    private InteractionActionItems interactionAction;
     private BufferedImage animateImage1, animateImage2, animateImage3, animateImage4;
     private int speedChangeAnimateSprite;
 
@@ -41,10 +41,10 @@ public class KeyItems {
     private GameStateManager gsm;
     private TileManager tileManager;
 
-    private InteractionActionItems interactionAction;
+
     // Metodo per impostare l'azione durante la costruzione dell'oggetto
-    public void setInteractionAction(ObjectsCreator.DisappearOrChangeImageAction action) {
-        this.interactionAction = action;
+    public void setInteractionActionItems(InteractionActionItems interactionAction) {
+        this.interactionAction = interactionAction;
     }
 
     public void setInteractable(boolean interactable) {
@@ -58,14 +58,6 @@ public class KeyItems {
         }catch (IOException e){
             e.printStackTrace();
         }
-    }
-
-    public void setScaleWidth(int scaleWidth) {
-        this.scaleWidth = scaleWidth;
-    }
-
-    public void setScaleHeigth(int scaleHeigth) {
-        this.scaleHeigth = scaleHeigth;
     }
 
     public void setCollisionArea(Rectangle collisionArea) {
@@ -145,6 +137,11 @@ public class KeyItems {
             return this;
         }
 
+        public KeyItemsBuilder setInteractionAction(InteractionActionItems interactionActionItems){
+            this.keyItems.interactionAction = interactionActionItems;
+            return this;
+        }
+
 
         public KeyItemsBuilder setSpeedChangeAnimateSprite(int speedChangeAnimateSprite) {
             this.keyItems.speedChangeAnimateSprite = speedChangeAnimateSprite;
@@ -177,21 +174,9 @@ public class KeyItems {
         int screenX = this.x - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
         int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
 
-
-        // se succede qualcosa l'immagine può cambiare avviando animazione o altro
-        if(false){
-            BufferedImage[] images = {animateImage1, animateImage2, animateImage3, animateImage4};
-            //...............
-
-
-            //-----------------.
-        }
-        else{
-            if(staticImage != null && gsm.getMapManager().getCurrentMap() == this.tileManager)
-         {
+        if(staticImage != null && gsm.getMapManager().getCurrentMap() == this.tileManager)
             graphics2D.drawImage(staticImage, screenX, screenY, tileSize*scaleWidth, tileSize*scaleHeigth, null);
-        }
-    }
+
         return null;
     }
 
@@ -208,7 +193,7 @@ public class KeyItems {
         // Verifica se il giocatore è nelle vicinanze e ha premuto il tasto "E"
         if (this.isInteractable && this.tileManager == gsm.getMapManager().getCurrentMap() && isPlayerNearby()) {
             if(keyH.interactPressed && interactionAction != null) {
-                //System.out.println("Ho interagioto con "+this.name);
+                System.out.println("Ho interagioto con "+this.name);
                 interactionAction.performAction(this);
             }
         }

@@ -2,6 +2,7 @@ package model.entity;
 
 import controller.KeyHandler;
 import model.gameState.GameStateManager;
+import model.items.KeyItems;
 import model.tile.TileManager;
 import model.view.GamePanel;
 
@@ -44,6 +45,8 @@ public class Entity {
     private boolean isInteractable;
 
     private InteractionActionEntity interactionAction;
+    private int scaleWidth= 1;
+    private int scaleHeigth=1;
 
     private Entity() {}
 
@@ -97,6 +100,11 @@ public class Entity {
 
         public EntityBuilder setIsInteractble(boolean isInteractble){
             this.entity.isInteractable = isInteractble;
+            return this;
+        }
+        public EntityBuilder setScale(int scaleWidth, int scaleHeigth) {
+            this.entity.scaleWidth = scaleWidth;
+            this.entity.scaleHeigth = scaleHeigth;
             return this;
         }
 
@@ -179,7 +187,7 @@ public class Entity {
         int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
 
         if (images != null && gsm.getMapManager().getCurrentMap() == this.tileManager) {
-            graphics2D.drawImage(images[spriteNum], screenX, screenY, tileSize + 16, tileSize + 16, null);
+            graphics2D.drawImage(images[spriteNum], screenX, screenY, tileSize *scaleWidth+16, tileSize*scaleWidth +16 , null);
         }
 
         return null;
@@ -210,9 +218,7 @@ public class Entity {
 
             }
         }
-
         interact();
-
 
     }
 
@@ -229,8 +235,6 @@ public class Entity {
     public void setInteractionAction(InteractionActionEntity action) {
         this.interactionAction = action;
     }
-
-
 
     private boolean isPlayerNearby() {
         // Puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto

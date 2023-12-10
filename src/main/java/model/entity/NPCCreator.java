@@ -35,6 +35,7 @@ public class NPCCreator {
                 .setSpriteNumLess1(1)
                 .setCollisionArea(32,32)
                 .setTotalSprite(8)
+                .setScale(2,3)
                 .setIsInteractble(true)
                 .setDefaultDirection("down")
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())

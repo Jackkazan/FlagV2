@@ -28,6 +28,7 @@ public class ObjectsCreator {
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())
                 .setRelatedQuests(questList.get(0))
                 .setInteractible(true)
+                .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
 
         KeyItems portaCasettaInizialeChiusa = new KeyItems.KeyItemsBuilder(gsm,4*tileSize,7*tileSize, keyH)
@@ -38,15 +39,12 @@ public class ObjectsCreator {
                 .setCollisionArea(0,0,48,48)
                 .setRelatedQuests(questList.get(1))
                 .setScale(2,3)
+                .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
-
-
+        
         //aggiunta di tutti gli oggetti alla lista
         objectList.add(keyCasettaIniziale);
         objectList.add(portaCasettaInizialeChiusa);
-
-        keyCasettaIniziale.setInteractionAction(new DisappearOrChangeImageAction());
-        portaCasettaInizialeChiusa.setInteractionAction(new DisappearOrChangeImageAction());
 
         return objectList;
     }
