@@ -260,7 +260,7 @@ public class Player {
         }
 
         if (images != null) {
-            int scale =5;
+            int scale = 5;
             graphics2D.drawImage(images[spriteNum], screenX+offsetX, screenY+offsetY, (imageWidth/2) *scale, (imageHeight/2)*scale, null);
         }
         return null;

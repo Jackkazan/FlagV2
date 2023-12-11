@@ -36,6 +36,8 @@ public class Entity {
 
     private int totalSprite;
 
+    private int scale;
+
     private Rectangle collisionArea;
     private GamePanel gamePanel;
     private GameStateManager gsm;
@@ -44,8 +46,8 @@ public class Entity {
     private boolean isInteractable;
 
     private InteractionActionEntity interactionAction;
-    private int scaleWidth= 1;
-    private int scaleHeigth=1;
+    private int imageWidth= 1;
+    private int imageHeight=1;
 
     private Entity() {}
 
@@ -82,7 +84,7 @@ public class Entity {
         }
 
         public EntityBuilder setCollisionArea(int larghezza, int altezza) {
-            this.entity.collisionArea = new Rectangle(entity.x, entity.y, larghezza, altezza);
+            this.entity.collisionArea = new Rectangle(this.entity.x, this.entity.y, (larghezza/2)*this.entity.scale, (altezza/2)*this.entity.scale);
             return this;
         }
 
@@ -105,9 +107,14 @@ public class Entity {
             this.entity.interactionAction = action;
             return this;
         }
-        public EntityBuilder setScale(int scaleWidth, int scaleHeigth) {
-            this.entity.scaleWidth = scaleWidth;
-            this.entity.scaleHeigth = scaleHeigth;
+        public EntityBuilder setImageDimension(int imageWidth, int imageHeight) {
+            this.entity.imageWidth = imageWidth;
+            this.entity.imageHeight = imageHeight;
+            return this;
+        }
+
+        public EntityBuilder setScale(int scale) {
+            this.entity.scale = scale;
             return this;
         }
 
@@ -190,7 +197,7 @@ public class Entity {
         int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
 
         if (images != null && gsm.getMapManager().getCurrentMap() == this.tileManager) {
-            graphics2D.drawImage(images[spriteNum], screenX, screenY, tileSize *scaleWidth+16, tileSize*scaleWidth +16 , null);
+            graphics2D.drawImage(images[spriteNum], screenX, screenY, (imageWidth/2)*scale , (imageHeight/2)*scale,null);
         }
 
         return null;
