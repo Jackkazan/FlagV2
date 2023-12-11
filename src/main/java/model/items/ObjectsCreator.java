@@ -2,12 +2,11 @@ package model.items;
 
 
 import controller.KeyHandler;
+import model.gameState.GameStateManager;
 import model.quests.Quest;
 import model.quests.QuestInitializer;
 import model.tile.MapManager;
-import view.GamePanel;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,20 +17,21 @@ public class ObjectsCreator {
     static List<Quest> questList = QuestInitializer.createQuestList();
 
 
-    public static List<KeyItems> createObjects(GamePanel gamePanel, MapManager mapManager, KeyHandler keyH) {
+    public static List<KeyItems> createObjects(GameStateManager gsm, MapManager mapManager, KeyHandler keyH) {
         List<KeyItems> objectList = new ArrayList<>();
 
         //inizializzazione oggetti
-        KeyItems keyCasettaIniziale = new KeyItems.KeyItemsBuilder(gamePanel, 7*tileSize, 5*tileSize, keyH)
+        KeyItems keyCasettaIniziale = new KeyItems.KeyItemsBuilder(gsm, 7*tileSize, 5*tileSize, keyH)
                 .setName("keyCasettaIniziale")
                 .setStaticImage("/object/key.png")
                 .setCollisionArea(0,0,16,16)
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())
                 .setRelatedQuests(questList.get(0))
                 .setInteractible(true)
+                .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
 
-        KeyItems portaCasettaInizialeChiusa = new KeyItems.KeyItemsBuilder(gamePanel,4*tileSize,7*tileSize, keyH)
+        KeyItems portaCasettaInizialeChiusa = new KeyItems.KeyItemsBuilder(gsm,4*tileSize,7*tileSize, keyH)
                 .setName("portaCasettaInizialeChiusa")
                 .setStaticImage("/object/PortaChiusaInterno.png")
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())
@@ -39,15 +39,12 @@ public class ObjectsCreator {
                 .setCollisionArea(0,0,48,48)
                 .setRelatedQuests(questList.get(1))
                 .setScale(2,3)
+                .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
-
-
+        
         //aggiunta di tutti gli oggetti alla lista
         objectList.add(keyCasettaIniziale);
         objectList.add(portaCasettaInizialeChiusa);
-
-        keyCasettaIniziale.setInteractionAction(new DisappearOrChangeImageAction());
-        portaCasettaInizialeChiusa.setInteractionAction(new DisappearOrChangeImageAction());
 
         return objectList;
     }

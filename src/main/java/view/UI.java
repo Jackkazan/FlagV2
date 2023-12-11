@@ -1,5 +1,6 @@
 package view;
 
+import model.gameState.GameStateManager;
 import model.HUD.OBJ_Heart;
 
 import java.awt.*;
@@ -8,18 +9,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
-import static view.GamePanel.tileSize;
-
 public class UI {
 
     private final GamePanel gamePanel;
+    private final GameStateManager gsm;
     private Graphics2D graphics2D;
     private final BufferedImage heart_full, heart_half, heart_blank;
     private Font maruMonica;
     private OBJ_Heart heart;
 
-    public UI(GamePanel gamePanel) {
+    public UI(GamePanel gamePanel, GameStateManager gsm) {
         this.gamePanel = gamePanel;
+        this.gsm = gsm;
 
         setupFonts();
 
@@ -45,26 +46,26 @@ public class UI {
     }
 
     private void drawPlayerLife() {
-        int x = tileSize / 2;
-        int y = tileSize / 2;
+        int x = GamePanel.tileSize / 2;
+        int y = GamePanel.tileSize / 2;
 
-        for (int i = 0; i < gamePanel.getPlayer().getMaxLife() / 2; i++) {
+        for (int i = 0; i < gsm.getPlayer().getMaxLife() / 2; i++) {
             graphics2D.drawImage(heart_blank, x, y, null);
-            x += tileSize;
+            x += GamePanel.tileSize;
         }
 
-        x = tileSize / 2;
-        y = tileSize / 2;
+        x = GamePanel.tileSize / 2;
+        y = GamePanel.tileSize / 2;
 
-        for (int i = 0; i < gamePanel.getPlayer().getCurrentLife(); i++) {
+        for (int i = 0; i < gsm.getPlayer().getCurrentLife(); i++) {
             graphics2D.drawImage(heart_half, x, y, null);
             i++;
 
-            if (i < gamePanel.getPlayer().getCurrentLife()) {
+            if (i < gsm.getPlayer().getCurrentLife()) {
                 graphics2D.drawImage(heart_full, x, y, null);
             }
 
-            x += tileSize;
+            x += GamePanel.tileSize;
         }
     }
 }

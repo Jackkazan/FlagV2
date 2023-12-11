@@ -1,6 +1,6 @@
 package model.quests;
 
-public class Quest {
+public class  Quest {
 
     private String questName;
     private boolean isDone;

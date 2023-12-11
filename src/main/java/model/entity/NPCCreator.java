@@ -1,6 +1,7 @@
 package model.entity;
 
 import controller.KeyHandler;
+import model.gameState.GameStateManager;
 import model.tile.MapManager;
 import view.GamePanel;
 
@@ -11,7 +12,7 @@ import static view.GamePanel.tileSize;
 
 public class NPCCreator {
 
-    public static List<Entity> createNPCs(GamePanel gamePanel, MapManager mapManager, KeyHandler keyH) {
+    public static List<Entity> createNPCs(GamePanel gamePanel, GameStateManager gsm, MapManager mapManager, KeyHandler keyH) {
         List<Entity> npcList = new ArrayList<>();
         // Inizializza le entità e aggiungile alla lista
 
@@ -27,14 +28,16 @@ public class NPCCreator {
         String Vecchietta_right1= "/npc/VecchiettaRight_0.png";
         String Vecchietta_right2= "/npc/VecchiettaRight_1.png";
 
-        Entity vecchietta = new Entity.EntityBuilder(gamePanel, 22*tileSize, 46*tileSize, gamePanel.getKeyH())
+        Entity vecchietta = new Entity.EntityBuilder(gamePanel, gsm, 22*tileSize, 46*tileSize, gsm.getKeyH())
                 .setName("Vecchietta")
                 .setSpeed(2)
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
                 .setCollisionArea(32,32)
                 .setTotalSprite(8)
+                .setScale(2,3)
                 .setIsInteractble(true)
+                .setInteractionAction(new NpcDialogue(gsm))
                 .setDefaultDirection("down")
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
                 .set8EntityImage(Vecchietta_up1, Vecchietta_up2,

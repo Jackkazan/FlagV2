@@ -1,5 +1,6 @@
 package controller;
 
+import model.gameState.GameStateManager;
 import view.GamePanel;
 
 import java.awt.event.KeyEvent;
@@ -8,73 +9,80 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
 
     private GamePanel gamePanel;
+    private GameStateManager gsm;
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, attackPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, spacePressed, enterPressed, yPressed;
 
     private boolean showDebugText = false;
-    private boolean pausePressed = false;
-    private boolean pauseToggle = true;
+    private boolean isPaused = false;
 
+    private boolean attacking = false;
+    private String lastPress;
 
     @Override
     public void keyTyped(KeyEvent e) {
 
     }
-
-    public KeyHandler(GamePanel gamePanel) {  // Aggiunto
-        this.gamePanel = gamePanel;  // Aggiunto
+    public void setGamePanel() {
+        this.gamePanel = gsm.getGamePanel();
+    }
+    public KeyHandler(GameStateManager gsm) {  // Aggiunto
+        this.gsm = gsm;
     }
 
-    public void setGamePanel(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
-    }
+
 
 
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
-        if(code == KeyEvent.VK_T){
-            showDebugText = !showDebugText;
-        }
-
-        if(code == KeyEvent.VK_SPACE){
-            attackPressed = true;
-        }
-
-        if(code == KeyEvent.VK_W){
-            upPressed = true;
-        }
-        if(code == KeyEvent.VK_S) {
-            downPressed = true;
-        }
-        if(code == KeyEvent.VK_A){
-            leftPressed = true;
-        }
-        if(code == KeyEvent.VK_D){
-            rightPressed = true;
-        }
-        if(code == KeyEvent.VK_E){
-            interactPressed = true;
-        }
-        //PAUSA
-        if (code == KeyEvent.VK_P) {
-            if (!pauseToggle) {
-                // Se la pausa non è in modalità toggle, imposta isPaused sulla pressione
-                pausePressed = true;
-            } else {
-                // Altrimenti, in modalità toggle, inverte lo stato di pausa quando si preme "P"
-                gamePanel.togglePause();
+            if (code == KeyEvent.VK_T) {
+                showDebugText = !showDebugText;
             }
-        }
+            if (code == KeyEvent.VK_Y){
+                yPressed = true;
+            }
+            if (code == KeyEvent.VK_ENTER)
+                enterPressed = true;
+
+            if (code == KeyEvent.VK_SPACE) {
+                spacePressed = true;
+            }
+
+            if (code == KeyEvent.VK_W) {
+                upPressed = true;
+            }
+            if (code == KeyEvent.VK_S) {
+                downPressed = true;
+            }
+            if (code == KeyEvent.VK_A) {
+                leftPressed = true;
+            }
+            if (code == KeyEvent.VK_D) {
+                rightPressed = true;
+            }
+            if (code == KeyEvent.VK_E) {
+                interactPressed = true;
+            }
+            //PAUSA
+            if (code == KeyEvent.VK_P) {
+                isPaused = !isPaused;
+                }
     }
+
 
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
 
+        if (code == KeyEvent.VK_ENTER)
+            enterPressed = false;
+        if (code == KeyEvent.VK_Y){
+            yPressed = false;
+        }
         if (code == KeyEvent.VK_SPACE){
-            attackPressed = false;
+            spacePressed = false;
         }
         if(code == KeyEvent.VK_W){
             upPressed = false;
@@ -93,13 +101,6 @@ public class KeyHandler implements KeyListener {
         }
         //PAUSA
         if (code == KeyEvent.VK_P) {
-            if (!pauseToggle) {
-                // Se la pausa non è in modalità toggle, imposta isPaused sul rilascio
-                pausePressed = false;
-                if (gamePanel.isPaused()) {
-                    gamePanel.togglePause();
-                }
-            }
         }
     }
 
@@ -108,7 +109,8 @@ public class KeyHandler implements KeyListener {
         return showDebugText;
     }
 
-    public boolean isPausePressed() {
-        return pausePressed;
+    public boolean isPaused() {
+        return isPaused;
     }
 }
+

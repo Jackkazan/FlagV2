@@ -1,13 +1,11 @@
 package model.entity;
 
 import controller.KeyHandler;
-import model.collisioni.CollisionObject;
-import model.items.InteractionActionItems;
+import model.gameState.GameStateManager;
 import model.tile.TileManager;
 import view.GamePanel;
 
 import javax.imageio.ImageIO;
-import javax.swing.plaf.basic.BasicTreeUI;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -40,20 +38,24 @@ public class Entity {
 
     private Rectangle collisionArea;
     private GamePanel gamePanel;
+    private GameStateManager gsm;
 
     private TileManager tileManager;
     private boolean isInteractable;
 
     private InteractionActionEntity interactionAction;
+    private int scaleWidth= 1;
+    private int scaleHeigth=1;
 
     private Entity() {}
 
     public static class EntityBuilder {
         private Entity entity;
 
-        public EntityBuilder(GamePanel gamePanel, int x, int y, KeyHandler keyH) {
+        public EntityBuilder(GamePanel gamePanel, GameStateManager gsm, int x, int y, KeyHandler keyH) {
             this.entity = new Entity();
             this.entity.gamePanel = gamePanel;
+            this.entity.gsm = gsm;
             this.entity.x = x;
             this.entity.y = y;
             this.entity.keyH = keyH;
@@ -97,6 +99,15 @@ public class Entity {
 
         public EntityBuilder setIsInteractble(boolean isInteractble){
             this.entity.isInteractable = isInteractble;
+            return this;
+        }
+        public EntityBuilder setInteractionAction(InteractionActionEntity action) {
+            this.entity.interactionAction = action;
+            return this;
+        }
+        public EntityBuilder setScale(int scaleWidth, int scaleHeigth) {
+            this.entity.scaleWidth = scaleWidth;
+            this.entity.scaleHeigth = scaleHeigth;
             return this;
         }
 
@@ -175,11 +186,11 @@ public class Entity {
             default -> null;
         };
 
-        int screenX = this.x - gamePanel.getPlayer().getX() + gamePanel.getPlayer().getScreenX();
-        int screenY = this.y - gamePanel.getPlayer().getY() + gamePanel.getPlayer().getScreenY();
+        int screenX = this.x - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
+        int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
 
-        if (images != null && gamePanel.getMapManager().getCurrentMap() == this.tileManager) {
-            graphics2D.drawImage(images[spriteNum], screenX, screenY, tileSize + 16, tileSize + 16, null);
+        if (images != null && gsm.getMapManager().getCurrentMap() == this.tileManager) {
+            graphics2D.drawImage(images[spriteNum], screenX, screenY, tileSize *scaleWidth+16, tileSize*scaleWidth +16 , null);
         }
 
         return null;
@@ -210,15 +221,13 @@ public class Entity {
 
             }
         }
-
         interact();
-
 
     }
 
     public void interact() {
         // Verifica se il giocatore è nelle vicinanze e ha premuto il tasto "E"
-        if (this.isInteractable && this.tileManager == gamePanel.getMapManager().getCurrentMap() && isPlayerNearby()) {
+        if (this.isInteractable && this.tileManager == gsm.getMapManager().getCurrentMap() && isPlayerNearby()) {
             if(keyH.interactPressed && interactionAction != null) {
                 //System.out.println("Ho interagioto con "+this.name);
                 interactionAction.performAction(this);
@@ -226,15 +235,11 @@ public class Entity {
         }
     }
 
-    public void setInteractionAction(InteractionActionEntity action) {
-        this.interactionAction = action;
-    }
-
 
 
     private boolean isPlayerNearby() {
         // Puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
-        if(this.collisionArea!= null && gamePanel.getPlayer().getInteractionArea().intersects(this.collisionArea)){
+        if(this.collisionArea!= null && gsm.getPlayer().getInteractionArea().intersects(this.collisionArea)){
             System.out.println("Sto collidendo con "+ this.name);
             return true;
         }
@@ -250,6 +255,10 @@ public class Entity {
 
     public int getY() {
         return this.y;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getSpeed() {

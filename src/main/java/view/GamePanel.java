@@ -1,25 +1,13 @@
 package view;
 
-import controller.KeyHandler;
-import model.entity.Entity;
-import model.entity.NPCCreator;
-import model.entity.Player;
-import model.items.KeyItems;
-import model.items.ObjectsCreator;
+import model.gameState.GameStateManager;
 import model.quests.Quest;
 import model.quests.QuestInitializer;
-import model.tile.MapManager;
-import model.tile.TileManager;
+import model.sound.Sound;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class GamePanel extends JPanel implements Runnable{
 
@@ -31,44 +19,35 @@ public class GamePanel extends JPanel implements Runnable{
     private final int maxScreenCol = 25; //16 default
     private final int maxScreenRow = 19; //12 default
     private final int screenWidth = tileSize * maxScreenCol; //768 pixels
-    private final int screenHeight = tileSize * maxScreenRow;//576 pixels
-    private Graphics2D graphics2D;
-    private BufferedImage buffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_RGB);
-    private final UI ui = new UI(this);
+    private final int screenHeight = tileSize * maxScreenRow;//576
+    private GameStateManager gsm;
+
+    //9/11
+    Sound sound = new Sound();
+
+
+
+    Thread gameThread;
+
+    private final UI ui;
 
     int FPS = 60;
 
-    private boolean isPaused = false;
-    private boolean pauseMenuVisible = false;
-
-
-    private KeyHandler keyH = new KeyHandler(this);
-
-    Thread gameThread;
-    private Player player = new Player(this, keyH);
-
-    //mappe
-    public TileManager tileManagerZonaIniziale = new TileManager(this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
-    public TileManager tileManagerCasettaIniziale = new TileManager(this, "src/main/resources/Map/StanzaIntroduzione/CasettaIniziale.tmx");
-    public TileManager tileManagerVillaggioSud = new TileManager(this,"src/main/resources/Map/VillaggioSud/VillaggioSud.tmx");
-    public TileManager tileManagerNegozioItemsVillaggioSud = new TileManager(this, "src/main/resources/Map/NegozioItemsVillaggioSud/NegozioItemsVillaggioSud.tmx");
-    //gestore mappe
-    MapManager mapManager = new MapManager(this, player, tileManagerCasettaIniziale, tileManagerZonaIniziale, tileManagerVillaggioSud, tileManagerNegozioItemsVillaggioSud);
-
-    List<Entity> npcList = NPCCreator.createNPCs(this, mapManager, keyH);
-
-    List<KeyItems> keyItemsList = ObjectsCreator.createObjects(this, mapManager, keyH);
 
     List<Quest> questList = QuestInitializer.createQuestList();
     //transizione
 
 
     public GamePanel(){
+        this.gsm = new GameStateManager(this);
+        this.addKeyListener(gsm.getKeyH());
+        this.ui = new UI(this, this.gsm);
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
-        this.addKeyListener(keyH);
         this.setFocusable(true);
+        //9/11
+        this.playMusic(0);
     }
 
     public void startGameThread(){
@@ -94,16 +73,13 @@ public class GamePanel extends JPanel implements Runnable{
             lastTime = currentTime;
 
             if (delta >= 1) {
+
                 // 1 UPDATE: Aggiornamento delle informazioni sulla posizione del personaggio
-                if (!isPaused) {
-                    if (keyH.isPausePressed()) {
-                        togglePause();
-                    }
-                    update();
-                }
+                update();
 
                 // 2 DRAW: Disegno dello schermo con le informazioni aggiornate
-                paintImmediately(0, 0, screenWidth, screenHeight);
+                //paintImmediately(0, 0, screenWidth, screenHeight);  Non ho idea di come funzini, se repaint da problemi usare questo :)
+                repaint(0, 0, screenWidth, screenHeight);
                 delta--;
                 drawCount++;
             }
@@ -116,125 +92,32 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
-
     public void update() {
-
-        player.update();
-
-        // Aggiornamento degli NPC
-        for (Entity npc : npcList) {
-            npc.update();
-        }
-
-        // Aggiornamento degli oggetti
-        for (KeyItems items : keyItemsList) {
-            items.update();
-        }
-
-
-        // Gestione delle transizioni della mappa
-        mapManager.manageTransitions();
+        gsm.update();
     }
 
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        gsm.draw(g);
 
-        this.graphics2D = (Graphics2D) g;
-        if(pauseMenuVisible){
-            drawPauseMenu(graphics2D);
-        }
-        else {
-            // Disegna sulla buffer
-            Graphics2D bufferGraphics = buffer.createGraphics();
-            // Cancella completamente l'immagine del buffer
-            bufferGraphics.clearRect(0, 0, screenWidth, screenHeight);
-            mapManager.draw(bufferGraphics);
-            for (Entity npc : npcList) {
-                npc.draw(bufferGraphics);
-            }
-            for (KeyItems items : keyItemsList) {
-                items.draw(bufferGraphics);
-            }
-            player.draw(bufferGraphics);
-            ui.draw(bufferGraphics);
-            drawToTempScreen();
-            // Copia l'intera immagine buffer sulla schermata
-            g.drawImage(buffer, 0, 0, this);
-            graphics2D.dispose();
-            // Dispose del bufferGraphics
-            bufferGraphics.dispose();
-        }
     }
 
-    public void drawToTempScreen() {
-
-        // DEBUG
-        long drawStart = 0;
-        if (keyH.isShowDebugText()) {
-            drawStart = System.nanoTime();
-        }
-        // Crea un nuovo Graphics2D per il buffer
-        Graphics2D bufferGraphics = buffer.createGraphics();
-        // DEBUG
-        if (keyH.isShowDebugText()) {
-            drawDebugInfo(bufferGraphics, drawStart);
-        }
-
-        bufferGraphics.dispose();
+    //9/11
+    public void playMusic(int i) {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
     }
 
-    //DEBUG
-    private void drawDebugInfo(Graphics2D graphics2D, long drawStart) {
-        long drawEnd = System.nanoTime();
-        long passedTime = drawEnd - drawStart;
-        int x = 10;
-        int y = 400;
-        int lineHeight = 20;
-
-        graphics2D.setFont(new Font("Arial", Font.PLAIN, 20));
-        graphics2D.setColor(Color.WHITE);
-
-        graphics2D.drawString("X: " + player.getX(), x, y);
-        y += lineHeight;
-        graphics2D.drawString("Y: " + player.getY(), x, y);
-        y += lineHeight;
-        graphics2D.drawString("Col: " + (player.getX() + player.getCollisionArea().x) / tileSize, x, y);
-        y += lineHeight;
-        graphics2D.drawString("Row: " + (player.getY() + player.getCollisionArea().y) / tileSize, x, y);
-        y += lineHeight;
-        graphics2D.drawString("Draw Time: " + passedTime, x, y);
+    //9/11
+    public void stopMusic(){
+        sound.stop();
     }
-
-    public void togglePause() {
-        pauseMenuVisible = !isPaused;
-        isPaused = !isPaused;
-    }
-
-    private void drawPauseMenu(Graphics2D g2d) {
-        // Disegna il menu di pausa
-        // Ad esempio, puoi disegnare un rettangolo semi-trasparente con le opzioni del menu
-        g2d.setColor(new Color(0, 0, 0, 150)); // Colore nero semi-trasparente
-        g2d.fillRect(0, 0, screenWidth, screenHeight);
-
-        // Disegna le opzioni del menu di pausa
-        g2d.setColor(Color.WHITE);
-        g2d.setFont(new Font("Arial", Font.BOLD, 24));
-        String pauseText = "ENTRA STO TRAPEZIO";
-        int textWidth = g2d.getFontMetrics().stringWidth(pauseText);
-        int x = (screenWidth - textWidth) / 2;
-        int y = screenHeight / 2;
-        g2d.drawString(pauseText, x, y);
-
-        // Aggiungi altre opzioni del menu di pausa se necessario
-    }
-
-    public Player getPlayer() {
-        return this.player;
-    }
-
-    public Graphics2D getGraphics2D() {
-        return this.graphics2D;
+    //9/11
+    public void playSE(int i){
+        sound.setFile(i);
+        sound.play();
     }
 
     public int getMaxScreenCol() {
@@ -255,25 +138,11 @@ public class GamePanel extends JPanel implements Runnable{
 
     public int getScale() { return this.scale; }
 
-    public MapManager getMapManager() {
-        return mapManager;
+    public GameStateManager getGsm() {
+        return gsm;
     }
-
-    public List<Entity> getNpcList() {
-        return npcList;
+    public UI getUi() {
+        return ui;
     }
-
-    public List<KeyItems> getKeyItemsList() {
-        return keyItemsList;
-    }
-
-    public boolean isPaused() {
-        return isPaused;
-    }
-
-    public KeyHandler getKeyH() {
-        return keyH;
-    }
-
     //transizione animata -------------------------------------------------------------------------------
 }

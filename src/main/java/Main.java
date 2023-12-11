@@ -10,6 +10,7 @@ public class Main {
         window.setTitle("2D Adventure");
 
         GamePanel gamePanel = new GamePanel();
+
         window.add(gamePanel);
 
         window.pack();
