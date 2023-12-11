@@ -99,7 +99,7 @@ public class GameStateManager {
         this.setState(GameStateManager.State.PLAY);
         this.inDialogue = false;
         this.previousState = null;
-    }
+    } // Logica per uscire dal dialogo
     public void update() {
         currentState.update();
     }

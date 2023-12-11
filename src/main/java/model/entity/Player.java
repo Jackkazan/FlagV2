@@ -213,7 +213,7 @@ public class Player {
         }
     }
 
-    public BufferedImage draw(Graphics2D graphics2D) {
+    public void draw(Graphics2D graphics2D) {
         BufferedImage[] images = switch (direction) {
             case "up" -> new BufferedImage[]{up1, up2, up3, up4};
             case "down" -> new BufferedImage[]{down1, down2, down3, down4};
@@ -263,7 +263,6 @@ public class Player {
             int scale = 5;
             graphics2D.drawImage(images[spriteNum], screenX+offsetX, screenY+offsetY, (imageWidth/2) *scale, (imageHeight/2)*scale, null);
         }
-        return null;
     }
     public boolean collidesWithObjects(int nextX, int nextY) {
         // Verifica la collisione con gli oggetti di collisione della mappa corrente

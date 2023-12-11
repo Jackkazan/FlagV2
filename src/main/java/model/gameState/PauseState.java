@@ -26,12 +26,12 @@ public class PauseState implements GameState{
         //gsm.getPlayState().update();
         if (!keyH.isPaused()){
             if (gsm.isInDialogue()){
-                gsm.setState(GameStateManager.State.PREVIOUS);
+                gsm.setState(GameStateManager.State.PREVIOUS); // Se si è in dialogo uscendo dalla pausa bisogna ritornare allo stato dialogo salvato in previous state
             }
             else{
             gsm.setState(GameStateManager.State.PLAY);
             }
-            //gsm.setAlreadyPaused(false);
+            gsm.setAlreadyPaused(false);
         }
 
     }
