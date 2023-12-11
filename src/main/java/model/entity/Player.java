@@ -223,43 +223,43 @@ public class Player {
             case "right&attack" -> new BufferedImage[]{attackRight1, attackRight2, attackRight3, attackRight4};
             default -> null;
         };
-        int offsetX, offsetY, offsetWidth, offsetHeight;
+        int offsetX, offsetY, imageWidth, imageHeight;
         switch (direction) {
             case "down&attack" -> {
                 offsetX = -16;
                 offsetY = -32;
-                offsetWidth = 48;
-                offsetHeight = 96;
+                imageWidth = 32; //48
+                imageHeight = 48; //96
             }
             case "left&attack" -> {
-                offsetX = -64;
+                offsetX = -58;
                 offsetY = -32;
-                offsetWidth = 96;
-                offsetHeight = 48;
+                imageWidth = 48; //96
+                imageHeight = 32; //48
             }
             case "right&attack" -> {
-                offsetX = -16;
+                offsetX = -14;
                 offsetY = -32;
-                offsetWidth = 96;
-                offsetHeight = 48;
+                imageWidth = 48; //96
+                imageHeight = 32; //48
             }
             case "up&attack" -> {
                 offsetX = -16;
-                offsetY = -76;
-                offsetWidth = 48;
-                offsetHeight = 96;
+                offsetY = -72;
+                imageWidth = 32; //48
+                imageHeight = 48; //96
             }
             default -> {
                 offsetX = -16;
                 offsetY = -32;
-                offsetWidth = 48;
-                offsetHeight = 48;
+                imageWidth = 32; //48
+                imageHeight = 32; //48
             }
         }
 
         if (images != null) {
-            //standard è tileSize+16 ---------------------------
-            graphics2D.drawImage(images[spriteNum], screenX+offsetX, screenY+offsetY, tileSize+offsetWidth, tileSize+offsetHeight, null);
+            int scale =5;
+            graphics2D.drawImage(images[spriteNum], screenX+offsetX, screenY+offsetY, (imageWidth/2) *scale, (imageHeight/2)*scale, null);
         }
         return null;
     }
