@@ -8,6 +8,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
+import static view.GamePanel.tileSize;
+
 public class OBJ_Heart {
 
     //OBJECT STATS
@@ -25,13 +27,13 @@ public class OBJ_Heart {
 
         try {
             BufferedImage image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/heart/heart_full.png")));
-            setImage1(UtilityTool.scaleImage(image, gamePanel.tileSize, gamePanel.tileSize));
+            setImage1(UtilityTool.scaleImage(image, tileSize, tileSize));
 
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/heart/heart_half.png")));
-            setImage2(UtilityTool.scaleImage(image, gamePanel.tileSize, gamePanel.tileSize));
+            setImage2(UtilityTool.scaleImage(image, tileSize, tileSize));
 
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/heart/heart_blank.png")));
-            setImage3(UtilityTool.scaleImage(image, gamePanel.tileSize, gamePanel.tileSize));
+            setImage3(UtilityTool.scaleImage(image, tileSize, tileSize));
         } catch (IOException e) {
             e.printStackTrace();
         }

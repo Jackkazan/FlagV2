@@ -4,6 +4,8 @@ import controller.KeyHandler;
 import model.entity.Entity;
 import model.items.KeyItems;
 import model.entity.Player;
+import model.sound.Playlist;
+import model.sound.Sound;
 import model.tile.MapManager;
 import view.GamePanel;
 
@@ -20,7 +22,8 @@ public class PlayState implements GameState{
 
     private MapManager mapManager;
 
-
+    Playlist playlist = new Playlist();
+    List<Sound> songList = playlist.getSongList();
     //mappe
 
 
@@ -38,7 +41,7 @@ public class PlayState implements GameState{
         this.player = player;
         this.keyH = keyH;
         this.buffer = new BufferedImage(gp.getScreenWidth(), gp.getScreenHeight(), BufferedImage.TYPE_INT_RGB);
-
+        this.playMusic();
     }
 
 
@@ -60,8 +63,7 @@ public class PlayState implements GameState{
             items.update();
         }
 
-
-            // Gestione delle transizioni della mappa
+        // Gestione delle transizioni della mappa
         mapManager.manageTransitions();
     }
 
@@ -130,5 +132,17 @@ public class PlayState implements GameState{
         y += lineHeight;
         graphics2D.drawString("Draw Time: " + passedTime, x, y);
     }
+
+    public void playMusic() {
+        songList.get(0).play();
+        songList.get(0).loop();
+
+    }
+
+    //9/11
+    public void stopMusic(){
+        songList.get(0).stop();
+    }
+    //9/11
 
 }
