@@ -24,6 +24,7 @@ public class ObjectsCreator {
         KeyItems keyCasettaIniziale = new KeyItems.KeyItemsBuilder(gsm, 7*tileSize, 5*tileSize, keyH)
                 .setName("keyCasettaIniziale")
                 .setStaticImage("/object/key.png")
+                .setImageDimension(16,16)
                 .setCollisionArea(0,0,16,16)
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())
                 .setRelatedQuests(questList.get(0))
@@ -36,15 +37,28 @@ public class ObjectsCreator {
                 .setStaticImage("/object/PortaChiusaInterno.png")
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())
                 .setInteractible(true)
+                .setImageDimension(32,48)
                 .setCollisionArea(0,0,48,48)
                 .setRelatedQuests(questList.get(1))
-                .setScale(2,3)
                 .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
-        
+
+
+        KeyItems zuccaMarcia = new KeyItems.KeyItemsBuilder(gsm, 20*tileSize, 50*tileSize, keyH)
+                .setName("zuccaMarcia")
+                .setStaticImage("/object/zuccaMarcia.png")
+                .setImageDimension(16,16)
+                .setCollisionArea(0,0,16,16)
+                .setContainedMap(mapManager.getTileManagerZonaIniziale())
+                .setRelatedQuests(questList.get(0))
+                .setInteractible(true)
+                .setInteractionAction(new DisappearOrChangeImageAction())
+                .build();
+
         //aggiunta di tutti gli oggetti alla lista
         objectList.add(keyCasettaIniziale);
         objectList.add(portaCasettaInizialeChiusa);
+        objectList.add(zuccaMarcia);
 
         return objectList;
     }
@@ -69,6 +83,13 @@ public class ObjectsCreator {
                 //se hai interagito con la collisione della porta e tutte le quest fin qui sono completate allora sblocca la porta
                 if(keyItems.getName().equals("portaCasettaInizialeChiusa")){
                     keyItems.setStaticImage("/object/portaAperta.png");
+                    keyItems.setCollisionArea(null);        //rimuove collisione della porta
+                    questList.get(2).setDone();
+                    keyItems.setInteractable(false);
+                }
+
+                if(keyItems.getName().equals("zuccaMarcia")){
+                    keyItems.setStaticImage("/object/spriteInvisibile16x16.png");
                     keyItems.setCollisionArea(null);        //rimuove collisione della porta
                     questList.get(2).setDone();
                     keyItems.setInteractable(false);

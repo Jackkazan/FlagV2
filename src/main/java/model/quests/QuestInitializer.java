@@ -9,7 +9,11 @@ public class QuestInitializer {
         Quest appenaSveglio = new Quest("AppenaSveglioTiALziDalLetto", true);
         Quest chiaveRaccoltaCasettaIniziale = new Quest("ChiaveRaccoltaCI", false);
         Quest portaSbloccataCasettaIniziale = new Quest("PortaSbloccataCI", false);
-        Quest parlaConLaVecchietta = new Quest("ParlaConVecchietta", false);
+        Quest parlaConLaVecchietta = new Quest("HaiParlatoConVecchietta", false);
+        Quest parlaColContadino1PerZucche = new Quest("HaiParlaColContadino1Zucche", false);
+        Quest parlaColContadino2PerSpaventapasseri = new Quest("HaiParlaColContadino2PerSpaventapasseri", false);
+        Quest interagitoConGliSpaventapasseriOrdineCorretto = new Quest("HaiInteragitoConGliSpaventapasseriNellOrdineCorretto", false);
+        Quest estirpatoTutteLeZuccheConIVermi = new Quest("HaiEstirpatoLeZuccheConIVermi", false);
 
 
         //0
@@ -20,6 +24,14 @@ public class QuestInitializer {
         questList.add(portaSbloccataCasettaIniziale);
         //3
         questList.add(parlaConLaVecchietta);
+        //4
+        questList.add(parlaColContadino1PerZucche);
+        //5
+        questList.add(parlaColContadino2PerSpaventapasseri);
+        //6
+        questList.add(interagitoConGliSpaventapasseriOrdineCorretto);
+        //7
+        questList.add(estirpatoTutteLeZuccheConIVermi);
 
         return questList;
     }

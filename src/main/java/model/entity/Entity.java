@@ -44,8 +44,8 @@ public class Entity {
     private boolean isInteractable;
 
     private InteractionActionEntity interactionAction;
-    private int imageWidth= 1;
-    private int imageHeight=1;
+    private int imageWidth;
+    private int imageHeight;
 
     private Entity() {}
 

@@ -1,6 +1,7 @@
 package model.items;
 
 import controller.KeyHandler;
+import model.entity.Entity;
 import model.gameState.GameStateManager;
 import model.quests.Quest;
 import model.tile.TileManager;
@@ -35,11 +36,12 @@ public class KeyItems {
     private boolean isInteractable = false;
     private List<Quest> relatedQuests= new ArrayList<>();
 
-    private int scaleWidth = 1;
-    private int scaleHeigth = 1;
+    private int imageWidth;
+    private int imageHeigth;
 
     private GameStateManager gsm;
     private TileManager tileManager;
+    private int scale;
 
 
     // Metodo per impostare l'azione durante la costruzione dell'oggetto
@@ -59,6 +61,7 @@ public class KeyItems {
             e.printStackTrace();
         }
     }
+
 
     public void setCollisionArea(Rectangle collisionArea) {
         this.collisionArea = collisionArea;
@@ -102,9 +105,14 @@ public class KeyItems {
             return this;
         }
         // Metodo per impostare il fattore di scala
-        public KeyItemsBuilder setScale(int scaleWidth, int scaleHeigth) {
-            this.keyItems.scaleWidth = scaleWidth;
-            this.keyItems.scaleHeigth = scaleHeigth;
+        public KeyItemsBuilder setImageDimension(int imageWidth, int imageHeigth) {
+            this.keyItems.imageWidth = imageWidth;
+            this.keyItems.imageHeigth = imageHeigth;
+            return this;
+        }
+
+        public KeyItemsBuilder setScale(int scale) {
+            this.keyItems.scale = scale;
             return this;
         }
 
@@ -175,7 +183,7 @@ public class KeyItems {
         int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
 
         if(staticImage != null && gsm.getMapManager().getCurrentMap() == this.tileManager)
-            graphics2D.drawImage(staticImage, screenX, screenY, tileSize*scaleWidth, tileSize*scaleHeigth, null);
+            graphics2D.drawImage(staticImage, screenX, screenY, (tileSize*imageWidth)/16, (tileSize*imageHeigth)/16, null);
 
         return null;
     }
