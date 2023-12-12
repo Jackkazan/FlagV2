@@ -19,13 +19,7 @@ public class PlayState implements GameState{
     private Player player;
     private GamePanel gp;
     private GameStateManager gsm;
-
     private MapManager mapManager;
-
-    Playlist playlist = new Playlist();
-    List<Sound> songList = playlist.getSongList();
-    //mappe
-
 
     private KeyHandler keyH;
     private Graphics2D graphics2D;
@@ -41,9 +35,7 @@ public class PlayState implements GameState{
         this.player = player;
         this.keyH = keyH;
         this.buffer = new BufferedImage(gp.getScreenWidth(), gp.getScreenHeight(), BufferedImage.TYPE_INT_RGB);
-        this.playMusic();
     }
-
 
     @Override
     public void update() {
@@ -66,7 +58,6 @@ public class PlayState implements GameState{
         // Gestione delle transizioni della mappa
         mapManager.manageTransitions();
     }
-
 
     @Override
     public void draw(Graphics g) {
@@ -93,7 +84,6 @@ public class PlayState implements GameState{
         bufferGraphics.dispose();
 
     }
-
 
 
     public void drawToTempScreen() {
@@ -132,17 +122,5 @@ public class PlayState implements GameState{
         y += lineHeight;
         graphics2D.drawString("Draw Time: " + passedTime, x, y);
     }
-
-    public void playMusic() {
-        songList.get(0).play();
-        songList.get(0).loop();
-
-    }
-
-    //9/11
-    public void stopMusic(){
-        songList.get(0).stop();
-    }
-    //9/11
 
 }

@@ -6,6 +6,8 @@ import model.entity.NPCCreator;
 import model.entity.Player;
 import model.items.KeyItems;
 import model.items.ObjectsCreator;
+import model.sound.Playlist;
+import model.sound.Sound;
 import model.tile.MapManager;
 import model.tile.TileManager;
 import view.GamePanel;
@@ -43,6 +45,9 @@ public class GameStateManager {
     List<KeyItems> keyItemsList;
     java.util.List<Entity> npcList;
 
+    Playlist playlist = new Playlist();
+    List<Sound> songList = playlist.getSongList();
+
 
 
     public GameStateManager(GamePanel gp) {
@@ -74,10 +79,12 @@ public class GameStateManager {
             case PLAY:
                 if(this.playState == null)
                     Init();
+                playMusic();
                 currentState = playState;
                 break;
             case PAUSE:
                 //currentState = pauseState;
+                stopMusic();
                 currentState = new PauseState(gp, this, keyH);
                 break;
             case PREVIOUS:
@@ -154,6 +161,18 @@ public class GameStateManager {
 
     public boolean isInDialogue() {
         return inDialogue;
+    }
+
+
+    public void playMusic() {
+
+        songList.get(0).loop();
+
+    }
+
+    //9/11
+    public void stopMusic(){
+        songList.get(0).stop();
     }
 
 
