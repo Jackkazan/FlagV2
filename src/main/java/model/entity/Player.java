@@ -26,11 +26,16 @@ public class Player {
     private int y;
     private int speed;
 
+    private int imageWidth = 32;
+    private int imageHeight = 32;
+
     private boolean isAttacking = false;
     private boolean attackAnimationCompleted = true;
 
     private final int screenX;
     private final int screenY;
+
+    private int scale = 5;
     private int maxLife = 10;
     private int currentLife = 9;
     private ArrayList<CollisionObject> currentCollisionMap;
@@ -260,7 +265,6 @@ public class Player {
         }
 
         if (images != null) {
-            int scale = 5;
             graphics2D.drawImage(images[spriteNum], screenX+offsetX, screenY+offsetY, (imageWidth/2) *scale, (imageHeight/2)*scale, null);
         }
     }
@@ -377,5 +381,17 @@ public class Player {
 
     public Rectangle getInteractionArea() {
         return interactionArea;
+    }
+
+    public int getScale() {
+        return scale;
+    }
+
+    public int getImageWidth() {
+        return imageWidth;
+    }
+
+    public int getImageHeight() {
+        return imageHeight;
     }
 }

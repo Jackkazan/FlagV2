@@ -11,8 +11,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-import static view.GamePanel.tileSize;
-
 //Class for npc and enemy
 public class Entity {
     //Name entity es. npc_1 ecc...
@@ -99,14 +97,18 @@ public class Entity {
             return this;
         }
 
-        public EntityBuilder setIsInteractble(boolean isInteractble){
-            this.entity.isInteractable = isInteractble;
+        public EntityBuilder setIsInteractible(boolean isInteractible){
+            this.entity.isInteractable = isInteractible;
             return this;
         }
         public EntityBuilder setInteractionAction(InteractionActionEntity action) {
             this.entity.interactionAction = action;
             return this;
         }
+
+
+
+
         public EntityBuilder setImageDimension(int imageWidth, int imageHeight) {
             this.entity.imageWidth = imageWidth;
             this.entity.imageHeight = imageHeight;
@@ -242,6 +244,10 @@ public class Entity {
         }
     }
 
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
 
 
     private boolean isPlayerNearby() {
@@ -270,5 +276,21 @@ public class Entity {
 
     public int getSpeed() {
         return this.speed;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public int getImageWidth() {
+        return imageWidth;
+    }
+
+    public int getImageHeight() {
+        return imageHeight;
+    }
+
+    public int getScale() {
+        return scale;
     }
 }

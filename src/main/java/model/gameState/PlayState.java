@@ -80,15 +80,15 @@ public class PlayState implements GameState{
         }
         for (KeyItems items : gsm.getKeyItemsList()) {
             items.draw(bufferGraphics);
-            }
-            player.draw(bufferGraphics);
-            gp.getUi().draw(bufferGraphics);
-            drawToTempScreen();
-            // Copia l'intera immagine buffer sulla schermata
-            g.drawImage(buffer, 0, 0, gp);
-            //graphics2D.dispose();
-            // Dispose del bufferGraphics
-            bufferGraphics.dispose();
+        }
+        player.draw(bufferGraphics);
+        gp.getUi().draw(bufferGraphics);
+        drawToTempScreen();
+        // Copia l'intera immagine buffer sulla schermata
+        g.drawImage(buffer, 0, 0, gp);
+        //graphics2D.dispose();
+        // Dispose del bufferGraphics
+        bufferGraphics.dispose();
 
     }
 
