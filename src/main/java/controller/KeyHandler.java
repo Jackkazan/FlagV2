@@ -11,7 +11,7 @@ public class KeyHandler implements KeyListener {
     private GamePanel gamePanel;
     private GameStateManager gsm;
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, spacePressed, enterPressed, yPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, attackVPressed, spacePressed, enterPressed, yPressed;
 
     private boolean showDebugText = false;
     private boolean isPaused = false;
@@ -37,38 +37,42 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
-            if (code == KeyEvent.VK_T) {
-                showDebugText = !showDebugText;
-            }
-            if (code == KeyEvent.VK_Y){
-                yPressed = true;
-            }
-            if (code == KeyEvent.VK_ENTER)
-                enterPressed = true;
+        if (code == KeyEvent.VK_T) {
+            showDebugText = !showDebugText;
+        }
+        if (code == KeyEvent.VK_Y){
+            yPressed = true;
+        }
+        if (code == KeyEvent.VK_ENTER)
+            enterPressed = true;
 
-            if (code == KeyEvent.VK_SPACE) {
-                spacePressed = true;
-            }
+        if (code == KeyEvent.VK_V) {
+            attackVPressed = true;
+        }
 
-            if (code == KeyEvent.VK_W) {
-                upPressed = true;
-            }
-            if (code == KeyEvent.VK_S) {
-                downPressed = true;
-            }
-            if (code == KeyEvent.VK_A) {
-                leftPressed = true;
-            }
-            if (code == KeyEvent.VK_D) {
-                rightPressed = true;
-            }
-            if (code == KeyEvent.VK_E) {
-                interactPressed = true;
-            }
-            //PAUSA
-            if (code == KeyEvent.VK_P) {
-                isPaused = !isPaused;
-                }
+        if (code == KeyEvent.VK_SPACE) {
+            spacePressed = true;
+        }
+
+        if (code == KeyEvent.VK_W) {
+            upPressed = true;
+        }
+        if (code == KeyEvent.VK_S) {
+            downPressed = true;
+        }
+        if (code == KeyEvent.VK_A) {
+            leftPressed = true;
+        }
+        if (code == KeyEvent.VK_D) {
+            rightPressed = true;
+        }
+        if (code == KeyEvent.VK_E) {
+            interactPressed = true;
+        }
+        //PAUSA
+        if (code == KeyEvent.VK_P) {
+            isPaused = !isPaused;
+        }
     }
 
 
@@ -80,6 +84,9 @@ public class KeyHandler implements KeyListener {
             enterPressed = false;
         if (code == KeyEvent.VK_Y){
             yPressed = false;
+        }
+        if (code == KeyEvent.VK_V){
+            attackVPressed = false;
         }
         if (code == KeyEvent.VK_SPACE){
             spacePressed = false;

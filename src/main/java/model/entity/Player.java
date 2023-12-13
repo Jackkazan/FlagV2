@@ -85,7 +85,7 @@ public class Player {
     }
 
     public void update() {
-        if (keyHandler.spacePressed && !isAttacking && attackAnimationCompleted) {
+        if (keyHandler.attackVPressed && !isAttacking && attackAnimationCompleted) {
             isAttacking = true;
             attackAnimationCompleted = false;
             attack();

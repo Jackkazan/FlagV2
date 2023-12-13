@@ -47,6 +47,7 @@ public class DialogueState implements GameState {
             dialogueAdvancing = false;
         }
 
+
         // logica dialoghi
     }
     public void advanceDialogue(){
