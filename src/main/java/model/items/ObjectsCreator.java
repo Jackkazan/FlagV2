@@ -10,7 +10,7 @@ import model.tile.MapManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import static model.items.KeyItems.KeyItemsFatory.createKeyItems;
+import static model.items.KeyItems.KeyItemsFactory.createKeyItems;
 import static view.GamePanel.tileSize;
 
 public class ObjectsCreator {
@@ -29,7 +29,7 @@ public class ObjectsCreator {
                 .setCollisionArea(0,0,16,16)
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())
                 .setRelatedQuests(questList.get(0))
-                .setInteractible(true)
+                .setInteractable(true)
                 .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
 
@@ -37,7 +37,7 @@ public class ObjectsCreator {
                 .setName("portaCasettaInizialeChiusa")
                 .setStaticImage("/object/PortaChiusaInterno.png")
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())
-                .setInteractible(true)
+                .setInteractable(true)
                 .setImageDimension(32,48)
                 .setCollisionArea(0,0,48,48)
                 .setRelatedQuests(questList.get(1))
@@ -52,14 +52,14 @@ public class ObjectsCreator {
                 .setCollisionArea(0,0,16,16)
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
                 .setRelatedQuests(questList.get(0))
-                .setInteractible(true)
+                .setInteractable(true)
                 .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
 
-        KeyItems zuccaMarcia2 = KeyItems.KeyItemsFatory.createKeyItems(zuccaMarcia1, "zuccaMarcia2",47,46,"/object/zuccaMarcia.png");
-        KeyItems zuccaMarcia3 = KeyItems.KeyItemsFatory.createKeyItems(zuccaMarcia1, "zuccaMarcia3", 42,48, "/object/zuccaMarcia.png");
-        KeyItems zuccaMarcia4 = KeyItems.KeyItemsFatory.createKeyItems(zuccaMarcia1, "zuccaMarcia4",45,52,"/object/zuccaMarcia.png");
-        KeyItems zuccaMarcia5 = KeyItems.KeyItemsFatory.createKeyItems(zuccaMarcia1, "zuccaMarcia5", 50,50, "/object/zuccaMarcia.png");
+        KeyItems zuccaMarcia2 = KeyItems.KeyItemsFactory.createKeyItems(zuccaMarcia1, "zuccaMarcia2",47,46);
+        KeyItems zuccaMarcia3 = KeyItems.KeyItemsFactory.createKeyItems(zuccaMarcia1, "zuccaMarcia3", 42,48);
+        KeyItems zuccaMarcia4 = KeyItems.KeyItemsFactory.createKeyItems(zuccaMarcia1, "zuccaMarcia4",45,52);
+        KeyItems zuccaMarcia5 = KeyItems.KeyItemsFactory.createKeyItems(zuccaMarcia1, "zuccaMarcia5", 50,50);
 
 
         //aggiunta di tutti gli oggetti alla lista
@@ -100,7 +100,7 @@ public class ObjectsCreator {
                     keyItems.setInteractable(false);
                 }
 
-                if(keyItems.getName().equals("zuccaMarcia")){
+                if(keyItems.getName().matches("zuccaMarcia1|zuccaMarcia2|zuccaMarcia3|zuccaMarcia4|zuccaMarcia5")){
                     keyItems.setStaticImage("/object/spriteInvisibile16x16.png");
                     keyItems.setCollisionArea(null);        //rimuove collisione della porta
                     questList.get(2).setDone();

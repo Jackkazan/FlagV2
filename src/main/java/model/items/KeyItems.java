@@ -88,16 +88,17 @@ public class KeyItems {
     private KeyItems() {}
 
     public KeyItems clone(){
-        KeyItems newKeyItems = new KeyItemsBuilder(gsm, this.x, this.y, keyH)
+
+        return new KeyItemsBuilder(gsm, this.x, this.y, keyH)
                 .setName(this.name)
-                .setImageDimension(this.imageWidth,this.imageHeigth)
-                .setCollisionArea(0,0,16,16)
+                .setStaticImage(this.staticImage)
                 .setContainedMap(this.tileManager)
-                .setInteractible(this.isInteractable)
+                .setInteractable(this.isInteractable)
+                .setImageDimension(this.imageWidth, this.imageHeigth)
+                .setCollisionArea(0,0, this.imageWidth, this.imageHeigth)
+                .setRelatedQuests(this.relatedQuests)
                 .setInteractionAction(this.interactionAction)
                 .build();
-
-        return newKeyItems;
     }
 
 
@@ -126,6 +127,10 @@ public class KeyItems {
             this.keyItems.relatedQuests.addAll(Arrays.asList(quests));
             return this;
         }
+        public KeyItemsBuilder setRelatedQuests(List<Quest> relatedQuests) {
+            this.keyItems.relatedQuests = relatedQuests;
+            return this;
+        }
         // Metodo per impostare il fattore di scala
         public KeyItemsBuilder setImageDimension(int imageWidth, int imageHeigth) {
             this.keyItems.imageWidth = imageWidth;
@@ -152,6 +157,10 @@ public class KeyItems {
             }
             return this;
         }
+        public KeyItemsBuilder setStaticImage(BufferedImage staticImage) {
+            this.keyItems.staticImage = staticImage;
+            return this;
+        }
 
         public KeyItemsBuilder setCollisionArea(int posX, int posY ,int larghezza, int altezza) {
             this.keyItems.collisionArea = new Rectangle(posX, posY , larghezza, altezza);
@@ -162,8 +171,8 @@ public class KeyItems {
             this.keyItems.tileManager = tileManager;
             return this;
         }
-        public KeyItemsBuilder setInteractible(boolean interactible) {
-            this.keyItems.isInteractable = interactible;
+        public KeyItemsBuilder setInteractable(boolean interactable) {
+            this.keyItems.isInteractable = interactable;
             return this;
         }
 
@@ -199,13 +208,12 @@ public class KeyItems {
 
     }
 
-    public static class KeyItemsFatory {
+    public static class KeyItemsFactory {
 
-        public static KeyItems createKeyItems(KeyItems referenceKeyItems, String name, int x, int y, String pathImage) {
+        public static KeyItems createKeyItems(KeyItems referenceKeyItems, String name, int x, int y) {
             KeyItems newKeyItems = referenceKeyItems.clone();
             newKeyItems.setName(name);
             newKeyItems.setPosition(x,y);
-            newKeyItems.setStaticImage(pathImage);
             // Puoi impostare eventuali attributi specifici della nuova istanza
             return newKeyItems;
         }
