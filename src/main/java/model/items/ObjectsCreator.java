@@ -10,6 +10,7 @@ import model.tile.MapManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import static model.items.KeyItems.KeyItemsFatory.createKeyItems;
 import static view.GamePanel.tileSize;
 
 public class ObjectsCreator {
@@ -21,7 +22,7 @@ public class ObjectsCreator {
         List<KeyItems> objectList = new ArrayList<>();
 
         //inizializzazione oggetti
-        KeyItems keyCasettaIniziale = new KeyItems.KeyItemsBuilder(gsm, 7*tileSize, 5*tileSize, keyH)
+        KeyItems keyCasettaIniziale = new KeyItems.KeyItemsBuilder(gsm, 7, 5, keyH)
                 .setName("keyCasettaIniziale")
                 .setStaticImage("/object/key.png")
                 .setImageDimension(16,16)
@@ -32,7 +33,7 @@ public class ObjectsCreator {
                 .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
 
-        KeyItems portaCasettaInizialeChiusa = new KeyItems.KeyItemsBuilder(gsm,4*tileSize,7*tileSize, keyH)
+        KeyItems portaCasettaInizialeChiusa = new KeyItems.KeyItemsBuilder(gsm,4,7, keyH)
                 .setName("portaCasettaInizialeChiusa")
                 .setStaticImage("/object/PortaChiusaInterno.png")
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())
@@ -44,8 +45,8 @@ public class ObjectsCreator {
                 .build();
 
 
-        KeyItems zuccaMarcia = new KeyItems.KeyItemsBuilder(gsm, 20*tileSize, 50*tileSize, keyH)
-                .setName("zuccaMarcia")
+        KeyItems zuccaMarcia1 = new KeyItems.KeyItemsBuilder(gsm, 39, 44, keyH)
+                .setName("zuccaMarcia1")
                 .setStaticImage("/object/zuccaMarcia.png")
                 .setImageDimension(16,16)
                 .setCollisionArea(0,0,16,16)
@@ -55,13 +56,24 @@ public class ObjectsCreator {
                 .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
 
+        KeyItems zuccaMarcia2 = KeyItems.KeyItemsFatory.createKeyItems(zuccaMarcia1, "zuccaMarcia2",47,76,"/object/zuccaMarcia.png");
+        KeyItems zuccaMarcia3 = KeyItems.KeyItemsFatory.createKeyItems(zuccaMarcia1, "zuccaMarcia3", 42,48, "/object/zuccaMarcia.png");
+        KeyItems zuccaMarcia4 = KeyItems.KeyItemsFatory.createKeyItems(zuccaMarcia1, "zuccaMarcia4",45,52,"/object/zuccaMarcia.png");
+        KeyItems zuccaMarcia5 = KeyItems.KeyItemsFatory.createKeyItems(zuccaMarcia1, "zuccaMarcia5", 50,50, "/object/zuccaMarcia.png");
+
+
         //aggiunta di tutti gli oggetti alla lista
         objectList.add(keyCasettaIniziale);
         objectList.add(portaCasettaInizialeChiusa);
-        objectList.add(zuccaMarcia);
+        objectList.add(zuccaMarcia1);
+        objectList.add(zuccaMarcia2);
+        objectList.add(zuccaMarcia3);
+        objectList.add(zuccaMarcia4);
+        objectList.add(zuccaMarcia5);
 
         return objectList;
     }
+
 
     //raccolta oggetti o semplice interazione con scomparsa
     public static class DisappearOrChangeImageAction implements InteractionActionItems {

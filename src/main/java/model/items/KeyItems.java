@@ -45,14 +45,17 @@ public class KeyItems {
 
 
     // Metodo per impostare l'azione durante la costruzione dell'oggetto
-    public void setInteractionActionItems(InteractionActionItems interactionAction) {
-        this.interactionAction = interactionAction;
-    }
+
 
     public void setInteractable(boolean interactable) {
         this.isInteractable = interactable;
     }
 
+    public void setPosition(int x, int y){
+        this.x = x*tileSize;
+        this.y = y*tileSize;
+
+    }
     public void setStaticImage(String pathImage){
         try {
             this.staticImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(pathImage)));
@@ -78,7 +81,26 @@ public class KeyItems {
             collisionArea.setSize(width, height);
         }
     }
+
+    public void setName(String name){
+        this.name = name;
+    }
     private KeyItems() {}
+
+    public KeyItems clone(){
+        KeyItems newKeyItems = new KeyItemsBuilder(gsm, this.x, this.y, keyH)
+                .setName(this.name)
+                .setImageDimension(this.imageWidth,this.imageHeigth)
+                .setCollisionArea(0,0,16,16)
+                .setContainedMap(this.tileManager)
+                .setInteractible(this.isInteractable)
+                .setInteractionAction(this.interactionAction)
+                .build();
+
+        return newKeyItems;
+    }
+
+
 
     public boolean questListIsDone() {
 
@@ -95,8 +117,8 @@ public class KeyItems {
         public KeyItemsBuilder(GameStateManager gsm, int x, int y, KeyHandler keyH){
             this.keyItems = new KeyItems();
             this.keyItems.gsm = gsm;
-            this.keyItems.x = x;
-            this.keyItems.y = y;
+            this.keyItems.x = x *tileSize;
+            this.keyItems.y = y *tileSize;
             this.keyItems.keyH = keyH;
         }
 
@@ -174,6 +196,20 @@ public class KeyItems {
         public KeyItems build() {
             return this.keyItems;
         }
+
+    }
+
+    public static class KeyItemsFatory {
+
+        public static KeyItems createKeyItems(KeyItems referenceKeyItems, String name, int x, int y, String pathImage) {
+            KeyItems newKeyItems = referenceKeyItems.clone();
+            newKeyItems.setName(name);
+            newKeyItems.setPosition(x,y);
+            newKeyItems.setStaticImage(pathImage);
+            // Puoi impostare eventuali attributi specifici della nuova istanza
+            return newKeyItems;
+        }
+
 
     }
 
