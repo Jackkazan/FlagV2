@@ -39,9 +39,6 @@ public class DialogueState implements GameState {
         if (keyH.isPaused()){
             gsm.dialoguePause();
         }
-        if(keyH.yPressed){
-            gsm.exitDialogue();
-        }
         if(keyH.spacePressed && !dialogueAdvancing){
            advanceDialogue();
            dialogueAdvancing = true;
@@ -53,10 +50,13 @@ public class DialogueState implements GameState {
         // logica dialoghi
     }
     public void advanceDialogue(){
-
-        System.out.println("sono stato chiamata");
-        i++;
-        dialogue = test.get(i);
+        if(i< test.size()-1) {
+            System.out.println("sono stato chiamata");
+            i++;
+            dialogue = test.get(i);
+        }
+        else
+            gsm.exitDialogue();
     }
     @Override
     public void draw(Graphics g) {
