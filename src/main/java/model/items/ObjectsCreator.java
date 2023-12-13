@@ -10,9 +10,6 @@ import model.tile.MapManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import static model.items.KeyItems.KeyItemsFactory.createKeyItems;
-import static view.GamePanel.tileSize;
-
 public class ObjectsCreator {
 
     static List<Quest> questList = QuestInitializer.createQuestList();
@@ -26,7 +23,7 @@ public class ObjectsCreator {
                 .setName("keyCasettaIniziale")
                 .setStaticImage("/object/key.png")
                 .setImageDimension(16,16)
-                .setCollisionArea(0,0,16,16)
+                .setCollisionArea(16,16)
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())
                 .setRelatedQuests(questList.get(0))
                 .setInteractable(true)
@@ -39,7 +36,7 @@ public class ObjectsCreator {
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())
                 .setInteractable(true)
                 .setImageDimension(32,48)
-                .setCollisionArea(0,0,48,48)
+                .setCollisionArea(48,48)
                 .setRelatedQuests(questList.get(1))
                 .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
@@ -49,27 +46,31 @@ public class ObjectsCreator {
                 .setName("zuccaMarcia1")
                 .setStaticImage("/object/zuccaMarcia.png")
                 .setImageDimension(16,16)
-                .setCollisionArea(0,0,16,16)
+                .setCollisionArea(16,16)
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
                 .setRelatedQuests(questList.get(0))
                 .setInteractable(true)
                 .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
 
-        KeyItems zuccaMarcia2 = KeyItems.KeyItemsFactory.createKeyItems(zuccaMarcia1, "zuccaMarcia2",47,46);
-        KeyItems zuccaMarcia3 = KeyItems.KeyItemsFactory.createKeyItems(zuccaMarcia1, "zuccaMarcia3", 42,48);
-        KeyItems zuccaMarcia4 = KeyItems.KeyItemsFactory.createKeyItems(zuccaMarcia1, "zuccaMarcia4",45,52);
-        KeyItems zuccaMarcia5 = KeyItems.KeyItemsFactory.createKeyItems(zuccaMarcia1, "zuccaMarcia5", 50,50);
+        KeyItemsPrototype prototypeManager = new KeyItemsPrototype(zuccaMarcia1);
+
+        Prototype zuccaMarcia2 = prototypeManager.createKeyItems("zuccaMarcia2",47,46,16,16);
+        Prototype zuccaMarcia3 = prototypeManager.createKeyItems("zuccaMarcia3", 42,48,16,16);
+        Prototype zuccaMarcia4 = prototypeManager.createKeyItems("zuccaMarcia4",45,52,16,16);
+        Prototype zuccaMarcia5 = prototypeManager.createKeyItems("zuccaMarcia5", 50,50,16,16);
+
+
 
 
         //aggiunta di tutti gli oggetti alla lista
         objectList.add(keyCasettaIniziale);
         objectList.add(portaCasettaInizialeChiusa);
         objectList.add(zuccaMarcia1);
-        objectList.add(zuccaMarcia2);
-        objectList.add(zuccaMarcia3);
-        objectList.add(zuccaMarcia4);
-        objectList.add(zuccaMarcia5);
+        objectList.add((KeyItems) zuccaMarcia2);
+        objectList.add((KeyItems) zuccaMarcia3);
+        objectList.add((KeyItems) zuccaMarcia4);
+        objectList.add((KeyItems) zuccaMarcia5);
 
         return objectList;
     }

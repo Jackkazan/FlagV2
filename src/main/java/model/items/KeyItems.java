@@ -17,7 +17,7 @@ import java.util.Objects;
 
 import static view.GamePanel.tileSize;
 
-public class KeyItems {
+public class KeyItems implements Prototype{
     private KeyHandler keyH;
     //Name object
     private String name;
@@ -70,15 +70,16 @@ public class KeyItems {
         this.collisionArea = collisionArea;
     }
 
-    public void setCollisionAreaPosition(int x, int y) {
-        if (collisionArea != null) {
-            collisionArea.setLocation(x, y);
-        }
-    }
 
-    public void setCollisionAreaSize(int width, int height) {
-        if (collisionArea != null) {
-            collisionArea.setSize(width, height);
+
+    // Metodo per clonare l'oggetto
+    @Override
+    public Prototype clone() {
+        try {
+            return (KeyItems) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -86,22 +87,6 @@ public class KeyItems {
         this.name = name;
     }
     private KeyItems() {}
-
-    public KeyItems clone(){
-
-        return new KeyItemsBuilder(gsm, this.x, this.y, keyH)
-                .setName(this.name)
-                .setStaticImage(this.staticImage)
-                .setContainedMap(this.tileManager)
-                .setInteractable(this.isInteractable)
-                .setImageDimension(this.imageWidth, this.imageHeigth)
-                .setCollisionArea(0,0, this.imageWidth, this.imageHeigth)
-                .setRelatedQuests(this.relatedQuests)
-                .setInteractionAction(this.interactionAction)
-                .build();
-    }
-
-
 
     public boolean questListIsDone() {
 
@@ -162,8 +147,12 @@ public class KeyItems {
             return this;
         }
 
-        public KeyItemsBuilder setCollisionArea(int posX, int posY ,int larghezza, int altezza) {
-            this.keyItems.collisionArea = new Rectangle(posX, posY , larghezza, altezza);
+        public KeyItemsBuilder setCollisionArea(int larghezza, int altezza) {
+            this.keyItems.collisionArea = new Rectangle(this.keyItems.x, this.keyItems.y , larghezza, altezza);
+            return this;
+        }
+        public KeyItemsBuilder setCollisionArea(int x, int y, int larghezza, int altezza) {
+            this.keyItems.collisionArea = new Rectangle(x, y , larghezza, altezza);
             return this;
         }
 
@@ -208,6 +197,7 @@ public class KeyItems {
 
     }
 
+    /*
     public static class KeyItemsFactory {
 
         public static KeyItems createKeyItems(KeyItems referenceKeyItems, String name, int x, int y) {
@@ -220,6 +210,9 @@ public class KeyItems {
 
 
     }
+
+     */
+
 
     public BufferedImage draw(Graphics2D graphics2D){
 
