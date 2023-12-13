@@ -61,7 +61,7 @@ public class GameStateManager {
         this.tileManagerZonaIniziale = new TileManager(gp, this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
         this.tileManagerCasettaIniziale = new TileManager(gp, this, "src/main/resources/Map/StanzaIntroduzione/CasettaIniziale.tmx");
         this.tileManagerVillaggioSud = new TileManager(gp, this, "src/main/resources/Map/VillaggioSud/VillaggioSud.tmx");
-        this. tileManagerNegozioItemsVillaggioSud = new TileManager(gp, this, "src/main/resources/Map/NegozioItemsVillaggioSud/NegozioItemsVillaggioSud.tmx");
+        this.tileManagerNegozioItemsVillaggioSud = new TileManager(gp, this, "src/main/resources/Map/NegozioItemsVillaggioSud/NegozioItemsVillaggioSud.tmx");
         this.mapManager = new MapManager(gp, player, tileManagerCasettaIniziale, tileManagerZonaIniziale, tileManagerVillaggioSud, tileManagerNegozioItemsVillaggioSud);
         this.playState = new PlayState(gp, this, mapManager, player, keyH);
         //this.pauseState = new PauseState(gp, this, keyH);
@@ -79,12 +79,12 @@ public class GameStateManager {
             case PLAY:
                 if(this.playState == null)
                     Init();
-                playMusic();
+                playMusic(0);
                 currentState = playState;
                 break;
             case PAUSE:
                 //currentState = pauseState;
-                stopMusic();
+                stopMusic(0);
                 currentState = new PauseState(gp, this, keyH);
                 break;
             case PREVIOUS:
@@ -164,15 +164,15 @@ public class GameStateManager {
     }
 
 
-    public void playMusic() {
+    public void playMusic(int numSong) {
 
-        songList.get(0).loop();
+        songList.get(numSong).loop();
 
     }
 
     //9/11
-    public void stopMusic(){
-        songList.get(0).stop();
+    public void stopMusic(int numSong){
+        songList.get(numSong).stop();
     }
 
 

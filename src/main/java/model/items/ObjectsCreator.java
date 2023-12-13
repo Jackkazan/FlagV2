@@ -56,7 +56,7 @@ public class ObjectsCreator {
                 .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
 
-        KeyItems zuccaMarcia2 = KeyItems.KeyItemsFatory.createKeyItems(zuccaMarcia1, "zuccaMarcia2",47,76,"/object/zuccaMarcia.png");
+        KeyItems zuccaMarcia2 = KeyItems.KeyItemsFatory.createKeyItems(zuccaMarcia1, "zuccaMarcia2",47,46,"/object/zuccaMarcia.png");
         KeyItems zuccaMarcia3 = KeyItems.KeyItemsFatory.createKeyItems(zuccaMarcia1, "zuccaMarcia3", 42,48, "/object/zuccaMarcia.png");
         KeyItems zuccaMarcia4 = KeyItems.KeyItemsFatory.createKeyItems(zuccaMarcia1, "zuccaMarcia4",45,52,"/object/zuccaMarcia.png");
         KeyItems zuccaMarcia5 = KeyItems.KeyItemsFatory.createKeyItems(zuccaMarcia1, "zuccaMarcia5", 50,50, "/object/zuccaMarcia.png");
