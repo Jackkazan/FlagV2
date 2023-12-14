@@ -134,8 +134,11 @@ public class Player {
                     spriteNum = (spriteNum + 1) % 4;
                     spriteCounter = 0;
                 }
-
             }
+            else{
+                spriteNum = 0;
+            }
+
         }
 
     }
@@ -151,13 +154,10 @@ public class Player {
         spriteNum=1;
 
         // Imposta un timer per la durata dell'animazione dell'attacco
-        Timer timer = new Timer(385, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                isAttacking = false;
-                attackAnimationCompleted = true;
-                ((Timer) e.getSource()).stop();
-            }
+        Timer timer = new Timer(385, e -> {
+            isAttacking = false;
+            attackAnimationCompleted = true;
+            ((Timer) e.getSource()).stop();
         });
         timer.setRepeats(false);
         timer.start();
@@ -310,10 +310,10 @@ public class Player {
                     down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterDown_1.png")));
                     down3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterDown_2.png")));
                     down4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterDown_3.png")));
-                    left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterLeft_0.png")));
-                    left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterLeft_1.png")));
-                    left3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterLeft_2.png")));
-                    left4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterLeft_3.png")));
+                    left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterLeft_1.png")));
+                    left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterLeft_2.png")));
+                    left3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterLeft_3.png")));
+                    left4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterLeft_0.png")));
                     right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterRight_0.png")));
                     right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterRight_1.png")));
                     right3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterRight_2.png")));
