@@ -27,6 +27,8 @@ public class TileManager {
     // int mapWidth = tileSize * maxMapCol;
     // int mapHeigth = tileSize * maxMapRow;
 
+    public TileManager(){}
+
     public TileManager(GamePanel gamePanel, GameStateManager gsm, String pathTMXMap){
 
         this.gamePanel = gamePanel;

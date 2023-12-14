@@ -19,6 +19,9 @@ public class KeyHandler implements KeyListener {
     private boolean attacking = false;
     private String lastPress;
 
+
+    public KeyHandler(){}
+
     @Override
     public void keyTyped(KeyEvent e) {
 

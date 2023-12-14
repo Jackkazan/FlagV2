@@ -50,6 +50,9 @@ public class GameStateManager {
 
 
 
+    public GameStateManager(){
+
+    }
     public GameStateManager(GamePanel gp) {
         this.gp = gp;
         this.keyH = new KeyHandler(this);

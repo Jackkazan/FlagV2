@@ -35,7 +35,7 @@ public class Player {
     private final int screenX;
     private final int screenY;
 
-    private enum swordStateAndArmor { IronSwordNoArmor, IronSwordAndArmor, GoldSwordAndArmor, RubySwordAndArmor }
+    public enum swordStateAndArmor { IronSwordNoArmor, IronSwordAndArmor, GoldSwordAndArmor, RubySwordAndArmor }
 
     swordStateAndArmor currentSwordStateAndArmor;
 

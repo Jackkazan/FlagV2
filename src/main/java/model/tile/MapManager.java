@@ -17,6 +17,8 @@ public class MapManager {
     private TileManager tileManagerNegozioItemsVillaggioSud;
     GamePanel gamePanel;
 
+    public MapManager(){}
+
     public MapManager(GamePanel gamePanel, Player player, TileManager tileManagerCasettaIniziale, TileManager tileManagerZonaIniziale, TileManager tileManagerVillaggioSud, TileManager tileManagerNegozioItemsVillaggioSud) {
         this.gamePanel = gamePanel;
         this.player = player;
