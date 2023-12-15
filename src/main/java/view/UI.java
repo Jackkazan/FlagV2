@@ -1,7 +1,7 @@
 package view;
 
 import model.gameState.GameStateManager;
-import model.HUD.OBJ_Heart;
+import model.hud.OBJ_Heart;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

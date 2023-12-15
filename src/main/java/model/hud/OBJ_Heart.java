@@ -1,4 +1,4 @@
-package model.HUD;
+package model.hud;
 
 import view.GamePanel;
 import view.UtilityTool;

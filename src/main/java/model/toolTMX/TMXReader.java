@@ -1,7 +1,7 @@
 package model.toolTMX;
 
 
-import model.collisioni.CollisionObject;
+import model.collisions.CollisionObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

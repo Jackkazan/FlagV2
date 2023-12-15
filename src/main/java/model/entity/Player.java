@@ -2,7 +2,7 @@ package model.entity;
 
 import controller.KeyHandler;
 import model.gameState.GameStateManager;
-import model.collisioni.CollisionObject;
+import model.collisions.CollisionObject;
 import model.items.KeyItems;
 import view.GamePanel;
 import java.awt.event.ActionEvent;

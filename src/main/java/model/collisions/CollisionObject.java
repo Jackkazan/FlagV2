@@ -1,4 +1,4 @@
-package model.collisioni;
+package model.collisions;
 
 public class CollisionObject {
     private double x, y, width, height;
