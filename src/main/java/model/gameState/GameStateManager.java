@@ -178,5 +178,9 @@ public class GameStateManager {
         songList.get(numSong).stop();
     }
 
+    public List<Sound> getSongList() {
+        return songList;
+    }
+
 
 }
