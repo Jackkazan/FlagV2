@@ -86,8 +86,17 @@ public class PauseState implements GameState{
         g.setColor(new Color(0, 0, 0, 150));
         g.fillRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
 
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 30));
+        String volumeText = "Volume: ";
+        int volumeTextWidth = g.getFontMetrics().stringWidth(volumeText);
+        int volumeTextX = (gp.getScreenWidth()- volumeTextWidth) / 2;
+        int volumeTextY = gp.getScreenHeight()/ 2+30;
+        g.drawString(volumeText, volumeTextX, volumeTextY);
+
+
         // Draw volume control bar
-        g.setColor(Color.BLUE);  // Change color as needed
+        g.setColor(Color.GRAY);  // Change color as needed
         int volumeBarWidth = 200;  // Set width as needed
         int volumeBarHeight = 20;  // Set height as needed
         int volumeBarX = (gp.getScreenWidth() - volumeBarWidth) / 2;
@@ -95,11 +104,10 @@ public class PauseState implements GameState{
         g.fillRect(volumeBarX, volumeBarY, volumeBarWidth, volumeBarHeight);
 
         // Draw volume indicator
-        g.setColor(Color.RED);  // Change color as needed
+        g.setColor(Color.WHITE);  // Change color as needed
         int volumeIndicatorWidth = getVolume()*2;
-        System.out.println("Volume indicator: "+ volumeIndicatorWidth +
-                "\nVolume: "+ volume);
         g.fillRect(volumeBarX, volumeBarY, volumeIndicatorWidth, volumeBarHeight);
+
 
         // Draw exit option
         g.setColor(Color.WHITE);
@@ -107,7 +115,7 @@ public class PauseState implements GameState{
         String exitText = "Press P to Exit";
         int exitTextWidth = g.getFontMetrics().stringWidth(exitText);
         int exitX = (gp.getScreenWidth() - exitTextWidth) / 2;
-        int exitY = volumeBarY + volumeBarHeight + 30;
+        int exitY = volumeBarY + volumeBarHeight + 100;
         g.drawString(exitText, exitX, exitY);
 
         g.setColor(Color.WHITE);
