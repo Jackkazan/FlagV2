@@ -13,7 +13,7 @@ public class PauseState implements GameState{
     GameStateManager gsm;
     KeyHandler keyH;
 
-    private static int volume;
+    private static int volume = 90;
     private GamePanel gamePanel;  // Aggiungi questo campo
     private int volumeBarHeight=20;  // Aggiungi questo campo
     private int volumeBarWidth =200;  // Nuova variabile di istanza
@@ -75,7 +75,7 @@ public class PauseState implements GameState{
 
             // Cambia il volume effettivo del suono
             for (Sound sound : gsm.getSongList()) {
-                sound.setVolume(volume / 100.0f);  // Normalizza il volume a un valore compreso tra 0 e 1
+                sound.setVolume(volume  / 100.0f);  // Normalizza il volume a un valore compreso tra 0 e 1
             }
         }
     }
