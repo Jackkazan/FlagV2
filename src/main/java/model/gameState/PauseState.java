@@ -13,10 +13,10 @@ public class PauseState implements GameState{
     GameStateManager gsm;
     KeyHandler keyH;
 
-    private int volume;
+    private static int volume;
     private GamePanel gamePanel;  // Aggiungi questo campo
-    private int volumeBarHeight;  // Aggiungi questo campo
-    private int volumeBarWidth;  // Nuova variabile di istanza
+    private int volumeBarHeight=20;  // Aggiungi questo campo
+    private int volumeBarWidth =200;  // Nuova variabile di istanza
 
     private MouseHandler mouseHandler;
 
@@ -28,15 +28,10 @@ public class PauseState implements GameState{
         this.gsm = gsm;
         this.keyH = keyH;
         gsm.setAlreadyPaused(true);
-        // Inizializza il volume ad un valore di default
-        volume = 50;
 
         // Inizializza gamePanel
         this.gamePanel = gp;
 
-        // Inizializza volumeBarHeight (puoi assegnare un valore iniziale o calcolarlo dinamicamente)
-        this.volumeBarHeight = 20;  // Esempio: altezza della barra del volume
-        this.volumeBarWidth = 200;  // Inizializza la larghezza della barra del volume
 
         // Inizializza mouseHandler
         mouseHandler = new MouseHandler();
@@ -76,7 +71,7 @@ public class PauseState implements GameState{
             int newVolume = (mouseX - volumeBarX) * 100 / volumeBarWidth;
             // Assicurati che il nuovo volume sia compreso tra 0 e 100
             newVolume = Math.max(0, Math.min(100, newVolume));
-            volume = newVolume;
+            setVolume(newVolume);
 
             // Cambia il volume effettivo del suono
             for (Sound sound : gsm.getSongList()) {
@@ -101,26 +96,36 @@ public class PauseState implements GameState{
 
         // Draw volume indicator
         g.setColor(Color.RED);  // Change color as needed
-        int volumeIndicatorWidth = (int) (volumeBarWidth * (volume / 100.0));
+        int volumeIndicatorWidth = getVolume()*2;
+        System.out.println("Volume indicator: "+ volumeIndicatorWidth +
+                "\nVolume: "+ volume);
         g.fillRect(volumeBarX, volumeBarY, volumeIndicatorWidth, volumeBarHeight);
 
         // Draw exit option
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 24));
-        String exitText = "Press Y to Exit";
+        String exitText = "Press P to Exit";
         int exitTextWidth = g.getFontMetrics().stringWidth(exitText);
         int exitX = (gp.getScreenWidth() - exitTextWidth) / 2;
         int exitY = volumeBarY + volumeBarHeight + 30;
         g.drawString(exitText, exitX, exitY);
 
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.BOLD, 24));
-        String pauseText = "E BECCATI STO TRAPEZIO";
+        g.setFont(new Font("Arial", Font.BOLD, 30));
+        String pauseText = "Menù Pausa";
         int textWidth = g.getFontMetrics().stringWidth(pauseText);
         int x = (gp.getScreenWidth()- textWidth) / 2;
-        int y = gp.getScreenHeight()/ 2;
+        int y = gp.getScreenHeight()/ 4;
         g.drawString(pauseText, x, y);
 
+    }
+
+    public int getVolume() {
+        return PauseState.volume;
+    }
+
+    public void setVolume(int volume) {
+        PauseState.volume = volume;
     }
 }
 

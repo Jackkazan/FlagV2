@@ -27,7 +27,7 @@ public class Sound {
     public void setVolume(float volume) {
         FloatControl control = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         float range = control.getMaximum() - control.getMinimum();
-        float gain = (range * volume) + control.getMinimum();
+        float gain = (range * volume + control.getMinimum());
         control.setValue(gain);
     }
 
