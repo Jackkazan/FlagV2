@@ -14,9 +14,9 @@ public class PauseState implements GameState{
     KeyHandler keyH;
 
     private static int volume = 90;
-    private GamePanel gamePanel;  // Aggiungi questo campo
-    private int volumeBarHeight=20;  // Aggiungi questo campo
-    private int volumeBarWidth =200;  // Nuova variabile di istanza
+    private GamePanel gamePanel;
+    private int volumeBarHeight=20;
+    private int volumeBarWidth =200;
 
     private MouseHandler mouseHandler;
 
@@ -29,11 +29,9 @@ public class PauseState implements GameState{
         this.keyH = keyH;
         gsm.setAlreadyPaused(true);
 
-        // Inizializza gamePanel
         this.gamePanel = gp;
 
 
-        // Inizializza mouseHandler
         mouseHandler = new MouseHandler();
         gamePanel.addMouseListener(mouseHandler);
         gamePanel.addMouseMotionListener(mouseHandler);
@@ -69,7 +67,7 @@ public class PauseState implements GameState{
                 && mouseY >= volumeBarY && mouseY <= volumeBarY + volumeBarHeight) {
             // Calcola il nuovo valore del volume in base alla posizione del mouse sulla barra del volume
             int newVolume = (mouseX - volumeBarX) * 100 / volumeBarWidth;
-            // Assicurati che il nuovo volume sia compreso tra 0 e 100
+            //Il nuovo volume deve essere compreso tra 0 e 100
             newVolume = Math.max(0, Math.min(100, newVolume));
             setVolume(newVolume);
 

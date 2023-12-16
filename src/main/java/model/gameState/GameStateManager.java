@@ -110,6 +110,7 @@ public class GameStateManager {
         this.inDialogue = false;
         this.previousState = null;
     } // Logica per uscire dal dialogo
+
     public void update() {
         currentState.update();
     }
@@ -173,7 +174,6 @@ public class GameStateManager {
 
     }
 
-    //9/11
     public void stopMusic(int numSong){
         songList.get(numSong).stop();
     }

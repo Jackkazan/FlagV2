@@ -10,7 +10,7 @@ public class MapManager {
     private TileManager currentMap;
     private Player player;
 
-    //tutte le mappe
+    //Tutte le mappe
     private TileManager tileManagerCasettaIniziale;
     private TileManager tileManagerZonaIniziale;
     private TileManager tileManagerVillaggioSud;

@@ -131,7 +131,7 @@ public class TMXReader {
 
         for (int i = 0; i < tilesetSize; i++) {
             try {
-                //nel file tmx i percorsi iniziano con 1 o più "../" quindi bisogna cancellarli e concatenargli "src/main/resources/"
+                //Nel file tmx i percorsi iniziano con 1 o più "../" quindi bisogna cancellarli e concatenargli "src/main/resources/"
                 String imageSource = listaPercorsiTilesets.get(i);
                 String patternToRemove = "\\.\\./";
                 String imagePath = "src/main/resources/" + imageSource.replaceAll(patternToRemove, "");

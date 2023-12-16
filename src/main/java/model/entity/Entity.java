@@ -238,7 +238,7 @@ public class Entity {
         // Verifica se il giocatore è nelle vicinanze e ha premuto il tasto "E"
         if (this.isInteractable && this.tileManager == gsm.getMapManager().getCurrentMap() && isPlayerNearby()) {
             if(keyH.interactPressed && interactionAction != null) {
-                //System.out.println("Ho interagioto con "+this.name);
+                //System.out.println("Ho interagito con "+this.name);
                 interactionAction.performAction(this);
             }
         }
