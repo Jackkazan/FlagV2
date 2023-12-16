@@ -8,10 +8,10 @@ public class Playlist {
 
     public Playlist() {
         songList = new ArrayList<>();
-        // Aggiungi le tue canzoni alla playlist
+        // Aggiungi le canzoni alla playlist
         addSong("src/main/resources/music/ost.wav");
         //addSong("src/main/resources/music/ost2.wav");
-        // Aggiungi altre canzoni se necessario
+        // Aggiungi altre canzoni quando necessario
     }
 
     private void addSong(String filePath) {

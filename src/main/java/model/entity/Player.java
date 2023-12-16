@@ -249,7 +249,7 @@ public class Player {
                 y + tileSize > objectY;
     }
 
-    //------------------------------------------------------
+
     // metodo per verificare la collisione con le entità
     public boolean collidesWithEntities(int nextX, int nextY) {
         // Verifica la collisione con le entità della lista npcList
@@ -270,7 +270,7 @@ public class Player {
         }
         return false; // Nessuna collisione rilevata
     }
-    // Aggiungi questo nuovo metodo per verificare la collisione con i CollisionObject
+    //metodo per verificare la collisione con i CollisionObject
     private boolean checkCollisionRectangle(int x, int y, Rectangle collisionArea) {
         double objectX = collisionArea.getX();
         double objectY = collisionArea.getY();

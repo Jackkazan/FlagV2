@@ -12,12 +12,12 @@ import static view.GamePanel.tileSize;
 
 public class OBJ_Heart {
 
-    //OBJECT STATS
+    //OBJECT stats
     private String name;
     private int value;
 
     private GamePanel gamePanel;
-    // IMAGES
+    // Images
     private BufferedImage image1, image2, image3;
 
     public OBJ_Heart(GamePanel gamePanel) {
@@ -77,7 +77,7 @@ public class OBJ_Heart {
     public void setImage3(BufferedImage image3) {
         this.image3 = image3;
     }
-//    @Override
+
 //    public void use() {
 //        gamePanel.playSoundEffect(1);
 //        gamePanel.getUi().addMessage("Life +" + getValue());

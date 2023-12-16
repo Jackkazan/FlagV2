@@ -18,7 +18,7 @@ public class ObjectsCreator {
     public static List<KeyItems> createObjects(GameStateManager gsm, MapManager mapManager, KeyHandler keyH) {
         List<KeyItems> objectList = new ArrayList<>();
 
-        //inizializzazione oggetti
+        //Inizializzazione oggetti
         KeyItems keyCasettaIniziale = new KeyItems.KeyItemsBuilder(gsm, 7, 5, keyH)
                 .setName("keyCasettaIniziale")
                 .setStaticImage("/object/key.png")
@@ -63,7 +63,7 @@ public class ObjectsCreator {
 
 
 
-        //aggiunta di tutti gli oggetti alla lista
+        //Aggiunta di tutti gli oggetti alla lista
         objectList.add(keyCasettaIniziale);
         objectList.add(portaCasettaInizialeChiusa);
         objectList.add(zuccaMarcia1);
@@ -76,24 +76,24 @@ public class ObjectsCreator {
     }
 
 
-    //raccolta oggetti o semplice interazione con scomparsa
+    //Raccolta oggetti o semplice interazione con scomparsa
     public static class DisappearOrChangeImageAction implements InteractionActionItems {
         @Override
         public void performAction(KeyItems keyItems){
 
-            //se le quest prima di interagire con questo oggetto sono state fatte
+            //Se le quest prima di interagire con questo oggetto sono state fatte
             if(keyItems.questListIsDone()){
 
                 // Implementa l'azione di nascondere
                 System.out.println("Sto nascondendo " + keyItems.getName());
 
-                //se hai interagito con chiave e tutte le quest fin qui sono completate allora prendi la chiave
+                //Se hai interagito con chiave e tutte le quest fin qui sono completate allora prendi la chiave
                 if (keyItems.getName().equals("keyCasettaIniziale")) {
                     keyItems.setStaticImage("/object/spriteInvisibile16x16.png");
                     questList.get(1).setDone();
                     keyItems.setInteractable(false);
                 }
-                //se hai interagito con la collisione della porta e tutte le quest fin qui sono completate allora sblocca la porta
+                //Se hai interagito con la collisione della porta e tutte le quest fin qui sono completate allora sblocca la porta
                 if(keyItems.getName().equals("portaCasettaInizialeChiusa")){
                     keyItems.setStaticImage("/object/portaAperta.png");
                     keyItems.setCollisionArea(null);        //rimuove collisione della porta
@@ -109,10 +109,10 @@ public class ObjectsCreator {
                 }
 
             }
-            // pannello comunicativo che ti dice che non puoi ancora passare/prendere
+            // Pannello comunicativo che ti dice che non puoi ancora passare/prendere
             else{
 
-                //se hai interagito con la collisione della porta ma tutte le quest precedenti non sono state completate
+                //Se hai interagito con la collisione della porta ma tutte le quest precedenti non sono state completate
                 if(keyItems.getName().equals("portaCasettaInizialeChiusa")){
                     System.out.println("La porta è bloccata, guardati attorno, magari puoi trovare qualcosa per aprirla");
                 }
