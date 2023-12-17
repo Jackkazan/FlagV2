@@ -27,9 +27,9 @@ public class DialogueState implements GameState {
             this.gsm = gsm;
             this.keyH = keyH;
             this.npc = npc;
-            test.add("dialogo 1");
-            test.add("dialogo2");
-            test.add("dialogo 3 porcamadonna" );
+            test.add("dialogo 1 ");
+            test.add("dialogo 2 ");
+            test.add("dialogo 3 ");
             dialogue = test.get(i);
     }
 
