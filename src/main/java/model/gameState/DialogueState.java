@@ -58,7 +58,7 @@ public class DialogueState implements GameState {
         }
 
 
-        // logica dialoghi
+        //logica dialoghi
     }
     public void advanceDialogue(){
         if(i< test.size()-1) {
