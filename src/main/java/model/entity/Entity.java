@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 //Class for npc and enemy
@@ -51,6 +52,9 @@ public class Entity {
 
     public static class EntityBuilder {
         private Entity entity;
+        private int[] pathX;  // Array delle coordinate x del percorso
+        private int[] pathY;  // Array delle coordinate y del percorso
+        private int pathIndex;
 
         public EntityBuilder(GamePanel gamePanel, GameStateManager gsm, int x, int y, KeyHandler keyH) {
             this.entity = new Entity();
@@ -180,7 +184,6 @@ public class Entity {
             }
             return this;
         }
-
         public Entity build() {
             return this.entity;
         }
@@ -204,11 +207,18 @@ public class Entity {
 
         return null;
     }
+    public void setPath(){
+        // Definisci il percorso predefinito
+        int[] pathX = new int[]{this.x, this.x + GamePanel.tileSize, this.x, this.x - GamePanel.tileSize};  // Esempio: movimento orizzontale a destra, poi su, poi a sinistra
+        int[] pathY = new int[]{this.y, this.y + GamePanel.tileSize, this.y, this.y - GamePanel.tileSize};       // Modifica il percorso secondo le tue esigenze
+        int pathIndex = 0;  // Inizia dal primo punto del percorso
 
-
-    //Futura """"AI""""
-    public void setupAI() {
-
+        // Muovi l'entità lungo il percorso predefinito
+            this.x = pathX[pathIndex];
+            this.y = pathY[pathIndex];
+            pathIndex++;
+            if(pathIndex == 3) pathIndex = 0;
+        // Se hai raggiunto la fine del percorso, ricomincia da capo
     }
 
     public void update() {
@@ -230,6 +240,7 @@ public class Entity {
 
             }
         }
+        setPath();
         interact();
 
     }

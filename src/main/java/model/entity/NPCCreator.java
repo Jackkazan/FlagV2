@@ -12,7 +12,15 @@ import static view.GamePanel.tileSize;
 
 public class NPCCreator {
 
+    private int spriteCounter = 0;
+    private int spriteNum = 3;
+    private int speed;
+
+
     public static List<Entity> createNPCs(GamePanel gamePanel, GameStateManager gsm, MapManager mapManager, KeyHandler keyH) {
+        int x_vecchietta = 22*tileSize;
+        int y_vecchietta = 46*tileSize;
+
         List<Entity> npcList = new ArrayList<>();
         // Inizializza le entità e aggiungile alla lista
 
@@ -24,7 +32,9 @@ public class NPCCreator {
         String vecchietta_left2= "/npc/Vecchietta/VecchiettaLookLeft_1.png";
         String vecchietta_right1= "/npc/Vecchietta/VecchiettaLookRight_0.png";
         String vecchietta_right2= "/npc/Vecchietta/VecchiettaLookRight_1.png";
-        Entity vecchietta = new Entity.EntityBuilder(gamePanel, gsm, 22*tileSize, 46*tileSize, gsm.getKeyH())
+
+                                                                    //x          //y
+        Entity vecchietta = new Entity.EntityBuilder(gamePanel, gsm, x_vecchietta, y_vecchietta, gsm.getKeyH())
                 .setName("Vecchietta")
                 .setSpeed(2)
                 .setSpeedChangeSprite(100)
