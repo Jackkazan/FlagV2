@@ -22,17 +22,24 @@ public class DialogueState implements GameState {
     private boolean dialogueAdvancing = false;
     private boolean dialogueDisplayed;
     int index = 0;
-
+    private final int DialogueBoxX;
+    private final int DialogueBoxY;
+    private final int DialogueBoxWidth;
+    private final int DialogueBoxHeight;
 
     public DialogueState(GamePanel gp, GameStateManager gsm, KeyHandler keyH, Entity npc) {
-            this.gp = gp;
-            this.gsm = gsm;
-            this.keyH = keyH;
-            this.npc = npc;
-            test.add("dialogo 1 ");
-            test.add("dialogo 2 ");
-            test.add("dialogo 3 ");
-            dialogue = test.get(i);
+        this.gp = gp;
+        this.gsm = gsm;
+        this.keyH = keyH;
+        this.npc = npc;
+        DialogueBoxX = GamePanel.tileSize * 2;
+        DialogueBoxY = GamePanel.tileSize;
+        DialogueBoxWidth = gp.getScreenWidth() - (GamePanel.tileSize * 3);
+        DialogueBoxHeight = GamePanel.tileSize*5;
+        test.add("dialogo 1 ");
+        test.add("dialogo 2 ");
+        test.add("dialogo 3 ");
+        dialogue = test.get(i);
     }
 
     @Override
@@ -66,12 +73,15 @@ public class DialogueState implements GameState {
     @Override
     public void draw(Graphics g) {
         gsm.getPlayState().draw(g);
+        this.drawDialogueBox(g, DialogueBoxX, DialogueBoxY, DialogueBoxWidth, DialogueBoxHeight);
+        this.drawDialogue(g, DialogueBoxX, DialogueBoxY);
+    }
+
+    public void drawDialogueBox(Graphics g, int x, int y, int width, int height){
         g.setColor(new Color(255, 255, 255));
-        int x = GamePanel.tileSize * 2;
-        int y = GamePanel.tileSize;
-        int width = gp.getScreenWidth() - (GamePanel.tileSize * 3);
-        int height = GamePanel.tileSize*5;
         g.fillRoundRect(x, y, width, height, 40, 40);
+    }
+    public void drawDialogue(Graphics g, int x, int y){
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 24));;
         x += (GamePanel.tileSize);
@@ -86,6 +96,6 @@ public class DialogueState implements GameState {
             dialogueDisplayed = true;
         }
         g.drawString(dialogueText, x, y);
-
     }
+
 }
