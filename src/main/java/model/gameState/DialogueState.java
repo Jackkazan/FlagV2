@@ -16,10 +16,12 @@ public class DialogueState implements GameState {
     private Entity npc;
 
     private String dialogue;
+    private String dialogueText = "";
     private ArrayList<String> test = new ArrayList<>();
     private int i = 0;
     private boolean dialogueAdvancing = false;
-
+    private boolean dialogueDisplayed;
+    int index = 0;
 
 
     public DialogueState(GamePanel gp, GameStateManager gsm, KeyHandler keyH, Entity npc) {
@@ -39,9 +41,10 @@ public class DialogueState implements GameState {
         if (keyH.isPaused()){
             gsm.dialoguePause();
         }
-        if(keyH.spacePressed && !dialogueAdvancing){
+        if(keyH.spacePressed && !dialogueAdvancing && dialogueDisplayed){
            advanceDialogue();
            dialogueAdvancing = true;
+           dialogueDisplayed = false;
         }
         if(!keyH.spacePressed) {
             dialogueAdvancing = false;
@@ -52,6 +55,8 @@ public class DialogueState implements GameState {
     }
     public void advanceDialogue(){
         if(i< test.size()-1) {
+            dialogueText = "";
+            index = 0;
             System.out.println("sono stato chiamata");
             i++;
             dialogue = test.get(i);
@@ -62,16 +67,26 @@ public class DialogueState implements GameState {
     @Override
     public void draw(Graphics g) {
         gsm.getPlayState().draw(g);
-        g.setColor(new Color(0, 0, 0, 150));
-        g.fillRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
-
-
-        g.setColor(Color.WHITE);
+        g.setColor(new Color(255, 255, 255));
+        int x = GamePanel.tileSize * 2;
+        int y = GamePanel.tileSize;
+        int width = gp.getScreenWidth() - (GamePanel.tileSize * 3);
+        int height = GamePanel.tileSize*5;
+        g.fillRoundRect(x, y, width, height, 40, 40);
+        g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 24));;
-        int textWidth = g.getFontMetrics().stringWidth(dialogue);
-        int x = (gp.getScreenWidth()- textWidth) / 2;
-        int y = gp.getScreenHeight()/ 2;
-        g.drawString(dialogue, x, y);
+        x += (GamePanel.tileSize);
+        y += (GamePanel.tileSize);
+        char characterArray[] = dialogue.toCharArray();
+        if (index < characterArray.length){
+            String temp = String.valueOf(characterArray[index]);
+            dialogueText = dialogueText + temp;
+            index++;
+        }
+        else{
+            dialogueDisplayed = true;
+        }
+        g.drawString(dialogueText, x, y);
 
     }
 }

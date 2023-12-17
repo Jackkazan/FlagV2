@@ -128,5 +128,7 @@ public class GamePanel extends JPanel implements Runnable{
     public UI getUi() {
         return ui;
     }
+
+
     //transizione animata -------------------------------------------------------------------------------
 }
