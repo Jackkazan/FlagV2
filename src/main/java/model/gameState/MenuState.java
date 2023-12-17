@@ -71,8 +71,6 @@ public class MenuState implements GameState{
         int y = gp.getScreenHeight() *2/3;
 
 
-
-
         g.drawString(menuText, x, y);
 
     }
