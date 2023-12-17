@@ -22,20 +22,20 @@ public class DialogueState implements GameState {
     private boolean dialogueAdvancing = false;
     private boolean dialogueDisplayed;
     int index = 0;
-    private final int DialogueBoxX;
-    private final int DialogueBoxY;
-    private final int DialogueBoxWidth;
-    private final int DialogueBoxHeight;
+    private final int dialogueBoxX;
+    private final int dialogueBoxY;
+    private final int dialogueBoxWidth;
+    private final int dialogueBoxHeight;
 
     public DialogueState(GamePanel gp, GameStateManager gsm, KeyHandler keyH, Entity npc) {
         this.gp = gp;
         this.gsm = gsm;
         this.keyH = keyH;
         this.npc = npc;
-        DialogueBoxX = GamePanel.tileSize * 2;
-        DialogueBoxY = GamePanel.tileSize;
-        DialogueBoxWidth = gp.getScreenWidth() - (GamePanel.tileSize * 3);
-        DialogueBoxHeight = GamePanel.tileSize*5;
+        dialogueBoxWidth = gp.getScreenWidth() - (GamePanel.tileSize * 4);
+        dialogueBoxHeight = GamePanel.tileSize*5;
+        dialogueBoxX = GamePanel.tileSize * 2;
+        dialogueBoxY = gp.getScreenHeight() -(dialogueBoxHeight + GamePanel.tileSize * 2);
         test.add("dialogo 1 ");
         test.add("dialogo 2 ");
         test.add("dialogo 3 ");
@@ -73,8 +73,8 @@ public class DialogueState implements GameState {
     @Override
     public void draw(Graphics g) {
         gsm.getPlayState().draw(g);
-        this.drawDialogueBox(g, DialogueBoxX, DialogueBoxY, DialogueBoxWidth, DialogueBoxHeight);
-        this.drawDialogue(g, DialogueBoxX, DialogueBoxY);
+        this.drawDialogueBox(g, dialogueBoxX, dialogueBoxY, dialogueBoxWidth, dialogueBoxHeight);
+        this.drawDialogue(g, dialogueBoxX, dialogueBoxY);
     }
 
     public void drawDialogueBox(Graphics g, int x, int y, int width, int height){
