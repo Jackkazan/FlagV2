@@ -12,17 +12,17 @@ public class MenuState implements GameState{
     private GameStateManager gsm;
     private KeyHandler keyH;
     private Graphics2D g2;
-    public MenuState(GamePanel gp, GameStateManager gsm) {
+    public MenuState(GamePanel gp, GameStateManager gsm, KeyHandler keyH) {
         this.gp = gp;
         this.gsm = gsm;
-        this.keyH = gsm.getKeyH();
+        this.keyH = keyH;
 
 
     }
 
     @Override
     public void update() {
-        if(keyH.enterPressed == true){
+        if(keyH.enterPressed){
             gsm.setState(GameStateManager.State.PLAY);
         }
 

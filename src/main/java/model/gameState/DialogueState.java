@@ -57,7 +57,6 @@ public class DialogueState implements GameState {
         if(i< test.size()-1) {
             dialogueText = "";
             index = 0;
-            System.out.println("sono stato chiamata");
             i++;
             dialogue = test.get(i);
         }
@@ -79,7 +78,7 @@ public class DialogueState implements GameState {
         y += (GamePanel.tileSize);
         char characterArray[] = dialogue.toCharArray();
         if (index < characterArray.length){
-            String temp = String.valueOf(characterArray[index]);
+            String temp = String.valueOf(characterArray[index]); // logica per mostrare il testo lettera per lettera
             dialogueText = dialogueText + temp;
             index++;
         }
