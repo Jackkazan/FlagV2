@@ -197,22 +197,6 @@ public class KeyItems implements Prototype{
 
     }
 
-    /*
-    public static class KeyItemsFactory {
-
-        public static KeyItems createKeyItems(KeyItems referenceKeyItems, String name, int x, int y) {
-            KeyItems newKeyItems = referenceKeyItems.clone();
-            newKeyItems.setName(name);
-            newKeyItems.setPosition(x,y);
-            // Puoi impostare eventuali attributi specifici della nuova istanza
-            return newKeyItems;
-        }
-
-
-    }
-
-     */
-
 
     public BufferedImage draw(Graphics2D graphics2D){
 

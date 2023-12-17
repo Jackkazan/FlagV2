@@ -28,8 +28,8 @@ public class GameStateManager {
     private GamePanel gp;
     KeyHandler keyH;
 
-    private boolean alreadyPaused = false;
-    private boolean inDialogue = false;
+    private boolean alreadyPaused = false; // necessario onde evitare che il playstate richiami il costruttore del pause state mentre il gioco è in pausa
+    private boolean inDialogue = false; //necessario per la logica della pausa durante i dialoghi
     Player player;
     public TileManager tileManagerZonaIniziale;
     public TileManager tileManagerCasettaIniziale;
@@ -56,10 +56,10 @@ public class GameStateManager {
     public GameStateManager(GamePanel gp) {
         this.gp = gp;
         this.keyH = new KeyHandler(this);
-        this.currentState = new MenuState(gp, this);
+        this.currentState = new MenuState(gp, this, keyH);
 
     }
-    public void Init(){
+    public void Init(){ // inizializza il player e le mappe
         this.player = new Player(gp, this, keyH);
         this.tileManagerZonaIniziale = new TileManager(gp, this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
         this.tileManagerCasettaIniziale = new TileManager(gp, this, "src/main/resources/Map/StanzaIntroduzione/CasettaIniziale.tmx");
@@ -77,13 +77,13 @@ public class GameStateManager {
     public void setState(State state) {
         switch (state) {
             case MENU:
-                currentState = new MenuState(gp, this);
+                currentState = new MenuState(gp, this, keyH);
                 break;
             case PLAY:
                 if(this.playState == null)
                     Init();
                 playMusic(0);
-                currentState = playState;
+                currentState = playState; // playstate deve essere sempre in memoria
                 break;
             case PAUSE:
                 //currentState = pauseState;
@@ -181,6 +181,5 @@ public class GameStateManager {
     public List<Sound> getSongList() {
         return songList;
     }
-
 
 }

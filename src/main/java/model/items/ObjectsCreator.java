@@ -87,26 +87,30 @@ public class ObjectsCreator {
                 // Implementa l'azione di nascondere
                 System.out.println("Sto nascondendo " + keyItems.getName());
 
-                //Se hai interagito con chiave e tutte le quest fin qui sono completate allora prendi la chiave
-                if (keyItems.getName().equals("keyCasettaIniziale")) {
-                    keyItems.setStaticImage("/object/spriteInvisibile16x16.png");
-                    questList.get(1).setDone();
-                    keyItems.setInteractable(false);
-                }
-                //Se hai interagito con la collisione della porta e tutte le quest fin qui sono completate allora sblocca la porta
-                if(keyItems.getName().equals("portaCasettaInizialeChiusa")){
-                    keyItems.setStaticImage("/object/portaAperta.png");
-                    keyItems.setCollisionArea(null);        //rimuove collisione della porta
-                    questList.get(2).setDone();
-                    keyItems.setInteractable(false);
+                switch (keyItems.getName()) {
+
+                    //Se hai interagito con chiave e tutte le quest fin qui sono completate allora prendi la chiave
+                    case "keyCasettaIniziale" -> {
+                        keyItems.setStaticImage("/object/spriteInvisibile16x16.png");
+                        questList.get(1).setDone();
+                        keyItems.setInteractable(false);
+                    }
+                    //Se hai interagito con la collisione della porta e tutte le quest fin qui sono completate allora sblocca la porta
+                    case "portaCasettaInizialeChiusa" -> {
+                        keyItems.setStaticImage("/object/portaAperta.png");
+                        keyItems.setCollisionArea(null);        //rimuove collisione della porta
+                        questList.get(2).setDone();
+                        keyItems.setInteractable(false);
+                    }
+                    case "zuccaMarcia1", "zuccaMarcia2", "zuccaMarcia3", "zuccaMarcia4", "zuccaMarcia5" -> {
+                        keyItems.setStaticImage("/object/spriteInvisibile16x16.png");
+                        keyItems.setCollisionArea(null);        //rimuove collisione
+                        questList.get(2).setDone();     // la quest al momento è sbagliata
+                        keyItems.setInteractable(false);
+                    }
+                    default -> {}
                 }
 
-                if(keyItems.getName().matches("zuccaMarcia1|zuccaMarcia2|zuccaMarcia3|zuccaMarcia4|zuccaMarcia5")){
-                    keyItems.setStaticImage("/object/spriteInvisibile16x16.png");
-                    keyItems.setCollisionArea(null);        //rimuove collisione della porta
-                    questList.get(2).setDone();
-                    keyItems.setInteractable(false);
-                }
 
             }
             // Pannello comunicativo che ti dice che non puoi ancora passare/prendere

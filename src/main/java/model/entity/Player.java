@@ -194,32 +194,32 @@ public class Player {
             case "down&attack" -> {
                 offsetX = -16;
                 offsetY = -32;
-                imageWidth = 32; //48
-                imageHeight = 48; //96
+                imageWidth = 32;
+                imageHeight = 48;
             }
             case "left&attack" -> {
                 offsetX = -58;
                 offsetY = -32;
-                imageWidth = 48; //96
-                imageHeight = 32; //48
+                imageWidth = 48;
+                imageHeight = 32;
             }
             case "right&attack" -> {
                 offsetX = -14;
                 offsetY = -32;
-                imageWidth = 48; //96
-                imageHeight = 32; //48
+                imageWidth = 48;
+                imageHeight = 32;
             }
             case "up&attack" -> {
                 offsetX = -16;
                 offsetY = -72;
-                imageWidth = 32; //48
-                imageHeight = 48; //96
+                imageWidth = 32;
+                imageHeight = 48;
             }
             default -> {
                 offsetX = -16;
                 offsetY = -32;
-                imageWidth = 32; //48
-                imageHeight = 32; //48
+                imageWidth = 32;
+                imageHeight = 32;
             }
         }
 
@@ -270,7 +270,7 @@ public class Player {
         }
         return false; // Nessuna collisione rilevata
     }
-    //metodo per verificare la collisione con i CollisionObject
+    //metodo per verificare la collisione con i Rectangle degli Items
     private boolean checkCollisionRectangle(int x, int y, Rectangle collisionArea) {
         double objectX = collisionArea.getX();
         double objectY = collisionArea.getY();

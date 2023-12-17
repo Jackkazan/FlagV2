@@ -110,9 +110,6 @@ public class Entity {
             return this;
         }
 
-
-
-
         public EntityBuilder setImageDimension(int imageWidth, int imageHeight) {
             this.entity.imageWidth = imageWidth;
             this.entity.imageHeight = imageHeight;
