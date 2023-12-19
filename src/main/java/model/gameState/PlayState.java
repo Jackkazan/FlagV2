@@ -35,6 +35,7 @@ public class PlayState implements GameState{
         this.player = player;
         this.keyH = keyH;
         this.buffer = new BufferedImage(gp.getScreenWidth(), gp.getScreenHeight(), BufferedImage.TYPE_INT_RGB);
+
     }
 
     @Override

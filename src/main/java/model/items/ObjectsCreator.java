@@ -5,6 +5,7 @@ import controller.KeyHandler;
 import model.gameState.GameStateManager;
 import model.quests.Quest;
 import model.quests.QuestInitializer;
+import model.sound.Playlist;
 import model.tile.MapManager;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
 public class ObjectsCreator {
 
     static List<Quest> questList = QuestInitializer.createQuestList();
-
+    static KeyItemsPrototype prototypeManager;
 
     public static List<KeyItems> createObjects(GameStateManager gsm, MapManager mapManager, KeyHandler keyH) {
         List<KeyItems> objectList = new ArrayList<>();
@@ -53,13 +54,33 @@ public class ObjectsCreator {
                 .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
 
-        KeyItemsPrototype prototypeManager = new KeyItemsPrototype(zuccaMarcia1);
+        prototypeManager = new KeyItemsPrototype(zuccaMarcia1);
 
         Prototype zuccaMarcia2 = prototypeManager.createKeyItems("zuccaMarcia2",47,46,16,16);
         Prototype zuccaMarcia3 = prototypeManager.createKeyItems("zuccaMarcia3", 42,48,16,16);
         Prototype zuccaMarcia4 = prototypeManager.createKeyItems("zuccaMarcia4",45,52,16,16);
         Prototype zuccaMarcia5 = prototypeManager.createKeyItems("zuccaMarcia5", 50,50,16,16);
 
+
+
+        KeyItems spaventaPasseri1 = new KeyItems.KeyItemsBuilder(gsm, 43, 27, keyH)
+                .setName("spaventaPasseri1")
+                .setStaticImage("/object/spaventaPasseri.png")
+                .setImageDimension(32,48)
+                .setCollisionArea(32,64)
+                .setContainedMap(mapManager.getTileManagerZonaIniziale())
+                .setRelatedQuests(questList.get(0))
+                .setInteractable(true)
+                .setInteractionAction(new DisappearOrChangeImageAction())
+                .build();
+
+        prototypeManager = new KeyItemsPrototype(spaventaPasseri1);
+
+        Prototype spaventaPasseri2 = prototypeManager.createKeyItems("spaventaPasseri2",64,27,32,64);
+        Prototype spaventaPasseri3 = prototypeManager.createKeyItems("spaventaPasseri3", 82,30,32,64);
+        Prototype spaventaPasseri4 = prototypeManager.createKeyItems("spaventaPasseri4",44,40,32,64);
+        Prototype spaventaPasseri5 = prototypeManager.createKeyItems("spaventaPasseri5", 64,43,32,64);
+        Prototype spaventaPasseri6 = prototypeManager.createKeyItems("spaventaPasseri6", 85,42,32,64);
 
 
 
@@ -71,6 +92,12 @@ public class ObjectsCreator {
         objectList.add((KeyItems) zuccaMarcia3);
         objectList.add((KeyItems) zuccaMarcia4);
         objectList.add((KeyItems) zuccaMarcia5);
+        objectList.add(spaventaPasseri1);
+        objectList.add((KeyItems) spaventaPasseri2);
+        objectList.add((KeyItems) spaventaPasseri3);
+        objectList.add((KeyItems) spaventaPasseri4);
+        objectList.add((KeyItems) spaventaPasseri5);
+        objectList.add((KeyItems) spaventaPasseri6);
 
         return objectList;
     }
@@ -108,6 +135,10 @@ public class ObjectsCreator {
                         questList.get(2).setDone();     // la quest al momento è sbagliata
                         keyItems.setInteractable(false);
                     }
+                    case "spaventaPasseri1", "spaventaPasseri2", "spaventaPasseri3", "spaventaPasseri4", "spaventaPasseri5", "spaventaPasseri6" -> {
+                        keyItems.setStaticImage("/object/spaventaPasseriDritto.png");
+                    }
+
                     default -> {}
                 }
 

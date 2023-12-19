@@ -13,7 +13,7 @@ public class PauseState implements GameState{
     GameStateManager gsm;
     KeyHandler keyH;
 
-    private static int volume = 90;
+    private static int volumeIndicator=90;
     private GamePanel gamePanel;
     private int volumeBarHeight=20;
     private int volumeBarWidth =200;
@@ -40,6 +40,8 @@ public class PauseState implements GameState{
     @Override
     public void update() {
         //gsm.getPlayState().update();
+
+
         if (!keyH.isPaused()){
             if (gsm.isInDialogue()){
                 gsm.setState(GameStateManager.State.PREVIOUS); // Se si è in dialogo uscendo dalla pausa bisogna ritornare allo stato dialogo salvato in previous state
@@ -68,12 +70,11 @@ public class PauseState implements GameState{
             // Calcola il nuovo valore del volume in base alla posizione del mouse sulla barra del volume
             int newVolume = (mouseX - volumeBarX) * 100 / volumeBarWidth;
             //Il nuovo volume deve essere compreso tra 0 e 100
-            newVolume = Math.max(0, Math.min(100, newVolume));
-            setVolume(newVolume);
+            volumeIndicator = Math.max(0, Math.min(100, newVolume));
 
             // Cambia il volume effettivo del suono
             for (Sound sound : gsm.getSongList()) {
-                sound.setVolume(volume  / 100.0f);  // Normalizza il volume a un valore compreso tra 0 e 1
+                sound.setVolume(volumeIndicator  / 100.0f);  // Normalizza il volume a un valore compreso tra 0 e 1
             }
         }
     }
@@ -103,7 +104,7 @@ public class PauseState implements GameState{
 
         // Draw volume indicator
         g.setColor(Color.WHITE);  // Change color as needed
-        int volumeIndicatorWidth = getVolume()*2;
+        int volumeIndicatorWidth = volumeIndicator*2;
         g.fillRect(volumeBarX, volumeBarY, volumeIndicatorWidth, volumeBarHeight);
 
 
@@ -127,11 +128,11 @@ public class PauseState implements GameState{
     }
 
     public int getVolume() {
-        return PauseState.volume;
+        return PauseState.volumeIndicator;
     }
 
     public void setVolume(int volume) {
-        PauseState.volume = volume;
+        PauseState.volumeIndicator = volume;
     }
 }
 

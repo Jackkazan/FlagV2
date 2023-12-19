@@ -15,14 +15,14 @@ class KeyItemsPrototype {
         return prototype.clone();
     }
 
-    public Prototype createKeyItems(String name, int x, int y, int imageWidth, int imageHeight) {
+    public Prototype createKeyItems(String name, int x, int y, int collisionWidth, int collisionHeight) {
         // Clonare l'oggetto prototipo
         KeyItems newKeyItem = (KeyItems) prototype.clone();
 
         // Modificare alcuni valori del nuovo oggetto, se necessario
         newKeyItem.setName(name);
         newKeyItem.setPosition(x, y);
-        newKeyItem.setCollisionArea(new Rectangle(x,y,imageWidth,imageHeight));
+        newKeyItem.setCollisionArea(new Rectangle(x,y,collisionWidth,collisionHeight));
 
         // Restituire il nuovo oggetto
         return newKeyItem;

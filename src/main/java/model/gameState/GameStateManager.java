@@ -82,7 +82,7 @@ public class GameStateManager {
             case PLAY:
                 if(this.playState == null)
                     Init();
-                playMusic(0);
+                playMusicLoop(0);
                 currentState = playState; // playstate deve essere sempre in memoria
                 break;
             case PAUSE:
@@ -168,7 +168,7 @@ public class GameStateManager {
     }
 
 
-    public void playMusic(int numSong) {
+    public void playMusicLoop(int numSong) {
 
         songList.get(numSong).loop();
 

@@ -56,7 +56,7 @@ public class MapManager {
                 setMap(tileManagerZonaIniziale);
                 player.teleport(64, 62);
             }
-            if (player.onTransitionPoint(30, 27, 1)) {
+            if (player.onTransitionPoint(29, 27, 1)) {
                 setMap(tileManagerNegozioItemsVillaggioSud);
                 player.teleport(8, 9);
             }
