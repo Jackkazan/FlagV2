@@ -15,20 +15,27 @@ public class MapManager {
     private TileManager tileManagerZonaIniziale;
     private TileManager tileManagerVillaggioSud;
     private TileManager tileManagerNegozioItemsVillaggioSud;
+
+    private TileManager tileManagerPianoTerraTavernaVillaggio;
+
+    private TileManager tileManagerPrimoPianoTavernaVillaggio;
     GamePanel gamePanel;
 
     public MapManager(){}
 
-    public MapManager(GamePanel gamePanel, Player player, TileManager tileManagerCasettaIniziale, TileManager tileManagerZonaIniziale, TileManager tileManagerVillaggioSud, TileManager tileManagerNegozioItemsVillaggioSud) {
+    public MapManager(GamePanel gamePanel, Player player, TileManager tileManagerCasettaIniziale, TileManager tileManagerZonaIniziale, TileManager tileManagerVillaggioSud, TileManager tileManagerNegozioItemsVillaggioSud, TileManager tileManagerPianoTerraTavernaVillaggio, TileManager tileManagerPrimoPianoTavernaVillaggio) {
         this.gamePanel = gamePanel;
         this.player = player;
         this.tileManagerZonaIniziale = tileManagerZonaIniziale;//Mappa iniziale
         this.tileManagerCasettaIniziale = tileManagerCasettaIniziale;
         this.tileManagerVillaggioSud = tileManagerVillaggioSud;
         this.tileManagerNegozioItemsVillaggioSud = tileManagerNegozioItemsVillaggioSud;
+        this.tileManagerPianoTerraTavernaVillaggio = tileManagerPianoTerraTavernaVillaggio;
+        this.tileManagerPrimoPianoTavernaVillaggio = tileManagerPrimoPianoTavernaVillaggio;
 
-        setMap(tileManagerCasettaIniziale);
+        setMap(tileManagerVillaggioSud);
     }
+
 
     public void setMap(TileManager newMap){
         currentMap = newMap;
@@ -60,12 +67,36 @@ public class MapManager {
                 setMap(tileManagerNegozioItemsVillaggioSud);
                 player.teleport(8, 9);
             }
+            if(player.onTransitionPoint(63, 47, 1)) {
+                setMap(tileManagerPianoTerraTavernaVillaggio);
+                player.teleport(17, 9);
+            }
+
         }
 
         if(currentMap == tileManagerNegozioItemsVillaggioSud){
             if(player.onTransitionPoint(8, 11, 1)) {
                 setMap(tileManagerVillaggioSud);
                 player.teleport(30, 29);
+            }
+        }
+
+        if(currentMap == tileManagerPianoTerraTavernaVillaggio){
+            if(player.onTransitionPoint(2, 2, 1)) {
+                setMap(tileManagerPrimoPianoTavernaVillaggio);
+                player.teleport(2, 5);
+            }
+            if(player.onTransitionPoint(17, 11, 1)) {
+                setMap(tileManagerVillaggioSud);
+                player.teleport(64, 51);
+            }
+
+        }
+
+        if (currentMap == tileManagerPrimoPianoTavernaVillaggio) {
+            if(player.onTransitionPoint(2, 8, 1)) {
+                setMap(tileManagerPianoTerraTavernaVillaggio);
+                player.teleport(2, 4);
             }
         }
 

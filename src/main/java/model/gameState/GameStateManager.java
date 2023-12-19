@@ -38,6 +38,9 @@ public class GameStateManager {
 
     public TileManager tileManagerNegozioItemsVillaggioSud;
 
+    public TileManager tileManagerPianoTerraTavernaVillaggio;
+    public TileManager tileManagerPrimoPianoTavernaVillaggio;
+
 
     //gestore mappe
     MapManager mapManager;
@@ -65,7 +68,9 @@ public class GameStateManager {
         this.tileManagerCasettaIniziale = new TileManager(gp, this, "src/main/resources/Map/StanzaIntroduzione/CasettaIniziale.tmx");
         this.tileManagerVillaggioSud = new TileManager(gp, this, "src/main/resources/Map/VillaggioSud/VillaggioSud.tmx");
         this.tileManagerNegozioItemsVillaggioSud = new TileManager(gp, this, "src/main/resources/Map/NegozioItemsVillaggioSud/NegozioItemsVillaggioSud.tmx");
-        this.mapManager = new MapManager(gp, player, tileManagerCasettaIniziale, tileManagerZonaIniziale, tileManagerVillaggioSud, tileManagerNegozioItemsVillaggioSud);
+        this.tileManagerPianoTerraTavernaVillaggio = new TileManager(gp,this,"src/main/resources/Map/TavernaVillaggio/PianoTerraTavernaVillaggio.tmx");
+        this.tileManagerPrimoPianoTavernaVillaggio = new TileManager(gp,this,"src/main/resources/Map/TavernaVillaggio/PrimoPianoTavernaVillaggio.tmx");
+        this.mapManager = new MapManager(gp, player, tileManagerCasettaIniziale, tileManagerZonaIniziale, tileManagerVillaggioSud, tileManagerNegozioItemsVillaggioSud,tileManagerPianoTerraTavernaVillaggio,tileManagerPrimoPianoTavernaVillaggio);
         this.playState = new PlayState(gp, this, mapManager, player, keyH);
         //this.pauseState = new PauseState(gp, this, keyH);
         this.npcList = NPCCreator.createNPCs(gp, this , mapManager, keyH);

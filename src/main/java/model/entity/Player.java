@@ -72,8 +72,8 @@ public class Player {
     }
 
     public void setDefaultValues() {
-        x = tileSize*3;
-        y = tileSize*4;
+        x = tileSize*64;  //3
+        y = tileSize*55;  //4
         maxLife = 6;
         speed = 4;
         direction = "down";
