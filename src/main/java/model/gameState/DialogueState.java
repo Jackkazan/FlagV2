@@ -80,8 +80,8 @@ public class DialogueState implements GameState {
     public void drawDialogueBox(Graphics g, int x, int y, int width, int height){
 
 
-        // Imposta il colore del bordo
-        g.setColor(Color.WHITE);
+        // Imposta il colore dello sfondo
+        g.setColor(new Color(101,71,42));
         g.fillRoundRect(x, y, width, height, 40, 40);
 
         g.setColor(Color.BLACK);
@@ -107,7 +107,7 @@ public class DialogueState implements GameState {
         height -= 2 * spessoreBordo;
 
         // Imposta il colore di sfondo
-        g.setColor(Color.WHITE);
+        g.setColor(new Color(171,124,77));
 
         // Disegna il rettangolo di sfondo
         g.fillRoundRect(x, y, width, height, 40, 40);
