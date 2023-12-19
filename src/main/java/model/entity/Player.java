@@ -254,7 +254,7 @@ public class Player {
     public boolean collidesWithEntities(int nextX, int nextY) {
         // Verifica la collisione con le entità della lista npcList
         for (Entity npc : gsm.getNpcList()) {
-            if (checkCollisionRectangle(nextX, nextY, npc.getCollisionArea())) {
+            if (npc.getTileManager().equals(gsm.getMapManager().getCurrentMap()) && checkCollisionRectangle(nextX, nextY, npc.getCollisionArea())) {
                 return true; // Collisione rilevata
             }
         }
@@ -263,7 +263,7 @@ public class Player {
     public boolean collidesWithItems(int nextX, int nextY) {
         // Verifica la collisione con gli oggetti della lista keyItemsList
         for (KeyItems items : gsm.getKeyItemsList()) {
-            if (items.getCollisionArea()!=null && checkCollisionRectangle(nextX, nextY, items.getCollisionArea())) {
+            if (items.getTileManager().equals(gsm.getMapManager().getCurrentMap()) && items.getCollisionArea()!=null && checkCollisionRectangle(nextX, nextY, items.getCollisionArea())) {
                 items.interact();
                 return true; // Collisione rilevata
             }

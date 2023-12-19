@@ -48,12 +48,14 @@ public class PlayState implements GameState{
 
         // Aggiornamento degli NPC
         for (Entity npc : gsm.getNpcList()) {
-            npc.update();
+            if(npc.getTileManager().equals(mapManager.getCurrentMap()))
+                npc.update();
         }
 
         // Aggiornamento degli oggetti
         for (KeyItems items : gsm.getKeyItemsList()) {
-            items.update();
+            if(items.getTileManager().equals(mapManager.getCurrentMap()))
+                items.update();
         }
 
         // Gestione delle transizioni della mappa

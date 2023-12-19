@@ -301,4 +301,8 @@ public class Entity {
     public int getScale() {
         return scale;
     }
+
+    public TileManager getTileManager() {
+        return tileManager;
+    }
 }
