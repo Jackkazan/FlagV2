@@ -121,4 +121,19 @@ public class MapManager {
         return tileManagerZonaIniziale;
     }
 
+    public TileManager getTileManagerNegozioItemsVillaggioSud() {
+        return tileManagerNegozioItemsVillaggioSud;
+    }
+
+    public TileManager getTileManagerVillaggioSud() {
+        return tileManagerVillaggioSud;
+    }
+
+    public TileManager getTileManagerPianoTerraTavernaVillaggio() {
+        return tileManagerPianoTerraTavernaVillaggio;
+    }
+
+    public TileManager getTileManagerPrimoPianoTavernaVillaggio() {
+        return tileManagerPrimoPianoTavernaVillaggio;
+    }
 }

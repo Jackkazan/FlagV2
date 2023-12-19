@@ -1,8 +1,8 @@
 package model.items;
 
 import controller.KeyHandler;
-import model.entity.Entity;
 import model.gameState.GameStateManager;
+import model.quests.Interactable;
 import model.quests.Quest;
 import model.tile.TileManager;
 
@@ -24,7 +24,7 @@ public class KeyItems implements Prototype{
 
     private BufferedImage staticImage;
 
-    private InteractionActionItems interactionAction;
+    private Interactable interactionAction;
     private BufferedImage animateImage1, animateImage2, animateImage3, animateImage4;
     private int speedChangeAnimateSprite;
 
@@ -165,7 +165,7 @@ public class KeyItems implements Prototype{
             return this;
         }
 
-        public KeyItemsBuilder setInteractionAction(InteractionActionItems interactionActionItems){
+        public KeyItemsBuilder setInteractionAction(Interactable interactionActionItems){
             this.keyItems.interactionAction = interactionActionItems;
             return this;
         }

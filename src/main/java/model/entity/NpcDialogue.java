@@ -1,12 +1,20 @@
 package model.entity;
 
 import model.gameState.GameStateManager;
+import model.quests.Interactable;
+import model.items.KeyItems;
 
-public class NpcDialogue implements InteractionActionEntity {
+public class NpcDialogue implements Interactable {
     GameStateManager gsm;
     public NpcDialogue(GameStateManager gsm){
         this.gsm = gsm;
     }
+
+    @Override
+    public void performAction(KeyItems keyItems) {
+
+    }
+
     @Override
     public void performAction(Entity entity) {
         //cambia direzione dell'entità

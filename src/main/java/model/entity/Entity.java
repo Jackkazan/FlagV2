@@ -2,6 +2,7 @@ package model.entity;
 
 import controller.KeyHandler;
 import model.gameState.GameStateManager;
+import model.quests.Interactable;
 import model.tile.TileManager;
 import view.GamePanel;
 
@@ -9,7 +10,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 
 //Class for npc and enemy
@@ -44,7 +44,7 @@ public class Entity {
     private TileManager tileManager;
     private boolean isInteractable;
 
-    private InteractionActionEntity interactionAction;
+    private Interactable interactionAction;
     private int imageWidth;
     private int imageHeight;
 
@@ -105,7 +105,7 @@ public class Entity {
             this.entity.isInteractable = isInteractible;
             return this;
         }
-        public EntityBuilder setInteractionAction(InteractionActionEntity action) {
+        public EntityBuilder setInteractionAction(Interactable action) {
             this.entity.interactionAction = action;
             return this;
         }

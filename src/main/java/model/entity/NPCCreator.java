@@ -109,9 +109,33 @@ public class NPCCreator {
                 .build();
 
 
+        String cameriera1Down_0 = "/npc/Cameriera/CamerieraVillaggioTavernaDown_0.png";
+        String cameriera1Down_1 = "/npc/Cameriera/CamerieraVillaggioTavernaDown_1.png";
+
+        Entity cameriera1 = new Entity.EntityBuilder(gamePanel, gsm, 15*tileSize, 3*tileSize, gsm.getKeyH())
+                .setName("Cameriera1")
+                .setSpeed(2)
+                .setSpeedChangeSprite(100)
+                .setSpriteNumLess1(1)
+                .setScale(5)
+                .setCollisionArea(16,37)
+                .setTotalSprite(2)
+                .setImageDimension(16,32)
+                .setIsInteractible(true)
+                .setInteractionAction(new NpcDialogue(gsm))
+                .setDefaultDirection("down")
+                .setContainedMap(mapManager.getTileManagerPianoTerraTavernaVillaggio())
+                .set8EntityImage(cameriera1Down_0, cameriera1Down_1,
+                        cameriera1Down_0, cameriera1Down_1,
+                        cameriera1Down_0, cameriera1Down_1,
+                        cameriera1Down_0, cameriera1Down_1)
+                .build();
+
         npcList.add(vecchietta);
         npcList.add(contadino1);
         npcList.add(contadino2);
+        npcList.add(cameriera1);
+
 
         return npcList;
     }

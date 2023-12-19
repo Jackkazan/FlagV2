@@ -2,10 +2,11 @@ package model.items;
 
 
 import controller.KeyHandler;
+import model.entity.Entity;
 import model.gameState.GameStateManager;
+import model.quests.Interactable;
 import model.quests.Quest;
 import model.quests.QuestInitializer;
-import model.sound.Playlist;
 import model.tile.MapManager;
 
 import java.util.ArrayList;
@@ -104,7 +105,7 @@ public class ItemsCreator {
 
 
     //Raccolta oggetti o semplice interazione con scomparsa
-    public static class DisappearOrChangeImageAction implements InteractionActionItems {
+    public static class DisappearOrChangeImageAction implements Interactable {
         @Override
         public void performAction(KeyItems keyItems){
 
@@ -153,6 +154,11 @@ public class ItemsCreator {
                     System.out.println("La porta è bloccata, guardati attorno, magari puoi trovare qualcosa per aprirla");
                 }
             }
+        }
+
+        @Override
+        public void performAction(Entity entity) {
+
         }
     }
 
