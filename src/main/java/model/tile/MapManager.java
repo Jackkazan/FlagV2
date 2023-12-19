@@ -33,7 +33,7 @@ public class MapManager {
         this.tileManagerPianoTerraTavernaVillaggio = tileManagerPianoTerraTavernaVillaggio;
         this.tileManagerPrimoPianoTavernaVillaggio = tileManagerPrimoPianoTavernaVillaggio;
 
-        setMap(tileManagerVillaggioSud);
+        setMap(tileManagerCasettaIniziale);
     }
 
 
