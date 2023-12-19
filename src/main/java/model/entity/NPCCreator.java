@@ -89,7 +89,7 @@ public class NPCCreator {
         String contadino2_left2="/npc/Contadino2/Contadino2LookLeft_1.png";
         String contadino2_right1="/npc/Contadino2/Contadino2LookRight_0.png";
         String contadino2_right2="/npc/Contadino2/Contadino2LookRight_1.png";
-        Entity contadino2 = new Entity.EntityBuilder(gamePanel, gsm, 64*tileSize, 31*tileSize, gsm.getKeyH())
+        Entity contadino2 = new Entity.EntityBuilder(gamePanel, gsm, 61*tileSize, 33*tileSize, gsm.getKeyH())
                 .setName("Contadino2")
                 .setSpeed(2)
                 .setSpeedChangeSprite(100)

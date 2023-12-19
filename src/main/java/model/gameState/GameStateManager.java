@@ -5,7 +5,7 @@ import model.entity.Entity;
 import model.entity.NPCCreator;
 import model.entity.Player;
 import model.items.KeyItems;
-import model.items.ObjectsCreator;
+import model.items.ItemsCreator;
 import model.sound.Playlist;
 import model.sound.Sound;
 import model.tile.MapManager;
@@ -69,7 +69,7 @@ public class GameStateManager {
         this.playState = new PlayState(gp, this, mapManager, player, keyH);
         //this.pauseState = new PauseState(gp, this, keyH);
         this.npcList = NPCCreator.createNPCs(gp, this , mapManager, keyH);
-        this.keyItemsList = ObjectsCreator.createObjects(this, mapManager, keyH);
+        this.keyItemsList = ItemsCreator.createObjects(this, mapManager, keyH);
     }
 
     public enum State{MENU, PLAY, PAUSE, PREVIOUS};

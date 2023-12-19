@@ -11,7 +11,7 @@ import model.tile.MapManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ObjectsCreator {
+public class ItemsCreator {
 
     static List<Quest> questList = QuestInitializer.createQuestList();
     static KeyItemsPrototype prototypeManager;
@@ -20,7 +20,7 @@ public class ObjectsCreator {
         List<KeyItems> objectList = new ArrayList<>();
 
         //Inizializzazione oggetti
-        KeyItems keyCasettaIniziale = new KeyItems.KeyItemsBuilder(gsm, 7, 5, keyH)
+        KeyItems keyCasettaIniziale = new KeyItems.KeyItemsBuilder(gsm, 7, 4, keyH)
                 .setName("keyCasettaIniziale")
                 .setStaticImage("/object/key.png")
                 .setImageDimension(16,16)
@@ -135,6 +135,7 @@ public class ObjectsCreator {
                         questList.get(2).setDone();     // la quest al momento è sbagliata
                         keyItems.setInteractable(false);
                     }
+
                     case "spaventaPasseri1", "spaventaPasseri2", "spaventaPasseri3", "spaventaPasseri4", "spaventaPasseri5", "spaventaPasseri6" -> {
                         keyItems.setStaticImage("/object/spaventaPasseriDritto.png");
                     }
