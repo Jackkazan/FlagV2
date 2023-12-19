@@ -118,8 +118,8 @@ public class DialogueState implements GameState {
     public void drawDialogue(Graphics g, int x, int y){
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 24));;
-        x += (GamePanel.tileSize);
-        y += (GamePanel.tileSize);
+        x += (GamePanel.tileSize - 3 );
+        y += (GamePanel.tileSize + 3);
         char characterArray[] = dialogue.toCharArray();
         if (index < characterArray.length){
             String temp = String.valueOf(characterArray[index]); // logica per mostrare il testo lettera per lettera
