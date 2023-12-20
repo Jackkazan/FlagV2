@@ -35,8 +35,8 @@ public class Enemy extends Entity{
                 .setDamage(3)
                 .setSpeedChangeSprite(10)
                 .setSpriteNumLess1(1)
-                .setCollisionArea(24,30)
-                .setImageDimension(32,32)
+                .setCollisionArea(16,16)
+                .setImageDimension(16,16)
                 .setDefaultDirection("left")
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
                 .set8EntityImage(img1, img2, img3, img4, img5, img6, img7, img8)
@@ -45,4 +45,4 @@ public class Enemy extends Entity{
         enemyList.add(slime1);
         return enemyList;
     }
-    }
+}

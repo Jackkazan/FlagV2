@@ -450,9 +450,9 @@
   <object id="11" x="480" y="153.333" width="373.167" height="124"/>
   <object id="12" x="441.333" y="240" width="40" height="114"/>
   <object id="13" x="415" y="659.5" width="5.75" height="7.5"/>
-  <object id="16" x="258.545" y="624.364" width="21.3693" height="71.5909"/>
-  <object id="17" x="323.455" y="624.364" width="25.2727" height="71.75"/>
-  <object id="19" x="280.199" y="624" width="42.5284" height="24.6477"/>
+  <object id="16" x="258.545" y="633.819" width="27.9148" height="62.1364"/>
+  <object id="17" x="318.91" y="633.273" width="29.8182" height="62.8409"/>
+  <object id="19" x="287.29" y="633.636" width="31.0739" height="24.6477"/>
   <object id="26" x="1127.5" y="464" width="40.5" height="15.1667">
    <ellipse/>
   </object>

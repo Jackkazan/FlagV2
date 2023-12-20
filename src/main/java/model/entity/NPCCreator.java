@@ -117,10 +117,31 @@ public class NPCCreator extends Entity{
                         cameriera1Down_0, cameriera1Down_1)
                 .build();
 
+        String mercante1Right_0 = "/npc/Mercante1/VenditoreOggettiVillaggioRight_0.png";
+        String mercante1Right_1 = "/npc/Mercante1/VenditoreOggettiVillaggioRight_1.png";
+
+        Entity mercante1 = new Entity.EntityBuilder(2*tileSize, 4*tileSize, "NPC")
+                .setName("Mercante1")
+                .setSpeedChangeSprite(100)
+                .setSpriteNumLess1(1)
+                .setCollisionArea(37,32)
+                .setTotalSprite(2)
+                .setImageDimension(16,32)
+                .setInteractionAction(new NpcDialogue(gsm))
+                .setDefaultDirection("right")
+                .setContainedMap(mapManager.getTileManagerNegozioItemsVillaggioSud())
+                .set8EntityImage(mercante1Right_0, mercante1Right_1,
+                        mercante1Right_0, mercante1Right_1,
+                        mercante1Right_0, mercante1Right_1,
+                        mercante1Right_0, mercante1Right_1)
+                .build();
+
+
         npcList.add(vecchietta);
         npcList.add(contadino1);
         npcList.add(contadino2);
         npcList.add(cameriera1);
+        npcList.add(mercante1);
 
 
         return npcList;
