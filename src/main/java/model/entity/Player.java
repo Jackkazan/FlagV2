@@ -215,6 +215,12 @@ public class Player extends Entity{
                 return true; // Collisione rilevata
             }
         }
+
+        for (Entity enemy : this.getGsm().getEnemyList()) {
+            if (enemy.getTileManager().equals(this.getGsm().getMapManager().getCurrentMap()) && checkCollisionRectangle(nextX, nextY, enemy.getCollisionArea())) {
+                return true; // Collisione rilevata
+            }
+        }
         return false; // Nessuna collisione rilevata
     }
     public boolean collidesWithItems(int nextX, int nextY) {

@@ -1,6 +1,7 @@
 package model.gameState;
 
 import controller.KeyHandler;
+import model.entity.Enemy;
 import model.entity.Entity;
 import model.entity.NPCCreator;
 import model.entity.Player;
@@ -46,11 +47,11 @@ public class GameStateManager {
     MapManager mapManager;
 
     List<KeyItems> keyItemsList;
-    java.util.List<Entity> npcList;
+    List<Entity> npcList;
 
     Playlist playlist = new Playlist();
     List<Sound> songList = playlist.getSongList();
-
+    List<Entity> enemyList;
 
 
     public GameStateManager(){
@@ -73,7 +74,8 @@ public class GameStateManager {
         this.mapManager = new MapManager(gp, player, tileManagerCasettaIniziale, tileManagerZonaIniziale, tileManagerVillaggioSud, tileManagerNegozioItemsVillaggioSud,tileManagerPianoTerraTavernaVillaggio,tileManagerPrimoPianoTavernaVillaggio);
         this.playState = new PlayState(gp, this, mapManager, player, keyH);
         //this.pauseState = new PauseState(gp, this, keyH);
-        this.npcList = NPCCreator.createNPCs(gp, this , mapManager, keyH);
+        this.enemyList = Enemy.createEnemy(this, mapManager);
+        this.npcList = NPCCreator.createNPCs(this, mapManager);
         this.keyItemsList = ItemsCreator.createObjects(this, mapManager, keyH);
     }
 
@@ -146,7 +148,8 @@ public class GameStateManager {
         return this.mapManager;
     }
 
-    public java.util.List<Entity> getNpcList() { return npcList; }
+    public List<Entity> getNpcList() { return this.npcList; }
+    public List<Entity> getEnemyList(){return this.enemyList;}
 
     public List<KeyItems> getKeyItemsList() {
         return keyItemsList;

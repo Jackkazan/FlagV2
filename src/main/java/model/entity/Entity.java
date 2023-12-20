@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Random;
 
 import static view.GamePanel.tileSize;
 
@@ -35,6 +36,9 @@ public class Entity {
     private int currentLife;
     private String direction;
     swordStateAndArmor currentSwordStateAndArmor;
+    //Enemy
+    private int damage;
+
 
     private BufferedImage
             up1, up2, up3, up4,
@@ -44,6 +48,8 @@ public class Entity {
     private int spriteCounter = 0;
     private int totalSprite;
     private int scale;
+
+    private int actionLockCounter = 0;
 
     private Rectangle collisionArea;
 
@@ -78,10 +84,21 @@ public class Entity {
             currentSwordStateAndArmor = swordStateAndArmor.IronSwordNoArmor;
         }
         else if(entity.equalsIgnoreCase("NPC")){
-            this.speed = 2;
+            this.gamePanel = GameStateManager.gp;
+            this.gsm = GameStateManager.gp.getGsm();
+            this.keyH = GameStateManager.keyH;
+            this.speed = 10;
             this.scale = 5;
             this.totalSprite = 8;
             this.isInteractable = true;
+        }
+        else if(entity.equalsIgnoreCase("Enemy")){
+            this.gamePanel = GameStateManager.gp;
+            this.gsm = GameStateManager.gp.getGsm();
+            this.speed = 2;
+            this.scale = 5;
+            this.totalSprite = 8;
+            this.isInteractable = false;
         }
     }
 
@@ -174,6 +191,42 @@ public class Entity {
 
     public void update() {
         collisionArea.setLocation(x, y);
+//        actionLockCounter++;
+//        int nextX = this.getX();
+//        int nextY = this.getY();
+//
+//        if(actionLockCounter == 120) {
+//            Random random = new Random();
+//
+//            int i = random.nextInt(100) + 1;
+//
+//            if (i <= 25) {
+//                this.setDirection("right");
+//                nextX += this.getSpeed();
+//            }
+//            if (i > 25 && i <= 50) {
+//                this.setDirection("left");
+//                nextX -= this.getSpeed();
+//            }
+//            if (i > 50 && i <= 75) {
+//                this.setDirection("up");
+//                nextY -= this.getSpeed();
+//            }
+//            if (i > 75) {
+//                this.setDirection("down");
+//                nextY += this.getSpeed();
+//            }
+//            this.setX(nextX);
+//            this.setY(nextY);
+//            //alternatore di sprite
+//            this.setSpriteCounter(this.getSpriteCounter() + 1);
+//            //velocità di cambio sprite 5-10
+//            if (this.getSpriteCounter() > 7) {
+//                this.setSpriteNum((this.getSpriteNum() + 1) % 4);
+//                this.setSpriteCounter(0);
+//            }
+//        }
+//        actionLockCounter=0;
         if (totalSprite == 16) {
             //alternatore di sprite
             spriteCounter++;
@@ -191,7 +244,7 @@ public class Entity {
 
             }
         }
-        setPath();
+
         interact();
 
     }
@@ -262,17 +315,11 @@ public class Entity {
 
     public static class EntityBuilder {
         private Entity entity;
-        private int[] pathX;  // Array delle coordinate x del percorso
-        private int[] pathY;  // Array delle coordinate y del percorso
-        private int pathIndex;
 
-        public EntityBuilder(GamePanel gamePanel, GameStateManager gsm, int x, int y, KeyHandler keyH, String entity) {
+        public EntityBuilder(int x, int y,String entity) {
             this.entity = new Entity(entity);
-            this.entity.gamePanel = gamePanel;
-            this.entity.gsm = gsm;
             this.entity.x = x;
             this.entity.y = y;
-            this.entity.keyH = keyH;
         }
 
         public EntityBuilder setName(String name) {
@@ -326,11 +373,22 @@ public class Entity {
             return this;
         }
 
+        public EntityBuilder setDamage(int damage){
+            this.entity.damage = damage;
+            return this;
+        }
         public EntityBuilder setScale(int scale) {
             this.entity.scale = scale;
             return this;
         }
-
+        public EntityBuilder setMaxLife(int maxLife){
+            this.entity.maxLife = maxLife;
+            return this;
+        }
+        public EntityBuilder setCurrentLife(int currentLife){
+            this.entity.currentLife = currentLife;
+            return this;
+        }
         public EntityBuilder setContainedMap(TileManager tileManager) {
             this.entity.tileManager = tileManager;
             return this;

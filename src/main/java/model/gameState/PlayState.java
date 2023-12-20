@@ -52,6 +52,12 @@ public class PlayState implements GameState{
                 npc.update();
         }
 
+        // Aggiornamento dei nemici
+        for(Entity enemy : gsm.getEnemyList()){
+            if(enemy.getTileManager().equals(mapManager.getCurrentMap()))
+                enemy.update();
+        }
+
         // Aggiornamento degli oggetti
         for (KeyItems items : gsm.getKeyItemsList()) {
             if(items.getTileManager().equals(mapManager.getCurrentMap()))
@@ -76,6 +82,9 @@ public class PlayState implements GameState{
         }
         for (KeyItems items : gsm.getKeyItemsList()) {
             items.draw(bufferGraphics);
+        }
+        for(Entity enemy : gsm.getEnemyList()){
+            enemy.draw(bufferGraphics);
         }
         player.draw(bufferGraphics);
         gp.getUi().draw(bufferGraphics);

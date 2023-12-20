@@ -7,17 +7,18 @@ import view.GamePanel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static view.GamePanel.tileSize;
 
 public class NPCCreator extends Entity{
-
+    private int actionLockCounter = 0;
     public NPCCreator(String entity) {
         super(entity);
     }
 
 
-    public static List<Entity> createNPCs(GamePanel gamePanel, GameStateManager gsm, MapManager mapManager, KeyHandler keyH) {
+    public static List<Entity> createNPCs(GameStateManager gsm, MapManager mapManager) {
         int x_vecchietta = 22*tileSize;
         int y_vecchietta = 46*tileSize;
 
@@ -34,7 +35,7 @@ public class NPCCreator extends Entity{
         String vecchietta_right2= "/npc/Vecchietta/VecchiettaLookRight_1.png";
 
                                                                     //x          //y
-        Entity vecchietta = new Entity.EntityBuilder(gamePanel, gsm, x_vecchietta, y_vecchietta, gsm.getKeyH(), "NPC")
+        Entity vecchietta = new Entity.EntityBuilder(x_vecchietta, y_vecchietta,"NPC")
                 .setName("Vecchietta")
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
@@ -58,7 +59,7 @@ public class NPCCreator extends Entity{
         String contadino1_left2="/npc/Contadino1/Contadino1LookLeft_1.png";
         String contadino1_right1="/npc/Contadino1/Contadino1LookRight_0.png";
         String contadino1_right2="/npc/Contadino1/Contadino1LookRight_1.png";
-        Entity contadino1 = new Entity.EntityBuilder(gamePanel, gsm, 86*tileSize, 37*tileSize, gsm.getKeyH(), "NPC")
+        Entity contadino1 = new Entity.EntityBuilder(86*tileSize, 37*tileSize,"NPC")
                 .setName("Contadino1")
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
@@ -81,7 +82,7 @@ public class NPCCreator extends Entity{
         String contadino2_left2="/npc/Contadino2/Contadino2LookLeft_1.png";
         String contadino2_right1="/npc/Contadino2/Contadino2LookRight_0.png";
         String contadino2_right2="/npc/Contadino2/Contadino2LookRight_1.png";
-        Entity contadino2 = new Entity.EntityBuilder(gamePanel, gsm, 61*tileSize, 33*tileSize, gsm.getKeyH(), "NPC")
+        Entity contadino2 = new Entity.EntityBuilder(61*tileSize, 33*tileSize,"NPC")
                 .setName("Contadino2")
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
@@ -100,7 +101,7 @@ public class NPCCreator extends Entity{
         String cameriera1Down_0 = "/npc/Cameriera/CamerieraVillaggioTavernaDown_0.png";
         String cameriera1Down_1 = "/npc/Cameriera/CamerieraVillaggioTavernaDown_1.png";
 
-        Entity cameriera1 = new Entity.EntityBuilder(gamePanel, gsm, 15*tileSize, 3*tileSize, gsm.getKeyH(), "NPC")
+        Entity cameriera1 = new Entity.EntityBuilder(15*tileSize, 3*tileSize, "NPC")
                 .setName("Cameriera1")
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
@@ -124,4 +125,6 @@ public class NPCCreator extends Entity{
 
         return npcList;
     }
+
+
 }
