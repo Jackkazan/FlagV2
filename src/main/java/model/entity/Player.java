@@ -30,14 +30,11 @@ public class Player extends Entity{
             left1, left2, left3, left4,
             right1, right2, right3, right4;
     private BufferedImage attackUp1, attackUp2, attackUp3, attackUp4, attackDown1, attackDown2, attackDown3, attackDown4, attackLeft1, attackLeft2, attackLeft3, attackLeft4, attackRight1, attackRight2, attackRight3, attackRight4;
-    private int spriteCounter = 0;
-    private int spriteNum = 3;
 
     public Player() {
         super("Player");
         getEntityImage();
         getAttackImages();
-
     }
 
     public void setCurrentSwordStateAndArmor(swordStateAndArmor currentSwordStateAndArmor) {
@@ -88,16 +85,17 @@ public class Player extends Entity{
                     this.setY(nextY);
                 }
 
+
                 //alternatore di sprite
-                spriteCounter++;
+                this.setSpriteCounter(this.getSpriteCounter()+1);
                 //velocità di cambio sprite 5-10
-                if (spriteCounter > 7) {
-                    spriteNum = (spriteNum + 1) % 4;
-                    spriteCounter = 0;
+                if (this.getSpriteCounter() > 7) {
+                    this.setSpriteNum((this.getSpriteNum() + 1) % 4);
+                    this.setSpriteCounter(0);
                 }
             }
             else{
-                spriteNum = 0;
+                this.setSpriteNum(0);
             }
 
         }
@@ -112,7 +110,7 @@ public class Player extends Entity{
             default -> {}
         }
 
-        spriteNum=1;
+        this.setSpriteNum(1);
 
         // Imposta un timer per la durata dell'animazione dell'attacco
         Timer timer = new Timer(385, e -> {
@@ -127,11 +125,11 @@ public class Player extends Entity{
 
     private void updateAttackAnimation() {
         //alternatore di sprite
-        spriteCounter++;
+        this.setSpriteCounter(this.getSpriteCounter() + 1);
         //velocità di cambio sprite 5-10
-        if (spriteCounter > 7) {
-            spriteNum = (spriteNum + 1) % 4;
-            spriteCounter = 0;
+        if (this.getSpriteCounter() > 7) {
+            this.setSpriteNum((this.getSpriteNum() + 1) % 4);
+            this.setSpriteCounter(0);
         }
     }
 
@@ -183,7 +181,7 @@ public class Player extends Entity{
         }
 
         if (images != null) {
-            graphics2D.drawImage(images[spriteNum], this.getScreenX()+offsetX, this.getScreenY()+offsetY, (imageWidth/2) *this.getScale(), (imageHeight/2)*this.getScale(), null);
+            graphics2D.drawImage(images[this.getSpriteNum()], this.getScreenX()+offsetX, this.getScreenY()+offsetY, (imageWidth/2) *this.getScale(), (imageHeight/2)*this.getScale(), null);
         }
     }
     public boolean collidesWithObjects(int nextX, int nextY) {

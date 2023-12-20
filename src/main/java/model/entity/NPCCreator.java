@@ -10,11 +10,11 @@ import java.util.List;
 
 import static view.GamePanel.tileSize;
 
-public class NPCCreator{
+public class NPCCreator extends Entity{
 
-    private int spriteCounter = 0;
-    private int spriteNum = 3;
-    private int speed;
+    public NPCCreator(String entity) {
+        super(entity);
+    }
 
 
     public static List<Entity> createNPCs(GamePanel gamePanel, GameStateManager gsm, MapManager mapManager, KeyHandler keyH) {
@@ -34,16 +34,12 @@ public class NPCCreator{
         String vecchietta_right2= "/npc/Vecchietta/VecchiettaLookRight_1.png";
 
                                                                     //x          //y
-        Entity vecchietta = new Entity.EntityBuilder(gamePanel, gsm, x_vecchietta, y_vecchietta, gsm.getKeyH())
+        Entity vecchietta = new Entity.EntityBuilder(gamePanel, gsm, x_vecchietta, y_vecchietta, gsm.getKeyH(), "NPC")
                 .setName("Vecchietta")
-                .setSpeed(2)
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
-                .setScale(5)
                 .setCollisionArea(24,30)
-                .setTotalSprite(8)
                 .setImageDimension(32,32)
-                .setIsInteractible(true)
                 .setInteractionAction(new NpcDialogue(gsm))
                 .setDefaultDirection("left")
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
@@ -62,16 +58,12 @@ public class NPCCreator{
         String contadino1_left2="/npc/Contadino1/Contadino1LookLeft_1.png";
         String contadino1_right1="/npc/Contadino1/Contadino1LookRight_0.png";
         String contadino1_right2="/npc/Contadino1/Contadino1LookRight_1.png";
-        Entity contadino1 = new Entity.EntityBuilder(gamePanel, gsm, 86*tileSize, 37*tileSize, gsm.getKeyH())
+        Entity contadino1 = new Entity.EntityBuilder(gamePanel, gsm, 86*tileSize, 37*tileSize, gsm.getKeyH(), "NPC")
                 .setName("Contadino1")
-                .setSpeed(2)
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
-                .setScale(5)
                 .setCollisionArea(24,30)
-                .setTotalSprite(8)
                 .setImageDimension(32,32)
-                .setIsInteractible(true)
                 .setInteractionAction(new NpcDialogue(gsm))
                 .setDefaultDirection("right")
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
@@ -89,16 +81,12 @@ public class NPCCreator{
         String contadino2_left2="/npc/Contadino2/Contadino2LookLeft_1.png";
         String contadino2_right1="/npc/Contadino2/Contadino2LookRight_0.png";
         String contadino2_right2="/npc/Contadino2/Contadino2LookRight_1.png";
-        Entity contadino2 = new Entity.EntityBuilder(gamePanel, gsm, 61*tileSize, 33*tileSize, gsm.getKeyH())
+        Entity contadino2 = new Entity.EntityBuilder(gamePanel, gsm, 61*tileSize, 33*tileSize, gsm.getKeyH(), "NPC")
                 .setName("Contadino2")
-                .setSpeed(2)
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
-                .setScale(5)
                 .setCollisionArea(24,30)
-                .setTotalSprite(8)
                 .setImageDimension(32,32)
-                .setIsInteractible(true)
                 .setInteractionAction(new NpcDialogue(gsm))
                 .setDefaultDirection("down")
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
@@ -112,16 +100,13 @@ public class NPCCreator{
         String cameriera1Down_0 = "/npc/Cameriera/CamerieraVillaggioTavernaDown_0.png";
         String cameriera1Down_1 = "/npc/Cameriera/CamerieraVillaggioTavernaDown_1.png";
 
-        Entity cameriera1 = new Entity.EntityBuilder(gamePanel, gsm, 15*tileSize, 3*tileSize, gsm.getKeyH())
+        Entity cameriera1 = new Entity.EntityBuilder(gamePanel, gsm, 15*tileSize, 3*tileSize, gsm.getKeyH(), "NPC")
                 .setName("Cameriera1")
-                .setSpeed(2)
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
-                .setScale(5)
                 .setCollisionArea(16,37)
                 .setTotalSprite(2)
                 .setImageDimension(16,32)
-                .setIsInteractible(true)
                 .setInteractionAction(new NpcDialogue(gsm))
                 .setDefaultDirection("down")
                 .setContainedMap(mapManager.getTileManagerPianoTerraTavernaVillaggio())
