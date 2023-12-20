@@ -25,8 +25,8 @@ public class GameStateManager {
     private GameState currentState;
     private GameState previousState;
 
-    private GamePanel gp;
-    KeyHandler keyH;
+    public static GamePanel gp;
+    public static KeyHandler keyH;
 
     private boolean alreadyPaused = false; // necessario onde evitare che il playstate richiami il costruttore del pause state mentre il gioco è in pausa
     private boolean inDialogue = false; //necessario per la logica della pausa durante i dialoghi
@@ -63,7 +63,7 @@ public class GameStateManager {
 
     }
     public void Init(){ // inizializza il player e le mappe
-        this.player = new Player(gp, this, keyH);
+        this.player = new Player();
         this.tileManagerZonaIniziale = new TileManager(gp, this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
         this.tileManagerCasettaIniziale = new TileManager(gp, this, "src/main/resources/Map/StanzaIntroduzione/CasettaIniziale.tmx");
         this.tileManagerVillaggioSud = new TileManager(gp, this, "src/main/resources/Map/VillaggioSud/VillaggioSud.tmx");

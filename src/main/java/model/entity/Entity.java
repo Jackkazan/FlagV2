@@ -12,34 +12,40 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
+import static view.GamePanel.tileSize;
+
 //Class for npc and enemy
 public class Entity {
+    //Essentials
+    private GamePanel gamePanel;
+    private GameStateManager gsm;
+    private KeyHandler keyH;
+    public enum swordStateAndArmor { IronSwordNoArmor, IronSwordAndArmor, GoldSwordAndArmor, RubySwordAndArmor }
+
     //Name entity es. npc_1 ecc...
     private String name;
-    //Coordinate spawn npc
+
+    //CHARACTER INFO
     private int x;
     private int y;
     private int speed;
     private int speedChangeSprite;
-
-    private KeyHandler keyH;
-
     private int spriteNum;
+    private int maxLife;
+    private int currentLife;
+    private String direction;
+    swordStateAndArmor currentSwordStateAndArmor;
+
     private BufferedImage
             up1, up2, up3, up4,
             down1, down2, down3, down4,
             left1, left2, left3, left4,
             right1, right2, right3, right4;
-    private String direction;
     private int spriteCounter = 0;
-
     private int totalSprite;
-
     private int scale;
 
     private Rectangle collisionArea;
-    private GamePanel gamePanel;
-    private GameStateManager gsm;
 
     private TileManager tileManager;
     private boolean isInteractable;
@@ -48,7 +54,88 @@ public class Entity {
     private int imageWidth;
     private int imageHeight;
 
-    private Entity() {}
+    private int screenX;
+    private int screenY;
+
+    private Entity(){}
+
+    public Entity(String entity){
+        if(entity.equalsIgnoreCase("Player")){
+            this.gamePanel = GameStateManager.gp;
+            this.keyH = GameStateManager.keyH;
+            this.gsm = GameStateManager.gp.getGsm();
+            this.x = GamePanel.tileSize*3;
+            this.y = GamePanel.tileSize*4;
+            this.screenX = this.getGamePanel().getScreenWidth()/2 - (tileSize/2);
+            this.screenY = this.getGamePanel().getScreenHeight()/2 - (tileSize/2);
+            this.maxLife = 6;
+            this.currentLife = maxLife;
+            this.speed = 4;
+            this.scale = 5;
+            this.spriteCounter = 0;
+            this.spriteNum = 3;
+            this.direction = "down";
+            currentSwordStateAndArmor = swordStateAndArmor.IronSwordNoArmor;
+        }
+    }
+
+
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setSpriteNum(int spriteNum) {
+        this.spriteNum = spriteNum;
+    }
+
+    public void setSpriteCounter(int spriteCounter) {
+        this.spriteCounter = spriteCounter;
+    }
+
+    public int getSpriteNum() {
+        return this.spriteNum;
+    }
+
+    public int getSpriteCounter() {
+        return this.spriteCounter;
+    }
+
+    public int getMaxLife() {
+        return this.maxLife;
+    }
+
+    public int getCurrentLife() {
+        return this.currentLife;
+    }
+
+    public KeyHandler getKeyH() {
+        return this.keyH;
+    }
+
+    public int getScreenX() {
+        return this.screenX;
+    }
+
+    public int getScreenY() {
+        return this.screenY;
+    }
+
+    public GamePanel getGamePanel() {
+        return this.gamePanel;
+    }
+
+    public GameStateManager getGsm() {
+        return this.gsm;
+    }
+
+    public KeyHandler getKeyHandler() {
+        return this.keyH;
+    }
 
     public static class EntityBuilder {
         private Entity entity;
@@ -186,7 +273,7 @@ public class Entity {
         }
     }
 
-    public BufferedImage draw(Graphics2D graphics2D) {
+    public void draw(Graphics2D graphics2D) {
         BufferedImage[] images = switch (direction) {
             case "up" -> new BufferedImage[]{up1, up2, up3, up4};
             case "down" -> new BufferedImage[]{down1, down2, down3, down4};
@@ -201,8 +288,6 @@ public class Entity {
         if (images != null && gsm.getMapManager().getCurrentMap() == this.tileManager) {
             graphics2D.drawImage(images[spriteNum], screenX, screenY, (imageWidth/2)*scale , (imageHeight/2)*scale,null);
         }
-
-        return null;
     }
     public void setPath(){
         // Definisci il percorso predefinito

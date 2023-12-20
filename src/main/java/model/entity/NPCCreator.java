@@ -10,7 +10,7 @@ import java.util.List;
 
 import static view.GamePanel.tileSize;
 
-public class NPCCreator {
+public class NPCCreator{
 
     private int spriteCounter = 0;
     private int spriteNum = 3;
