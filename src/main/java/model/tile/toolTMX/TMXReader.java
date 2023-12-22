@@ -1,4 +1,4 @@
-package model.toolTMX;
+package model.tile.toolTMX;
 
 
 import model.collisions.CollisionObject;

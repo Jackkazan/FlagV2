@@ -1,28 +1,21 @@
-package model.entity;
+package model.entity.npc;
 
-import controller.KeyHandler;
 import model.gameState.GameStateManager;
 import model.tile.MapManager;
-import view.GamePanel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import static view.GamePanel.tileSize;
+public class NpcCreator {
 
-public class NPCCreator extends Entity{
-    private int actionLockCounter = 0;
-    public NPCCreator(String entity) {
-        super(entity);
-    }
+    private int spriteCounter = 0;
+    private int spriteNum = 3;
+    private int speed;
 
 
-    public static List<Entity> createNPCs(GameStateManager gsm, MapManager mapManager) {
-        int x_vecchietta = 22*tileSize;
-        int y_vecchietta = 46*tileSize;
+    public static List<Npc> createNPCs(GameStateManager gsm, MapManager mapManager) {
 
-        List<Entity> npcList = new ArrayList<>();
+        List<Npc> npcList = new ArrayList<>();
         // Inizializza le entità e aggiungile alla lista
 
         String vecchietta_up1 = "/npc/Vecchietta/VecchiettaLookUp_0.png";
@@ -33,14 +26,16 @@ public class NPCCreator extends Entity{
         String vecchietta_left2= "/npc/Vecchietta/VecchiettaLookLeft_1.png";
         String vecchietta_right1= "/npc/Vecchietta/VecchiettaLookRight_0.png";
         String vecchietta_right2= "/npc/Vecchietta/VecchiettaLookRight_1.png";
-
-                                                                    //x          //y
-        Entity vecchietta = new Entity.EntityBuilder(x_vecchietta, y_vecchietta,"NPC")
+        Npc vecchietta = new Npc.NpcBuilder( 22, 46 )
                 .setName("Vecchietta")
+                .setSpeed(2)
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
+                .setScale(5)
                 .setCollisionArea(24,30)
+                .setTotalSprite(8)
                 .setImageDimension(32,32)
+                .setIsInteractible(true)
                 .setInteractionAction(new NpcDialogue(gsm))
                 .setDefaultDirection("left")
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
@@ -59,12 +54,16 @@ public class NPCCreator extends Entity{
         String contadino1_left2="/npc/Contadino1/Contadino1LookLeft_1.png";
         String contadino1_right1="/npc/Contadino1/Contadino1LookRight_0.png";
         String contadino1_right2="/npc/Contadino1/Contadino1LookRight_1.png";
-        Entity contadino1 = new Entity.EntityBuilder(86*tileSize, 37*tileSize,"NPC")
+        Npc contadino1 = new Npc.NpcBuilder(86, 37)
                 .setName("Contadino1")
+                .setSpeed(2)
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
+                .setScale(5)
                 .setCollisionArea(24,30)
+                .setTotalSprite(8)
                 .setImageDimension(32,32)
+                .setIsInteractible(true)
                 .setInteractionAction(new NpcDialogue(gsm))
                 .setDefaultDirection("right")
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
@@ -82,12 +81,16 @@ public class NPCCreator extends Entity{
         String contadino2_left2="/npc/Contadino2/Contadino2LookLeft_1.png";
         String contadino2_right1="/npc/Contadino2/Contadino2LookRight_0.png";
         String contadino2_right2="/npc/Contadino2/Contadino2LookRight_1.png";
-        Entity contadino2 = new Entity.EntityBuilder(61*tileSize, 33*tileSize,"NPC")
+        Npc contadino2 = new Npc.NpcBuilder(61, 33)
                 .setName("Contadino2")
+                .setSpeed(2)
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
+                .setScale(5)
                 .setCollisionArea(24,30)
+                .setTotalSprite(8)
                 .setImageDimension(32,32)
+                .setIsInteractible(true)
                 .setInteractionAction(new NpcDialogue(gsm))
                 .setDefaultDirection("down")
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
@@ -100,14 +103,16 @@ public class NPCCreator extends Entity{
 
         String cameriera1Down_0 = "/npc/Cameriera/CamerieraVillaggioTavernaDown_0.png";
         String cameriera1Down_1 = "/npc/Cameriera/CamerieraVillaggioTavernaDown_1.png";
-
-        Entity cameriera1 = new Entity.EntityBuilder(15*tileSize, 3*tileSize, "NPC")
+        Npc cameriera1 = new Npc.NpcBuilder( 15, 3)
                 .setName("Cameriera1")
+                .setSpeed(2)
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
-                .setCollisionArea(16,37)
+                .setScale(5)
+                .setCollisionArea(16,38)
                 .setTotalSprite(2)
                 .setImageDimension(16,32)
+                .setIsInteractible(true)
                 .setInteractionAction(new NpcDialogue(gsm))
                 .setDefaultDirection("down")
                 .setContainedMap(mapManager.getTileManagerPianoTerraTavernaVillaggio())
@@ -117,16 +122,19 @@ public class NPCCreator extends Entity{
                         cameriera1Down_0, cameriera1Down_1)
                 .build();
 
+
         String mercante1Right_0 = "/npc/Mercante1/VenditoreOggettiVillaggioRight_0.png";
         String mercante1Right_1 = "/npc/Mercante1/VenditoreOggettiVillaggioRight_1.png";
-
-        Entity mercante1 = new Entity.EntityBuilder(2*tileSize, 4*tileSize, "NPC")
+        Npc mercante1 = new Npc.NpcBuilder( 2, 4)
                 .setName("Mercante1")
+                .setSpeed(2)
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
+                .setScale(5)
                 .setCollisionArea(37,32)
                 .setTotalSprite(2)
                 .setImageDimension(16,32)
+                .setIsInteractible(true)
                 .setInteractionAction(new NpcDialogue(gsm))
                 .setDefaultDirection("right")
                 .setContainedMap(mapManager.getTileManagerNegozioItemsVillaggioSud())
@@ -143,9 +151,6 @@ public class NPCCreator extends Entity{
         npcList.add(cameriera1);
         npcList.add(mercante1);
 
-
-        return npcList;
+       return npcList;
     }
-
-
 }

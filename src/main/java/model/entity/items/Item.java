@@ -1,8 +1,10 @@
-package model.items;
+package model.entity.items;
 
 import controller.KeyHandler;
+import model.entity.Entity;
+import model.entity.Prototype;
 import model.gameState.GameStateManager;
-import model.quests.Interactable;
+import model.entity.Interactable;
 import model.quests.Quest;
 import model.tile.TileManager;
 
@@ -17,7 +19,7 @@ import java.util.Objects;
 
 import static view.GamePanel.tileSize;
 
-public class KeyItems implements Prototype{
+public class Item extends Entity implements Prototype {
     private KeyHandler keyH;
     //Name object
     private String name;
@@ -76,7 +78,7 @@ public class KeyItems implements Prototype{
     @Override
     public Prototype clone() {
         try {
-            return (KeyItems) super.clone();
+            return (Item) super.clone();
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
             return null;
@@ -86,7 +88,7 @@ public class KeyItems implements Prototype{
     public void setName(String name){
         this.name = name;
     }
-    private KeyItems() {}
+    private Item() {}
 
     public boolean questListIsDone() {
 
@@ -98,91 +100,91 @@ public class KeyItems implements Prototype{
     }
 
     public static class KeyItemsBuilder {
-        private KeyItems keyItems;
+        private Item item;
 
         public KeyItemsBuilder(GameStateManager gsm, int x, int y, KeyHandler keyH){
-            this.keyItems = new KeyItems();
-            this.keyItems.gsm = gsm;
-            this.keyItems.x = x *tileSize;
-            this.keyItems.y = y *tileSize;
-            this.keyItems.keyH = keyH;
+            this.item = new Item();
+            this.item.gsm = gsm;
+            this.item.x = x *tileSize;
+            this.item.y = y *tileSize;
+            this.item.keyH = keyH;
         }
 
         public KeyItemsBuilder setRelatedQuests(Quest... quests) {
-            this.keyItems.relatedQuests.addAll(Arrays.asList(quests));
+            this.item.relatedQuests.addAll(Arrays.asList(quests));
             return this;
         }
         public KeyItemsBuilder setRelatedQuests(List<Quest> relatedQuests) {
-            this.keyItems.relatedQuests = relatedQuests;
+            this.item.relatedQuests = relatedQuests;
             return this;
         }
         // Metodo per impostare il fattore di scala
         public KeyItemsBuilder setImageDimension(int imageWidth, int imageHeigth) {
-            this.keyItems.imageWidth = imageWidth;
-            this.keyItems.imageHeigth = imageHeigth;
+            this.item.imageWidth = imageWidth;
+            this.item.imageHeigth = imageHeigth;
             return this;
         }
 
         public KeyItemsBuilder setScale(int scale) {
-            this.keyItems.scale = scale;
+            this.item.scale = scale;
             return this;
         }
 
 
         public KeyItemsBuilder setName(String name){
-            this.keyItems.name = name;
+            this.item.name = name;
             return this;
         }
 
         public KeyItemsBuilder setStaticImage(String pathImage) {
             try{
-                this.keyItems.staticImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(pathImage)));
+                this.item.staticImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(pathImage)));
             }catch (IOException e) {
                 e.printStackTrace();
             }
             return this;
         }
         public KeyItemsBuilder setStaticImage(BufferedImage staticImage) {
-            this.keyItems.staticImage = staticImage;
+            this.item.staticImage = staticImage;
             return this;
         }
 
         public KeyItemsBuilder setCollisionArea(int larghezza, int altezza) {
-            this.keyItems.collisionArea = new Rectangle(this.keyItems.x, this.keyItems.y , larghezza, altezza);
+            this.item.collisionArea = new Rectangle(this.item.x, this.item.y , larghezza, altezza);
             return this;
         }
         public KeyItemsBuilder setCollisionArea(int x, int y, int larghezza, int altezza) {
-            this.keyItems.collisionArea = new Rectangle(x, y , larghezza, altezza);
+            this.item.collisionArea = new Rectangle(x, y , larghezza, altezza);
             return this;
         }
 
         public KeyItemsBuilder setContainedMap(TileManager tileManager) {
-            this.keyItems.tileManager = tileManager;
+            this.item.tileManager = tileManager;
             return this;
         }
         public KeyItemsBuilder setInteractable(boolean interactable) {
-            this.keyItems.isInteractable = interactable;
+            this.item.isInteractable = interactable;
             return this;
         }
 
         public KeyItemsBuilder setInteractionAction(Interactable interactionActionItems){
-            this.keyItems.interactionAction = interactionActionItems;
+            this.item.interactionAction = interactionActionItems;
             return this;
         }
 
 
         public KeyItemsBuilder setSpeedChangeAnimateSprite(int speedChangeAnimateSprite) {
-            this.keyItems.speedChangeAnimateSprite = speedChangeAnimateSprite;
+            this.item.speedChangeAnimateSprite = speedChangeAnimateSprite;
             return this;
         }
 
         public KeyItemsBuilder setAnimateImages(String path1, String path2, String path3, String path4) {
             try {
-                this.keyItems.animateImage1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path1)));
-                this.keyItems.animateImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path2)));
+                this.item.animateImage1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path1)));
+                this.item.animateImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path2)));
 
-                this.keyItems.animateImage3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path3)));
-                this.keyItems.animateImage4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path4)));
+                this.item.animateImage3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path3)));
+                this.item.animateImage4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path4)));
 
 
             } catch (IOException e) {
@@ -191,14 +193,14 @@ public class KeyItems implements Prototype{
             return this;
         }
 
-        public KeyItems build() {
-            return this.keyItems;
+        public Item build() {
+            return this.item;
         }
 
     }
 
 
-    public BufferedImage draw(Graphics2D graphics2D){
+    public void draw(Graphics2D graphics2D){
 
         int screenX = this.x - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
         int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
@@ -206,7 +208,6 @@ public class KeyItems implements Prototype{
         if(staticImage != null && gsm.getMapManager().getCurrentMap() == this.tileManager)
             graphics2D.drawImage(staticImage, screenX, screenY, (tileSize*imageWidth)/16, (tileSize*imageHeigth)/16, null);
 
-        return null;
     }
 
     public void update() {

@@ -1,7 +1,12 @@
-package model.entity;
+package model.entity.player;
 
+import controller.KeyHandler;
+import model.entity.Entity;
+import model.entity.npc.Npc;
+import model.gameState.GameStateManager;
 import model.collisions.CollisionObject;
-import model.items.KeyItems;
+import model.entity.items.Item;
+import view.GamePanel;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -12,12 +17,31 @@ import javax.swing.Timer;
 
 import static view.GamePanel.tileSize;
 
-public class Player extends Entity{
+public class Player extends Entity {
+    private GamePanel gamePanel;
+    private GameStateManager gsm;
+    private KeyHandler keyHandler;
+
+    private int x;
+    private int y;
+    private int speed;
+
     private int imageWidth = 32;
     private int imageHeight = 32;
 
     private boolean isAttacking = false;
     private boolean attackAnimationCompleted = true;
+
+    private final int screenX;
+    private final int screenY;
+
+    public enum swordStateAndArmor { IronSwordNoArmor, IronSwordAndArmor, GoldSwordAndArmor, RubySwordAndArmor }
+
+    swordStateAndArmor currentSwordStateAndArmor;
+
+    private int scale = 5;
+    private int maxLife = 10;
+    private int currentLife = 9;
     private ArrayList<CollisionObject> currentCollisionMap;
 
     // Nuova area di interazione
@@ -30,20 +54,38 @@ public class Player extends Entity{
             left1, left2, left3, left4,
             right1, right2, right3, right4;
     private BufferedImage attackUp1, attackUp2, attackUp3, attackUp4, attackDown1, attackDown2, attackDown3, attackDown4, attackLeft1, attackLeft2, attackLeft3, attackLeft4, attackRight1, attackRight2, attackRight3, attackRight4;
+    private String direction;
+    private int spriteCounter = 0;
+    private int spriteNum = 3;
 
-    public Player() {
-        super("Player");
+    public Player(GamePanel gamePanel, GameStateManager gsm, KeyHandler keyHandler) {
+        this.gamePanel = gamePanel;
+        this.gsm = gsm;
+        this.keyHandler = keyHandler;
+
+        screenX = gamePanel.getScreenWidth()/2 - (tileSize/2);
+        screenY = gamePanel.getScreenHeight()/2 - (tileSize/2);
+        setDefaultValues();
         getEntityImage();
         getAttackImages();
+
+    }
+
+    public void setDefaultValues() {
+        x = tileSize*3;  //3
+        y = tileSize*4;  //4
+        maxLife = 6;
+        speed = 4;
+        direction = "down";
+        currentSwordStateAndArmor= swordStateAndArmor.IronSwordNoArmor;
     }
 
     public void setCurrentSwordStateAndArmor(swordStateAndArmor currentSwordStateAndArmor) {
         this.currentSwordStateAndArmor = currentSwordStateAndArmor;
     }
 
-    @Override
     public void update() {
-        if (this.getKeyHandler().attackVPressed && !isAttacking && attackAnimationCompleted) {
+        if (keyHandler.attackVPressed && !isAttacking && attackAnimationCompleted) {
             isAttacking = true;
             attackAnimationCompleted = false;
             attack();
@@ -52,65 +94,66 @@ public class Player extends Entity{
         if (isAttacking) {
             updateAttackAnimation();
         } else {
-            if (this.getKeyHandler().upPressed || this.getKeyHandler().downPressed || this.getKeyHandler().leftPressed || this.getKeyHandler().rightPressed) {
-                int nextX = this.getX();
-                int nextY = this.getY();
+            if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed) {
+                int nextX = x;
+                int nextY = y;
 
-                if (this.getKeyHandler().rightPressed) {
-                    this.setDirection("right");
-                    nextX += this.getSpeed();
+                if (keyHandler.rightPressed) {
+                    direction = "right";
+                    nextX += speed;
                 }
-                if (this.getKeyHandler().leftPressed) {
-                    this.setDirection("left");
-                    nextX -= this.getSpeed();
+                if (keyHandler.leftPressed) {
+                    direction = "left";
+                    nextX -= speed;
                 }
-                if (this.getKeyHandler().upPressed) {
-                    this.setDirection("up");
-                    nextY -= this.getSpeed();
+                if (keyHandler.upPressed) {
+                    direction = "up";
+                    nextY -= speed;
                 }
-                if (this.getKeyHandler().downPressed) {
-                    this.setDirection("down");
-                    nextY += this.getSpeed();
+                if (keyHandler.downPressed) {
+                    direction = "down";
+                    nextY += speed;
                 }
 
                 // Aggiorna la collisionArea del giocatore
-                collisionArea.setLocation(this.getX(), this.getY());
+                collisionArea.setLocation(x, y);
 
                 // Aggiorna la collisionArea dell'area di interazione
-                interactionArea.setLocation(this.getX() - 8, this.getY() - 8); // Esempio: l'area di interazione è leggermente più grande di quella del giocatore
+                interactionArea.setLocation(x - 8, y - 8); // Esempio: l'area di interazione è leggermente più grande di quella del giocatore
 
 
                 if (!collidesWithObjects(nextX, nextY) && !collidesWithEntities(nextX, nextY) && !collidesWithItems(nextX, nextY)) {
-                    this.setX(nextX);
-                    this.setY(nextY);
+                    x = nextX;
+                    y = nextY;
                 }
 
-
                 //alternatore di sprite
-                this.setSpriteCounter(this.getSpriteCounter()+1);
+                spriteCounter++;
                 //velocità di cambio sprite 5-10
-                if (this.getSpriteCounter() > 7) {
-                    this.setSpriteNum((this.getSpriteNum() + 1) % 4);
-                    this.setSpriteCounter(0);
+                if (spriteCounter > 7) {
+                    spriteNum = (spriteNum + 1) % 4;
+                    spriteCounter = 0;
                 }
             }
             else{
-                this.setSpriteNum(0);
+                spriteNum = 0;
             }
 
         }
 
     }
+
+
     private void attack() {
-        switch (this.getDirection()) {
-            case "left" -> this.setDirection("left&attack");
-            case "right" -> this.setDirection("right&attack");
-            case "down" -> this.setDirection("down&attack");
-            case "up" -> this.setDirection("up&attack");
+        switch (direction) {
+            case "left" -> direction = "left&attack";
+            case "right" -> direction = "right&attack";
+            case "down" -> direction = "down&attack";
+            case "up" -> direction = "up&attack";
             default -> {}
         }
 
-        this.setSpriteNum(1);
+        spriteNum=1;
 
         // Imposta un timer per la durata dell'animazione dell'attacco
         Timer timer = new Timer(385, e -> {
@@ -122,20 +165,19 @@ public class Player extends Entity{
         timer.start();
 
     }
-
     private void updateAttackAnimation() {
         //alternatore di sprite
-        this.setSpriteCounter(this.getSpriteCounter() + 1);
+        spriteCounter++;
         //velocità di cambio sprite 5-10
-        if (this.getSpriteCounter() > 7) {
-            this.setSpriteNum((this.getSpriteNum() + 1) % 4);
-            this.setSpriteCounter(0);
+        if (spriteCounter > 7) {
+            spriteNum = (spriteNum + 1) % 4;
+            spriteCounter = 0;
         }
     }
 
-    @Override
+
     public void draw(Graphics2D graphics2D) {
-        BufferedImage[] images = switch (this.getDirection()) {
+        BufferedImage[] images = switch (direction) {
             case "up" -> new BufferedImage[]{up1, up2, up3, up4};
             case "down" -> new BufferedImage[]{down1, down2, down3, down4};
             case "left" -> new BufferedImage[]{left1, left2, left3, left4};
@@ -147,7 +189,7 @@ public class Player extends Entity{
             default -> null;
         };
         int offsetX, offsetY, imageWidth, imageHeight;
-        switch (this.getDirection()) {
+        switch (direction) {
             case "down&attack" -> {
                 offsetX = -16;
                 offsetY = -32;
@@ -181,7 +223,7 @@ public class Player extends Entity{
         }
 
         if (images != null) {
-            graphics2D.drawImage(images[this.getSpriteNum()], this.getScreenX()+offsetX, this.getScreenY()+offsetY, (imageWidth/2) *this.getScale(), (imageHeight/2)*this.getScale(), null);
+            graphics2D.drawImage(images[spriteNum], screenX+offsetX, screenY+offsetY, (imageWidth/2) *scale, (imageHeight/2)*scale, null);
         }
     }
     public boolean collidesWithObjects(int nextX, int nextY) {
@@ -195,10 +237,10 @@ public class Player extends Entity{
     }
 
     public boolean checkCollisionObject(int x, int y, CollisionObject collisionObject) {
-        double objectX = collisionObject.getX() * this.getGamePanel().getScale();
-        double objectY = collisionObject.getY() * this.getGamePanel().getScale();
-        double objectWidth = collisionObject.getWidth() * this.getGamePanel().getScale();
-        double objectHeight = collisionObject.getHeight() * this.getGamePanel().getScale();
+        double objectX = collisionObject.getX() * gamePanel.getScale();
+        double objectY = collisionObject.getY() * gamePanel.getScale();
+        double objectWidth = collisionObject.getWidth() * gamePanel.getScale();
+        double objectHeight = collisionObject.getHeight() * gamePanel.getScale();
 
         return x < objectX + objectWidth &&
                 x + tileSize > objectX &&
@@ -210,14 +252,8 @@ public class Player extends Entity{
     // metodo per verificare la collisione con le entità
     public boolean collidesWithEntities(int nextX, int nextY) {
         // Verifica la collisione con le entità della lista npcList
-        for (Entity npc : this.getGsm().getNpcList()) {
-            if (npc.getTileManager().equals(this.getGsm().getMapManager().getCurrentMap()) && checkCollisionRectangle(nextX, nextY, npc.getCollisionArea())) {
-                return true; // Collisione rilevata
-            }
-        }
-
-        for (Entity enemy : this.getGsm().getEnemyList()) {
-            if (enemy.getTileManager().equals(this.getGsm().getMapManager().getCurrentMap()) && checkCollisionRectangle(nextX, nextY, enemy.getCollisionArea())) {
+        for (Npc npc : gsm.getNpcList()) {
+            if (npc.getTileManager().equals(gsm.getMapManager().getCurrentMap()) && checkCollisionRectangle(nextX, nextY, npc.getCollisionArea())) {
                 return true; // Collisione rilevata
             }
         }
@@ -225,9 +261,9 @@ public class Player extends Entity{
     }
     public boolean collidesWithItems(int nextX, int nextY) {
         // Verifica la collisione con gli oggetti della lista keyItemsList
-        for (KeyItems items : this.getGsm().getKeyItemsList()) {
-            if (items.getTileManager().equals(this.getGsm().getMapManager().getCurrentMap()) && items.getCollisionArea()!=null && checkCollisionRectangle(nextX, nextY, items.getCollisionArea())) {
-                items.interact();
+        for (Item item : gsm.getKeyItemsList()) {
+            if (item.getTileManager().equals(gsm.getMapManager().getCurrentMap()) && item.getCollisionArea()!=null && checkCollisionRectangle(nextX, nextY, item.getCollisionArea())) {
+                item.interact();
                 return true; // Collisione rilevata
             }
         }
@@ -252,14 +288,14 @@ public class Player extends Entity{
     }
 
     public boolean onTransitionPoint(int targetX, int targetY, int tolerance) {
-        int playerTileX = this.getX() / tileSize;
-        int playerTileY = this.getY() / tileSize;
+        int playerTileX = x / tileSize;
+        int playerTileY = y / tileSize;
         return Math.abs(playerTileX - targetX) <= tolerance && Math.abs(playerTileY - targetY) <= tolerance;
     }
 
     public void teleport(int targetX, int targetY) {
-        this.setX(tileSize * targetX);
-        this.setY(tileSize * targetY);
+        x = tileSize * targetX;
+        y = tileSize * targetY;
     }
     public void getEntityImage() {
         try {
@@ -323,17 +359,17 @@ public class Player extends Entity{
         }
     }
 
-//    public String getDirection() {
-//        return this.direction;
-//    }
-//
-//    public int getMaxLife() {
-//        return this.maxLife;
-//    }
-//
-//    public int getCurrentLife() {
-//        return this.currentLife;
-//    }
+    public String getDirection() {
+        return this.direction;
+    }
+
+    public int getMaxLife() {
+        return this.maxLife;
+    }
+
+    public int getCurrentLife() {
+        return this.currentLife;
+    }
 
     // COLLISION
     private Rectangle collisionArea = new Rectangle(0, 0, 48, 48);
@@ -342,13 +378,33 @@ public class Player extends Entity{
         return this.collisionArea;
     }
 
+    public int getScreenX() {
+        return this.screenX;
+    }
+
+    public int getScreenY() {
+        return this.screenY;
+    }
+
+    public int getX() {
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
+    }
+
+    public int getSpeed() {
+        return this.speed;
+    }
+
     public Rectangle getInteractionArea() {
         return interactionArea;
     }
 
-//    public int getScale() {
-//        return scale;
-//    }
+    public int getScale() {
+        return scale;
+    }
 
     public int getImageWidth() {
         return imageWidth;

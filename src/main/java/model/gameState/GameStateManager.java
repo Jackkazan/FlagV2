@@ -1,12 +1,13 @@
 package model.gameState;
 
 import controller.KeyHandler;
-import model.entity.Enemy;
-import model.entity.Entity;
-import model.entity.NPCCreator;
-import model.entity.Player;
-import model.items.KeyItems;
-import model.items.ItemsCreator;
+import model.entity.enemies.Enemy;
+import model.entity.enemies.EnemyCreator;
+import model.entity.npc.Npc;
+import model.entity.npc.NpcCreator;
+import model.entity.player.Player;
+import model.entity.items.Item;
+import model.entity.items.ItemCreator;
 import model.sound.Playlist;
 import model.sound.Sound;
 import model.tile.MapManager;
@@ -46,12 +47,12 @@ public class GameStateManager {
     //gestore mappe
     MapManager mapManager;
 
-    List<KeyItems> keyItemsList;
-    List<Entity> npcList;
+    List<Item> itemList;
+    List<Npc> npcList;
 
     Playlist playlist = new Playlist();
     List<Sound> songList = playlist.getSongList();
-    List<Entity> enemyList;
+    List<Enemy> enemyList;
 
 
     public GameStateManager(){
@@ -64,7 +65,7 @@ public class GameStateManager {
 
     }
     public void Init(){ // inizializza il player e le mappe
-        this.player = new Player();
+        this.player = new Player(gp,this, keyH);
         this.tileManagerZonaIniziale = new TileManager(gp, this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
         this.tileManagerCasettaIniziale = new TileManager(gp, this, "src/main/resources/Map/StanzaIntroduzione/CasettaIniziale.tmx");
         this.tileManagerVillaggioSud = new TileManager(gp, this, "src/main/resources/Map/VillaggioSud/VillaggioSud.tmx");
@@ -74,9 +75,9 @@ public class GameStateManager {
         this.mapManager = new MapManager(gp, player, tileManagerCasettaIniziale, tileManagerZonaIniziale, tileManagerVillaggioSud, tileManagerNegozioItemsVillaggioSud,tileManagerPianoTerraTavernaVillaggio,tileManagerPrimoPianoTavernaVillaggio);
         this.playState = new PlayState(gp, this, mapManager, player, keyH);
         //this.pauseState = new PauseState(gp, this, keyH);
-        this.enemyList = Enemy.createEnemy(this, mapManager);
-        this.npcList = NPCCreator.createNPCs(this, mapManager);
-        this.keyItemsList = ItemsCreator.createObjects(this, mapManager, keyH);
+        this.npcList = NpcCreator.createNPCs(this, mapManager);
+        this.itemList = ItemCreator.createObjects(this, mapManager, keyH);
+        this.enemyList = EnemyCreator.createEnemies(this, mapManager);
     }
 
     public enum State{MENU, PLAY, PAUSE, PREVIOUS};
@@ -103,8 +104,8 @@ public class GameStateManager {
             // Add more cases for additional states as needed
         }
     }
-    public void setDialogueState(Entity entity){
-        currentState = new DialogueState(gp, this , keyH, entity);
+    public void setDialogueState(Npc npc){
+        currentState = new DialogueState(gp, this , keyH, npc);
         inDialogue = true;
 
     }
@@ -148,11 +149,11 @@ public class GameStateManager {
         return this.mapManager;
     }
 
-    public List<Entity> getNpcList() { return this.npcList; }
-    public List<Entity> getEnemyList(){return this.enemyList;}
+    public List<Npc> getNpcList() { return this.npcList; }
+    public List<Enemy> getEnemyList(){return this.enemyList;}
 
-    public List<KeyItems> getKeyItemsList() {
-        return keyItemsList;
+    public List<Item> getKeyItemsList() {
+        return itemList;
     }
 
     public GamePanel getGamePanel() {

@@ -1,11 +1,10 @@
 package model.gameState;
 
 import controller.KeyHandler;
-import model.entity.Entity;
-import model.items.KeyItems;
-import model.entity.Player;
-import model.sound.Playlist;
-import model.sound.Sound;
+import model.entity.enemies.Enemy;
+import model.entity.npc.Npc;
+import model.entity.items.Item;
+import model.entity.player.Player;
 import model.tile.MapManager;
 import view.GamePanel;
 
@@ -27,7 +26,7 @@ public class PlayState implements GameState{
     private BufferedImage buffer;
 
 
-    List<KeyItems> keyItemsList;
+    List<Item> itemList;
     public PlayState(GamePanel gp, GameStateManager gsm, MapManager mapManager,Player player, KeyHandler keyH) {
         this.gp = gp;
         this.gsm = gsm;
@@ -47,21 +46,21 @@ public class PlayState implements GameState{
             player.update();
 
         // Aggiornamento degli NPC
-        for (Entity npc : gsm.getNpcList()) {
+        for (Npc npc : gsm.getNpcList()) {
             if(npc.getTileManager().equals(mapManager.getCurrentMap()))
                 npc.update();
         }
 
-        // Aggiornamento dei nemici
-        for(Entity enemy : gsm.getEnemyList()){
-            if(enemy.getTileManager().equals(mapManager.getCurrentMap()))
-                enemy.update();
-        }
 
         // Aggiornamento degli oggetti
-        for (KeyItems items : gsm.getKeyItemsList()) {
-            if(items.getTileManager().equals(mapManager.getCurrentMap()))
-                items.update();
+        for (Item item : gsm.getKeyItemsList()) {
+            if(item.getTileManager().equals(mapManager.getCurrentMap()))
+                item.update();
+        }
+
+        for (Enemy enemy : gsm.getEnemyList()) {
+            if(enemy.getTileManager().equals(mapManager.getCurrentMap()))
+                enemy.update();
         }
 
         // Gestione delle transizioni della mappa
@@ -77,13 +76,13 @@ public class PlayState implements GameState{
         // Cancella completamente l'immagine del buffer
         bufferGraphics.clearRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
         mapManager.draw(bufferGraphics);
-        for (Entity npc : gsm.getNpcList()) {
+        for (Npc npc : gsm.getNpcList()) {
             npc.draw(bufferGraphics);
         }
-        for (KeyItems items : gsm.getKeyItemsList()) {
-            items.draw(bufferGraphics);
+        for (Item item : gsm.getKeyItemsList()) {
+            item.draw(bufferGraphics);
         }
-        for(Entity enemy : gsm.getEnemyList()){
+        for (Enemy enemy : gsm.getEnemyList()) {
             enemy.draw(bufferGraphics);
         }
         player.draw(bufferGraphics);

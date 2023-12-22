@@ -1,19 +1,18 @@
 package model.gameState;
 
 import controller.KeyHandler;
-import model.entity.Entity;
+import model.entity.npc.Npc;
 import view.GamePanel;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class DialogueState implements GameState {
 
     private GamePanel gp;
     private GameStateManager gsm;
     private KeyHandler keyH;
-    private Entity npc;
+    private Npc npc;
 
     private String dialogue;
     private String dialogueText = "";
@@ -27,7 +26,7 @@ public class DialogueState implements GameState {
     private final int dialogueBoxWidth;
     private final int dialogueBoxHeight;
 
-    public DialogueState(GamePanel gp, GameStateManager gsm, KeyHandler keyH, Entity npc) {
+    public DialogueState(GamePanel gp, GameStateManager gsm, KeyHandler keyH, Npc npc) {
         this.gp = gp;
         this.gsm = gsm;
         this.keyH = keyH;

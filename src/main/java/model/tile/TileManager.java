@@ -2,7 +2,7 @@ package model.tile;
 
 import model.gameState.GameStateManager;
 import model.collisions.CollisionObject;
-import model.toolTMX.TMXReader;
+import model.tile.toolTMX.TMXReader;
 import view.GamePanel;
 
 import java.awt.*;
