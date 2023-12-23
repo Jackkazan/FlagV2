@@ -2,6 +2,7 @@ package model.entity.enemies;
 
 import controller.KeyHandler;
 import model.entity.*;
+import model.entity.states.IdleState;
 import model.gameState.GameStateManager;
 import model.tile.TileManager;
 
@@ -16,7 +17,7 @@ import static view.GamePanel.tileSize;
 public class Enemy{
 
     private String name;
-    protected int x;
+    private int x;
     private int y;
     private int speed;
     private int speedChangeSprite;
@@ -52,7 +53,6 @@ public class Enemy{
 
     private EnemyState currentState; //Stato corrente enum
 
-    public enum EnemyState {IDLE, MOVEMENT, ATTACK}
 
 
     public Enemy (){
@@ -71,6 +71,7 @@ public class Enemy{
             this.enemy = new Enemy();
             this.enemy.x = x* tileSize;
             this.enemy.y = y* tileSize;
+            this.enemy.currentState = new IdleState();
         }
 
         public Enemy.EnemyBuilder setMaxLife(int maxLife){
@@ -207,48 +208,15 @@ public class Enemy{
         }
     }
     public void draw(Graphics2D graphics2D) {
-        BufferedImage[] images = switch (direction) {
-            case "up" -> new BufferedImage[]{up1, up2, up3, up4};
-            case "down" -> new BufferedImage[]{down1, down2, down3, down4};
-            case "left" -> new BufferedImage[]{left1, left2, left3, left4};
-            case "right" -> new BufferedImage[]{right1, right2, right3, right4};
-            default -> null;
-        };
-
-        int screenX = this.x - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
-        int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
-
-        if (images != null && gsm.getMapManager().getCurrentMap() == this.tileManager) {
-            graphics2D.drawImage(images[spriteNum], screenX, screenY, (imageWidth/2)*scale , (imageHeight/2)*scale,null);
-        }
-        //non so se va alla fine
-       //currentState.draw(graphics2D);
+       currentState.draw(graphics2D, this);
     }
 
     public void update() {
-        collisionArea.setLocation(x, y);
-        if (totalSprite == 16) {
-            //alternatore di sprite
-            spriteCounter++;
-            //più è alto, più è lento
-            if (spriteCounter > speedChangeSprite) {
-                spriteNum = (spriteNum + 1) % 4;
-                spriteCounter = 0;
-            }
-        } else {
-            spriteCounter++;
-            //più è alto, più è lento
-            if (spriteCounter > speedChangeSprite) {
-                spriteNum = (spriteNum + 1) % 2;
-                spriteCounter = 0;
-
-            }
-        }
-//        currentState.handleInput();
-//        currentState.update();
+        currentState.update(this);
     }
 
     public void setState(EnemyState state) {
+
         currentState = state;
     }
 
@@ -257,4 +225,166 @@ public class Enemy{
     public TileManager getTileManager() {
         return tileManager;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public int getSpeedChangeSprite() {
+        return speedChangeSprite;
+    }
+
+    public KeyHandler getKeyH() {
+        return keyH;
+    }
+
+    public int getSpriteNum() {
+        return spriteNum;
+    }
+
+    public BufferedImage getUp1() {
+        return up1;
+    }
+
+    public BufferedImage getUp2() {
+        return up2;
+    }
+
+    public BufferedImage getUp3() {
+        return up3;
+    }
+
+    public BufferedImage getUp4() {
+        return up4;
+    }
+
+    public BufferedImage getDown1() {
+        return down1;
+    }
+
+    public BufferedImage getDown2() {
+        return down2;
+    }
+
+    public BufferedImage getDown3() {
+        return down3;
+    }
+
+    public BufferedImage getDown4() {
+        return down4;
+    }
+
+    public BufferedImage getLeft1() {
+        return left1;
+    }
+
+    public BufferedImage getLeft2() {
+        return left2;
+    }
+
+    public BufferedImage getLeft3() {
+        return left3;
+    }
+
+    public BufferedImage getLeft4() {
+        return left4;
+    }
+
+    public BufferedImage getRight1() {
+        return right1;
+    }
+
+    public BufferedImage getRight2() {
+        return right2;
+    }
+
+    public BufferedImage getRight3() {
+        return right3;
+    }
+
+    public BufferedImage getRight4() {
+        return right4;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public int getSpriteCounter() {
+        return spriteCounter;
+    }
+
+    public int getTotalSprite() {
+        return totalSprite;
+    }
+
+    public int getScale() {
+        return scale;
+    }
+
+    public Rectangle getCollisionArea() {
+        return collisionArea;
+    }
+
+    public GameStateManager getGsm() {
+        return gsm;
+    }
+
+    public boolean isInteractable() {
+        return isInteractable;
+    }
+
+    public Interactable getInteractionAction() {
+        return interactionAction;
+    }
+
+    public int getImageWidth() {
+        return imageWidth;
+    }
+
+    public int getImageHeight() {
+        return imageHeight;
+    }
+
+    public int getMaxLife() {
+        return maxLife;
+    }
+
+    public int getCurrentLife() {
+        return currentLife;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public EnemyState getCurrentState() {
+        return currentState;
+    }
+
+    public void incrementSpriteCounter() {
+        this.spriteCounter = spriteCounter +1;
+    }
+
+    public void setSpriteCounter(int spriteCounter) {
+        this.spriteCounter = spriteCounter;
+    }
+
+    public void setSpriteNum(int spriteNum) {
+        this.spriteNum = spriteNum;
+    }
 }
+
+
