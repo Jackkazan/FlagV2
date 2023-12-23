@@ -50,6 +50,9 @@ public class Enemy{
     private int currentLife;
     private int damage;
 
+    private EnemyState currentState; //Stato corrente del nemico
+
+
     public Enemy (){
         this.gsm = GameStateManager.gp.getGsm();
         this.keyH = GameStateManager.keyH;
@@ -216,6 +219,8 @@ public class Enemy{
         if (images != null && gsm.getMapManager().getCurrentMap() == this.tileManager) {
             graphics2D.drawImage(images[spriteNum], screenX, screenY, (imageWidth/2)*scale , (imageHeight/2)*scale,null);
         }
+        //non so se va alla fine
+       // currentState.draw(graphics2D);
     }
 
     public void update() {
@@ -237,6 +242,12 @@ public class Enemy{
 
             }
         }
+//        currentState.handleInput();
+//        currentState.update();
+    }
+
+    public void setState(EnemyState state) {
+        currentState = state;
     }
 
     public TileManager getTileManager() {
