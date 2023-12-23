@@ -1,7 +1,7 @@
-package model.entity.states;
+package model.entities.states;
 
-import model.entity.enemies.Enemy;
-import model.entity.enemies.EnemyState;
+import model.entities.enemies.Enemy;
+import model.entities.enemies.EnemyState;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

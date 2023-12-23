@@ -1,4 +1,4 @@
-package model.entity.enemies;
+package model.entities.enemies;
 
 import java.awt.*;
 

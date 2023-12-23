@@ -1,8 +1,8 @@
-package model.entity.npc;
+package model.entities.npc;
 
+import model.entities.Interactable;
+import model.entities.items.Item;
 import model.gameState.GameStateManager;
-import model.entity.Interactable;
-import model.entity.items.Item;
 
 public class NpcDialogue implements Interactable {
     GameStateManager gsm;

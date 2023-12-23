@@ -1,7 +1,7 @@
 package model.gameState;
 
 import controller.KeyHandler;
-import model.entity.npc.Npc;
+import model.entities.npc.Npc;
 import view.GamePanel;
 
 import java.awt.*;

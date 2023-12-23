@@ -1,6 +1,5 @@
-package model.entity.enemies;
+package model.entities.enemies;
 
-import model.entity.npc.Npc;
 import model.gameState.GameStateManager;
 import model.tile.MapManager;
 

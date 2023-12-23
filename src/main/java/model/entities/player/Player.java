@@ -1,12 +1,11 @@
-package model.entity.player;
+package model.entities.player;
 
 import controller.KeyHandler;
-import model.entity.Entity;
-import model.entity.enemies.Enemy;
-import model.entity.npc.Npc;
+import model.entities.enemies.Enemy;
+import model.entities.items.Item;
+import model.entities.npc.Npc;
 import model.gameState.GameStateManager;
 import model.collisions.CollisionObject;
-import model.entity.items.Item;
 import view.GamePanel;
 import javax.imageio.ImageIO;
 import java.awt.*;

@@ -1,10 +1,9 @@
-package model.entity.enemies;
+package model.entities.enemies;
 
-import controller.KeyHandler;
-import model.entity.*;
-import model.entity.npc.Npc;
-import model.entity.states.IdleState;
-import model.entity.states.MovementState;
+import model.entities.Interactable;
+import model.entities.npc.Npc;
+import model.entities.states.IdleState;
+import model.entities.states.MovementState;
 import model.gameState.GameStateManager;
 import model.tile.TileManager;
 

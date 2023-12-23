@@ -1,4 +1,4 @@
-package model.entity.npc;
+package model.entities.npc;
 
 public interface NpcState {
     void update();

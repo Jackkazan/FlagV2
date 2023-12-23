@@ -1,13 +1,13 @@
 package model.gameState;
 
 import controller.KeyHandler;
-import model.entity.enemies.Enemy;
-import model.entity.enemies.EnemyCreator;
-import model.entity.npc.Npc;
-import model.entity.npc.NpcCreator;
-import model.entity.player.Player;
-import model.entity.items.Item;
-import model.entity.items.ItemCreator;
+import model.entities.enemies.Enemy;
+import model.entities.enemies.EnemyCreator;
+import model.entities.npc.Npc;
+import model.entities.npc.NpcCreator;
+import model.entities.player.Player;
+import model.entities.items.Item;
+import model.entities.items.ItemCreator;
 import model.sound.Playlist;
 import model.sound.Sound;
 import model.tile.MapManager;

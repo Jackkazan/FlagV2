@@ -1,4 +1,4 @@
-package model.entity;
+package model.entities;
 
 import controller.KeyHandler;
 import model.gameState.GameStateManager;

@@ -1,11 +1,11 @@
-package model.entity.items;
+package model.entities.items;
 
 
 import controller.KeyHandler;
-import model.entity.Prototype;
-import model.entity.npc.Npc;
+import model.entities.Prototype;
+import model.entities.npc.Npc;
 import model.gameState.GameStateManager;
-import model.entity.Interactable;
+import model.entities.Interactable;
 import model.quests.Quest;
 import model.quests.QuestInitializer;
 import model.tile.MapManager;

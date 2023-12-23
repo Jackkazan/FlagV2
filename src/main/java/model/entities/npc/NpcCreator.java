@@ -1,4 +1,4 @@
-package model.entity.npc;
+package model.entities.npc;
 
 import model.gameState.GameStateManager;
 import model.tile.MapManager;

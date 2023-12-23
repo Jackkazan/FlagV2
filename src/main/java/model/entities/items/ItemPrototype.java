@@ -1,6 +1,6 @@
-package model.entity.items;
+package model.entities.items;
 
-import model.entity.Prototype;
+import model.entities.Prototype;
 
 import java.awt.*;
 

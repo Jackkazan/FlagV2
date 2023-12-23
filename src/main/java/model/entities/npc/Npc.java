@@ -1,8 +1,8 @@
-package model.entity.npc;
+package model.entities.npc;
 
-import model.entity.Entity;
+import model.entities.Interactable;
+import model.entities.Entity;
 import model.gameState.GameStateManager;
-import model.entity.Interactable;
 import model.tile.TileManager;
 
 import javax.imageio.ImageIO;

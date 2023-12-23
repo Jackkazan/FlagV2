@@ -1,9 +1,9 @@
-package model.entity.items;
+package model.entities.items;
 
-import model.entity.Entity;
-import model.entity.Prototype;
+import model.entities.Entity;
+import model.entities.Prototype;
 import model.gameState.GameStateManager;
-import model.entity.Interactable;
+import model.entities.Interactable;
 import model.quests.Quest;
 import model.tile.TileManager;
 

@@ -1,4 +1,4 @@
-package model.entity.player;
+package model.entities.player;
 
 public interface PlayerState {
 

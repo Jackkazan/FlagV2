@@ -1,6 +1,6 @@
 package model.tile;
 
-import model.entity.player.Player;
+import model.entities.player.Player;
 import view.GamePanel;
 
 import java.awt.*;
