@@ -1,8 +1,7 @@
 package model.entity.enemies;
 
 import controller.KeyHandler;
-import model.entity.Interactable;
-import model.entity.npc.Npc;
+import model.entity.*;
 import model.gameState.GameStateManager;
 import model.tile.TileManager;
 
@@ -50,7 +49,10 @@ public class Enemy{
     private int currentLife;
     private int damage;
 
-    private EnemyState currentState; //Stato corrente del nemico
+
+    private EnemyState currentState; //Stato corrente enum
+
+    public enum EnemyState {IDLE, MOVEMENT, ATTACK}
 
 
     public Enemy (){
@@ -220,7 +222,7 @@ public class Enemy{
             graphics2D.drawImage(images[spriteNum], screenX, screenY, (imageWidth/2)*scale , (imageHeight/2)*scale,null);
         }
         //non so se va alla fine
-       // currentState.draw(graphics2D);
+       //currentState.draw(graphics2D);
     }
 
     public void update() {
@@ -249,6 +251,8 @@ public class Enemy{
     public void setState(EnemyState state) {
         currentState = state;
     }
+
+
 
     public TileManager getTileManager() {
         return tileManager;

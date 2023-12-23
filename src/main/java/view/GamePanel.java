@@ -43,7 +43,6 @@ public class GamePanel extends JPanel implements Runnable{
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
         this.setFocusable(true);
-        //9/11
 
     }
 
@@ -74,9 +73,14 @@ public class GamePanel extends JPanel implements Runnable{
                 // 1 UPDATE: Aggiornamento delle informazioni sulla posizione del personaggio
                 update();
 
+                //da cambiare con entity
+                //enemy.handleInput();
+                //enemy.update();
+
                 // 2 DRAW: Disegno dello schermo con le informazioni aggiornate
                 //paintImmediately(0, 0, screenWidth, screenHeight);  Non ho idea di come funzini, se repaint da problemi usare questo :)
                 repaint(0, 0, screenWidth, screenHeight);
+
                 delta--;
                 drawCount++;
             }
