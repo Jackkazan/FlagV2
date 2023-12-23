@@ -2,39 +2,24 @@ package model.entity.states;
 
 import model.entity.enemies.Enemy;
 import model.entity.enemies.EnemyState;
-import model.entity.player.Player;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static view.GamePanel.tileSize;
 
 public class MovementState implements EnemyState {
-    private Enemy enemy;
-    private Player player;
-    private final int AGGRO_RANGE = 20 * tileSize; //raggio in pixel
-
-    public MovementState(Enemy enemy) {
-        this.enemy = enemy;
-    }
 
     @Override
     public void update(Enemy enemy) {
         // Aggiorna lo stato di movimento
-        if (player != null) {
-            int playerX = player.getX();
-            int playerY = player.getY();
-            // Calcola la distanza tra l'Enemy e il giocatore
-            double distance = Math.hypot(playerX - enemy.getX(), playerY - enemy.getY());
 
-            if (distance <= AGGRO_RANGE) {
-                // Il giocatore è nel raggio di inseguimento, muovi l'Enemy verso il giocatore
-                enemy.moveTowardsPlayer(playerX, playerY);
-            } else {
-                // Il giocatore è fuori dal raggio di inseguimento, potresti gestire
-                enemy.setState (new IdleState());
-            }
+        double distance = Math.hypot(enemy.getGsm().getPlayer().getX() - enemy.getX(), enemy.getGsm().getPlayer().getY() - enemy.getY());
+        if (distance <= enemy.getAggroRange()) {
+            enemy.moveTowardsPlayer(enemy.getGsm().getPlayer().getX(), enemy.getGsm().getPlayer().getY());
+        } else {
+            enemy.setState(Enemy.State.IDLE);
         }
+
     }
 
     public void draw(Graphics2D graphics2D, Enemy enemy){

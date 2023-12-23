@@ -3,6 +3,7 @@ package model.entity.enemies;
 import controller.KeyHandler;
 import model.entity.*;
 import model.entity.states.IdleState;
+import model.entity.states.MovementState;
 import model.gameState.GameStateManager;
 import model.tile.TileManager;
 
@@ -49,15 +50,17 @@ public class Enemy{
     private int maxLife;
     private int currentLife;
     private int damage;
+    private int aggroRange = 4 * tileSize;
 
 
     private EnemyState currentState;
 
-
+    public enum State{IDLE, MOVEMENT}
 
     public Enemy (){
         this.gsm = GameStateManager.gp.getGsm();
         this.keyH = GameStateManager.keyH;
+        this.currentState = new IdleState();
     }
 
 
@@ -71,7 +74,6 @@ public class Enemy{
             this.enemy = new Enemy();
             this.enemy.x = x* tileSize;
             this.enemy.y = y* tileSize;
-            this.enemy.currentState = new IdleState();
         }
 
         public Enemy.EnemyBuilder setMaxLife(int maxLife){
@@ -212,11 +214,19 @@ public class Enemy{
     }
 
     public void update() {
+        double distance = Math.hypot(gsm.getPlayer().getX() - this.getX(), gsm.getPlayer().getY() - this.getY());
+        if (distance <= aggroRange) {
+            System.out.println("Sei nell'aggro");
+            setState(State.MOVEMENT);
+        } else {
+            System.out.println("Non sei nell'aggro");
+            setState(State.IDLE);
+        }
         currentState.update(this);
     }
 
     public void moveTowardsPlayer(int playerX, int playerY) {
-        int distanceThreshold = 1*tileSize; // Adjust this value as needed
+        int distanceThreshold = tileSize; // Adjust this value as needed
 
         int distanceX = Math.abs(playerX - this.x);
         int distanceY = Math.abs(playerY - this.y);
@@ -243,9 +253,16 @@ public class Enemy{
         }
     }
 
-    public void setState(EnemyState state) {
-
-        currentState = state;
+    public void setState(State enemyState) {
+        switch (enemyState) {
+            case IDLE:
+                currentState = new IdleState();
+                break;
+            case MOVEMENT:
+                currentState = new MovementState();
+                break;
+            // Aggiungi altri stati se necessario
+        }
     }
 
 
@@ -394,6 +411,10 @@ public class Enemy{
         return currentLife;
     }
 
+    public int getAggroRange() {
+        return aggroRange;
+    }
+
     public int getDamage() {
         return damage;
     }
@@ -425,4 +446,5 @@ public class Enemy{
     public void setY(int y) {
         this.y = y;
     }
+
 }
