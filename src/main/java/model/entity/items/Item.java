@@ -1,6 +1,5 @@
 package model.entity.items;
 
-import controller.KeyHandler;
 import model.entity.Entity;
 import model.entity.Prototype;
 import model.gameState.GameStateManager;
@@ -99,7 +98,7 @@ public class Item extends Entity implements Prototype {
     }
 
     public static class ItemBuilder {
-        private Item item;
+        private final Item item;
 
         public ItemBuilder(int x, int y){
             this.item = new Item();

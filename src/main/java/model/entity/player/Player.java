@@ -2,6 +2,7 @@ package model.entity.player;
 
 import controller.KeyHandler;
 import model.entity.Entity;
+import model.entity.enemies.Enemy;
 import model.entity.npc.Npc;
 import model.gameState.GameStateManager;
 import model.collisions.CollisionObject;
@@ -17,9 +18,8 @@ import javax.swing.Timer;
 
 import static view.GamePanel.tileSize;
 
-public class Player extends Entity {
+public class Player extends Enemy {
     private final GamePanel gamePanel;
-    private int speed;
 
     private boolean isAttacking;
     private boolean attackAnimationCompleted;
@@ -31,24 +31,13 @@ public class Player extends Entity {
 
     swordStateAndArmor currentSwordStateAndArmor;
 
-    private int maxLife;
-    private int currentLife;
     private ArrayList<CollisionObject> currentCollisionMap;
 
     // Nuova area di interazione
     private Rectangle interactionArea;
 
-    private Rectangle collisionArea;
-
-    private BufferedImage
-            up1, up2, up3, up4,
-            down1, down2, down3, down4,
-            left1, left2, left3, left4,
-            right1, right2, right3, right4;
     private BufferedImage attackUp1, attackUp2, attackUp3, attackUp4, attackDown1, attackDown2, attackDown3, attackDown4, attackLeft1, attackLeft2, attackLeft3, attackLeft4, attackRight1, attackRight2, attackRight3, attackRight4;
-    private String direction;
-    private int spriteCounter = 0;
-    private int spriteNum = 3;
+
 
     public Player(GamePanel gamePanel, GameStateManager gsm, KeyHandler keyH) {
         this.gamePanel = gamePanel;
@@ -70,6 +59,8 @@ public class Player extends Entity {
         currentLife = 6;
         speed = 4;
         scale = 5;
+        spriteCounter = 0;
+        spriteNum = 3;
         direction = "down";
         currentSwordStateAndArmor= swordStateAndArmor.IronSwordNoArmor;
         imageWidth = tileSize;
@@ -355,18 +346,6 @@ public class Player extends Entity {
         }
     }
 
-    public String getDirection() {
-        return this.direction;
-    }
-
-    public int getMaxLife() {
-        return this.maxLife;
-    }
-
-    public int getCurrentLife() {
-        return this.currentLife;
-    }
-
     public int getScreenX() {
         return this.screenX;
     }
@@ -375,12 +354,27 @@ public class Player extends Entity {
         return this.screenY;
     }
 
-    public int getSpeed() {
-        return this.speed;
-    }
-
     public Rectangle getInteractionArea() {
         return interactionArea;
     }
 
+    public GamePanel getGamePanel() {
+        return gamePanel;
+    }
+
+    public boolean isAttacking() {
+        return isAttacking;
+    }
+
+    public boolean isAttackAnimationCompleted() {
+        return attackAnimationCompleted;
+    }
+
+    public swordStateAndArmor getCurrentSwordStateAndArmor() {
+        return currentSwordStateAndArmor;
+    }
+
+    public ArrayList<CollisionObject> getCurrentCollisionMap() {
+        return currentCollisionMap;
+    }
 }

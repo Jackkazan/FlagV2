@@ -13,21 +13,21 @@ import java.util.Objects;
 
 import static view.GamePanel.tileSize;
 
-//Class for npc and enemy
+//Class for npc
 public class Npc extends Entity {
-    //Name entity es. npc_1 ecc...
-    private int speed;
-    private int speedChangeSprite;
 
-    private int spriteNum;
-    private BufferedImage
+    protected int speed;
+    protected int speedChangeSprite;
+
+    protected int spriteNum;
+    protected BufferedImage
             up1, up2, up3, up4,
             down1, down2, down3, down4,
             left1, left2, left3, left4,
             right1, right2, right3, right4;
-    private String direction;
-    private int spriteCounter = 0;
-    private int totalSprite;
+    protected String direction;
+    protected int spriteCounter = 0;
+    protected int totalSprite;
 
     public Npc (){
         this.gsm = GameStateManager.gp.getGsm();
@@ -184,19 +184,7 @@ public class Npc extends Entity {
             graphics2D.drawImage(images[spriteNum], screenX, screenY, (imageWidth/2)*scale , (imageHeight/2)*scale,null);
         }
     }
-    public void setPath(){
-        // Definisci il percorso predefinito
-        int[] pathX = new int[]{this.x, this.x + tileSize, this.x, this.x - tileSize};  // Esempio: movimento orizzontale a destra, poi su, poi a sinistra
-        int[] pathY = new int[]{this.y, this.y + tileSize, this.y, this.y - tileSize};       // Modifica il percorso secondo le tue esigenze
-        int pathIndex = 0;  // Inizia dal primo punto del percorso
 
-        // Muovi l'entità lungo il percorso predefinito
-            this.x = pathX[pathIndex];
-            this.y = pathY[pathIndex];
-            pathIndex++;
-            if(pathIndex == 3) pathIndex = 0;
-        // Se hai raggiunto la fine del percorso, ricomincia da capo
-    }
 
     @Override
     public void update() {
@@ -220,7 +208,20 @@ public class Npc extends Entity {
         }
         setPath();
         interact();
+    }
 
+    public void setPath(){
+        // Definisci il percorso predefinito
+        int[] pathX = new int[]{this.x, this.x + tileSize, this.x, this.x - tileSize};  // Esempio: movimento orizzontale a destra, poi su, poi a sinistra
+        int[] pathY = new int[]{this.y, this.y + tileSize, this.y, this.y - tileSize};       // Modifica il percorso secondo le tue esigenze
+        int pathIndex = 0;  // Inizia dal primo punto del percorso
+
+        // Muovi l'entità lungo il percorso predefinito
+        this.x = pathX[pathIndex];
+        this.y = pathY[pathIndex];
+        pathIndex++;
+        if(pathIndex == 3) pathIndex = 0;
+        // Se hai raggiunto la fine del percorso, ricomincia da capo
     }
 
     public void interact() {
@@ -246,7 +247,6 @@ public class Npc extends Entity {
         else return false;
     }
 
-
     public int getSpeed() {
         return this.speed;
     }
@@ -255,4 +255,103 @@ public class Npc extends Entity {
         return direction;
     }
 
+    public int getSpeedChangeSprite() {
+        return speedChangeSprite;
+    }
+
+    public int getSpriteNum() {
+        return spriteNum;
+    }
+
+    public BufferedImage getUp1() {
+        return up1;
+    }
+
+    public BufferedImage getUp2() {
+        return up2;
+    }
+
+    public BufferedImage getUp3() {
+        return up3;
+    }
+
+    public BufferedImage getUp4() {
+        return up4;
+    }
+
+    public BufferedImage getDown1() {
+        return down1;
+    }
+
+    public BufferedImage getDown2() {
+        return down2;
+    }
+
+    public BufferedImage getDown3() {
+        return down3;
+    }
+
+    public BufferedImage getDown4() {
+        return down4;
+    }
+
+    public BufferedImage getLeft1() {
+        return left1;
+    }
+
+    public BufferedImage getLeft2() {
+        return left2;
+    }
+
+    public BufferedImage getLeft3() {
+        return left3;
+    }
+
+    public BufferedImage getLeft4() {
+        return left4;
+    }
+
+    public BufferedImage getRight1() {
+        return right1;
+    }
+
+    public BufferedImage getRight2() {
+        return right2;
+    }
+
+    public BufferedImage getRight3() {
+        return right3;
+    }
+
+    public BufferedImage getRight4() {
+        return right4;
+    }
+
+    public int getSpriteCounter() {
+        return spriteCounter;
+    }
+
+    public int getTotalSprite() {
+        return totalSprite;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public void setSpeedChangeSprite(int speedChangeSprite) {
+        this.speedChangeSprite = speedChangeSprite;
+    }
+
+    public void setSpriteNum(int spriteNum) {
+        this.spriteNum = spriteNum;
+    }
+
+    public void setSpriteCounter(int spriteCounter) {
+        this.spriteCounter = spriteCounter;
+    }
+
+    public void setTotalSprite(int totalSprite) {
+        this.totalSprite = totalSprite;
+    }
 }
