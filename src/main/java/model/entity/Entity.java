@@ -22,6 +22,9 @@ public abstract class Entity{
     protected boolean isInteractable;
     protected Interactable interactionAction;
 
+    protected int imageWidth;
+    protected int imageHeight;
+
     public abstract void draw(Graphics2D graphics2D);
 
     public abstract void update();
@@ -112,6 +115,22 @@ public abstract class Entity{
 
     public void setKeyH(KeyHandler keyH) {
         this.keyH = keyH;
+    }
+
+    public int getImageWidth() {
+        return imageWidth;
+    }
+
+    public int getImageHeight() {
+        return imageHeight;
+    }
+
+    public void setImageWidth(int imageWidth) {
+        this.imageWidth = imageWidth;
+    }
+
+    public void setImageHeight(int imageHeight) {
+        this.imageHeight = imageHeight;
     }
 
     public void setTileManager(TileManager tileManager) {

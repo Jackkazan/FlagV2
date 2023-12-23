@@ -6,7 +6,7 @@ import java.awt.*;
 
 // Classe che utilizza il pattern Prototype
 class ItemPrototype {
-    private Prototype prototype;
+    private final Prototype prototype;
 
     public ItemPrototype(Prototype prototype) {
         this.prototype = prototype;

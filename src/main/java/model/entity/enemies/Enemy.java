@@ -28,9 +28,6 @@ public class Enemy extends Entity{
     private int spriteCounter = 0;
 
     private int totalSprite;
-
-    private int imageWidth;
-    private int imageHeight;
     private int maxLife;
     private int currentLife;
     private int damage;
@@ -343,13 +340,7 @@ public class Enemy extends Entity{
         return totalSprite;
     }
 
-    public int getImageWidth() {
-        return imageWidth;
-    }
 
-    public int getImageHeight() {
-        return imageHeight;
-    }
 
     public int getMaxLife() {
         return maxLife;

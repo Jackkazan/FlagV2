@@ -29,9 +29,6 @@ public class Npc extends Entity {
     private int spriteCounter = 0;
     private int totalSprite;
 
-    private int imageWidth;
-    private int imageHeight;
-
     public Npc (){
         this.gsm = GameStateManager.gp.getGsm();
         this.keyH = GameStateManager.keyH;
@@ -249,9 +246,6 @@ public class Npc extends Entity {
         else return false;
     }
 
-    public Rectangle getCollisionArea() {
-        return this.collisionArea;
-    }
 
     public int getSpeed() {
         return this.speed;
@@ -261,11 +255,4 @@ public class Npc extends Entity {
         return direction;
     }
 
-    public int getImageWidth() {
-        return imageWidth;
-    }
-
-    public int getImageHeight() {
-        return imageHeight;
-    }
 }

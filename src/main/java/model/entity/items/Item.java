@@ -24,10 +24,51 @@ public class Item extends Entity implements Prototype {
     private BufferedImage animateImage1, animateImage2, animateImage3, animateImage4;
     private int speedChangeAnimateSprite;
     private List<Quest> relatedQuests= new ArrayList<>();
-    private int imageWidth;
-    private int imageHeigth;
 
-    // Metodo per impostare l'azione durante la costruzione dell'oggetto
+    public Item() {
+        this.gsm = GameStateManager.gp.getGsm();
+        this.keyH = GameStateManager.keyH;
+    }
+
+    @Override
+    public void draw(Graphics2D graphics2D){
+
+        int screenX = this.x - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
+        int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
+
+        if(staticImage != null && gsm.getMapManager().getCurrentMap() == this.tileManager)
+            graphics2D.drawImage(staticImage, screenX, screenY, (tileSize*imageWidth)/16, (tileSize*imageHeight)/16, null);
+
+    }
+    @Override
+    public void update() {
+
+        if(collisionArea != null)
+            collisionArea.setLocation(x, y);
+        // animazione se succede evento o altro
+        interact();
+
+    }
+
+    public void interact() {
+        // Verifica se il giocatore è nelle vicinanze e ha premuto il tasto "E"
+        if (this.isInteractable && this.tileManager == gsm.getMapManager().getCurrentMap() && isPlayerNearby()) {
+            if(keyH.interactPressed && interactionAction != null) {
+                System.out.println("Ho interagioto con "+this.name);
+                interactionAction.performAction(this);
+            }
+        }
+    }
+
+    private boolean isPlayerNearby() {
+        //Definisci la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
+        if(this.collisionArea!= null && gsm.getPlayer().getInteractionArea().intersects(this.collisionArea)){
+            System.out.println("Sto collidendo con "+ this.name);
+            return true;
+        }
+        else return false;
+    }
+
     public void setStaticImage(String pathImage){
         try {
             this.staticImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(pathImage)));
@@ -48,8 +89,6 @@ public class Item extends Entity implements Prototype {
         }
     }
 
-    public Item() {}
-
     public boolean questListIsDone() {
 
         for(Quest quest : relatedQuests){
@@ -62,12 +101,10 @@ public class Item extends Entity implements Prototype {
     public static class ItemBuilder {
         private Item item;
 
-        public ItemBuilder(GameStateManager gsm, int x, int y, KeyHandler keyH){
+        public ItemBuilder(int x, int y){
             this.item = new Item();
-            this.item.gsm = gsm;
             this.item.x = x *tileSize;
             this.item.y = y *tileSize;
-            this.item.keyH = keyH;
         }
 
         public ItemBuilder setRelatedQuests(Quest... quests) {
@@ -81,7 +118,7 @@ public class Item extends Entity implements Prototype {
         // Metodo per impostare il fattore di scala
         public ItemBuilder setImageDimension(int imageWidth, int imageHeigth) {
             this.item.imageWidth = imageWidth;
-            this.item.imageHeigth = imageHeigth;
+            this.item.imageHeight = imageHeigth;
             return this;
         }
 
@@ -159,43 +196,7 @@ public class Item extends Entity implements Prototype {
 
     }
 
-    public void draw(Graphics2D graphics2D){
 
-        int screenX = this.x - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
-        int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
-
-        if(staticImage != null && gsm.getMapManager().getCurrentMap() == this.tileManager)
-            graphics2D.drawImage(staticImage, screenX, screenY, (tileSize*imageWidth)/16, (tileSize*imageHeigth)/16, null);
-
-    }
-    @Override
-    public void update() {
-
-        if(collisionArea != null)
-            collisionArea.setLocation(x, y);
-        // animazione se succede evento o altro
-        interact();
-
-    }
-
-    public void interact() {
-        // Verifica se il giocatore è nelle vicinanze e ha premuto il tasto "E"
-        if (this.isInteractable && this.tileManager == gsm.getMapManager().getCurrentMap() && isPlayerNearby()) {
-            if(keyH.interactPressed && interactionAction != null) {
-                System.out.println("Ho interagioto con "+this.name);
-                interactionAction.performAction(this);
-            }
-        }
-    }
-
-    private boolean isPlayerNearby() {
-        //Definisci la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
-        if(this.collisionArea!= null && gsm.getPlayer().getInteractionArea().intersects(this.collisionArea)){
-            System.out.println("Sto collidendo con "+ this.name);
-            return true;
-        }
-        else return false;
-    }
 
     public List<Quest> getRelatedQuests() {
         return relatedQuests;

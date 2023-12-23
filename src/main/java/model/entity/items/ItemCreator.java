@@ -22,7 +22,7 @@ public class ItemCreator {
         List<Item> objectList = new ArrayList<>();
 
         //Inizializzazione oggetti
-        Item keyCasettaIniziale = new Item.ItemBuilder(gsm, 7, 4, keyH)
+        Item keyCasettaIniziale = new Item.ItemBuilder(7, 4)
                 .setName("keyCasettaIniziale")
                 .setStaticImage("/object/key.png")
                 .setImageDimension(16,16)
@@ -33,7 +33,7 @@ public class ItemCreator {
                 .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
 
-        Item portaCasettaInizialeChiusa = new Item.ItemBuilder(gsm,4,7, keyH)
+        Item portaCasettaInizialeChiusa = new Item.ItemBuilder(4,7)
                 .setName("portaCasettaInizialeChiusa")
                 .setStaticImage("/object/PortaChiusaInterno.png")
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())
@@ -44,7 +44,7 @@ public class ItemCreator {
                 .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
 
-        Item zuccaMarcia1 = new Item.ItemBuilder(gsm, 39, 44, keyH)
+        Item zuccaMarcia1 = new Item.ItemBuilder(39, 44)
                 .setName("zuccaMarcia1")
                 .setStaticImage("/object/zuccaMarcia.png")
                 .setImageDimension(16,16)
@@ -64,7 +64,7 @@ public class ItemCreator {
 
 
 
-        Item spaventaPasseri1 = new Item.ItemBuilder(gsm, 43, 27, keyH)
+        Item spaventaPasseri1 = new Item.ItemBuilder(43, 27)
                 .setName("spaventaPasseri1")
                 .setStaticImage("/object/spaventaPasseri.png")
                 .setImageDimension(32,48)

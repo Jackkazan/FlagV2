@@ -18,14 +18,8 @@ import javax.swing.Timer;
 import static view.GamePanel.tileSize;
 
 public class Player extends Entity {
-    private GamePanel gamePanel;
-
-    private KeyHandler keyHandler;
-
+    private final GamePanel gamePanel;
     private int speed;
-
-    private int imageWidth;
-    private int imageHeight;
 
     private boolean isAttacking;
     private boolean attackAnimationCompleted;
@@ -42,9 +36,9 @@ public class Player extends Entity {
     private ArrayList<CollisionObject> currentCollisionMap;
 
     // Nuova area di interazione
-    private final Rectangle interactionArea = new Rectangle(0, 0, tileSize*2, tileSize*2);
+    private Rectangle interactionArea;
 
-    private final Rectangle collisionArea = new Rectangle(0, 0, tileSize, tileSize);
+    private Rectangle collisionArea;
 
     private BufferedImage
             up1, up2, up3, up4,
@@ -56,10 +50,10 @@ public class Player extends Entity {
     private int spriteCounter = 0;
     private int spriteNum = 3;
 
-    public Player(GamePanel gamePanel, GameStateManager gsm, KeyHandler keyHandler) {
+    public Player(GamePanel gamePanel, GameStateManager gsm, KeyHandler keyH) {
         this.gamePanel = gamePanel;
         this.gsm = gsm;
-        this.keyHandler = keyHandler;
+        this.keyH = keyH;
 
         screenX = gamePanel.getScreenWidth()/2 - (tileSize/2);
         screenY = gamePanel.getScreenHeight()/2 - (tileSize/2);
@@ -81,6 +75,9 @@ public class Player extends Entity {
         imageWidth = tileSize;
         imageHeight = tileSize;
         attackAnimationCompleted = true;
+        interactionArea = new Rectangle(0, 0, tileSize*2, tileSize*2);
+        collisionArea = new Rectangle(0, 0, tileSize, tileSize);
+
     }
 
     public void setSwordStateAndArmor(swordStateAndArmor newSwordStateAndArmor) {
@@ -89,7 +86,7 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-        if (keyHandler.attackVPressed && !isAttacking && attackAnimationCompleted) {
+        if (keyH.attackVPressed && !isAttacking && attackAnimationCompleted) {
             isAttacking = true;
             attackAnimationCompleted = false;
             attack();
@@ -98,23 +95,23 @@ public class Player extends Entity {
         if (isAttacking) {
             updateAttackAnimation();
         } else {
-            if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed) {
+            if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
                 int nextX = x;
                 int nextY = y;
 
-                if (keyHandler.rightPressed) {
+                if (keyH.rightPressed) {
                     direction = "right";
                     nextX += speed;
                 }
-                if (keyHandler.leftPressed) {
+                if (keyH.leftPressed) {
                     direction = "left";
                     nextX -= speed;
                 }
-                if (keyHandler.upPressed) {
+                if (keyH.upPressed) {
                     direction = "up";
                     nextY -= speed;
                 }
-                if (keyHandler.downPressed) {
+                if (keyH.downPressed) {
                     direction = "down";
                     nextY += speed;
                 }
@@ -386,11 +383,4 @@ public class Player extends Entity {
         return interactionArea;
     }
 
-    public int getImageWidth() {
-        return imageWidth;
-    }
-
-    public int getImageHeight() {
-        return imageHeight;
-    }
 }
