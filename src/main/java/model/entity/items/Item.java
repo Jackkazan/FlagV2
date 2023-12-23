@@ -20,44 +20,14 @@ import java.util.Objects;
 import static view.GamePanel.tileSize;
 
 public class Item extends Entity implements Prototype {
-    private KeyHandler keyH;
-    //Name object
-    private String name;
-
     private BufferedImage staticImage;
-
-    private Interactable interactionAction;
     private BufferedImage animateImage1, animateImage2, animateImage3, animateImage4;
     private int speedChangeAnimateSprite;
-
-    private int x;
-    private int y;
-
-    private Rectangle collisionArea;
-
-    private boolean isInteractable = false;
     private List<Quest> relatedQuests= new ArrayList<>();
-
     private int imageWidth;
     private int imageHeigth;
 
-    private GameStateManager gsm;
-    private TileManager tileManager;
-    private int scale;
-
-
     // Metodo per impostare l'azione durante la costruzione dell'oggetto
-
-
-    public void setInteractable(boolean interactable) {
-        this.isInteractable = interactable;
-    }
-
-    public void setPosition(int x, int y){
-        this.x = x*tileSize;
-        this.y = y*tileSize;
-
-    }
     public void setStaticImage(String pathImage){
         try {
             this.staticImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(pathImage)));
@@ -66,13 +36,6 @@ public class Item extends Entity implements Prototype {
             e.printStackTrace();
         }
     }
-
-
-    public void setCollisionArea(Rectangle collisionArea) {
-        this.collisionArea = collisionArea;
-    }
-
-
 
     // Metodo per clonare l'oggetto
     @Override
@@ -85,10 +48,7 @@ public class Item extends Entity implements Prototype {
         }
     }
 
-    public void setName(String name){
-        this.name = name;
-    }
-    private Item() {}
+    public Item() {}
 
     public boolean questListIsDone() {
 
@@ -99,10 +59,10 @@ public class Item extends Entity implements Prototype {
         return true;
     }
 
-    public static class KeyItemsBuilder {
+    public static class ItemBuilder {
         private Item item;
 
-        public KeyItemsBuilder(GameStateManager gsm, int x, int y, KeyHandler keyH){
+        public ItemBuilder(GameStateManager gsm, int x, int y, KeyHandler keyH){
             this.item = new Item();
             this.item.gsm = gsm;
             this.item.x = x *tileSize;
@@ -110,33 +70,33 @@ public class Item extends Entity implements Prototype {
             this.item.keyH = keyH;
         }
 
-        public KeyItemsBuilder setRelatedQuests(Quest... quests) {
+        public ItemBuilder setRelatedQuests(Quest... quests) {
             this.item.relatedQuests.addAll(Arrays.asList(quests));
             return this;
         }
-        public KeyItemsBuilder setRelatedQuests(List<Quest> relatedQuests) {
+        public ItemBuilder setRelatedQuests(List<Quest> relatedQuests) {
             this.item.relatedQuests = relatedQuests;
             return this;
         }
         // Metodo per impostare il fattore di scala
-        public KeyItemsBuilder setImageDimension(int imageWidth, int imageHeigth) {
+        public ItemBuilder setImageDimension(int imageWidth, int imageHeigth) {
             this.item.imageWidth = imageWidth;
             this.item.imageHeigth = imageHeigth;
             return this;
         }
 
-        public KeyItemsBuilder setScale(int scale) {
+        public ItemBuilder setScale(int scale) {
             this.item.scale = scale;
             return this;
         }
 
 
-        public KeyItemsBuilder setName(String name){
+        public ItemBuilder setName(String name){
             this.item.name = name;
             return this;
         }
 
-        public KeyItemsBuilder setStaticImage(String pathImage) {
+        public ItemBuilder setStaticImage(String pathImage) {
             try{
                 this.item.staticImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(pathImage)));
             }catch (IOException e) {
@@ -144,41 +104,41 @@ public class Item extends Entity implements Prototype {
             }
             return this;
         }
-        public KeyItemsBuilder setStaticImage(BufferedImage staticImage) {
+        public ItemBuilder setStaticImage(BufferedImage staticImage) {
             this.item.staticImage = staticImage;
             return this;
         }
 
-        public KeyItemsBuilder setCollisionArea(int larghezza, int altezza) {
+        public ItemBuilder setCollisionArea(int larghezza, int altezza) {
             this.item.collisionArea = new Rectangle(this.item.x, this.item.y , larghezza, altezza);
             return this;
         }
-        public KeyItemsBuilder setCollisionArea(int x, int y, int larghezza, int altezza) {
+        public ItemBuilder setCollisionArea(int x, int y, int larghezza, int altezza) {
             this.item.collisionArea = new Rectangle(x, y , larghezza, altezza);
             return this;
         }
 
-        public KeyItemsBuilder setContainedMap(TileManager tileManager) {
+        public ItemBuilder setContainedMap(TileManager tileManager) {
             this.item.tileManager = tileManager;
             return this;
         }
-        public KeyItemsBuilder setInteractable(boolean interactable) {
+        public ItemBuilder setInteractable(boolean interactable) {
             this.item.isInteractable = interactable;
             return this;
         }
 
-        public KeyItemsBuilder setInteractionAction(Interactable interactionActionItems){
+        public ItemBuilder setInteractionAction(Interactable interactionActionItems){
             this.item.interactionAction = interactionActionItems;
             return this;
         }
 
 
-        public KeyItemsBuilder setSpeedChangeAnimateSprite(int speedChangeAnimateSprite) {
+        public ItemBuilder setSpeedChangeAnimateSprite(int speedChangeAnimateSprite) {
             this.item.speedChangeAnimateSprite = speedChangeAnimateSprite;
             return this;
         }
 
-        public KeyItemsBuilder setAnimateImages(String path1, String path2, String path3, String path4) {
+        public ItemBuilder setAnimateImages(String path1, String path2, String path3, String path4) {
             try {
                 this.item.animateImage1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path1)));
                 this.item.animateImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path2)));
@@ -199,7 +159,6 @@ public class Item extends Entity implements Prototype {
 
     }
 
-
     public void draw(Graphics2D graphics2D){
 
         int screenX = this.x - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
@@ -209,7 +168,7 @@ public class Item extends Entity implements Prototype {
             graphics2D.drawImage(staticImage, screenX, screenY, (tileSize*imageWidth)/16, (tileSize*imageHeigth)/16, null);
 
     }
-
+    @Override
     public void update() {
 
         if(collisionArea != null)
@@ -229,8 +188,6 @@ public class Item extends Entity implements Prototype {
         }
     }
 
-
-
     private boolean isPlayerNearby() {
         //Definisci la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
         if(this.collisionArea!= null && gsm.getPlayer().getInteractionArea().intersects(this.collisionArea)){
@@ -238,26 +195,6 @@ public class Item extends Entity implements Prototype {
             return true;
         }
         else return false;
-    }
-
-    public Rectangle getCollisionArea() {
-        return collisionArea;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public TileManager getTileManager() {
-        return tileManager;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public List<Quest> getRelatedQuests() {

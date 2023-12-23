@@ -33,6 +33,7 @@ public class EnemyCreator {
                         slimeDown_0,slimeDown_1,
                         slimeDown_0,slimeDown_1,
                         slimeDown_0,slimeDown_1)
+                .setAggroRange(4)
                 .build();
 
 

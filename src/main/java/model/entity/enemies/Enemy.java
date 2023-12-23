@@ -15,16 +15,9 @@ import java.util.Objects;
 
 import static view.GamePanel.tileSize;
 
-public class Enemy{
-
-    private String name;
-    private int x;
-    private int y;
+public class Enemy extends Entity{
     private int speed;
     private int speedChangeSprite;
-
-    private KeyHandler keyH;
-
     private int spriteNum;
     private BufferedImage
             up1, up2, up3, up4,
@@ -36,21 +29,12 @@ public class Enemy{
 
     private int totalSprite;
 
-    private int scale;
-
-    private Rectangle collisionArea;
-    private GameStateManager gsm;
-
-    private TileManager tileManager;
-    private boolean isInteractable;
-
-    private Interactable interactionAction;
     private int imageWidth;
     private int imageHeight;
     private int maxLife;
     private int currentLife;
     private int damage;
-    private int aggroRange = 4 * tileSize;
+    private int aggroRange;
 
 
     private EnemyState currentState;
@@ -91,6 +75,11 @@ public class Enemy{
 
         public Enemy.EnemyBuilder setName(String name) {
             this.enemy.name = name;
+            return this;
+        }
+
+        public Enemy.EnemyBuilder setAggroRange(int aggroRange) {
+            this.enemy.aggroRange = aggroRange * tileSize;
             return this;
         }
 
@@ -209,10 +198,11 @@ public class Enemy{
             return this.enemy;
         }
     }
+    @Override
     public void draw(Graphics2D graphics2D) {
         currentState.draw(graphics2D, this);
     }
-
+    @Override
     public void update() {
         double distance = Math.hypot(gsm.getPlayer().getX() - this.getX(), gsm.getPlayer().getY() - this.getY());
         if (distance <= aggroRange) {
@@ -265,34 +255,12 @@ public class Enemy{
         }
     }
 
-
-
-    public TileManager getTileManager() {
-        return tileManager;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
     public int getSpeed() {
         return speed;
     }
 
     public int getSpeedChangeSprite() {
         return speedChangeSprite;
-    }
-
-    public KeyHandler getKeyH() {
-        return keyH;
     }
 
     public int getSpriteNum() {
@@ -375,26 +343,6 @@ public class Enemy{
         return totalSprite;
     }
 
-    public int getScale() {
-        return scale;
-    }
-
-    public Rectangle getCollisionArea() {
-        return collisionArea;
-    }
-
-    public GameStateManager getGsm() {
-        return gsm;
-    }
-
-    public boolean isInteractable() {
-        return isInteractable;
-    }
-
-    public Interactable getInteractionAction() {
-        return interactionAction;
-    }
-
     public int getImageWidth() {
         return imageWidth;
     }
@@ -437,14 +385,6 @@ public class Enemy{
 
     public void setDirection(String direction) {
         this.direction = direction;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
 }

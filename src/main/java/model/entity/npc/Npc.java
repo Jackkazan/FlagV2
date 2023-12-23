@@ -1,11 +1,9 @@
 package model.entity.npc;
 
-import controller.KeyHandler;
 import model.entity.Entity;
 import model.gameState.GameStateManager;
 import model.entity.Interactable;
 import model.tile.TileManager;
-import view.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,13 +16,8 @@ import static view.GamePanel.tileSize;
 //Class for npc and enemy
 public class Npc extends Entity {
     //Name entity es. npc_1 ecc...
-    private String name;
-    protected int x;
-    private int y;
     private int speed;
     private int speedChangeSprite;
-
-    private KeyHandler keyH;
 
     private int spriteNum;
     private BufferedImage
@@ -34,21 +27,10 @@ public class Npc extends Entity {
             right1, right2, right3, right4;
     private String direction;
     private int spriteCounter = 0;
-
     private int totalSprite;
 
-    private int scale;
-
-    private Rectangle collisionArea;
-    private GameStateManager gsm;
-
-    private TileManager tileManager;
-    private boolean isInteractable;
-
-    private Interactable interactionAction;
     private int imageWidth;
     private int imageHeight;
-
 
     public Npc (){
         this.gsm = GameStateManager.gp.getGsm();
@@ -56,7 +38,7 @@ public class Npc extends Entity {
     }
 
     public static class NpcBuilder {
-        private Npc npc;
+        private final Npc npc;
         private int[] pathX;  // Array delle coordinate x del percorso
         private int[] pathY;  // Array delle coordinate y del percorso
         private int pathIndex;
@@ -188,6 +170,7 @@ public class Npc extends Entity {
         }
     }
 
+    @Override
     public void draw(Graphics2D graphics2D) {
         BufferedImage[] images = switch (direction) {
             case "up" -> new BufferedImage[]{up1, up2, up3, up4};
@@ -218,6 +201,7 @@ public class Npc extends Entity {
         // Se hai raggiunto la fine del percorso, ricomincia da capo
     }
 
+    @Override
     public void update() {
         collisionArea.setLocation(x, y);
         if (totalSprite == 16) {
@@ -244,7 +228,7 @@ public class Npc extends Entity {
 
     public void interact() {
         // Verifica se il giocatore è nelle vicinanze e ha premuto il tasto "E"
-        if (this.isInteractable && this.tileManager == gsm.getMapManager().getCurrentMap() && isPlayerNearby()) {
+        if (this.tileManager == gsm.getMapManager().getCurrentMap() && this.isInteractable   && isPlayerNearby()) {
             if(keyH.interactPressed && interactionAction != null) {
                 //System.out.println("Ho interagito con "+this.name);
                 interactionAction.performAction(this);
@@ -255,8 +239,6 @@ public class Npc extends Entity {
     public void setDirection(String direction) {
         this.direction = direction;
     }
-
-
 
     private boolean isPlayerNearby() {
         // puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
@@ -269,17 +251,6 @@ public class Npc extends Entity {
 
     public Rectangle getCollisionArea() {
         return this.collisionArea;
-    }
-    public int getX() {
-        return this.x;
-    }
-
-    public int getY() {
-        return this.y;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public int getSpeed() {
@@ -296,13 +267,5 @@ public class Npc extends Entity {
 
     public int getImageHeight() {
         return imageHeight;
-    }
-
-    public int getScale() {
-        return scale;
-    }
-
-    public TileManager getTileManager() {
-        return tileManager;
     }
 }

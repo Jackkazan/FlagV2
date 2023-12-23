@@ -19,18 +19,16 @@ import static view.GamePanel.tileSize;
 
 public class Player extends Entity {
     private GamePanel gamePanel;
-    private GameStateManager gsm;
+
     private KeyHandler keyHandler;
 
-    private int x;
-    private int y;
     private int speed;
 
-    private int imageWidth = 32;
-    private int imageHeight = 32;
+    private int imageWidth;
+    private int imageHeight;
 
-    private boolean isAttacking = false;
-    private boolean attackAnimationCompleted = true;
+    private boolean isAttacking;
+    private boolean attackAnimationCompleted;
 
     private final int screenX;
     private final int screenY;
@@ -39,14 +37,14 @@ public class Player extends Entity {
 
     swordStateAndArmor currentSwordStateAndArmor;
 
-    private int scale = 5;
-    private int maxLife = 10;
-    private int currentLife = 9;
+    private int maxLife;
+    private int currentLife;
     private ArrayList<CollisionObject> currentCollisionMap;
 
     // Nuova area di interazione
-    private Rectangle interactionArea = new Rectangle(0, 0, tileSize*2, tileSize*2);
+    private final Rectangle interactionArea = new Rectangle(0, 0, tileSize*2, tileSize*2);
 
+    private final Rectangle collisionArea = new Rectangle(0, 0, tileSize, tileSize);
 
     private BufferedImage
             up1, up2, up3, up4,
@@ -75,15 +73,21 @@ public class Player extends Entity {
         x = tileSize*3;  //3
         y = tileSize*4;  //4
         maxLife = 6;
+        currentLife = 6;
         speed = 4;
+        scale = 5;
         direction = "down";
         currentSwordStateAndArmor= swordStateAndArmor.IronSwordNoArmor;
+        imageWidth = tileSize;
+        imageHeight = tileSize;
+        attackAnimationCompleted = true;
     }
 
-    public void setCurrentSwordStateAndArmor(swordStateAndArmor currentSwordStateAndArmor) {
-        this.currentSwordStateAndArmor = currentSwordStateAndArmor;
+    public void setSwordStateAndArmor(swordStateAndArmor newSwordStateAndArmor) {
+        this.currentSwordStateAndArmor = newSwordStateAndArmor;
     }
 
+    @Override
     public void update() {
         if (keyHandler.attackVPressed && !isAttacking && attackAnimationCompleted) {
             isAttacking = true;
@@ -138,11 +142,8 @@ public class Player extends Entity {
             else{
                 spriteNum = 0;
             }
-
         }
-
     }
-
 
     private void attack() {
         switch (direction) {
@@ -175,7 +176,7 @@ public class Player extends Entity {
         }
     }
 
-
+    @Override
     public void draw(Graphics2D graphics2D) {
         BufferedImage[] images = switch (direction) {
             case "up" -> new BufferedImage[]{up1, up2, up3, up4};
@@ -248,7 +249,6 @@ public class Player extends Entity {
                 y + tileSize > objectY;
     }
 
-
     // metodo per verificare la collisione con le entità
     public boolean collidesWithEntities(int nextX, int nextY) {
         // Verifica la collisione con le entità della lista npcList
@@ -281,7 +281,6 @@ public class Player extends Entity {
                 y < objectY + objectHeight &&
                 y + tileSize > objectY;
     }
-
 
     public void setCurrentCollisionMap(ArrayList<CollisionObject> collisionMap) {
         this.currentCollisionMap = collisionMap;
@@ -371,13 +370,6 @@ public class Player extends Entity {
         return this.currentLife;
     }
 
-    // COLLISION
-    private Rectangle collisionArea = new Rectangle(0, 0, 48, 48);
-
-    public Rectangle getCollisionArea() {
-        return this.collisionArea;
-    }
-
     public int getScreenX() {
         return this.screenX;
     }
@@ -386,24 +378,12 @@ public class Player extends Entity {
         return this.screenY;
     }
 
-    public int getX() {
-        return this.x;
-    }
-
-    public int getY() {
-        return this.y;
-    }
-
     public int getSpeed() {
         return this.speed;
     }
 
     public Rectangle getInteractionArea() {
         return interactionArea;
-    }
-
-    public int getScale() {
-        return scale;
     }
 
     public int getImageWidth() {
