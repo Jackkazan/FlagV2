@@ -30,6 +30,7 @@ public class IdleState implements EnemyState {
                 enemy.setSpriteCounter(0);
             }
         }
+
     }
 
     @Override

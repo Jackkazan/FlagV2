@@ -59,8 +59,10 @@ public class PlayState implements GameState{
         }
 
         for (Enemy enemy : gsm.getEnemyList()) {
-            if(enemy.getTileManager().equals(mapManager.getCurrentMap()))
+            if (enemy.getTileManager().equals(mapManager.getCurrentMap())) {
+                //enemy.moveTowardsPlayer(player.getX(), player.getY());
                 enemy.update();
+            }
         }
 
         // Gestione delle transizioni della mappa

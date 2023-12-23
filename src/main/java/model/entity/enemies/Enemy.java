@@ -51,7 +51,7 @@ public class Enemy{
     private int damage;
 
 
-    private EnemyState currentState; //Stato corrente enum
+    private EnemyState currentState;
 
 
 
@@ -149,9 +149,9 @@ public class Enemy{
         }
 
         public Enemy.EnemyBuilder set16EntityImage(String path_up1, String path_up2, String path_up3, String path_up4,
-                                               String path_down1, String path_down2, String path_down3, String path_down4,
-                                               String path_left1, String path_left2, String path_left3, String path_left4,
-                                               String path_right1, String path_right2, String path_right3, String path_right4) {
+                                                   String path_down1, String path_down2, String path_down3, String path_down4,
+                                                   String path_left1, String path_left2, String path_left3, String path_left4,
+                                                   String path_right1, String path_right2, String path_right3, String path_right4) {
             try {
                 this.enemy.up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up1)));
                 this.enemy.up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up2)));
@@ -183,7 +183,7 @@ public class Enemy{
         }
 
         public Enemy.EnemyBuilder set8EntityImage(String path_up1, String path_up2, String path_down1, String path_down2,
-                                              String path_left1, String path_left2, String path_right1, String path_right2) {
+                                                  String path_left1, String path_left2, String path_right1, String path_right2) {
             try {
                 this.enemy.up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up1)));
                 this.enemy.up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up2)));
@@ -208,11 +208,39 @@ public class Enemy{
         }
     }
     public void draw(Graphics2D graphics2D) {
-       currentState.draw(graphics2D, this);
+        currentState.draw(graphics2D, this);
     }
 
     public void update() {
         currentState.update(this);
+    }
+
+    public void moveTowardsPlayer(int playerX, int playerY) {
+        int distanceThreshold = 1*tileSize; // Adjust this value as needed
+
+        int distanceX = Math.abs(playerX - this.x);
+        int distanceY = Math.abs(playerY - this.y);
+
+        if (distanceX < distanceThreshold && distanceY < distanceThreshold) {
+            // The enemy is already close to the player, no need to move
+            return;
+        }
+
+        if (playerX < this.x) {
+            this.setDirection("left");
+            this.setX(this.x - this.speed);
+        } else if (playerX > this.x) {
+            this.setDirection("right");
+            this.setX(this.x + this.speed);
+        }
+
+        if (playerY < this.y) {
+            this.setDirection("up");
+            this.setY(this.y - this.speed);
+        } else if (playerY > this.y) {
+            this.setDirection("down");
+            this.setY(this.y + this.speed);
+        }
     }
 
     public void setState(EnemyState state) {
@@ -385,6 +413,16 @@ public class Enemy{
     public void setSpriteNum(int spriteNum) {
         this.spriteNum = spriteNum;
     }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 }
-
-
