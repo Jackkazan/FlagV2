@@ -12,7 +12,23 @@ public class MovementState implements EnemyState {
     @Override
     public void update(Enemy enemy) {
         // Aggiorna lo stato di movimento
-
+        enemy.getCollisionArea().setLocation(enemy.getX(), enemy.getY());
+        if (enemy.getTotalSprite() == 16) {
+            // alternatore di sprite
+            enemy.incrementSpriteCounter();
+            // più è alto, più è lento
+            if (enemy.getSpriteCounter() > enemy.getSpeedChangeSprite()) {
+                enemy.setSpriteNum((enemy.getSpriteNum() + 1) % 4);
+                enemy.setSpriteCounter(0);
+            }
+        } else {
+            enemy.incrementSpriteCounter();
+            // più è alto, più è lento
+            if (enemy.getSpriteCounter() > enemy.getSpeedChangeSprite()) {
+                enemy.setSpriteNum((enemy.getSpriteNum() + 1) % 2);
+                enemy.setSpriteCounter(0);
+            }
+        }
         double distance = Math.hypot(enemy.getGsm().getPlayer().getX() - enemy.getX(), enemy.getGsm().getPlayer().getY() - enemy.getY());
         if (distance <= enemy.getAggroRange()) {
             enemy.moveTowardsPlayer(enemy.getGsm().getPlayer().getX(), enemy.getGsm().getPlayer().getY());
