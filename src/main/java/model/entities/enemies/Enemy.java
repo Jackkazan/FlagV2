@@ -30,94 +30,64 @@ public class Enemy extends Npc {
     }
 
 
-    public static class EnemyBuilder{
-        private final Enemy enemy;
+    public static class EnemyBuilder extends EntityBuilder<Enemy,EnemyBuilder>{
+
         private int[] pathX;  // Array delle coordinate x del percorso
         private int[] pathY;  // Array delle coordinate y del percorso
         private int pathIndex;
 
         public EnemyBuilder( int x, int y) {
-            this.enemy = new Enemy();
-            this.enemy.x = x* tileSize;
-            this.enemy.y = y* tileSize;
+            super();
+            this.entity.x = x * tileSize;
+            this.entity.y = y * tileSize;
         }
 
         public Enemy.EnemyBuilder setMaxLife(int maxLife){
-            this.enemy.maxLife= maxLife;
+            this.entity.maxLife= maxLife;
             return this;
         }
         public Enemy.EnemyBuilder setDamage(int damage){
-            this.enemy.damage = damage;
+            this.entity.damage = damage;
             return this;
         }
         public Enemy.EnemyBuilder setCurrentLife(int currentLife){
-            this.enemy.currentLife = currentLife;
-            return this;
-        }
-
-        public Enemy.EnemyBuilder setName(String name) {
-            this.enemy.name = name;
+            this.entity.currentLife = currentLife;
             return this;
         }
 
         public Enemy.EnemyBuilder setAggroRange(int aggroRange) {
-            this.enemy.aggroRange = aggroRange * tileSize;
+            this.entity.aggroRange = aggroRange * tileSize;
             return this;
         }
 
         public Enemy.EnemyBuilder setTotalSprite(int totalSprite) {
-            this.enemy.totalSprite = totalSprite;
+            this.entity.totalSprite = totalSprite;
             return this;
         }
 
         public Enemy.EnemyBuilder setSpeed(int speed) {
-            this.enemy.speed = speed;
+            this.entity.speed = speed;
             return this;
         }
 
         public Enemy.EnemyBuilder setSpeedChangeSprite(int speedChangeSprite) {
-            this.enemy.speedChangeSprite = speedChangeSprite;
-            return this;
-        }
-
-        public Enemy.EnemyBuilder setCollisionArea(int larghezza, int altezza) {
-            this.enemy.collisionArea = new Rectangle(this.enemy.x, this.enemy.y, (larghezza/2)*this.enemy.scale, (altezza/2)*this.enemy.scale);
+            this.entity.speedChangeSprite = speedChangeSprite;
             return this;
         }
 
 
         public Enemy.EnemyBuilder setSpriteNumLess1(int numSpriteEachDirection) {
-            this.enemy.spriteNum = numSpriteEachDirection;
+            this.entity.spriteNum = numSpriteEachDirection;
             return this;
         }
 
         public Enemy.EnemyBuilder setDefaultDirection(String direction) {
-            this.enemy.direction = direction;
+            this.entity.direction = direction;
             return this;
         }
 
         public Enemy.EnemyBuilder setIsInteractible(boolean isInteractible){
-            this.enemy.isInteractable = isInteractible;
-            return this;
-        }
-        public Enemy.EnemyBuilder setInteractionAction(Interactable action) {
-            this.enemy.interactionAction = action;
-            return this;
-        }
-
-        public Enemy.EnemyBuilder setImageDimension(int imageWidth, int imageHeight) {
-            this.enemy.imageWidth = imageWidth;
-            this.enemy.imageHeight = imageHeight;
-            return this;
-        }
-
-        public Enemy.EnemyBuilder setScale(int scale) {
-            this.enemy.scale = scale;
-            return this;
-        }
-
-        public Enemy.EnemyBuilder setContainedMap(TileManager tileManager) {
-            this.enemy.tileManager = tileManager;
+            this.entity.isInteractable = isInteractible;
             return this;
         }
 
@@ -126,27 +96,27 @@ public class Enemy extends Npc {
                                                    String path_left1, String path_left2, String path_left3, String path_left4,
                                                    String path_right1, String path_right2, String path_right3, String path_right4) {
             try {
-                this.enemy.up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up1)));
-                this.enemy.up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up2)));
-                this.enemy.up3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up3)));
-                this.enemy.up4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up4)));
+                this.entity.up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up1)));
+                this.entity.up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up2)));
+                this.entity.up3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up3)));
+                this.entity.up4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up4)));
 
-                this.enemy.down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down1)));
-                this.enemy.down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down2)));
-                this.enemy.down3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down3)));
-                this.enemy.down4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down4)));
-
-
-                this.enemy.left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left1)));
-                this.enemy.left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left2)));
-                this.enemy.left3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left3)));
-                this.enemy.left4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left4)));
+                this.entity.down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down1)));
+                this.entity.down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down2)));
+                this.entity.down3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down3)));
+                this.entity.down4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down4)));
 
 
-                this.enemy.right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right1)));
-                this.enemy.right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right2)));
-                this.enemy.right3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right3)));
-                this.enemy.right4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right4)));
+                this.entity.left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left1)));
+                this.entity.left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left2)));
+                this.entity.left3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left3)));
+                this.entity.left4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left4)));
+
+
+                this.entity.right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right1)));
+                this.entity.right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right2)));
+                this.entity.right3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right3)));
+                this.entity.right4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right4)));
 
 
             } catch (IOException e) {
@@ -158,17 +128,17 @@ public class Enemy extends Npc {
         public Enemy.EnemyBuilder set8EntityImage(String path_up1, String path_up2, String path_down1, String path_down2,
                                                   String path_left1, String path_left2, String path_right1, String path_right2) {
             try {
-                this.enemy.up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up1)));
-                this.enemy.up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up2)));
+                this.entity.up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up1)));
+                this.entity.up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up2)));
 
-                this.enemy.down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down1)));
-                this.enemy.down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down2)));
+                this.entity.down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down1)));
+                this.entity.down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down2)));
 
-                this.enemy.left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left1)));
-                this.enemy.left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left2)));
+                this.entity.left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left1)));
+                this.entity.left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left2)));
 
-                this.enemy.right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right1)));
-                this.enemy.right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right2)));
+                this.entity.right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right1)));
+                this.entity.right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right2)));
 
 
             } catch (IOException e) {
@@ -176,8 +146,12 @@ public class Enemy extends Npc {
             }
             return this;
         }
+        @Override
+        protected Enemy createEntity() {
+            return new Enemy();
+        }
         public Enemy build() {
-            return this.enemy;
+            return (Enemy) this.entity;
         }
     }
     @Override

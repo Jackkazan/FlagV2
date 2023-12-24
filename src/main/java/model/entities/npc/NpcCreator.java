@@ -45,7 +45,6 @@ public class NpcCreator {
                         vecchietta_right1, vecchietta_right2)
                 .build();
 
-
         String contadino1_up1 ="/npc/Contadino1/Contadino1LookUp_0.png";
         String contadino1_up2="/npc/Contadino1/Contadino1LookUp_1.png";
         String contadino1_down1 ="/npc/Contadino1/Contadino1LookDown_0.png";
@@ -100,7 +99,6 @@ public class NpcCreator {
                         contadino2_right1, contadino2_right2)
                 .build();
 
-
         String cameriera1Down_0 = "/npc/Cameriera/CamerieraVillaggioTavernaDown_0.png";
         String cameriera1Down_1 = "/npc/Cameriera/CamerieraVillaggioTavernaDown_1.png";
         Npc cameriera1 = new Npc.NpcBuilder( 15, 3)
@@ -122,7 +120,6 @@ public class NpcCreator {
                         cameriera1Down_0, cameriera1Down_1)
                 .build();
 
-
         String mercante1Right_0 = "/npc/Mercante1/VenditoreOggettiVillaggioRight_0.png";
         String mercante1Right_1 = "/npc/Mercante1/VenditoreOggettiVillaggioRight_1.png";
         Npc mercante1 = new Npc.NpcBuilder( 2, 4)
@@ -143,6 +140,7 @@ public class NpcCreator {
                         mercante1Right_0, mercante1Right_1,
                         mercante1Right_0, mercante1Right_1)
                 .build();
+
 
 
         npcList.add(vecchietta);
