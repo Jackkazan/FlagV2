@@ -3,9 +3,7 @@ package model.entities.items;
 import model.entities.Entity;
 import model.entities.Prototype;
 import model.gameState.GameStateManager;
-import model.entities.Interactable;
 import model.quests.Quest;
-import model.tile.TileManager;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

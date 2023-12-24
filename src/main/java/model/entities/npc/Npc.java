@@ -1,9 +1,7 @@
 package model.entities.npc;
 
-import model.entities.Interactable;
 import model.entities.Entity;
 import model.gameState.GameStateManager;
-import model.tile.TileManager;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
