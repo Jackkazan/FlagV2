@@ -110,7 +110,7 @@ public class Player extends Enemy {
                 collisionArea.setLocation(x, y);
 
                 // Aggiorna la collisionArea dell'area di interazione
-                interactionArea.setLocation(x - 8, y - 8); // Esempio: l'area di interazione è leggermente più grande di quella del giocatore
+                interactionArea.setLocation(x - 24, y - 16); // Esempio: l'area di interazione è leggermente più grande di quella del giocatore
 
 
                 if (!collidesWithObjects(nextX, nextY) && !collidesWithEntities(nextX, nextY) && !collidesWithItems(nextX, nextY)) {
