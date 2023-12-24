@@ -65,7 +65,7 @@ public class Player extends Enemy {
         imageWidth = tileSize;
         imageHeight = tileSize;
         attackAnimationCompleted = true;
-        interactionArea = new Rectangle(0, 0, tileSize*2, tileSize*2);
+        interactionArea = new Rectangle(0, 0, tileSize*2+16, tileSize*2+16);
         collisionArea = new Rectangle(0, 0, tileSize, tileSize);
 
     }

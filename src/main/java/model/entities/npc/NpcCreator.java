@@ -32,7 +32,7 @@ public class NpcCreator {
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
                 .setScale(5)
-                .setCollisionArea(24,30)
+                .setCollisionArea(64,64)
                 .setTotalSprite(8)
                 .setImageDimension(32,32)
                 .setIsInteractible(true)
@@ -59,7 +59,7 @@ public class NpcCreator {
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
                 .setScale(5)
-                .setCollisionArea(24,30)
+                .setCollisionArea(64,64)
                 .setTotalSprite(8)
                 .setImageDimension(32,32)
                 .setIsInteractible(true)
@@ -86,7 +86,7 @@ public class NpcCreator {
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
                 .setScale(5)
-                .setCollisionArea(24,30)
+                .setCollisionArea(64,64)
                 .setTotalSprite(8)
                 .setImageDimension(32,32)
                 .setIsInteractible(true)
@@ -107,7 +107,7 @@ public class NpcCreator {
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
                 .setScale(5)
-                .setCollisionArea(16,38)
+                .setCollisionArea(64,90)
                 .setTotalSprite(2)
                 .setImageDimension(16,32)
                 .setIsInteractible(true)
@@ -128,7 +128,7 @@ public class NpcCreator {
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
                 .setScale(5)
-                .setCollisionArea(37,32)
+                .setCollisionArea(90,64)
                 .setTotalSprite(2)
                 .setImageDimension(16,32)
                 .setIsInteractible(true)
@@ -142,12 +142,32 @@ public class NpcCreator {
                 .build();
 
 
+        String fabbro1Down_0 = "/npc/Fabbro1/FabbroVillaggioDown_0.png";
+        Npc fabbro1 = new Npc.NpcBuilder(66,30)
+                .setName("Fabbro1")
+                .setSpeedChangeSprite(100)
+                .setSpriteNumLess1(0)
+                .setScale(5)
+                .setCollisionArea(64,64)
+                .setTotalSprite(1)
+                .setImageDimension(32,32)
+                .setIsInteractible(true)
+                .setInteractionAction(new NpcDialogue(gsm))
+                .setDefaultDirection("down")
+                .setContainedMap(mapManager.getTileManagerVillaggioSud())
+                .set8EntityImage(fabbro1Down_0, fabbro1Down_0,
+                        fabbro1Down_0, fabbro1Down_0,
+                        fabbro1Down_0, fabbro1Down_0,
+                        fabbro1Down_0, fabbro1Down_0)
+                .build();
+
 
         npcList.add(vecchietta);
         npcList.add(contadino1);
         npcList.add(contadino2);
         npcList.add(cameriera1);
         npcList.add(mercante1);
+        npcList.add(fabbro1);
 
        return npcList;
     }
