@@ -97,90 +97,48 @@ public class Item extends Entity implements Prototype {
         return true;
     }
 
-    public static class ItemBuilder {
-        private final Item item;
+    public static class ItemBuilder extends EntityBuilder<Item,ItemBuilder>{
 
         public ItemBuilder(int x, int y){
-            this.item = new Item();
-            this.item.x = x *tileSize;
-            this.item.y = y *tileSize;
+            super();
+            this.entity.x = x *tileSize;
+            this.entity.y = y *tileSize;
         }
 
         public ItemBuilder setRelatedQuests(Quest... quests) {
-            this.item.relatedQuests.addAll(Arrays.asList(quests));
+            this.entity.relatedQuests.addAll(Arrays.asList(quests));
             return this;
         }
         public ItemBuilder setRelatedQuests(List<Quest> relatedQuests) {
-            this.item.relatedQuests = relatedQuests;
-            return this;
-        }
-        // Metodo per impostare il fattore di scala
-        public ItemBuilder setImageDimension(int imageWidth, int imageHeigth) {
-            this.item.imageWidth = imageWidth;
-            this.item.imageHeight = imageHeigth;
-            return this;
-        }
-
-        public ItemBuilder setScale(int scale) {
-            this.item.scale = scale;
-            return this;
-        }
-
-
-        public ItemBuilder setName(String name){
-            this.item.name = name;
+            this.entity.relatedQuests = relatedQuests;
             return this;
         }
 
         public ItemBuilder setStaticImage(String pathImage) {
             try{
-                this.item.staticImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(pathImage)));
+                this.entity.staticImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(pathImage)));
             }catch (IOException e) {
                 e.printStackTrace();
             }
             return this;
         }
         public ItemBuilder setStaticImage(BufferedImage staticImage) {
-            this.item.staticImage = staticImage;
+            this.entity.staticImage = staticImage;
             return this;
         }
-
-        public ItemBuilder setCollisionArea(int larghezza, int altezza) {
-            this.item.collisionArea = new Rectangle(this.item.x, this.item.y , larghezza, altezza);
-            return this;
-        }
-        public ItemBuilder setCollisionArea(int x, int y, int larghezza, int altezza) {
-            this.item.collisionArea = new Rectangle(x, y , larghezza, altezza);
-            return this;
-        }
-
-        public ItemBuilder setContainedMap(TileManager tileManager) {
-            this.item.tileManager = tileManager;
-            return this;
-        }
-        public ItemBuilder setInteractable(boolean interactable) {
-            this.item.isInteractable = interactable;
-            return this;
-        }
-
-        public ItemBuilder setInteractionAction(Interactable interactionActionItems){
-            this.item.interactionAction = interactionActionItems;
-            return this;
-        }
-
 
         public ItemBuilder setSpeedChangeAnimateSprite(int speedChangeAnimateSprite) {
-            this.item.speedChangeAnimateSprite = speedChangeAnimateSprite;
+            this.entity.speedChangeAnimateSprite = speedChangeAnimateSprite;
             return this;
         }
 
         public ItemBuilder setAnimateImages(String path1, String path2, String path3, String path4) {
             try {
-                this.item.animateImage1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path1)));
-                this.item.animateImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path2)));
+                this.entity.animateImage1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path1)));
+                this.entity.animateImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path2)));
 
-                this.item.animateImage3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path3)));
-                this.item.animateImage4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path4)));
+                this.entity.animateImage3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path3)));
+                this.entity.animateImage4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path4)));
 
 
             } catch (IOException e) {
@@ -189,10 +147,15 @@ public class Item extends Entity implements Prototype {
             return this;
         }
 
+        @Override
         public Item build() {
-            return this.item;
+            return this.entity;
         }
 
+        @Override
+        protected Item createEntity() {
+            return new Item();
+        }
     }
 
 

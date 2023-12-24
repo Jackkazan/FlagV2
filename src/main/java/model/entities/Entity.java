@@ -28,6 +28,67 @@ public abstract class Entity{
     public abstract void draw(Graphics2D graphics2D);
 
     public abstract void update();
+    public static class EntityBuilder<T extends Entity, B extends EntityBuilder<T, B>> {
+        protected T entity;
+
+        public EntityBuilder() {
+            this.entity = createEntity();
+        }
+
+        protected T createEntity() {
+            return null;
+        }
+
+        public B setName(String name) {
+            this.entity.name = name;
+            return (B) this;
+        }
+
+        public B setX(int x) {
+            this.entity.x = x;
+            return (B) this;
+        }
+
+        public B setY(int y) {
+            this.entity.y = y;
+            return (B) this;
+        }
+
+        // ... (aggiungi altri setter comuni)
+        public B setCollisionArea(int larghezza, int altezza) {
+            this.entity.collisionArea = new Rectangle(this.entity.x, this.entity.y , larghezza, altezza);
+            return (B) this;
+        }
+        public B setCollisionArea(int x, int y, int larghezza, int altezza) {
+            this.entity.collisionArea = new Rectangle(x, y , larghezza, altezza);
+            return (B) this;
+        }
+
+        public B setContainedMap(TileManager tileManager) {
+            this.entity.tileManager = tileManager;
+            return (B) this;
+        }
+        public B setInteractable(boolean interactable) {
+            this.entity.isInteractable = interactable;
+            return (B) this;
+        }
+        public B setImageDimension(int imageWidth, int imageHeigth) {
+            this.entity.imageWidth = imageWidth;
+            this.entity.imageHeight = imageHeigth;
+            return (B) this;
+        }
+        public B setInteractionAction(Interactable interactionActionItems){
+            this.entity.interactionAction = interactionActionItems;
+            return (B) this;
+        }
+        public B setScale(int scale) {
+            this.entity.scale = scale;
+            return (B) this;
+        }
+        public T build() {
+            return this.entity;
+        }
+    }
 
     public Rectangle getCollisionArea() {
         return collisionArea;

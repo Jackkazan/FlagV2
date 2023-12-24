@@ -34,76 +34,45 @@ public class Npc extends Entity {
         this.keyH = GameStateManager.keyH;
     }
 
-    public static class NpcBuilder {
-        private final Npc npc;
+    public static class NpcBuilder extends EntityBuilder<Npc,NpcBuilder>{
+
         private int[] pathX;  // Array delle coordinate x del percorso
         private int[] pathY;  // Array delle coordinate y del percorso
         private int pathIndex;
 
         public NpcBuilder( int x, int y) {
-            this.npc = new Npc();
-            this.npc.x = x * tileSize;
-            this.npc.y = y * tileSize;
-        }
-
-        public NpcBuilder setName(String name) {
-            this.npc.name = name;
-            return this;
+            super();
+            this.entity.x = x * tileSize;
+            this.entity.y = y * tileSize;
         }
 
         public NpcBuilder setTotalSprite(int totalSprite) {
-            this.npc.totalSprite = totalSprite;
+            this.entity.totalSprite = totalSprite;
             return this;
         }
 
         public NpcBuilder setSpeed(int speed) {
-            this.npc.speed = speed;
+            this.entity.speed = speed;
             return this;
         }
 
         public NpcBuilder setSpeedChangeSprite(int speedChangeSprite) {
-            this.npc.speedChangeSprite = speedChangeSprite;
+            this.entity.speedChangeSprite = speedChangeSprite;
             return this;
         }
-
-        public NpcBuilder setCollisionArea(int larghezza, int altezza) {
-            this.npc.collisionArea = new Rectangle(this.npc.x, this.npc.y, (larghezza/2)*this.npc.scale, (altezza/2)*this.npc.scale);
-            return this;
-        }
-
 
         public NpcBuilder setSpriteNumLess1(int numSpriteEachDirection) {
-            this.npc.spriteNum = numSpriteEachDirection;
+            this.entity.spriteNum = numSpriteEachDirection;
             return this;
         }
 
         public NpcBuilder setDefaultDirection(String direction) {
-            this.npc.direction = direction;
+            this.entity.direction = direction;
             return this;
         }
 
         public NpcBuilder setIsInteractible(boolean isInteractible){
-            this.npc.isInteractable = isInteractible;
-            return this;
-        }
-        public NpcBuilder setInteractionAction(Interactable action) {
-            this.npc.interactionAction = action;
-            return this;
-        }
-
-        public NpcBuilder setImageDimension(int imageWidth, int imageHeight) {
-            this.npc.imageWidth = imageWidth;
-            this.npc.imageHeight = imageHeight;
-            return this;
-        }
-
-        public NpcBuilder setScale(int scale) {
-            this.npc.scale = scale;
-            return this;
-        }
-
-        public NpcBuilder setContainedMap(TileManager tileManager) {
-            this.npc.tileManager = tileManager;
+            this.entity.isInteractable = isInteractible;
             return this;
         }
 
@@ -112,27 +81,27 @@ public class Npc extends Entity {
                                               String path_left1, String path_left2, String path_left3, String path_left4,
                                               String path_right1, String path_right2, String path_right3, String path_right4) {
             try {
-                this.npc.up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up1)));
-                this.npc.up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up2)));
-                this.npc.up3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up3)));
-                this.npc.up4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up4)));
+                this.entity.up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up1)));
+                this.entity.up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up2)));
+                this.entity.up3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up3)));
+                this.entity.up4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up4)));
 
-                this.npc.down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down1)));
-                this.npc.down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down2)));
-                this.npc.down3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down3)));
-                this.npc.down4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down4)));
-
-
-                this.npc.left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left1)));
-                this.npc.left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left2)));
-                this.npc.left3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left3)));
-                this.npc.left4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left4)));
+                this.entity.down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down1)));
+                this.entity.down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down2)));
+                this.entity.down3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down3)));
+                this.entity.down4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down4)));
 
 
-                this.npc.right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right1)));
-                this.npc.right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right2)));
-                this.npc.right3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right3)));
-                this.npc.right4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right4)));
+                this.entity.left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left1)));
+                this.entity.left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left2)));
+                this.entity.left3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left3)));
+                this.entity.left4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left4)));
+
+
+                this.entity.right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right1)));
+                this.entity.right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right2)));
+                this.entity.right3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right3)));
+                this.entity.right4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right4)));
 
 
             } catch (IOException e) {
@@ -144,17 +113,17 @@ public class Npc extends Entity {
         public NpcBuilder set8EntityImage(String path_up1, String path_up2, String path_down1, String path_down2,
                                              String path_left1, String path_left2, String path_right1, String path_right2) {
             try {
-                this.npc.up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up1)));
-                this.npc.up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up2)));
+                this.entity.up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up1)));
+                this.entity.up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up2)));
 
-                this.npc.down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down1)));
-                this.npc.down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down2)));
+                this.entity.down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down1)));
+                this.entity.down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down2)));
 
-                this.npc.left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left1)));
-                this.npc.left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left2)));
+                this.entity.left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left1)));
+                this.entity.left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left2)));
 
-                this.npc.right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right1)));
-                this.npc.right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right2)));
+                this.entity.right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right1)));
+                this.entity.right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right2)));
 
 
             } catch (IOException e) {
@@ -162,9 +131,15 @@ public class Npc extends Entity {
             }
             return this;
         }
+        @Override
         public Npc build() {
-            return this.npc;
+            return this.entity;
         }
+        @Override
+        protected Npc createEntity(){
+            return new Npc();
+        }
+
     }
 
     @Override
