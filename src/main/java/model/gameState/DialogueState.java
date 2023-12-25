@@ -25,6 +25,10 @@ public class DialogueState implements GameState {
     private final int dialogueBoxY;
     private final int dialogueBoxWidth;
     private final int dialogueBoxHeight;
+    private boolean ePressed = false;
+    private boolean eReleased = true;
+
+
 
     public DialogueState(GamePanel gp, GameStateManager gsm, KeyHandler keyH, Npc npc) {
         this.gp = gp;
@@ -47,13 +51,19 @@ public class DialogueState implements GameState {
         if (keyH.isPaused()){
             gsm.dialoguePause();
         }
-        if(keyH.spacePressed && !dialogueAdvancing && dialogueDisplayed){
+        if(keyH.interactPressed && eReleased &&!dialogueAdvancing && dialogueDisplayed){
            advanceDialogue();
            dialogueAdvancing = true;
            dialogueDisplayed = false;
+           ePressed = true;
         }
-        if(!keyH.spacePressed) {
+        if(!keyH.interactPressed) {
+            eReleased = true; // Rilasciato il tasto E
+            ePressed = false; // Resetta la variabile quando rilasci il tasto E
             dialogueAdvancing = false;
+        }
+        else{
+            eReleased = false; //Quando si tiene premuto
         }
 
 
@@ -66,8 +76,11 @@ public class DialogueState implements GameState {
             i++;
             dialogue = test.get(i);
         }
-        else
+        else {
+            //per non far startare il dialogo non appena finito
+            keyH.interactPressed = false;
             gsm.exitDialogue();
+        }
     }
     @Override
     public void draw(Graphics g) {

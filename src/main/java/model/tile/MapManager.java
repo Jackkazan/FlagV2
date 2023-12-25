@@ -37,8 +37,8 @@ public class MapManager {
     }
 
 
-    public void setMap(TileManager newMap){
-        currentMap = newMap;
+    public void setMap(TileManager nextMap){
+        currentMap = nextMap;
         player.setCurrentCollisionMap(currentMap.getCollisionMap());
     }
 

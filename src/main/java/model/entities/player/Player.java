@@ -30,7 +30,6 @@ public class Player extends Enemy {
 
     swordStateAndArmor currentSwordStateAndArmor;
 
-    private ArrayList<CollisionObject> currentCollisionMap;
 
     // Nuova area di interazione
     private Rectangle interactionArea;
@@ -76,7 +75,7 @@ public class Player extends Enemy {
 
     @Override
     public void update() {
-        if (keyH.attackVPressed && !isAttacking && attackAnimationCompleted) {
+        if (keyH.spacePressed && !isAttacking && attackAnimationCompleted) {
             isAttacking = true;
             attackAnimationCompleted = false;
             attack();
@@ -117,6 +116,8 @@ public class Player extends Enemy {
                     x = nextX;
                     y = nextY;
                 }
+
+                System.out.println("PlayerX: "+ this.x +"\nPlayerY: "+this.y);
 
                 //alternatore di sprite
                 spriteCounter++;
@@ -214,27 +215,7 @@ public class Player extends Enemy {
             graphics2D.drawImage(images[spriteNum], screenX+offsetX, screenY+offsetY, (imageWidth/2) *scale, (imageHeight/2)*scale, null);
         }
     }
-    public boolean collidesWithObjects(int nextX, int nextY) {
-        // Verifica la collisione con gli oggetti di collisione della mappa corrente
-        for (CollisionObject collisionObject : currentCollisionMap) {
-            if (checkCollisionObject(nextX, nextY, collisionObject)) {
-                return true; // Collisione rilevata
-            }
-        }
-        return false; // Nessuna collisione rilevata
-    }
 
-    public boolean checkCollisionObject(int x, int y, CollisionObject collisionObject) {
-        double objectX = collisionObject.getX() * gamePanel.getScale();
-        double objectY = collisionObject.getY() * gamePanel.getScale();
-        double objectWidth = collisionObject.getWidth() * gamePanel.getScale();
-        double objectHeight = collisionObject.getHeight() * gamePanel.getScale();
-
-        return x < objectX + objectWidth &&
-                x + tileSize > objectX &&
-                y < objectY + objectHeight &&
-                y + tileSize > objectY;
-    }
 
     // metodo per verificare la collisione con le entità
     public boolean collidesWithEntities(int nextX, int nextY) {

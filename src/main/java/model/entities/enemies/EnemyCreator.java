@@ -11,7 +11,6 @@ public class EnemyCreator {
 
         List<Enemy> enemyList = new ArrayList<>();
 
-
         String slimeDown_0 = "/testEnemy/monster/greenslime_down_1.png";
         String slimeDown_1 = "/testEnemy/monster/greenslime_down_2.png";
 
@@ -28,17 +27,15 @@ public class EnemyCreator {
                 .setImageDimension(16,16)
                 .setDefaultDirection("left")
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
+                .setCollisionMap(mapManager.getTileManagerZonaIniziale().getCollisionMap())
                 .set8EntityImage(slimeDown_0,slimeDown_1,
                         slimeDown_0,slimeDown_1,
                         slimeDown_0,slimeDown_1,
                         slimeDown_0,slimeDown_1)
-                .setAggroRange(7)
+                .setAggroRange(10)
                 .build();
 
-
-
         enemyList.add(slime1);
-
 
         return enemyList;
     }

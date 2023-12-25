@@ -1,5 +1,6 @@
 package model.entities.enemies;
 
+import model.collisions.CollisionObject;
 import model.entities.Interactable;
 import model.entities.npc.Npc;
 import model.entities.states.IdleState;
@@ -10,6 +11,7 @@ import model.tile.TileManager;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import static view.GamePanel.tileSize;
@@ -22,6 +24,7 @@ public class Enemy extends Npc {
     private EnemyState currentState;
 
     public enum State{IDLE, MOVEMENT}
+    protected ArrayList<CollisionObject> currentCollisionMap;
 
     public Enemy (){
         this.gsm = GameStateManager.gp.getGsm();
@@ -67,6 +70,12 @@ public class Enemy extends Npc {
 
         public Enemy.EnemyBuilder setSpeed(int speed) {
             this.entity.speed = speed;
+            return this;
+        }
+
+
+        public EnemyBuilder setCollisionMap(ArrayList<CollisionObject> collisionMap) {
+            this.entity.currentCollisionMap = collisionMap;
             return this;
         }
 
@@ -171,6 +180,28 @@ public class Enemy extends Npc {
         currentState.update(this);
     }
 
+    public boolean collidesWithObjects(int nextX, int nextY) {
+        // Verifica la collisione con gli oggetti di collisione della mappa corrente
+        for (CollisionObject collisionObject : currentCollisionMap) {
+            if (checkCollisionObject(nextX, nextY, collisionObject)) {
+                return true; // Collisione rilevata
+            }
+        }
+        return false; // Nessuna collisione rilevata
+    }
+
+    public boolean checkCollisionObject(int x, int y, CollisionObject collisionObject) {
+        double objectX = collisionObject.getX() * gsm.getGamePanel().getScale();
+        double objectY = collisionObject.getY() * gsm.getGamePanel().getScale();
+        double objectWidth = collisionObject.getWidth() * gsm.getGamePanel().getScale();
+        double objectHeight = collisionObject.getHeight() * gsm.getGamePanel().getScale();
+
+        return x < objectX + objectWidth &&
+                x + tileSize > objectX &&
+                y < objectY + objectHeight &&
+                y + tileSize > objectY;
+    }
+
     public void moveTowardsPlayer(int playerX, int playerY) {
         int distanceThreshold = tileSize; // Adjust this value as needed
 
@@ -181,22 +212,36 @@ public class Enemy extends Npc {
             // The enemy is already close to the player, no need to move
             return;
         }
-
+        int nextX;
+        int nextY;
         if (playerX < this.x) {
-            this.setDirection("left");
-            this.setX(this.x - this.speed);
+            nextX = this.x;
+            if(!collidesWithObjects(nextX - this.speed,this.y)) {
+                this.setDirection("left");
+                this.setX(nextX - this.speed);
+            }
         } else if (playerX > this.x) {
-            this.setDirection("right");
-            this.setX(this.x + this.speed);
+            nextX = this.x;
+            if(!collidesWithObjects(nextX + this.speed,this.y)) {
+                this.setDirection("right");
+                this.setX(nextX + this.speed);
+            }
         }
 
         if (playerY < this.y) {
-            this.setDirection("up");
-            this.setY(this.y - this.speed);
+            nextY = this.y ;
+            if(!collidesWithObjects(this.x,nextY- this.speed)) {
+                this.setDirection("up");
+                this.setY(nextY- this.speed);
+            }
         } else if (playerY > this.y) {
-            this.setDirection("down");
-            this.setY(this.y + this.speed);
+            nextY = this.y ;
+            if(!collidesWithObjects(this.x,nextY+ this.speed)) {
+                this.setDirection("down");
+                this.setY(nextY+ this.speed);
+            }
         }
+        System.out.println("SlimeX: "+ this.x +"\nSlimeY: "+this.y);
     }
 
     public void setState(State enemyState) {
