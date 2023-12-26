@@ -1,8 +1,11 @@
 package model.entities.enemies;
 
 import model.collisions.CollisionObject;
+import model.entities.EntityState;
 import model.entities.Interactable;
 import model.entities.npc.Npc;
+import model.entities.states.AttackState;
+import model.entities.states.HitState;
 import model.entities.states.IdleState;
 import model.entities.states.MovementState;
 import model.gameState.GameStateManager;
@@ -21,9 +24,9 @@ public class Enemy extends Npc {
     protected int currentLife;
     protected int damage;
     private int aggroRange;
-    private EnemyState currentState;
 
-    public enum State{IDLE, MOVEMENT}
+
+    public enum State{IDLE, MOVEMENT,HIT,ATTACK}
     protected ArrayList<CollisionObject> currentCollisionMap;
 
     public Enemy (){
@@ -247,12 +250,18 @@ public class Enemy extends Npc {
     public void setState(State enemyState) {
         switch (enemyState) {
             case IDLE:
-                currentState = new IdleState();
+                currentState =  new IdleState();
                 break;
             case MOVEMENT:
                 currentState = new MovementState();
                 break;
-            // Aggiungi altri stati se necessario
+            case ATTACK:
+                currentState = new AttackState();
+                break;
+            case HIT:
+                currentState = new HitState();
+                break;
+            default:
         }
     }
 
@@ -272,7 +281,7 @@ public class Enemy extends Npc {
         return damage;
     }
 
-    public EnemyState getCurrentState() {
+    public EntityState getCurrentState() {
         return currentState;
     }
 

@@ -1,16 +1,34 @@
 package model.entities.states;
 
+import model.entities.Entity;
+import model.entities.EntityState;
 import model.entities.enemies.Enemy;
-import model.entities.enemies.EnemyState;
+import model.entities.npc.Npc;
+import model.entities.player.Player;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class IdleState implements EnemyState {
-
-
+public class IdleState implements EntityState {
     @Override
-    public void update(Enemy enemy) {
+    public void update(Entity entity) {
+        switch (entity.getClass().getSimpleName()) {
+            case "Npc" -> updateNpc((Npc) entity);
+            case "Player" -> updatePlayer((Player) entity);
+            case "Enemy" -> updateEnemy((Enemy) entity);
+            default -> {}
+        }
+    }
+    @Override
+    public void draw(Graphics2D graphics2D, Entity entity) {
+        switch (entity.getClass().getSimpleName()) {
+            case "Npc" -> drawNpc(graphics2D, (Npc) entity);
+            case "Player" -> drawPlayer(graphics2D, (Player) entity);
+            case "Enemy" -> drawEnemy(graphics2D, (Enemy) entity);
+            default -> {}
+        }
+    }
+    public void updateEnemy(Enemy enemy) {
         enemy.getCollisionArea().setLocation(enemy.getX(), enemy.getY());
         if (enemy.getTotalSprite() == 16) {
             // alternatore di sprite
@@ -28,13 +46,9 @@ public class IdleState implements EnemyState {
                 enemy.setSpriteCounter(0);
             }
         }
-
     }
-
-    @Override
-    public void draw(Graphics2D graphics2D, Enemy enemy) {
-
-        BufferedImage[] images = switch (enemy.getDirection()) {
+    private void drawEnemy(Graphics2D graphics2D, Enemy enemy){
+        BufferedImage[] images = switch (enemy.getDirection()){
             case "up" -> new BufferedImage[]{enemy.getUp1(), enemy.getUp2(), enemy.getUp3(), enemy.getUp4()};
             case "down" -> new BufferedImage[]{enemy.getDown1(), enemy.getDown2(), enemy.getDown3(), enemy.getDown4()};
             case "left" -> new BufferedImage[]{enemy.getLeft1(), enemy.getLeft2(), enemy.getLeft3(), enemy.getLeft4()};
@@ -46,8 +60,23 @@ public class IdleState implements EnemyState {
         int screenY = enemy.getY() - enemy.getGsm().getPlayer().getY() + enemy.getGsm().getPlayer().getScreenY();
 
         if (images != null && enemy.getGsm().getMapManager().getCurrentMap() == enemy.getTileManager()) {
-            graphics2D.drawImage(images[enemy.getSpriteNum()], screenX, screenY, (enemy.getImageWidth()/2)* enemy.getScale() , (enemy.getImageHeight()/2)*enemy.getScale(),null);
+            graphics2D.drawImage(images[enemy.getSpriteNum()], screenX, screenY, (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
         }
+    }
+    public void updateNpc(Npc npc) {
 
     }
+    private void drawNpc(Graphics2D graphics2D, Npc npc){
+    }
+
+    public void updatePlayer(Player player){
+
+    }
+    private void drawPlayer(Graphics2D graphics2D, Player player){
+    }
+
+
+
+
+
 }

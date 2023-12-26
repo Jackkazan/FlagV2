@@ -28,6 +28,8 @@ public abstract class Entity{
     public abstract void draw(Graphics2D graphics2D);
 
     public abstract void update();
+
+
     public static class EntityBuilder<T extends Entity, B extends EntityBuilder<T, B>> {
         protected T entity;
 

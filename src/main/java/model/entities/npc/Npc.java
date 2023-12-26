@@ -1,6 +1,10 @@
 package model.entities.npc;
 
 import model.entities.Entity;
+import model.entities.EntityState;
+import model.entities.enemies.Enemy;
+import model.entities.states.IdleState;
+import model.entities.states.MovementState;
 import model.gameState.GameStateManager;
 
 import javax.imageio.ImageIO;
@@ -23,9 +27,13 @@ public class Npc extends Entity {
             down1, down2, down3, down4,
             left1, left2, left3, left4,
             right1, right2, right3, right4;
+
     protected String direction;
     protected int spriteCounter = 0;
     protected int totalSprite;
+
+    protected enum State{IDLE, MOVEMENT,HIT,ATTACK}
+    protected EntityState currentState;
 
     public Npc (){
         this.gsm = GameStateManager.gp.getGsm();
@@ -89,18 +97,15 @@ public class Npc extends Entity {
                 this.entity.down3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down3)));
                 this.entity.down4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down4)));
 
-
                 this.entity.left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left1)));
                 this.entity.left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left2)));
                 this.entity.left3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left3)));
                 this.entity.left4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left4)));
 
-
                 this.entity.right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right1)));
                 this.entity.right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right2)));
                 this.entity.right3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right3)));
                 this.entity.right4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right4)));
-
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -181,6 +186,18 @@ public class Npc extends Entity {
         }
         setPath();
         interact();
+    }
+
+    public void setState(State npcState) {
+        switch (npcState) {
+            case IDLE:
+                currentState =  new IdleState();
+                break;
+            case MOVEMENT:
+                currentState = new MovementState();
+                break;
+            // Aggiungi altri stati se necessario
+        }
     }
 
     public void setPath(){

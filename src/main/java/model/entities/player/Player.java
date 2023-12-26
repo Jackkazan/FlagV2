@@ -1,9 +1,14 @@
 package model.entities.player;
 
 import controller.KeyHandler;
+import model.entities.EntityState;
 import model.entities.enemies.Enemy;
 import model.entities.items.Item;
 import model.entities.npc.Npc;
+import model.entities.states.AttackState;
+import model.entities.states.HitState;
+import model.entities.states.IdleState;
+import model.entities.states.MovementState;
 import model.gameState.GameStateManager;
 import model.collisions.CollisionObject;
 import view.GamePanel;
@@ -27,6 +32,7 @@ public class Player extends Enemy {
     private final int screenY;
 
     public enum swordStateAndArmor { IronSwordNoArmor, IronSwordAndArmor, GoldSwordAndArmor, RubySwordAndArmor }
+
 
     swordStateAndArmor currentSwordStateAndArmor;
 
@@ -67,6 +73,24 @@ public class Player extends Enemy {
         interactionArea = new Rectangle(0, 0, tileSize*2+16, tileSize*2+16);
         collisionArea = new Rectangle(0, 0, tileSize, tileSize);
 
+    }
+    @Override
+    public void setState(State playerState) {
+        switch (playerState) {
+            case IDLE:
+                currentState =  new IdleState();
+                break;
+            case MOVEMENT:
+                currentState = new MovementState();
+                break;
+            case ATTACK:
+                currentState = new AttackState();
+                break;
+            case HIT:
+                currentState = new HitState();
+                break;
+            default:
+        }
     }
 
     public void setSwordStateAndArmor(swordStateAndArmor newSwordStateAndArmor) {
@@ -166,6 +190,7 @@ public class Player extends Enemy {
 
     @Override
     public void draw(Graphics2D graphics2D) {
+        //currentState.draw(graphics2D,this);
         BufferedImage[] images = switch (direction) {
             case "up" -> new BufferedImage[]{up1, up2, up3, up4};
             case "down" -> new BufferedImage[]{down1, down2, down3, down4};
