@@ -52,6 +52,7 @@ public class Player extends Enemy {
         setDefaultValues();
         getEntityImage();
         getAttackImages();
+        setState(State.IDLE);
 
     }
 

@@ -37,6 +37,7 @@ public class AttackState implements EntityState {
     }
 
     private void updatePlayer(Player player){
+        /*
         player.setAttacking(true);
         player.setAttackAnimationCompleted(false);
 
@@ -61,10 +62,11 @@ public class AttackState implements EntityState {
         });
         timer.setRepeats(false);
         timer.start();
-
+*/
     }
 
     private void drawPlayer(Graphics2D graphics2D, Player player){
+        /*
         BufferedImage[] images = switch (player.getDirection()) {
             case "up&attack" -> new BufferedImage[]{player.getAttackUp1(), player.getAttackUp2(), player.getAttackUp3(), player.getAttackUp4()};
             case "down&attack" -> new BufferedImage[]{player.getAttackDown1(), player.getAttackDown2(), player.getAttackDown3(), player.getAttackDown4()};
@@ -114,5 +116,6 @@ public class AttackState implements EntityState {
                 graphics2D.drawImage(images[0], player.getScreenX() + offsetX - tileSize / 2, player.getScreenY() + offsetY, (imageWidth / 2) * player.getScale(), (imageHeight / 2) * player.getScale(), null);
 
         }
-    }
+    */}
+
 }
