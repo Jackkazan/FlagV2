@@ -13,6 +13,7 @@ import model.tile.TileManager;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -25,6 +26,7 @@ public class Enemy extends Npc {
     protected int damage;
     private int aggroRange;
 
+    protected BufferedImage attackUp1, attackUp2, attackUp3, attackUp4, attackDown1, attackDown2, attackDown3, attackDown4, attackLeft1, attackLeft2, attackLeft3, attackLeft4, attackRight1, attackRight2, attackRight3, attackRight4;
 
     public enum State{IDLE, MOVEMENT,HIT,ATTACK}
     protected ArrayList<CollisionObject> currentCollisionMap;
@@ -289,5 +291,71 @@ public class Enemy extends Npc {
         this.spriteCounter = spriteCounter +1;
     }
 
+    public BufferedImage getAttackUp1() {
+        return attackUp1;
+    }
 
+    public BufferedImage getAttackUp2() {
+        return attackUp2;
+    }
+
+    public BufferedImage getAttackUp3() {
+        return attackUp3;
+    }
+
+    public BufferedImage getAttackUp4() {
+        return attackUp4;
+    }
+
+    public BufferedImage getAttackDown1() {
+        return attackDown1;
+    }
+
+    public BufferedImage getAttackDown2() {
+        return attackDown2;
+    }
+
+    public BufferedImage getAttackDown3() {
+        return attackDown3;
+    }
+
+    public BufferedImage getAttackDown4() {
+        return attackDown4;
+    }
+
+    public BufferedImage getAttackLeft1() {
+        return attackLeft1;
+    }
+
+    public BufferedImage getAttackLeft2() {
+        return attackLeft2;
+    }
+
+    public BufferedImage getAttackLeft3() {
+        return attackLeft3;
+    }
+
+    public BufferedImage getAttackLeft4() {
+        return attackLeft4;
+    }
+
+    public BufferedImage getAttackRight1() {
+        return attackRight1;
+    }
+
+    public BufferedImage getAttackRight2() {
+        return attackRight2;
+    }
+
+    public BufferedImage getAttackRight3() {
+        return attackRight3;
+    }
+
+    public BufferedImage getAttackRight4() {
+        return attackRight4;
+    }
+
+    public ArrayList<CollisionObject> getCurrentCollisionMap() {
+        return currentCollisionMap;
+    }
 }

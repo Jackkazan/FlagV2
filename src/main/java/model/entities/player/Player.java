@@ -40,7 +40,6 @@ public class Player extends Enemy {
     // Nuova area di interazione
     private Rectangle interactionArea;
 
-    private BufferedImage attackUp1, attackUp2, attackUp3, attackUp4, attackDown1, attackDown2, attackDown3, attackDown4, attackLeft1, attackLeft2, attackLeft3, attackLeft4, attackRight1, attackRight2, attackRight3, attackRight4;
 
 
     public Player(GamePanel gamePanel, GameStateManager gsm, KeyHandler keyH) {
