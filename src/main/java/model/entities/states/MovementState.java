@@ -9,6 +9,9 @@ import model.entities.player.Player;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static model.gameState.GameStateManager.keyH;
+import static view.GamePanel.tileSize;
+
 
 public class MovementState implements EntityState {
 
@@ -32,8 +35,58 @@ public class MovementState implements EntityState {
     }
 
     private void updatePlayer(Player player) {
+        int nextX = player.getX();
+        int nextY = player.getY();
+
+        if (keyH.rightPressed) {
+            player.setDirection("right");
+            nextX += player.getSpeed();
+        }
+        if (keyH.leftPressed) {
+            player.setDirection("left");
+            nextX -= player.getSpeed();
+        }
+        if (keyH.upPressed) {
+            player.setDirection("up");
+            nextY -= player.getSpeed();
+        }
+        if (keyH.downPressed) {
+            player.setDirection("down");
+            nextY += player.getSpeed();
+        }
+
+        if (!player.collidesWithObjects(nextX, nextY) && !player.collidesWithEntities(nextX, nextY) && !player.collidesWithItems(nextX, nextY)) {
+            player.setX(nextX);
+            player.setY(nextY);
+        }
+        // Aggiorna la collisionArea del giocatore
+        player.getCollisionArea().setLocation(player.getX(), player.getY());
+
+        // Aggiorna l'area di interazione
+        player.getInteractionArea().setLocation(player.getX() - tileSize, player.getY() - (tileSize+16)); // Esempio: l'area di interazione è leggermente più grande di quella del giocatore
+
+        //alternatore di sprite
+        player.incrementSpriteCounter();
+        //velocità di cambio sprite 5-10
+        if (player.getSpriteCounter() > 7) {
+            player.setSpriteNum((player.getSpriteNum() + 1) % 4);
+            player.setSpriteCounter(0);
+        }
     }
-    private void drawPlayer(Graphics2D graphics2D, Player player) {
+    private void drawPlayer(Graphics2D graphics2D, Player player){
+        BufferedImage[] images = switch (player.getDirection()) {
+            case "up" -> new BufferedImage[]{player.getUp1(), player.getUp2(), player.getUp3(), player.getUp4()};
+            case "down" -> new BufferedImage[]{player.getDown1(), player.getDown2(), player.getDown3(), player.getDown4()};
+            case "left" -> new BufferedImage[]{player.getLeft1(), player.getLeft2(), player.getLeft3(), player.getLeft4()};
+            case "right" -> new BufferedImage[]{player.getRight1(), player.getRight2(), player.getRight3(), player.getRight4()};
+            default -> null;
+        };
+
+        if (images != null) {
+            int spriteIndex = player.getSpriteNum() % images.length;
+
+            graphics2D.drawImage(images[spriteIndex], player.getScreenX()-tileSize, player.getScreenY()-tileSize, (player.getImageWidth()/2) *player.getScale(), (player.getImageHeight()/2)*player.getScale(), null);
+        }
     }
 
     private void updateNpc(Npc npc) {

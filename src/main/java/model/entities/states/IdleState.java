@@ -9,6 +9,8 @@ import model.entities.player.Player;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static view.GamePanel.tileSize;
+
 public class IdleState implements EntityState {
     @Override
     public void update(Entity entity) {
@@ -70,13 +72,20 @@ public class IdleState implements EntityState {
     }
 
     public void updatePlayer(Player player){
+        player.setSpriteCounter(0);
 
     }
     private void drawPlayer(Graphics2D graphics2D, Player player){
+        BufferedImage images = switch (player.getDirection()) {
+            case "up" -> player.getUp1();
+            case "down" -> player.getDown1();
+            case "left" -> player.getLeft1();
+            case "right" -> player.getRight1();
+            default -> null;
+        };
+        if (images != null) {
+            graphics2D.drawImage(images, player.getScreenX()-tileSize, player.getScreenY()-tileSize, (player.getImageWidth()/2) *player.getScale(), (player.getImageHeight()/2)*player.getScale(), null);
+        }
     }
-
-
-
-
 
 }
