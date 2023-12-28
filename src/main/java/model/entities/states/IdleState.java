@@ -72,19 +72,22 @@ public class IdleState implements EntityState {
     }
 
     public void updatePlayer(Player player){
+        /*
         player.setSpriteCounter(0);
-
+        oppure ?
+        player.setSpriteNum(0);
+        */
     }
     private void drawPlayer(Graphics2D graphics2D, Player player){
         BufferedImage images = switch (player.getDirection()) {
-            case "up" -> player.getUp1();
-            case "down" -> player.getDown1();
-            case "left" -> player.getLeft1();
-            case "right" -> player.getRight1();
+            case "up","up&attack" -> player.getUp1();
+            case "down","down&attack" -> player.getDown1();
+            case "left","left&attack" -> player.getLeft1();
+            case "right", "right&attack" -> player.getRight1();
             default -> null;
         };
         if (images != null) {
-            graphics2D.drawImage(images, player.getScreenX()-tileSize, player.getScreenY()-tileSize, (player.getImageWidth()/2) *player.getScale(), (player.getImageHeight()/2)*player.getScale(), null);
+            graphics2D.drawImage(images, player.getScreenX()-16, player.getScreenY()-32, (player.getImageWidth()/2) *player.getScale(), (player.getImageHeight()/2)*player.getScale(), null);
         }
     }
 

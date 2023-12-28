@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static model.gameState.GameStateManager.keyH;
 import static view.GamePanel.tileSize;
 
 public class AttackState implements EntityState {
@@ -37,36 +38,40 @@ public class AttackState implements EntityState {
     }
 
     private void updatePlayer(Player player){
-        /*
-        player.setAttacking(true);
-        player.setAttackAnimationCompleted(false);
+        if (player.isAttacking()) {
+            //alternatore di sprite
+            player.incrementSpriteCounter();
+            //velocità di cambio sprite 5-10
+            if (player.getSpriteCounter() > 7) {
+                player.setSpriteNum((player.getSpriteNum() + 1) % 4);
+                player.setSpriteCounter(0);
+            }
+        }else{
+            player.setAttacking(true);
+            player.setAttackAnimationCompleted(false);
 
-        switch (player.getDirection()) {
-            case "left" -> player.setDirection("left&attack");
-            case "right" -> player.setDirection("right&attack");
-            case "down" -> player.setDirection("down&attack");
-            case "up" -> player.setDirection("up&attack");
-            default -> {}
+            switch (player.getDirection()) {
+                case "left" -> player.setDirection("left&attack");
+                case "right" -> player.setDirection("right&attack");
+                case "down" -> player.setDirection("down&attack");
+                case "up" -> player.setDirection("up&attack");
+                default -> {}
+            }
+            player.setSpriteNum(1);
+
+            // Imposta un timer per la durata dell'animazione dell'attacco
+            Timer timer = new Timer(385, e -> {
+                player.setAttacking(false);
+                player.setAttackAnimationCompleted(true);
+                ((Timer) e.getSource()).stop();
+            });
+            timer.setRepeats(false);
+            timer.start();
         }
 
-        // Imposta un timer per la durata dell'animazione dell'attacco
-        Timer timer = new Timer(385, e -> {
-            player.setSpriteNum(0);
-            player.setAttacking(false);
-            player.setAttackAnimationCompleted(true);
-            // Una volta terminato lo stato di attacco, passa a Idle
-            player.setState(Player.State.IDLE);
-
-
-            ((Timer) e.getSource()).stop();
-        });
-        timer.setRepeats(false);
-        timer.start();
-*/
     }
 
     private void drawPlayer(Graphics2D graphics2D, Player player){
-        /*
         BufferedImage[] images = switch (player.getDirection()) {
             case "up&attack" -> new BufferedImage[]{player.getAttackUp1(), player.getAttackUp2(), player.getAttackUp3(), player.getAttackUp4()};
             case "down&attack" -> new BufferedImage[]{player.getAttackDown1(), player.getAttackDown2(), player.getAttackDown3(), player.getAttackDown4()};
@@ -110,12 +115,10 @@ public class AttackState implements EntityState {
 
         if (images != null) {
             int spriteIndex = player.getSpriteNum() % images.length;
-            if (player.isAttacking())
-                graphics2D.drawImage(images[spriteIndex], player.getScreenX() + offsetX - tileSize / 2, player.getScreenY() + offsetY, (imageWidth / 2) * player.getScale(), (imageHeight / 2) * player.getScale(), null);
-            else
-                graphics2D.drawImage(images[0], player.getScreenX() + offsetX - tileSize / 2, player.getScreenY() + offsetY, (imageWidth / 2) * player.getScale(), (imageHeight / 2) * player.getScale(), null);
-
+            graphics2D.drawImage(images[spriteIndex], player.getScreenX() + offsetX, player.getScreenY() + offsetY, (imageWidth / 2) * player.getScale(), (imageHeight / 2) * player.getScale(), null);
         }
-    */}
+
+
+    }
 
 }

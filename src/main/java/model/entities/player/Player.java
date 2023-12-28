@@ -31,6 +31,8 @@ public class Player extends Enemy {
     private final int screenX;
     private final int screenY;
 
+
+
     public enum swordStateAndArmor { IronSwordNoArmor, IronSwordAndArmor, GoldSwordAndArmor, RubySwordAndArmor }
 
 
@@ -69,27 +71,20 @@ public class Player extends Enemy {
         currentSwordStateAndArmor= swordStateAndArmor.IronSwordNoArmor;
         imageWidth = tileSize;
         imageHeight = tileSize;
+        isAttacking=false;
         attackAnimationCompleted = true;
-        interactionArea = new Rectangle(0, 0, tileSize*2+16, tileSize*2+16);
-        collisionArea = new Rectangle(0, 0, tileSize, tileSize);
+        this.setCollisionArea(tileSize*2,tileSize*2);
+        interactionArea = new Rectangle(x, y, tileSize*2+16, tileSize*2+16);
 
     }
     @Override
     public void setState(State playerState) {
         switch (playerState) {
-            case IDLE:
-                currentState =  new IdleState();
-                break;
-            case MOVEMENT:
-                currentState = new MovementState();
-                break;
-            case ATTACK:
-                currentState = new AttackState();
-                break;
-            case HIT:
-                currentState = new HitState();
-                break;
-            default:
+            case IDLE -> currentState = new IdleState();
+            case MOVEMENT -> currentState = new MovementState();
+            case ATTACK -> currentState = new AttackState();
+            case HIT -> currentState = new HitState();
+            default -> {}
         }
     }
 
@@ -99,146 +94,28 @@ public class Player extends Enemy {
 
     @Override
     public void update() {
-        if (keyH.spacePressed && !isAttacking && attackAnimationCompleted) {
-            isAttacking = true;
-            attackAnimationCompleted = false;
-            attack();
-        }
-
         if (isAttacking) {
-            updateAttackAnimation();
-        } else {
-            if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
-                int nextX = x;
-                int nextY = y;
-
-                if (keyH.rightPressed) {
-                    direction = "right";
-                    nextX += speed;
+            this.setState(State.ATTACK);
+        }else{
+            if (keyH.spacePressed && attackAnimationCompleted) {
+                this.setState(State.ATTACK);
+            }
+            else {
+                if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+                    this.setState(State.MOVEMENT);
                 }
-                if (keyH.leftPressed) {
-                    direction = "left";
-                    nextX -= speed;
-                }
-                if (keyH.upPressed) {
-                    direction = "up";
-                    nextY -= speed;
-                }
-                if (keyH.downPressed) {
-                    direction = "down";
-                    nextY += speed;
-                }
-
-                // Aggiorna la collisionArea del giocatore
-                collisionArea.setLocation(x, y);
-
-                // Aggiorna la collisionArea dell'area di interazione
-                interactionArea.setLocation(x - 24, y - 16); // Esempio: l'area di interazione è leggermente più grande di quella del giocatore
-
-
-                if (!collidesWithObjects(nextX, nextY) && !collidesWithEntities(nextX, nextY) && !collidesWithItems(nextX, nextY)) {
-                    x = nextX;
-                    y = nextY;
-                }
-
-                System.out.println("PlayerX: "+ this.x +"\nPlayerY: "+this.y);
-
-                //alternatore di sprite
-                spriteCounter++;
-                //velocità di cambio sprite 5-10
-                if (spriteCounter > 7) {
-                    spriteNum = (spriteNum + 1) % 4;
-                    spriteCounter = 0;
+                else{
+                    this.setState(State.IDLE);
                 }
             }
-            else{
-                spriteNum = 0;
-            }
         }
+        currentState.update(this);
     }
 
-    private void attack() {
-        switch (direction) {
-            case "left" -> direction = "left&attack";
-            case "right" -> direction = "right&attack";
-            case "down" -> direction = "down&attack";
-            case "up" -> direction = "up&attack";
-            default -> {}
-        }
-
-        spriteNum=1;
-
-        // Imposta un timer per la durata dell'animazione dell'attacco
-        Timer timer = new Timer(385, e -> {
-            isAttacking = false;
-            attackAnimationCompleted = true;
-            ((Timer) e.getSource()).stop();
-        });
-        timer.setRepeats(false);
-        timer.start();
-
-    }
-    private void updateAttackAnimation() {
-        //alternatore di sprite
-        spriteCounter++;
-        //velocità di cambio sprite 5-10
-        if (spriteCounter > 7) {
-            spriteNum = (spriteNum + 1) % 4;
-            spriteCounter = 0;
-        }
-    }
 
     @Override
     public void draw(Graphics2D graphics2D) {
-        //currentState.draw(graphics2D,this);
-        BufferedImage[] images = switch (direction) {
-            case "up" -> new BufferedImage[]{up1, up2, up3, up4};
-            case "down" -> new BufferedImage[]{down1, down2, down3, down4};
-            case "left" -> new BufferedImage[]{left1, left2, left3, left4};
-            case "right" -> new BufferedImage[]{right1, right2, right3, right4};
-            case "up&attack" -> new BufferedImage[]{attackUp1,attackUp2 , attackUp3, attackUp4};
-            case "down&attack" -> new BufferedImage[]{attackDown1, attackDown2, attackDown3, attackDown4};
-            case "left&attack" -> new BufferedImage[]{attackLeft1, attackLeft2, attackLeft3, attackLeft4};
-            case "right&attack" -> new BufferedImage[]{attackRight1, attackRight2, attackRight3, attackRight4};
-            default -> null;
-        };
-        int offsetX, offsetY, imageWidth, imageHeight;
-        switch (direction) {
-            case "down&attack" -> {
-                offsetX = -16;
-                offsetY = -32;
-                imageWidth = 32;
-                imageHeight = 48;
-            }
-            case "left&attack" -> {
-                offsetX = -58;
-                offsetY = -32;
-                imageWidth = 48;
-                imageHeight = 32;
-            }
-            case "right&attack" -> {
-                offsetX = -14;
-                offsetY = -32;
-                imageWidth = 48;
-                imageHeight = 32;
-            }
-            case "up&attack" -> {
-                offsetX = -16;
-                offsetY = -72;
-                imageWidth = 32;
-                imageHeight = 48;
-            }
-            default -> {
-                offsetX = -16;
-                offsetY = -32;
-                imageWidth = 32;
-                imageHeight = 32;
-            }
-        }
-
-        if (images != null) {
-            graphics2D.drawImage(images[spriteNum], screenX+offsetX, screenY+offsetY, (imageWidth/2) *scale, (imageHeight/2)*scale, null);
-        }
+        currentState.draw(graphics2D,this);
     }
 
 
@@ -381,5 +258,12 @@ public class Player extends Enemy {
 
     public ArrayList<CollisionObject> getCurrentCollisionMap() {
         return currentCollisionMap;
+    }
+
+    public void setAttackAnimationCompleted(boolean attackAnimationCompleted) {
+        this.attackAnimationCompleted = attackAnimationCompleted;
+    }
+    public void setAttacking(boolean isAttacking) {
+        this.isAttacking = isAttacking;
     }
 }

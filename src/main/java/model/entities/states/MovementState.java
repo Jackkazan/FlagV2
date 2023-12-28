@@ -58,20 +58,21 @@ public class MovementState implements EntityState {
         if (!player.collidesWithObjects(nextX, nextY) && !player.collidesWithEntities(nextX, nextY) && !player.collidesWithItems(nextX, nextY)) {
             player.setX(nextX);
             player.setY(nextY);
-        }
-        // Aggiorna la collisionArea del giocatore
-        player.getCollisionArea().setLocation(player.getX(), player.getY());
+            // Aggiorna la collisionArea del giocatore
+            player.getCollisionArea().setLocation(player.getX(), player.getY());
 
-        // Aggiorna l'area di interazione
-        player.getInteractionArea().setLocation(player.getX() - tileSize, player.getY() - (tileSize+16)); // Esempio: l'area di interazione è leggermente più grande di quella del giocatore
+            // Aggiorna l'area di interazione
+            player.getInteractionArea().setLocation(player.getX() - tileSize , player.getY() - tileSize); // Esempio: l'area di interazione è leggermente più grande di quella del giocatore
 
-        //alternatore di sprite
-        player.incrementSpriteCounter();
-        //velocità di cambio sprite 5-10
-        if (player.getSpriteCounter() > 7) {
-            player.setSpriteNum((player.getSpriteNum() + 1) % 4);
-            player.setSpriteCounter(0);
+            //alternatore di sprite
+            player.incrementSpriteCounter();
+            //velocità di cambio sprite 5-10
+            if (player.getSpriteCounter() > 7) {
+                player.setSpriteNum((player.getSpriteNum() + 1) % 4);
+                player.setSpriteCounter(0);
+            }
         }
+
     }
     private void drawPlayer(Graphics2D graphics2D, Player player){
         BufferedImage[] images = switch (player.getDirection()) {
@@ -84,8 +85,11 @@ public class MovementState implements EntityState {
 
         if (images != null) {
             int spriteIndex = player.getSpriteNum() % images.length;
+            graphics2D.setColor(Color.BLUE);
+            graphics2D.drawRect(player.getInteractionArea().x, player.getInteractionArea().y,
+                    player.getInteractionArea().width, player.getInteractionArea().height);
 
-            graphics2D.drawImage(images[spriteIndex], player.getScreenX()-tileSize, player.getScreenY()-tileSize, (player.getImageWidth()/2) *player.getScale(), (player.getImageHeight()/2)*player.getScale(), null);
+            graphics2D.drawImage(images[spriteIndex], player.getScreenX()-16, player.getScreenY()-32, (player.getImageWidth()/2) *player.getScale(), (player.getImageHeight()/2)*player.getScale(), null);
         }
     }
 

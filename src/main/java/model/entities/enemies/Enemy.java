@@ -251,19 +251,12 @@ public class Enemy extends Npc {
 
     public void setState(State enemyState) {
         switch (enemyState) {
-            case IDLE:
-                currentState =  new IdleState();
-                break;
-            case MOVEMENT:
-                currentState = new MovementState();
-                break;
-            case ATTACK:
-                currentState = new AttackState();
-                break;
-            case HIT:
-                currentState = new HitState();
-                break;
-            default:
+            case IDLE -> currentState = new IdleState();
+            case MOVEMENT -> currentState = new MovementState();
+            case ATTACK -> currentState = new AttackState();
+            case HIT -> currentState = new HitState();
+            default -> {
+            }
         }
     }
 
