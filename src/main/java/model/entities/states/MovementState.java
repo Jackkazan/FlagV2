@@ -55,7 +55,7 @@ public class MovementState implements EntityState {
             nextY += player.getSpeed();
         }
 
-        if (!player.collidesWithObjects(nextX, nextY) && !player.collidesWithEntities(nextX, nextY) && !player.collidesWithItems(nextX, nextY)) {
+        if (!player.collidesWithObjects(nextX, nextY) && !player.collidesWithNpcs(nextX, nextY) && !player.collidesWithItems(nextX, nextY)) {
             player.setX(nextX);
             player.setY(nextY);
             // Aggiorna la collisionArea del giocatore

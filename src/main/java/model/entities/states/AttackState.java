@@ -57,10 +57,10 @@ public class AttackState implements EntityState {
                 case "up" -> player.setDirection("up&attack");
                 default -> {}
             }
-            player.setSpriteNum(1);
+            player.setSpriteNum(0);
 
             // Imposta un timer per la durata dell'animazione dell'attacco
-            Timer timer = new Timer(385, e -> {
+            Timer timer = new Timer(420, e -> {
                 player.setAttacking(false);
                 player.setAttackAnimationCompleted(true);
                 ((Timer) e.getSource()).stop();

@@ -208,13 +208,14 @@ public class Enemy extends Npc {
     }
 
     public void moveTowardsPlayer(int playerX, int playerY) {
-        int distanceThreshold = tileSize; // Adjust this value as needed
+        int distanceThreshold = 0; // Adjust this value as needed
 
         int distanceX = Math.abs(playerX - this.x);
         int distanceY = Math.abs(playerY - this.y);
 
         if (distanceX < distanceThreshold && distanceY < distanceThreshold) {
             // The enemy is already close to the player, no need to move
+
             return;
         }
         int nextX;
@@ -246,7 +247,6 @@ public class Enemy extends Npc {
                 this.setY(nextY+ this.speed);
             }
         }
-        System.out.println("SlimeX: "+ this.x +"\nSlimeY: "+this.y);
     }
 
     public void setState(State enemyState) {

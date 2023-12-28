@@ -26,10 +26,14 @@ public class Player extends Enemy {
     private final GamePanel gamePanel;
 
     private boolean isAttacking;
+    private boolean isHitted;
     private boolean attackAnimationCompleted;
-
+    private boolean hitAnimationCompleted;
     private final int screenX;
     private final int screenY;
+
+    private boolean isHitFlashVisible;
+
 
 
 
@@ -72,7 +76,9 @@ public class Player extends Enemy {
         imageWidth = tileSize;
         imageHeight = tileSize;
         isAttacking=false;
+        isHitted= false;
         attackAnimationCompleted = true;
+        hitAnimationCompleted = true;
         this.setCollisionArea(tileSize*2,tileSize*2);
         interactionArea = new Rectangle(x, y, tileSize*2+16, tileSize*2+16);
 
@@ -96,19 +102,18 @@ public class Player extends Enemy {
     public void update() {
         if (isAttacking) {
             this.setState(State.ATTACK);
-        }else{
+        } else {
             if (keyH.spacePressed && attackAnimationCompleted) {
                 this.setState(State.ATTACK);
-            }
-            else {
+            } else {
                 if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
                     this.setState(State.MOVEMENT);
-                }
-                else{
+                } else {
                     this.setState(State.IDLE);
                 }
             }
         }
+        System.out.println("Stato corrente "+ currentState);
         currentState.update(this);
     }
 
@@ -118,9 +123,19 @@ public class Player extends Enemy {
         currentState.draw(graphics2D,this);
     }
 
+    public boolean collidesWithEnemies(int nextX, int nextY) {
+        // Verifica la collisione con le entità della lista npcList
+        for (Enemy enemy : gsm.getEnemyList()) {
+            if (enemy.getTileManager().equals(gsm.getMapManager().getCurrentMap()) && checkCollisionRectangle(nextX, nextY, enemy.getCollisionArea())) {
+                System.out.println("Sei stato hittato da "+ enemy.getName());
+                return true; // Collisione rilevata
+            }
+        }
+        return false; // Nessuna collisione rilevata
+    }
 
     // metodo per verificare la collisione con le entità
-    public boolean collidesWithEntities(int nextX, int nextY) {
+    public boolean collidesWithNpcs(int nextX, int nextY) {
         // Verifica la collisione con le entità della lista npcList
         for (Npc npc : gsm.getNpcList()) {
             if (npc.getTileManager().equals(gsm.getMapManager().getCurrentMap()) && checkCollisionRectangle(nextX, nextY, npc.getCollisionArea())) {
@@ -263,7 +278,32 @@ public class Player extends Enemy {
     public void setAttackAnimationCompleted(boolean attackAnimationCompleted) {
         this.attackAnimationCompleted = attackAnimationCompleted;
     }
+
+    public void setHitAnimationCompleted(boolean hitAnimationCompleted) {
+        this.hitAnimationCompleted = hitAnimationCompleted;
+    }
+
     public void setAttacking(boolean isAttacking) {
         this.isAttacking = isAttacking;
+    }
+
+    public void setHitted(boolean hitted) {
+        isHitted = hitted;
+    }
+
+    public boolean isHitted() {
+        return isHitted;
+    }
+
+    public boolean isHitAnimationCompleted() {
+        return hitAnimationCompleted;
+    }
+
+    public boolean isHitFlashVisible() {
+        return isHitFlashVisible;
+    }
+
+    public void setHitFlashVisible(boolean hitFlashVisible) {
+        isHitFlashVisible = hitFlashVisible;
     }
 }
