@@ -59,7 +59,7 @@ public class MovementState implements EntityState {
             player.setX(nextX);
             player.setY(nextY);
             // Aggiorna la collisionArea del giocatore
-            player.getCollisionArea().setLocation(player.getX(), player.getY());
+            player.getCollisionArea().setLocation(player.getX()-tileSize, player.getY()-tileSize);
 
             // Aggiorna l'area di interazione
             player.getInteractionArea().setLocation(player.getX() - tileSize , player.getY() - tileSize); // Esempio: l'area di interazione è leggermente più grande di quella del giocatore

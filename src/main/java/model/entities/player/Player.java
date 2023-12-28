@@ -25,16 +25,10 @@ import static view.GamePanel.tileSize;
 public class Player extends Enemy {
     private final GamePanel gamePanel;
 
-    private boolean isAttacking;
-    private boolean isHitted;
-    private boolean attackAnimationCompleted;
+
     private boolean hitAnimationCompleted;
     private final int screenX;
     private final int screenY;
-
-    private boolean isHitFlashVisible;
-
-
 
 
     public enum swordStateAndArmor { IronSwordNoArmor, IronSwordAndArmor, GoldSwordAndArmor, RubySwordAndArmor }
@@ -113,7 +107,7 @@ public class Player extends Enemy {
                 }
             }
         }
-        System.out.println("Stato corrente "+ currentState);
+        //System.out.println("Stato corrente "+ currentState);
         currentState.update(this);
     }
 
@@ -128,6 +122,7 @@ public class Player extends Enemy {
         for (Enemy enemy : gsm.getEnemyList()) {
             if (enemy.getTileManager().equals(gsm.getMapManager().getCurrentMap()) && checkCollisionRectangle(nextX, nextY, enemy.getCollisionArea())) {
                 System.out.println("Sei stato hittato da "+ enemy.getName());
+
                 return true; // Collisione rilevata
             }
         }
@@ -259,9 +254,7 @@ public class Player extends Enemy {
         return gamePanel;
     }
 
-    public boolean isAttacking() {
-        return isAttacking;
-    }
+
 
     public boolean isAttackAnimationCompleted() {
         return attackAnimationCompleted;
@@ -275,17 +268,12 @@ public class Player extends Enemy {
         return currentCollisionMap;
     }
 
-    public void setAttackAnimationCompleted(boolean attackAnimationCompleted) {
-        this.attackAnimationCompleted = attackAnimationCompleted;
-    }
+
 
     public void setHitAnimationCompleted(boolean hitAnimationCompleted) {
         this.hitAnimationCompleted = hitAnimationCompleted;
     }
 
-    public void setAttacking(boolean isAttacking) {
-        this.isAttacking = isAttacking;
-    }
 
     public void setHitted(boolean hitted) {
         isHitted = hitted;
@@ -297,13 +285,5 @@ public class Player extends Enemy {
 
     public boolean isHitAnimationCompleted() {
         return hitAnimationCompleted;
-    }
-
-    public boolean isHitFlashVisible() {
-        return isHitFlashVisible;
-    }
-
-    public void setHitFlashVisible(boolean hitFlashVisible) {
-        isHitFlashVisible = hitFlashVisible;
     }
 }

@@ -24,6 +24,10 @@ public class Enemy extends Npc {
     protected int maxLife;
     protected int currentLife;
     protected int damage;
+
+    protected boolean isAttacking;
+    protected boolean isHitted;
+    protected boolean attackAnimationCompleted;
     private int aggroRange;
 
     protected BufferedImage attackUp1, attackUp2, attackUp3, attackUp4, attackDown1, attackDown2, attackDown3, attackDown4, attackLeft1, attackLeft2, attackLeft3, attackLeft4, attackRight1, attackRight2, attackRight3, attackRight4;
@@ -37,6 +41,110 @@ public class Enemy extends Npc {
         this.currentState = new IdleState();
     }
 
+    public boolean isHittingPlayer() {
+        // puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
+        if(this.collisionArea!= null && gsm.getPlayer().getCollisionArea().intersects(this.collisionArea)){
+            System.out.println(this.name+" mi sta hittando" );
+            return true;
+        }
+        else return false;
+    }
+
+    @Override
+    public void draw(Graphics2D graphics2D) {
+        currentState.draw(graphics2D, this);
+    }
+    @Override
+    public void update() {
+        if(isAttacking){
+            this.setState(State.ATTACK);
+        }else {
+            double distance = Math.hypot(gsm.getPlayer().getX() - this.getX(), gsm.getPlayer().getY() - this.getY());
+            if (distance <= aggroRange) {
+                //System.out.println("Sei nell'aggro");
+                this.setState(State.MOVEMENT);
+            } else {
+                //System.out.println("Non sei nell'aggro");
+                this.setState(State.IDLE);
+            }
+        }
+        currentState.update(this);
+    }
+
+    public boolean collidesWithObjects(int nextX, int nextY) {
+        // Verifica la collisione con gli oggetti di collisione della mappa corrente
+        for (CollisionObject collisionObject : currentCollisionMap) {
+            if (checkCollisionObject(nextX, nextY, collisionObject)) {
+                return true; // Collisione rilevata
+            }
+        }
+        return false; // Nessuna collisione rilevata
+    }
+
+    public boolean checkCollisionObject(int x, int y, CollisionObject collisionObject) {
+        double objectX = collisionObject.getX() * gsm.getGamePanel().getScale();
+        double objectY = collisionObject.getY() * gsm.getGamePanel().getScale();
+        double objectWidth = collisionObject.getWidth() * gsm.getGamePanel().getScale();
+        double objectHeight = collisionObject.getHeight() * gsm.getGamePanel().getScale();
+
+        return x < objectX + objectWidth &&
+                x + tileSize > objectX &&
+                y < objectY + objectHeight &&
+                y + tileSize > objectY;
+    }
+
+    public void moveTowardsPlayer(int playerX, int playerY) {
+        int distanceThreshold = tileSize; // Adjust this value as needed
+
+        int distanceX = Math.abs(playerX - this.x);
+        int distanceY = Math.abs(playerY - this.y);
+
+        if (distanceX < distanceThreshold && distanceY < distanceThreshold) {
+            if(this.isHittingPlayer())
+                this.setState(State.ATTACK);
+            return;
+        }
+        int nextX;
+        int nextY;
+        if (playerX < this.x) {
+            nextX = this.x;
+            if(!collidesWithObjects(nextX - this.speed,this.y)) {
+                this.setDirection("left");
+                this.setX(nextX - this.speed);
+            }
+        } else if (playerX > this.x) {
+            nextX = this.x;
+            if(!collidesWithObjects(nextX + this.speed,this.y)) {
+                this.setDirection("right");
+                this.setX(nextX + this.speed);
+            }
+        }
+
+        if (playerY < this.y) {
+            nextY = this.y ;
+            if(!collidesWithObjects(this.x,nextY- this.speed)) {
+                this.setDirection("up");
+                this.setY(nextY- this.speed);
+            }
+        } else if (playerY > this.y) {
+            nextY = this.y ;
+            if(!collidesWithObjects(this.x,nextY+ this.speed)) {
+                this.setDirection("down");
+                this.setY(nextY+ this.speed);
+            }
+        }
+    }
+
+    public void setState(State enemyState) {
+        switch (enemyState) {
+            case IDLE -> currentState = new IdleState();
+            case MOVEMENT -> currentState = new MovementState();
+            case ATTACK -> currentState = new AttackState();
+            case HIT -> currentState = new HitState();
+            default -> {
+            }
+        }
+    }
 
     public static class EnemyBuilder extends EntityBuilder<Enemy,EnemyBuilder>{
 
@@ -100,8 +208,8 @@ public class Enemy extends Npc {
             return this;
         }
 
-        public Enemy.EnemyBuilder setIsInteractible(boolean isInteractible){
-            this.entity.isInteractable = isInteractible;
+        public Enemy.EnemyBuilder setIsInteractable(boolean isInteractable){
+            this.entity.isInteractable = isInteractable;
             return this;
         }
 
@@ -166,97 +274,6 @@ public class Enemy extends Npc {
         }
         public Enemy build() {
             return (Enemy) this.entity;
-        }
-    }
-    @Override
-    public void draw(Graphics2D graphics2D) {
-        currentState.draw(graphics2D, this);
-    }
-    @Override
-    public void update() {
-        double distance = Math.hypot(gsm.getPlayer().getX() - this.getX(), gsm.getPlayer().getY() - this.getY());
-        if (distance <= aggroRange) {
-            System.out.println("Sei nell'aggro");
-            setState(State.MOVEMENT);
-        } else {
-            System.out.println("Non sei nell'aggro");
-            setState(State.IDLE);
-        }
-        currentState.update(this);
-    }
-
-    public boolean collidesWithObjects(int nextX, int nextY) {
-        // Verifica la collisione con gli oggetti di collisione della mappa corrente
-        for (CollisionObject collisionObject : currentCollisionMap) {
-            if (checkCollisionObject(nextX, nextY, collisionObject)) {
-                return true; // Collisione rilevata
-            }
-        }
-        return false; // Nessuna collisione rilevata
-    }
-
-    public boolean checkCollisionObject(int x, int y, CollisionObject collisionObject) {
-        double objectX = collisionObject.getX() * gsm.getGamePanel().getScale();
-        double objectY = collisionObject.getY() * gsm.getGamePanel().getScale();
-        double objectWidth = collisionObject.getWidth() * gsm.getGamePanel().getScale();
-        double objectHeight = collisionObject.getHeight() * gsm.getGamePanel().getScale();
-
-        return x < objectX + objectWidth &&
-                x + tileSize > objectX &&
-                y < objectY + objectHeight &&
-                y + tileSize > objectY;
-    }
-
-    public void moveTowardsPlayer(int playerX, int playerY) {
-        int distanceThreshold = 0; // Adjust this value as needed
-
-        int distanceX = Math.abs(playerX - this.x);
-        int distanceY = Math.abs(playerY - this.y);
-
-        if (distanceX < distanceThreshold && distanceY < distanceThreshold) {
-            // The enemy is already close to the player, no need to move
-
-            return;
-        }
-        int nextX;
-        int nextY;
-        if (playerX < this.x) {
-            nextX = this.x;
-            if(!collidesWithObjects(nextX - this.speed,this.y)) {
-                this.setDirection("left");
-                this.setX(nextX - this.speed);
-            }
-        } else if (playerX > this.x) {
-            nextX = this.x;
-            if(!collidesWithObjects(nextX + this.speed,this.y)) {
-                this.setDirection("right");
-                this.setX(nextX + this.speed);
-            }
-        }
-
-        if (playerY < this.y) {
-            nextY = this.y ;
-            if(!collidesWithObjects(this.x,nextY- this.speed)) {
-                this.setDirection("up");
-                this.setY(nextY- this.speed);
-            }
-        } else if (playerY > this.y) {
-            nextY = this.y ;
-            if(!collidesWithObjects(this.x,nextY+ this.speed)) {
-                this.setDirection("down");
-                this.setY(nextY+ this.speed);
-            }
-        }
-    }
-
-    public void setState(State enemyState) {
-        switch (enemyState) {
-            case IDLE -> currentState = new IdleState();
-            case MOVEMENT -> currentState = new MovementState();
-            case ATTACK -> currentState = new AttackState();
-            case HIT -> currentState = new HitState();
-            default -> {
-            }
         }
     }
 
@@ -350,5 +367,14 @@ public class Enemy extends Npc {
 
     public ArrayList<CollisionObject> getCurrentCollisionMap() {
         return currentCollisionMap;
+    }
+    public boolean isAttacking() {
+        return isAttacking;
+    }
+    public void setAttacking(boolean isAttacking) {
+        this.isAttacking = isAttacking;
+    }
+    public void setAttackAnimationCompleted(boolean attackAnimationCompleted) {
+        this.attackAnimationCompleted = attackAnimationCompleted;
     }
 }

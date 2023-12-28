@@ -23,9 +23,10 @@ public class EnemyCreator {
                 .setSpeedChangeSprite(10)
                 .setSpriteNumLess1(1)
                 .setScale(5)
-                .setCollisionArea(16,16)
+                .setCollisionArea(32,32)
                 .setImageDimension(16,16)
                 .setDefaultDirection("left")
+
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
                 .setCollisionMap(mapManager.getTileManagerZonaIniziale().getCollisionMap())
                 .set8EntityImage(slimeDown_0,slimeDown_1,

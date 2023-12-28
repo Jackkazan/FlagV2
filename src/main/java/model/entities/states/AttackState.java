@@ -31,10 +31,88 @@ public class AttackState implements EntityState {
         }
     }
 
-
     private void updateEnemy(Enemy enemy){
+        if (enemy.isAttacking()){
+            //alternatore di sprite
+            enemy.incrementSpriteCounter();
+            //velocità di cambio sprite 5-10
+            if (enemy.getSpriteCounter() > 7) {
+                enemy.setSpriteNum((enemy.getSpriteNum() + 1) % 4);
+                enemy.setSpriteCounter(0);
+            }
+        }else{
+            enemy.setAttacking(true);
+            enemy.setAttackAnimationCompleted(false);
+
+            switch (enemy.getDirection()) {
+                case "left" -> enemy.setDirection("left&attack");
+                case "right" -> enemy.setDirection("right&attack");
+                case "down" -> enemy.setDirection("down&attack");
+                case "up" -> enemy.setDirection("up&attack");
+                default -> {}
+            }
+            enemy.setSpriteNum(0);
+
+            // Imposta un timer per la durata dell'animazione dell'attacco
+            Timer timer = new Timer(420, e -> {
+                enemy.setAttacking(false);
+                enemy.setAttackAnimationCompleted(true);
+                ((Timer) e.getSource()).stop();
+            });
+            timer.setRepeats(false);
+            timer.start();
+        }
     }
     private void drawEnemy(Graphics2D graphics2D, Enemy enemy){
+        BufferedImage[] images = switch (enemy.getDirection()) {
+            case "up&attack" -> new BufferedImage[]{enemy.getAttackUp1(), enemy.getAttackUp2(), enemy.getAttackUp3(), enemy.getAttackUp4()};
+            case "down&attack" -> new BufferedImage[]{enemy.getAttackDown1(), enemy.getAttackDown2(), enemy.getAttackDown3(), enemy.getAttackDown4()};
+            case "left&attack" -> new BufferedImage[]{enemy.getAttackLeft1(), enemy.getAttackLeft2(), enemy.getAttackLeft3(), enemy.getAttackLeft4()};
+            case "right&attack" -> new BufferedImage[]{enemy.getAttackRight1(), enemy.getAttackRight2(), enemy.getAttackRight3(), enemy.getAttackRight4()};
+            default -> null;
+        };
+        int offsetX, offsetY, imageWidth, imageHeight;
+        switch (enemy.getDirection()) {
+            case "down&attack" -> {
+                offsetX = -16;
+                offsetY = -32;
+                imageWidth = 32;
+                imageHeight = 48;
+            }
+            case "left&attack" -> {
+                offsetX = -58;
+                offsetY = -32;
+                imageWidth = 48;
+                imageHeight = 32;
+            }
+            case "right&attack" -> {
+                offsetX = -14;
+                offsetY = -32;
+                imageWidth = 48;
+                imageHeight = 32;
+            }
+            case "up&attack" -> {
+                offsetX = -16;
+                offsetY = -72;
+                imageWidth = 32;
+                imageHeight = 48;
+            }
+            default -> {
+                offsetX = -16;
+                offsetY = -32;
+                imageWidth = 32;
+                imageHeight = 32;
+            }
+        }
+
+        if (images != null && enemy.getGsm().getMapManager().getCurrentMap() == enemy.getTileManager()) {
+            int spriteIndex = enemy.getSpriteNum() % images.length;
+            int screenX = enemy.getX() - enemy.getGsm().getPlayer().getX() + enemy.getGsm().getPlayer().getScreenX();
+            int screenY = enemy.getY() - enemy.getGsm().getPlayer().getY() + enemy.getGsm().getPlayer().getScreenY();
+            graphics2D.drawImage(images[spriteIndex], screenX + offsetX, screenY + offsetY, (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+
+
+        }
     }
 
     private void updatePlayer(Player player){
