@@ -85,9 +85,6 @@ public class MovementState implements EntityState {
 
         if (images != null) {
             int spriteIndex = player.getSpriteNum() % images.length;
-            graphics2D.setColor(Color.BLUE);
-            graphics2D.drawRect(player.getInteractionArea().x, player.getInteractionArea().y,
-                    player.getInteractionArea().width, player.getInteractionArea().height);
 
             graphics2D.drawImage(images[spriteIndex], player.getScreenX()-16, player.getScreenY()-32, (player.getImageWidth()/2) *player.getScale(), (player.getImageHeight()/2)*player.getScale(), null);
         }
