@@ -242,7 +242,7 @@ public class Npc extends Entity {
     }
 
     public String getDirection() {
-        return direction;
+        return this.direction;
     }
 
     public int getSpeedChangeSprite() {

@@ -281,6 +281,33 @@ public class Enemy extends Npc {
             }
             return this;
         }
+        public EnemyBuilder set16AttackImage(String path_attackup1, String path_attackup2, String path_attackup3, String path_attackup4,
+                                             String path_attackdown1, String path_attackdown2,String path_attackdown3, String path_attackdown4,
+                                             String path_attackleft1, String path_attackleft2,String path_attackleft3, String path_attackleft4,
+                                             String path_attackright1, String path_attackright2,String path_attackright3, String path_attackright4) {
+            try {
+                this.entity.attackUp1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackup1)));
+                this.entity.attackUp2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackup2)));
+                this.entity.attackUp3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackup3)));
+                this.entity.attackUp4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackup4)));
+                this.entity.attackDown1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackdown1)));
+                this.entity.attackDown2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackdown2)));
+                this.entity.attackDown3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackdown3)));
+                this.entity.attackDown4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackdown4)));
+                this.entity.attackLeft1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackleft1)));
+                this.entity.attackLeft2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackleft2)));
+                this.entity.attackLeft3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackleft3)));
+                this.entity.attackLeft4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackleft4)));
+                this.entity.attackRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackright1)));
+                this.entity.attackRight2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackright2)));
+                this.entity.attackRight3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackright3)));
+                this.entity.attackRight4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackright4)));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return this;
+        }
         @Override
         protected Enemy createEntity() {
             return new Enemy();
@@ -288,6 +315,8 @@ public class Enemy extends Npc {
         public Enemy build() {
             return (Enemy) this.entity;
         }
+
+
     }
 
     public int getMaxLife() {
@@ -315,35 +344,35 @@ public class Enemy extends Npc {
     }
 
     public BufferedImage getAttackUp1() {
-        return attackUp1;
+        return this.attackUp1;
     }
 
     public BufferedImage getAttackUp2() {
-        return attackUp2;
+        return this.attackUp2;
     }
 
     public BufferedImage getAttackUp3() {
-        return attackUp3;
+        return this.attackUp3;
     }
 
     public BufferedImage getAttackUp4() {
-        return attackUp4;
+        return this.attackUp4;
     }
 
     public BufferedImage getAttackDown1() {
-        return attackDown1;
+        return this.attackDown1;
     }
 
     public BufferedImage getAttackDown2() {
-        return attackDown2;
+        return this.attackDown2;
     }
 
     public BufferedImage getAttackDown3() {
-        return attackDown3;
+        return this.attackDown3;
     }
 
     public BufferedImage getAttackDown4() {
-        return attackDown4;
+        return this.attackDown4;
     }
 
     public BufferedImage getAttackLeft1() {
@@ -351,38 +380,38 @@ public class Enemy extends Npc {
     }
 
     public BufferedImage getAttackLeft2() {
-        return attackLeft2;
+        return this.attackLeft2;
     }
 
     public BufferedImage getAttackLeft3() {
-        return attackLeft3;
+        return this.attackLeft3;
     }
 
     public BufferedImage getAttackLeft4() {
-        return attackLeft4;
+        return this.attackLeft4;
     }
 
     public BufferedImage getAttackRight1() {
-        return attackRight1;
+        return this.attackRight1;
     }
 
     public BufferedImage getAttackRight2() {
-        return attackRight2;
+        return this.attackRight2;
     }
 
     public BufferedImage getAttackRight3() {
-        return attackRight3;
+        return this.attackRight3;
     }
 
     public BufferedImage getAttackRight4() {
-        return attackRight4;
+        return this.attackRight4;
     }
 
     public ArrayList<CollisionObject> getCurrentCollisionMap() {
-        return currentCollisionMap;
+        return this.currentCollisionMap;
     }
     public boolean isAttacking() {
-        return isAttacking;
+        return this.isAttacking;
     }
     public void setAttacking(boolean isAttacking) {
         this.isAttacking = isAttacking;
@@ -392,26 +421,26 @@ public class Enemy extends Npc {
     }
 
     public boolean isHitted() {
-        return isHitted;
+        return this.isHitted;
     }
 
     public boolean isAttackAnimationCompleted() {
-        return attackAnimationCompleted;
+        return this.attackAnimationCompleted;
     }
 
     public BufferedImage getIdle1() {
-        return idle1;
+        return this.idle1;
     }
 
     public BufferedImage getIdle2() {
-        return idle2;
+        return this.idle2;
     }
 
     public BufferedImage getIdle3() {
-        return idle3;
+        return this.idle3;
     }
 
     public BufferedImage getIdle4() {
-        return idle4;
+        return this.idle4;
     }
 }

@@ -33,6 +33,25 @@ public class EnemyCreator {
         String greenSlime1Idle_2 = "/enemy/GreenSlime/GreenSlime1Idle_2.png";
         String greenSlime1Idle_3 = "/enemy/GreenSlime/GreenSlime1Idle_3.png";
 
+        /*
+        String greenSlime1AttackDown_0="/enemy/GreenSlime/GreenSlime1AttackDown_0.png";
+        String greenSlime1AttackDown_1="/enemy/GreenSlime/GreenSlime1AttackDown_1.png";
+        String greenSlime1AttackDown_2="/enemy/GreenSlime/GreenSlime1AttackDown_2.png";
+        String greenSlime1AttackDown_3="/enemy/GreenSlime/GreenSlime1AttackDown_3.png";
+        String greenSlime1AttackUp_0= "/enemy/GreenSlime/GreenSlime1AttackUp_0.png";
+        String greenSlime1AttackUp_1= "/enemy/GreenSlime/GreenSlime1AttackUp_1.png";
+        String greenSlime1AttackUp_2= "/enemy/GreenSlime/GreenSlime1AttackUp_2.png";
+        String greenSlime1AttackUp_3= "/enemy/GreenSlime/GreenSlime1AttackUp_3.png";
+         */
+        String greenSlime1AttackLeft_0= "/enemy/GreenSlime/GreenSlime1AttackLeft_0.png";
+        String greenSlime1AttackLeft_1= "/enemy/GreenSlime/GreenSlime1AttackLeft_1.png";
+        String greenSlime1AttackLeft_2= "/enemy/GreenSlime/GreenSlime1AttackLeft_2.png";
+        String greenSlime1AttackLeft_3= "/enemy/GreenSlime/GreenSlime1AttackLeft_3.png";
+        String greenSlime1AttackRight_0= "/enemy/GreenSlime/GreenSlime1AttackRight_0.png";
+        String greenSlime1AttackRight_1= "/enemy/GreenSlime/GreenSlime1AttackRight_1.png";
+        String greenSlime1AttackRight_2= "/enemy/GreenSlime/GreenSlime1AttackRight_2.png";
+        String greenSlime1AttackRight_3= "/enemy/GreenSlime/GreenSlime1AttackRight_3.png";
+
         Enemy slime1 = new Enemy.EnemyBuilder(25,46)
                 .setName("Slime1")
                 .setSpeed(2)
@@ -52,6 +71,10 @@ public class EnemyCreator {
                         greenSlime1Left_0,greenSlime1Left_1,greenSlime1Left_2,greenSlime1Left_3,
                         greenSlime1Right_0,greenSlime1Right_1,greenSlime1Right_2,greenSlime1Right_3)
                 .set4IdleImage(greenSlime1Idle_0,greenSlime1Idle_1,greenSlime1Idle_2,greenSlime1Idle_3)
+                .set16AttackImage(greenSlime1AttackLeft_0, greenSlime1AttackLeft_1, greenSlime1AttackLeft_2, greenSlime1AttackLeft_3,
+                        greenSlime1AttackLeft_0, greenSlime1AttackLeft_1, greenSlime1AttackLeft_2, greenSlime1AttackLeft_3,
+                        greenSlime1AttackLeft_0, greenSlime1AttackLeft_1, greenSlime1AttackLeft_2, greenSlime1AttackLeft_3,
+                        greenSlime1AttackRight_0, greenSlime1AttackRight_1, greenSlime1AttackRight_2, greenSlime1AttackRight_3)
                 .setAggroRange(10)
                 .build();
 

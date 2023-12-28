@@ -51,7 +51,7 @@ public class IdleState implements EntityState {
     }
     private void drawEnemy(Graphics2D graphics2D, Enemy enemy){
         BufferedImage[] images = switch (enemy.getDirection()){
-            case "up","down","left","right" -> new BufferedImage[]{enemy.getIdle1(), enemy.getIdle2(), enemy.getIdle3(), enemy.getIdle4()};
+            case "up","up&attack","down","down&attack","left","left&attack","right", "right&attack" -> new BufferedImage[]{enemy.getIdle1(), enemy.getIdle2(), enemy.getIdle3(), enemy.getIdle4()};
             default -> null;
         };
 
