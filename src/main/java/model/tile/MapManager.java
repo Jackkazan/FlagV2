@@ -94,7 +94,7 @@ public class MapManager {
         }
 
         if (currentMap == tileManagerPrimoPianoTavernaVillaggio) {
-            if(player.onTransitionPoint(2, 8, 1)) {
+            if(player.onTransitionPoint(1, 8, 1)) {
                 setMap(tileManagerPianoTerraTavernaVillaggio);
                 player.teleport(2, 4);
             }
