@@ -32,6 +32,7 @@ public class Enemy extends Npc {
 
     protected BufferedImage attackUp1, attackUp2, attackUp3, attackUp4, attackDown1, attackDown2, attackDown3, attackDown4, attackLeft1, attackLeft2, attackLeft3, attackLeft4, attackRight1, attackRight2, attackRight3, attackRight4;
 
+    protected BufferedImage idle1,idle2,idle3,idle4;
     public enum State{IDLE, MOVEMENT,HIT,ATTACK}
     protected ArrayList<CollisionObject> currentCollisionMap;
 
@@ -213,6 +214,18 @@ public class Enemy extends Npc {
             return this;
         }
 
+        public Enemy.EnemyBuilder set4IdleImage(String path_idle1, String path_idle2, String path_idle3, String path_idle4) {
+            try {
+                this.entity.idle1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_idle1)));
+                this.entity.idle2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_idle2)));
+                this.entity.idle3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_idle3)));
+                this.entity.idle4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_idle4)));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return this;
+        }
         public Enemy.EnemyBuilder set16EntityImage(String path_up1, String path_up2, String path_up3, String path_up4,
                                                    String path_down1, String path_down2, String path_down3, String path_down4,
                                                    String path_left1, String path_left2, String path_left3, String path_left4,
@@ -376,5 +389,29 @@ public class Enemy extends Npc {
     }
     public void setAttackAnimationCompleted(boolean attackAnimationCompleted) {
         this.attackAnimationCompleted = attackAnimationCompleted;
+    }
+
+    public boolean isHitted() {
+        return isHitted;
+    }
+
+    public boolean isAttackAnimationCompleted() {
+        return attackAnimationCompleted;
+    }
+
+    public BufferedImage getIdle1() {
+        return idle1;
+    }
+
+    public BufferedImage getIdle2() {
+        return idle2;
+    }
+
+    public BufferedImage getIdle3() {
+        return idle3;
+    }
+
+    public BufferedImage getIdle4() {
+        return idle4;
     }
 }
