@@ -61,6 +61,7 @@ public class EnemyCreator {
                 .setSpeedChangeSprite(10)
                 .setSpriteNumLess1(3)
                 .setScale(4)
+                .setTotalSprite(16)
                 .setCollisionArea(32,32)
                 .setImageDimension(48,48)
                 .setDefaultDirection("left")

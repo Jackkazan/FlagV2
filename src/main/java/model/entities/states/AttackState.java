@@ -32,22 +32,23 @@ public class AttackState implements EntityState {
     }
 
     private void updateEnemy(Enemy enemy){
-        if (enemy.isAttacking()){
+        if (!enemy.isAttackAnimationCompleted()) {
             //alternatore di sprite
             enemy.incrementSpriteCounter();
             //velocità di cambio sprite 5-10
-            if (enemy.getSpriteCounter() > 7) {
+            if (enemy.getSpriteCounter() > 10) {
                 enemy.setSpriteNum((enemy.getSpriteNum() + 1) % 4);
                 enemy.setSpriteCounter(0);
             }
-        }else{
+        }
+        else{
             enemy.setAttacking(true);
             enemy.setAttackAnimationCompleted(false);
 
             enemy.setSpriteNum(0);
 
             // Imposta un timer per la durata dell'animazione dell'attacco
-            Timer timer = new Timer(420, e -> {
+            Timer timer = new Timer(600, e -> {
                 enemy.setAttacking(false);
                 enemy.setAttackAnimationCompleted(true);
                 ((Timer) e.getSource()).stop();
@@ -55,6 +56,7 @@ public class AttackState implements EntityState {
             timer.setRepeats(false);
             timer.start();
         }
+
     }
     private void drawEnemy(Graphics2D graphics2D, Enemy enemy){
         BufferedImage[] images = switch (enemy.getDirection()) {
@@ -65,12 +67,11 @@ public class AttackState implements EntityState {
             default -> null;
         };
 
-        int spriteIndex = enemy.getSpriteNum() % images.length;
         int screenX = enemy.getX() - enemy.getGsm().getPlayer().getX() + enemy.getGsm().getPlayer().getScreenX();
         int screenY = enemy.getY() - enemy.getGsm().getPlayer().getY() + enemy.getGsm().getPlayer().getScreenY();
 
         if (images != null && enemy.getGsm().getMapManager().getCurrentMap() == enemy.getTileManager()) {
-            graphics2D.drawImage(images[spriteIndex], screenX-(enemy.getIdle1().getWidth()/2), screenY-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+            graphics2D.drawImage(images[enemy.getSpriteNum()], screenX-(enemy.getIdle1().getWidth()/2), screenY-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
         }
     }
 
