@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static model.entities.Entity.MAX_ATTACK_ANIMATION_FRAMES;
 import static model.gameState.GameStateManager.keyH;
 import static view.GamePanel.tileSize;
 
@@ -32,31 +33,19 @@ public class AttackState implements EntityState {
     }
 
     private void updateEnemy(Enemy enemy){
-        if (!enemy.isAttackAnimationCompleted()) {
-            //alternatore di sprite
-            enemy.incrementSpriteCounter();
-            //velocità di cambio sprite 5-10
-            if (enemy.getSpriteCounter() > 10) {
-                enemy.setSpriteNum((enemy.getSpriteNum() + 1) % 4);
-                enemy.setSpriteCounter(0);
-            }
+        if(enemy.getSpriteNum()>=3) {
+            enemy.setAttackAnimationCompleted(true);
         }
-        else{
-            enemy.setAttacking(true);
-            enemy.setAttackAnimationCompleted(false);
-
-            enemy.setSpriteNum(0);
-
-            // Imposta un timer per la durata dell'animazione dell'attacco
-            Timer timer = new Timer(600, e -> {
-                enemy.setAttacking(false);
-                enemy.setAttackAnimationCompleted(true);
-                ((Timer) e.getSource()).stop();
-            });
-            timer.setRepeats(false);
-            timer.start();
+        if(enemy.getSpriteNum()==0 && enemy.getAttackAnimationCompleted()) {
+            enemy.setAttacking(false);
         }
-
+        //alternatore di sprite
+        enemy.incrementSpriteCounter();
+        //velocità di cambio sprite 5-10
+        if (enemy.getSpriteCounter() > 10) {
+            enemy.setSpriteNum((enemy.getSpriteNum() + 1) % 4);
+            enemy.setSpriteCounter(0);
+        }
     }
     private void drawEnemy(Graphics2D graphics2D, Enemy enemy){
         BufferedImage[] images = switch (enemy.getDirection()) {

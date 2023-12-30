@@ -9,6 +9,7 @@ import java.awt.*;
 import static view.GamePanel.tileSize;
 
 public abstract class Entity{
+    public static final int MAX_ATTACK_ANIMATION_FRAMES= 60;
     protected String name;
     protected int x;
     protected int y;

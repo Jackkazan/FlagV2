@@ -27,12 +27,24 @@ public class Enemy extends Npc {
 
     protected boolean isAttacking;
     protected boolean isHitted;
-    protected boolean attackAnimationCompleted;
+    protected boolean attackAnimationCompleted = true;
     private int aggroRange;
 
     protected BufferedImage attackUp1, attackUp2, attackUp3, attackUp4, attackDown1, attackDown2, attackDown3, attackDown4, attackLeft1, attackLeft2, attackLeft3, attackLeft4, attackRight1, attackRight2, attackRight3, attackRight4;
 
     protected BufferedImage idle1,idle2,idle3,idle4;
+    private int attackAnimationFrames;
+
+    public void incrementAttackAnimationFrames() {
+        this.attackAnimationFrames +=1;
+    }
+
+    public int getAttackAnimationFrames() {
+        return attackAnimationFrames;
+    }
+    public void setAttackAnimationFrames( int num) {
+        this.attackAnimationFrames =num;
+    }
     public enum State{IDLE, MOVEMENT,HIT,ATTACK}
     protected ArrayList<CollisionObject> currentCollisionMap;
 
@@ -101,8 +113,11 @@ public class Enemy extends Npc {
         int distanceY = Math.abs(playerY - this.y);
 
         if (distanceX < distanceThreshold && distanceY < distanceThreshold) {
-            if(this.isHittingPlayer())
-                this.setState(State.ATTACK);
+            if(this.isHittingPlayer()) {
+                this.isAttacking = true;
+                this.attackAnimationCompleted = false;
+                this.spriteNum=0;
+            }
             return;
         }
         int nextX;
@@ -142,8 +157,7 @@ public class Enemy extends Npc {
             case MOVEMENT -> currentState = new MovementState();
             case ATTACK -> currentState = new AttackState();
             case HIT -> currentState = new HitState();
-            default -> {
-            }
+            default -> {}
         }
     }
 
@@ -424,7 +438,7 @@ public class Enemy extends Npc {
         return this.isHitted;
     }
 
-    public boolean isAttackAnimationCompleted() {
+    public boolean getAttackAnimationCompleted() {
         return this.attackAnimationCompleted;
     }
 
@@ -443,4 +457,6 @@ public class Enemy extends Npc {
     public BufferedImage getIdle4() {
         return this.idle4;
     }
+
+
 }
