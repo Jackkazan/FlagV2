@@ -35,6 +35,8 @@ public class AttackState implements EntityState {
     private void updateEnemy(Enemy enemy){
         if(enemy.getSpriteNum()==3) {
             enemy.setAttackAnimationCompleted(true);
+            //logica dell'hit
+
         }
         if(enemy.getSpriteNum()==0 && enemy.getAttackAnimationCompleted()) {
             enemy.setAttacking(false);

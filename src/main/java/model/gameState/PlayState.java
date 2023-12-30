@@ -1,6 +1,7 @@
 package model.gameState;
 
 import controller.KeyHandler;
+import model.entities.Entity;
 import model.entities.enemies.Enemy;
 import model.entities.npc.Npc;
 import model.entities.items.Item;
@@ -10,7 +11,9 @@ import view.GamePanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static view.GamePanel.tileSize;
 
@@ -45,12 +48,12 @@ public class PlayState implements GameState{
         if(!gsm.isInDialogue())
             player.update();
 
+        /*
         // Aggiornamento degli NPC
         for (Npc npc : gsm.getNpcList()) {
             if(npc.getTileManager().equals(mapManager.getCurrentMap()))
                 npc.update();
         }
-
 
         // Aggiornamento degli oggetti
         for (Item item : gsm.getKeyItemsList()) {
@@ -60,13 +63,27 @@ public class PlayState implements GameState{
 
         for (Enemy enemy : gsm.getEnemyList()) {
             if (enemy.getTileManager().equals(mapManager.getCurrentMap())) {
-                //enemy.moveTowardsPlayer(player.getX(), player.getY());
                 enemy.update();
             }
         }
 
+         */
+
+        for(Entity entity : gsm.getEntityList()){
+            if(!entity.equals(gsm.player) && entity.getTileManager().equals(mapManager.getCurrentMap()))
+                entity.update();
+
+        }
+
+        //ordina la lista
+        gsm.entityList = gsm.getEntityList().stream()
+                .sorted(Comparator.comparing(Entity:: getY))
+                        .collect(Collectors.toList());
+
+
         // Gestione delle transizioni della mappa
         mapManager.manageTransitions();
+
     }
 
     @Override
@@ -78,6 +95,7 @@ public class PlayState implements GameState{
         // Cancella completamente l'immagine del buffer
         bufferGraphics.clearRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
         mapManager.draw(bufferGraphics);
+        /*
         for (Npc npc : gsm.getNpcList()) {
             npc.draw(bufferGraphics);
         }
@@ -87,7 +105,12 @@ public class PlayState implements GameState{
         for (Enemy enemy : gsm.getEnemyList()) {
             enemy.draw(bufferGraphics);
         }
-        player.draw(bufferGraphics);
+
+         */
+        for(Entity entity : gsm.getEntityList())
+            entity.draw(bufferGraphics);
+
+        //player.draw(bufferGraphics);
         gp.getUi().draw(bufferGraphics);
         drawToTempScreen();
         // Copia l'intera immagine buffer sulla schermata

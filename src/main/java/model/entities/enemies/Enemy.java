@@ -3,10 +3,7 @@ package model.entities.enemies;
 import model.collisions.CollisionObject;
 import model.entities.states.EntityState;
 import model.entities.npc.Npc;
-import model.entities.states.AttackState;
-import model.entities.states.HitState;
-import model.entities.states.IdleState;
-import model.entities.states.MovementState;
+import model.entities.states.*;
 import model.gameState.GameStateManager;
 
 import javax.imageio.ImageIO;
@@ -25,10 +22,22 @@ public class Enemy extends Npc {
 
     protected boolean isAttacking;
     protected boolean isHitted;
-    protected boolean attackAnimationCompleted = true;
+    protected boolean attackAnimationCompleted;
     private int aggroRange;
 
+    private boolean isDespawned;
+
+    private int despawnTimer = 0;
+    private int despawnCooldown = 200;
+    private int respawnX; // Posizione di respawn X
+    private int respawnY; // Posizione di respawn Y
+
+    private long lastHitTime;  // Memorizza il tempo dell'ultima hit
+    private long hitCooldown = 1000;  // Cooldown in millisecondi (1 secondo)
+
     protected BufferedImage attackUp1, attackUp2, attackUp3, attackUp4, attackDown1, attackDown2, attackDown3, attackDown4, attackLeft1, attackLeft2, attackLeft3, attackLeft4, attackRight1, attackRight2, attackRight3, attackRight4;
+
+    protected BufferedImage dead1, dead2, dead3, dead4;
 
     protected BufferedImage idle1,idle2,idle3,idle4;
     private int attackAnimationFrames;
@@ -43,17 +52,29 @@ public class Enemy extends Npc {
     public void setAttackAnimationFrames( int num) {
         this.attackAnimationFrames =num;
     }
-    public enum State{IDLE, MOVEMENT,HIT,ATTACK}
+
+    public enum State{IDLE, MOVEMENT,HIT,ATTACK,DEAD}
     protected ArrayList<CollisionObject> currentCollisionMap;
 
     public Enemy (){
         this.gsm = GameStateManager.gp.getGsm();
         this.keyH = GameStateManager.keyH;
         this.currentState = new IdleState();
+        this.lastHitTime = System.currentTimeMillis();
     }
 
     public boolean isHittingPlayer() {
         // puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
+        if(this.collisionArea!= null && gsm.getPlayer().getCollisionArea().intersects(this.collisionArea)){
+            System.out.println(this.name+" mi sta hittando" );
+            return true;
+        }
+        else return false;
+    }
+
+    //Questo metodo è per testare l'hit del player contro il nemico, va sostituito con l'attuale attacco della spada, per adesso non sono riuscito
+    //E' di prova per testare ovviamente
+    public boolean isHittingEnemy() {
         if(this.collisionArea!= null && gsm.getPlayer().getCollisionArea().intersects(this.collisionArea)){
             System.out.println(this.name+" mi sta hittando" );
             return true;
@@ -67,19 +88,35 @@ public class Enemy extends Npc {
     }
     @Override
     public void update() {
-        if(isAttacking){
-            this.setState(State.ATTACK);
-        }else {
-            double distance = Math.hypot(gsm.getPlayer().getX() - this.getX(), gsm.getPlayer().getY() - this.getY());
-            if (distance <= aggroRange) {
-                //System.out.println("Sei nell'aggro");
-                this.setState(State.MOVEMENT);
-            } else {
-                //System.out.println("Non sei nell'aggro");
-                this.setState(State.IDLE);
+        //System.out.println("Despawn Timer: " + despawnTimer);
+        //System.out.println("Is Despawned: " + isDespawned);
+        if (isDespawned) {
+            // Logica di despawn
+            despawnTimer--; // Decrementa il timer di despawn
+
+            if (despawnTimer <= 0) {
+                respawn(respawnX, respawnY); // Respawn dell'entità
+                despawnTimer = despawnCooldown; // Reimposta il timer di despawn
             }
+        } else {
+            if (isAttacking) {
+                this.setState(State.ATTACK);
+            } else {
+                double distance = Math.hypot(gsm.getPlayer().getX() - this.getX(), gsm.getPlayer().getY() - this.getY());
+                if (distance <= aggroRange) {
+                    this.setState(State.MOVEMENT);
+                } else {
+                    this.setState(State.IDLE);
+                }
+            }
+            if (isHittingEnemy()) {
+                this.setState(State.HIT);
+            }
+            if (currentLife <= 0) {
+                this.setState(State.DEAD);
+            }
+            currentState.update(this);
         }
-        currentState.update(this);
     }
 
     public boolean collidesWithObjects(int nextX, int nextY) {
@@ -155,7 +192,9 @@ public class Enemy extends Npc {
             case MOVEMENT -> currentState = new MovementState();
             case ATTACK -> currentState = new AttackState();
             case HIT -> currentState = new HitState();
-            default -> {}
+            case DEAD -> currentState = new DeadState();
+            default -> {
+            }
         }
     }
 
@@ -320,6 +359,23 @@ public class Enemy extends Npc {
             }
             return this;
         }
+        public EnemyBuilder set4DeadImage(String path_dead1, String path_dead2, String path_dead3, String path_dead4) {
+            try {
+                this.entity.dead1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_dead1)));
+                this.entity.dead2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_dead2)));
+                this.entity.dead3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_dead3)));
+                this.entity.dead4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_dead4)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return this;
+        }
+        public EnemyBuilder setRespawnCoordinates(int respawnX, int respawnY) {
+            this.entity.respawnX = respawnX;
+            this.entity.respawnY = respawnY;
+            return this;
+        }
+
         @Override
         protected Enemy createEntity() {
             return new Enemy();
@@ -328,7 +384,49 @@ public class Enemy extends Npc {
             return (Enemy) this.entity;
         }
 
+    }
 
+    public void takeDamage(int damage) {
+        currentLife -= damage;
+        System.out.println("La vita del nemico e' : " + currentLife);
+/*
+        if(currentLife <= 0) {
+            setState(State.DEAD);
+        } else {
+            setState(State.HIT);
+        }
+        */
+    }
+
+    public void die(){
+        isDespawned = true;
+        currentLife = maxLife;
+    }
+
+    public void respawn(int respawnX, int respawnY) {
+        //System.out.println("Respawning at X: " + respawnX + ", Y: " + respawnY);
+        isDespawned = false;
+        this.x = respawnX * tileSize;
+        this.y = respawnY * tileSize;
+
+    }
+
+    public BufferedImage getDeadImage() {
+        switch (direction) {
+            case "up" -> {
+                if (dead1 != null) return dead1;
+            }
+            case "down" -> {
+                if (dead2 != null) return dead2;
+            }
+            case "left" -> {
+                if (dead3 != null) return dead3;
+            }
+            case "right" -> {
+                if (dead4 != null) return dead4;
+            }
+        }
+        return null;
     }
 
     public int getMaxLife() {
@@ -456,5 +554,15 @@ public class Enemy extends Npc {
         return this.idle4;
     }
 
+    public long getLastHitTime() {
+        return lastHitTime;
+    }
 
+    public void setLastHitTime(long time) {
+        lastHitTime = time;
+    }
+
+    public long getHitCooldown() {
+        return hitCooldown;
+    }
 }

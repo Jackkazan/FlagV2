@@ -1,6 +1,7 @@
 package model.gameState;
 
 import controller.KeyHandler;
+import model.entities.Entity;
 import model.entities.enemies.Enemy;
 import model.entities.enemies.EnemyCreator;
 import model.entities.npc.Npc;
@@ -15,6 +16,8 @@ import model.tile.TileManager;
 import view.GamePanel;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class GameStateManager {
@@ -48,10 +51,12 @@ public class GameStateManager {
 
     List<Item> itemList;
     List<Npc> npcList;
+    List<Enemy> enemyList;
 
+    List<Entity> entityList;
     Playlist playlist = new Playlist();
     List<Sound> songList = playlist.getSongList();
-    List<Enemy> enemyList;
+
 
 
     public GameStateManager(){
@@ -75,9 +80,17 @@ public class GameStateManager {
         this.playState = new PlayState(gp, this, mapManager, player, keyH);
         playMusicLoop(0);
         //this.pauseState = new PauseState(gp, this, keyH);
+
         this.npcList = NpcCreator.createNPCs(this, mapManager);
         this.itemList = ItemCreator.createObjects(this, mapManager, keyH);
         this.enemyList = EnemyCreator.createEnemies(this, mapManager);
+
+        this.entityList = new ArrayList<>();
+        this.entityList.add(player);
+        this.entityList.addAll(this.npcList);
+        this.entityList.addAll(this.enemyList);
+        this.entityList.addAll(this.itemList);
+
     }
 
     public enum State{MENU, PLAY, PAUSE, PREVIOUS};
@@ -170,4 +183,7 @@ public class GameStateManager {
         return songList;
     }
 
+    public List<Entity> getEntityList() {
+        return entityList;
+    }
 }
