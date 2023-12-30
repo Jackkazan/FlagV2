@@ -1,7 +1,7 @@
 package model.entities.states;
 
 import model.entities.Entity;
-import model.entities.EntityState;
+
 import model.entities.enemies.Enemy;
 
 

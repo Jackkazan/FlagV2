@@ -5,6 +5,7 @@ import model.entities.enemies.Enemy;
 import model.entities.player.Player;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class HitState implements EntityState {
 
