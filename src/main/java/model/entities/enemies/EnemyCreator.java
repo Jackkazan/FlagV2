@@ -52,9 +52,14 @@ public class EnemyCreator {
         String greenSlime1AttackRight_2= "/enemy/GreenSlime/GreenSlime1AttackRight_2.png";
         String greenSlime1AttackRight_3= "/enemy/GreenSlime/GreenSlime1AttackRight_3.png";
 
+        String greenSlime1Dead_0 = "/enemy/GreenSlime/GreenSlime1Dead_0.png";
+        String greenSlime1Dead_1 = "/enemy/GreenSlime/GreenSlime1Dead_1.png";
+        String greenSlime1Dead_2 = "/enemy/GreenSlime/GreenSlime1Dead_2.png";
+        String greenSlime1Dead_3 = "/enemy/GreenSlime/GreenSlime1Dead_3.png";
+
         Enemy slime1 = new Enemy.EnemyBuilder(25,46)
                 .setName("Slime1")
-                .setSpeed(2)    //se si settano numeri dispari vibra, ma che porco dio ne so
+                .setSpeed(2)
                 .setMaxLife(6)
                 .setCurrentLife(6)
                 .setDamage(3)
@@ -76,7 +81,9 @@ public class EnemyCreator {
                         greenSlime1AttackDown_0, greenSlime1AttackDown_1, greenSlime1AttackDown_2, greenSlime1AttackDown_3,
                         greenSlime1AttackLeft_0, greenSlime1AttackLeft_1, greenSlime1AttackLeft_2, greenSlime1AttackLeft_3,
                         greenSlime1AttackRight_0, greenSlime1AttackRight_1, greenSlime1AttackRight_2, greenSlime1AttackRight_3)
+                .set4DeadImage(greenSlime1Dead_0, greenSlime1Dead_1, greenSlime1Dead_2, greenSlime1Dead_3)
                 .setAggroRange(10)
+                .setRespawnCoordinates(25,46)
                 .build();
 
         enemyList.add(slime1);
