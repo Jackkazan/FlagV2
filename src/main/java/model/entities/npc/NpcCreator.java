@@ -26,13 +26,13 @@ public class NpcCreator {
         String vecchietta_left2= "/npc/Vecchietta/VecchiettaLookLeft_1.png";
         String vecchietta_right1= "/npc/Vecchietta/VecchiettaLookRight_0.png";
         String vecchietta_right2= "/npc/Vecchietta/VecchiettaLookRight_1.png";
-        Npc vecchietta = new Npc.NpcBuilder( 22, 46 )
+        Npc vecchietta = new Npc.NpcBuilder( 22, 47 )
                 .setName("Vecchietta")
                 .setSpeed(2)
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
                 .setScale(5)
-                .setCollisionArea(64,64)
+                .setCollisionArea(64,32)
                 .setTotalSprite(8)
                 .setImageDimension(32,32)
                 .setIsInteractible(true)
@@ -53,13 +53,13 @@ public class NpcCreator {
         String contadino1_left2="/npc/Contadino1/Contadino1LookLeft_1.png";
         String contadino1_right1="/npc/Contadino1/Contadino1LookRight_0.png";
         String contadino1_right2="/npc/Contadino1/Contadino1LookRight_1.png";
-        Npc contadino1 = new Npc.NpcBuilder(86, 37)
+        Npc contadino1 = new Npc.NpcBuilder(86, 38)
                 .setName("Contadino1")
                 .setSpeed(2)
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
                 .setScale(5)
-                .setCollisionArea(64,64)
+                .setCollisionArea(64,32)
                 .setTotalSprite(8)
                 .setImageDimension(32,32)
                 .setIsInteractible(true)
@@ -80,13 +80,13 @@ public class NpcCreator {
         String contadino2_left2="/npc/Contadino2/Contadino2LookLeft_1.png";
         String contadino2_right1="/npc/Contadino2/Contadino2LookRight_0.png";
         String contadino2_right2="/npc/Contadino2/Contadino2LookRight_1.png";
-        Npc contadino2 = new Npc.NpcBuilder(61, 33)
+        Npc contadino2 = new Npc.NpcBuilder(61, 34)
                 .setName("Contadino2")
                 .setSpeed(2)
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
                 .setScale(5)
-                .setCollisionArea(64,64)
+                .setCollisionArea(64,32)
                 .setTotalSprite(8)
                 .setImageDimension(32,32)
                 .setIsInteractible(true)
@@ -101,13 +101,13 @@ public class NpcCreator {
 
         String cameriera1Down_0 = "/npc/Cameriera/CamerieraVillaggioTavernaDown_0.png";
         String cameriera1Down_1 = "/npc/Cameriera/CamerieraVillaggioTavernaDown_1.png";
-        Npc cameriera1 = new Npc.NpcBuilder( 15, 3)
+        Npc cameriera1 = new Npc.NpcBuilder( 15, 4)
                 .setName("Cameriera1")
                 .setSpeed(2)
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(1)
                 .setScale(5)
-                .setCollisionArea(64,90)
+                .setCollisionArea(64,60)
                 .setTotalSprite(2)
                 .setImageDimension(16,32)
                 .setIsInteractible(true)
@@ -122,7 +122,7 @@ public class NpcCreator {
 
         String mercante1Right_0 = "/npc/Mercante1/VenditoreOggettiVillaggioRight_0.png";
         String mercante1Right_1 = "/npc/Mercante1/VenditoreOggettiVillaggioRight_1.png";
-        Npc mercante1 = new Npc.NpcBuilder( 2, 4)
+        Npc mercante1 = new Npc.NpcBuilder( 2, 5)
                 .setName("Mercante1")
                 .setSpeed(2)
                 .setSpeedChangeSprite(100)
@@ -143,12 +143,12 @@ public class NpcCreator {
 
 
         String fabbro1Down_0 = "/npc/Fabbro1/FabbroVillaggioDown_0.png";
-        Npc fabbro1 = new Npc.NpcBuilder(66,30)
+        Npc fabbro1 = new Npc.NpcBuilder(66,31)
                 .setName("Fabbro1")
                 .setSpeedChangeSprite(100)
                 .setSpriteNumLess1(0)
                 .setScale(5)
-                .setCollisionArea(64,64)
+                .setCollisionArea(64,32)
                 .setTotalSprite(1)
                 .setImageDimension(32,32)
                 .setIsInteractible(true)

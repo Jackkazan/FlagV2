@@ -159,7 +159,7 @@ public class Npc extends Entity {
         int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
 
         if (images != null && gsm.getMapManager().getCurrentMap() == this.tileManager) {
-            graphics2D.drawImage(images[spriteNum], screenX, screenY, (imageWidth/2)*scale , (imageHeight/2)*scale,null);
+            graphics2D.drawImage(images[spriteNum], screenX, screenY-tileSize, (imageWidth/2)*scale , (imageHeight/2)*scale,null);
         }
     }
 
