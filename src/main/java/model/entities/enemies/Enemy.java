@@ -1,15 +1,13 @@
 package model.entities.enemies;
 
 import model.collisions.CollisionObject;
-import model.entities.EntityState;
-import model.entities.Interactable;
+import model.entities.states.EntityState;
 import model.entities.npc.Npc;
 import model.entities.states.AttackState;
 import model.entities.states.HitState;
 import model.entities.states.IdleState;
 import model.entities.states.MovementState;
 import model.gameState.GameStateManager;
-import model.tile.TileManager;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

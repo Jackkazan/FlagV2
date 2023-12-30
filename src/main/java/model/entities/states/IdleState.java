@@ -1,15 +1,12 @@
 package model.entities.states;
 
 import model.entities.Entity;
-import model.entities.EntityState;
 import model.entities.enemies.Enemy;
 import model.entities.npc.Npc;
 import model.entities.player.Player;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
-import static view.GamePanel.tileSize;
 
 public class IdleState implements EntityState {
     @Override

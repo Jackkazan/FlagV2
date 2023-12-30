@@ -27,11 +27,8 @@ public class PauseState implements GameState{
         this.gp = gp;
         this.gsm = gsm;
         this.keyH = keyH;
-        gsm.setAlreadyPaused(true);
-
         this.gamePanel = gp;
-
-
+        gsm.stopMusic(0);
         mouseHandler = new MouseHandler();
         gamePanel.addMouseListener(mouseHandler);
         gamePanel.addMouseMotionListener(mouseHandler);
@@ -42,17 +39,12 @@ public class PauseState implements GameState{
         //gsm.getPlayState().update();
 
 
-        if (!keyH.isPaused()){
-            if (gsm.isInDialogue()){
-                gsm.setState(GameStateManager.State.PREVIOUS); // Se si è in dialogo uscendo dalla pausa bisogna ritornare allo stato dialogo salvato in previous state
-            }
-            else{
-                gsm.setState(GameStateManager.State.PLAY);
-            }
-            gsm.setAlreadyPaused(false);
+        if (keyH.pauseSwitch()){
+                gsm.setState(GameStateManager.State.PREVIOUS);// Uscendo dalla pausa bisogna ritornare allo stato precedente
+                gsm.playMusicLoop(0);
         }
         // Aggiorna il volume quando il mouse è premuto sulla barra del volume
-        if (keyH.isPaused() && mouseHandler.isMousePressed()) {
+        if (mouseHandler.isMousePressed()) {
             updateVolume();
         }
 

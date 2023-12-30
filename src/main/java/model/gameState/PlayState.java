@@ -39,7 +39,7 @@ public class PlayState implements GameState{
 
     @Override
     public void update() {
-        if (keyH.isPaused() && !gsm.isAlreadyPaused() && !gsm.isInDialogue()){
+        if (keyH.pauseSwitch() && !gsm.isInDialogue()){
             gsm.setState(GameStateManager.State.PAUSE);
         }
         if(!gsm.isInDialogue())
@@ -98,7 +98,7 @@ public class PlayState implements GameState{
 
     }
 
-
+//DEBUG
     public void drawToTempScreen() {
 
         // DEBUG

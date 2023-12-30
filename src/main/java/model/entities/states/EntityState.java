@@ -1,5 +1,6 @@
-package model.entities;
+package model.entities.states;
 
+import model.entities.Entity;
 import model.entities.enemies.Enemy;
 
 import java.awt.*;

@@ -5,20 +5,19 @@ import view.GamePanel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Arrays;
 
 public class KeyHandler implements KeyListener {
 
     private GamePanel gamePanel;
     private GameStateManager gsm;
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, attackVPressed, spacePressed, enterPressed, yPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, attackVPressed, spacePressed, enterPressed, yPressed, pPressed;
+    private boolean pauseSwitch;
 
     private boolean showDebugText = false;
-    private boolean isPaused = false;
 
     private boolean attacking = false;
-    private String lastPress;
-
 
     public KeyHandler(){}
 
@@ -74,7 +73,8 @@ public class KeyHandler implements KeyListener {
         }
         //PAUSA
         if (code == KeyEvent.VK_P) {
-            isPaused = !isPaused;
+            pPressed = true;
+            pauseSwitch = true;
         }
     }
 
@@ -111,7 +111,15 @@ public class KeyHandler implements KeyListener {
         }
         //PAUSA
         if (code == KeyEvent.VK_P) {
+            pPressed = false;
         }
+    }
+    public void releaseToggles(){
+        pauseSwitch = false;
+    }
+
+    public boolean pauseSwitch(){
+        return pauseSwitch;
     }
 
     public boolean isShowDebugText() {
@@ -119,8 +127,6 @@ public class KeyHandler implements KeyListener {
         return showDebugText;
     }
 
-    public boolean isPaused() {
-        return isPaused;
-    }
+
 }
 

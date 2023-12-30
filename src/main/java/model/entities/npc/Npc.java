@@ -1,8 +1,7 @@
 package model.entities.npc;
 
 import model.entities.Entity;
-import model.entities.EntityState;
-import model.entities.enemies.Enemy;
+import model.entities.states.EntityState;
 import model.entities.states.IdleState;
 import model.entities.states.MovementState;
 import model.gameState.GameStateManager;

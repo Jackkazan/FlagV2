@@ -1,7 +1,6 @@
 package model.entities.player;
 
 import controller.KeyHandler;
-import model.entities.EntityState;
 import model.entities.enemies.Enemy;
 import model.entities.items.Item;
 import model.entities.npc.Npc;
@@ -14,11 +13,9 @@ import model.collisions.CollisionObject;
 import view.GamePanel;
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
-import javax.swing.Timer;
 
 import static view.GamePanel.tileSize;
 

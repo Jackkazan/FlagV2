@@ -35,15 +35,12 @@ public class KeyHandlerTest {
 
     @Test
     public void testPauseToggle() {
-        assertFalse(keyHandler.isPaused());
+        assertFalse(keyHandler.pauseSwitch());
 
-        // Pressing 'P' should toggle pause
-        keyHandler.keyPressed(createKeyEvent(KeyEvent.VK_P));
-        assertTrue(keyHandler.isPaused());
 
-        // Pressing 'P' again should toggle it back
         keyHandler.keyPressed(createKeyEvent(KeyEvent.VK_P));
-        assertFalse(keyHandler.isPaused());
+        assertTrue(keyHandler.pauseSwitch());
+
     }
 
     @Test

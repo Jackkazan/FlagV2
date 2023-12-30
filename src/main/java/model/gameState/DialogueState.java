@@ -48,8 +48,8 @@ public class DialogueState implements GameState {
     @Override
     public void update() {
         gsm.getPlayState().update();
-        if (keyH.isPaused()){
-            gsm.dialoguePause();
+        if (keyH.pauseSwitch()){
+            gsm.setState(GameStateManager.State.PAUSE);
         }
         if(keyH.interactPressed && eReleased &&!dialogueAdvancing && dialogueDisplayed){
            advanceDialogue();
