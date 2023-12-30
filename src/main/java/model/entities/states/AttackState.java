@@ -33,7 +33,7 @@ public class AttackState implements EntityState {
     }
 
     private void updateEnemy(Enemy enemy){
-        if(enemy.getSpriteNum()>=3) {
+        if(enemy.getSpriteNum()==3) {
             enemy.setAttackAnimationCompleted(true);
         }
         if(enemy.getSpriteNum()==0 && enemy.getAttackAnimationCompleted()) {
@@ -46,6 +46,8 @@ public class AttackState implements EntityState {
             enemy.setSpriteNum((enemy.getSpriteNum() + 1) % 4);
             enemy.setSpriteCounter(0);
         }
+        System.out.println("Sprite num: "+ enemy.getSpriteNum());
+
     }
     private void drawEnemy(Graphics2D graphics2D, Enemy enemy){
         BufferedImage[] images = switch (enemy.getDirection()) {
@@ -60,7 +62,11 @@ public class AttackState implements EntityState {
         int screenY = enemy.getY() - enemy.getGsm().getPlayer().getY() + enemy.getGsm().getPlayer().getScreenY();
 
         if (images != null && enemy.getGsm().getMapManager().getCurrentMap() == enemy.getTileManager()) {
-            graphics2D.drawImage(images[enemy.getSpriteNum()], screenX-(enemy.getIdle1().getWidth()/2), screenY-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+            //perché altrimenti prima di finire disegnava lo sprite 0
+            if(enemy.getAttackAnimationCompleted())
+                graphics2D.drawImage(images[images.length-1], screenX-(enemy.getIdle1().getWidth()/2), screenY-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+            else
+                graphics2D.drawImage(images[enemy.getSpriteNum()], screenX-(enemy.getIdle1().getWidth()/2), screenY-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
         }
     }
 

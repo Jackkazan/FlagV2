@@ -54,7 +54,7 @@ public class EnemyCreator {
 
         Enemy slime1 = new Enemy.EnemyBuilder(25,46)
                 .setName("Slime1")
-                .setSpeed(2)
+                .setSpeed(2)    //se si settano numeri dispari vibra, ma che porco dio ne so
                 .setMaxLife(6)
                 .setCurrentLife(6)
                 .setDamage(3)
