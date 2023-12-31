@@ -12,6 +12,7 @@ import model.gameState.GameStateManager;
 import model.collisions.CollisionObject;
 import view.GamePanel;
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,6 +28,32 @@ public class Player extends Enemy {
     private final int screenX;
     private final int screenY;
 
+    public void updateInteractionArea() {
+        interactionArea.setLocation(x -tileSize , y-tileSize);
+    }
+
+    public void updateCollisionArea() {
+        collisionArea.setLocation(x-tileSize, y-tileSize);
+    }
+
+    public void updateAttackArea() {
+        switch(direction){
+            case "up":
+                attackArea = new Rectangle(x-tileSize,y-tileSize*2-16,tileSize*3,tileSize*3);
+                break;
+            case "down":
+                attackArea = new Rectangle(x-tileSize,y-tileSize,tileSize*3,tileSize*3);
+                break;
+            case "left":
+                attackArea = new Rectangle(x-tileSize*2,y-tileSize,tileSize*3,tileSize*3);
+                break;
+            case "right":
+                attackArea = new Rectangle(x,y-tileSize,tileSize*3,tileSize*3);
+                break;
+        }
+
+    }
+
 
     public enum swordStateAndArmor { IronSwordNoArmor, IronSwordAndArmor, GoldSwordAndArmor, RubySwordAndArmor }
 
@@ -36,6 +63,8 @@ public class Player extends Enemy {
 
     // Nuova area di interazione
     private Rectangle interactionArea;
+
+    private Rectangle attackArea;
 
 
 
@@ -70,8 +99,9 @@ public class Player extends Enemy {
         isHitted= false;
         attackAnimationCompleted = true;
         hitAnimationCompleted = true;
-        this.setCollisionArea(tileSize*2,tileSize*2);
-        interactionArea = new Rectangle(x, y, tileSize*2+16, tileSize*2+16);
+        attackArea = new Rectangle();
+        collisionArea = new Rectangle(x-tileSize,y-tileSize,tileSize*2,tileSize*2);
+        interactionArea = new Rectangle(x-16, y-16, tileSize*3, tileSize*3);
 
     }
     @Override
@@ -92,6 +122,7 @@ public class Player extends Enemy {
     @Override
     public void update() {
         if (isAttacking) {
+            hitAnEnemy();
             this.setState(State.ATTACK);
         } else {
             if (keyH.spacePressed && attackAnimationCompleted) {
@@ -111,7 +142,29 @@ public class Player extends Enemy {
 
     @Override
     public void draw(Graphics2D graphics2D) {
+
         currentState.draw(graphics2D,this);
+        // Disegna l'area di collisione per debug
+        graphics2D.setColor(Color.RED);
+        graphics2D.drawRect((int) collisionArea.getX(), (int) collisionArea.getY(), (int) collisionArea.getWidth(), (int) collisionArea.getHeight());
+
+        // Disegna l'area di interazione per debug
+        graphics2D.setColor(Color.BLUE);
+        graphics2D.drawRect((int) interactionArea.getX(), (int) interactionArea.getY(), (int) interactionArea.getWidth(), (int) interactionArea.getHeight());
+
+        // Disegna l'area di attacco per debug
+        graphics2D.setColor(Color.YELLOW);
+        graphics2D.drawRect((int) attackArea.getX(), (int) attackArea.getY(), (int) attackArea.getWidth(), (int) attackArea.getHeight());
+
+    }
+
+    public void hitAnEnemy(){
+        for(Enemy enemy: gsm.getEnemyList()) {
+            if (attackArea.intersects(enemy.getCollisionArea())) {
+                System.out.println(enemy.getName() + " è stato hittato");
+                enemy.setHitted(true);
+            }
+        }
     }
 
     public boolean collidesWithEnemies(int nextX, int nextY) {
@@ -278,6 +331,10 @@ public class Player extends Enemy {
 
     public boolean isHitted() {
         return isHitted;
+    }
+
+    public Rectangle getAttackArea() {
+        return attackArea;
     }
 
     public boolean isHitAnimationCompleted() {

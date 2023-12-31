@@ -2,17 +2,13 @@ package model.entities.states;
 
 import model.entities.Entity;
 
+import model.entities.EntityState;
 import model.entities.enemies.Enemy;
-import model.entities.npc.Npc;
 import model.entities.player.Player;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
-import static model.entities.Entity.MAX_ATTACK_ANIMATION_FRAMES;
-import static model.gameState.GameStateManager.keyH;
-import static view.GamePanel.tileSize;
 
 public class AttackState implements EntityState {
     @Override

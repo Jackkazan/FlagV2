@@ -2,6 +2,7 @@ package model.entities.states;
 
 import model.entities.Entity;
 
+import model.entities.EntityState;
 import model.entities.enemies.Enemy;
 
 
@@ -25,20 +26,41 @@ public class DeadState implements EntityState {
     }
 
     private void updateEnemy(Enemy enemy) {
+        if(enemy.getSpriteNum()==8) {
+            enemy.setDeadAnimationCompleted(true);
+            //logica dell'hit
+
+        }
+        if(enemy.getSpriteNum()==0 && enemy.getDeadAnimationCompleted()) {
+            enemy.setDead(false);
+            enemy.setDespawned(true);
+        }
+        // alternatore di sprite
+        enemy.incrementSpriteCounter();
+        // più è alto, più è lento
+        if (enemy.getSpriteCounter() > 7) {
+            enemy.setSpriteNum((enemy.getSpriteNum() + 1) % 9);
+            enemy.setSpriteCounter(0);
+        }
+
         // Implementa la logica per la transizione a DEAD state, se necessario
         //System.out.println("Il nemico deve morì");
-        enemy.die();
     }
 
     private void drawEnemy(Graphics2D graphics2D, Enemy enemy) {
-        // Implementa la logica di disegno per lo stato DEAD
-        BufferedImage deadImage = enemy.getDeadImage();
+        BufferedImage[] images = switch (enemy.getDirection()){
+            case "up","up&attack","down","down&attack","left","left&attack","right", "right&attack" -> new BufferedImage[]{enemy.getDead1(), enemy.getDead2(), enemy.getDead3(), enemy.getDead4(), enemy.getDead5(), enemy.getDead6(), enemy.getDead7(),enemy.getDead8(),enemy.getDead9()};
+            default -> null;
+        };
 
         int screenX = enemy.getX() - enemy.getGsm().getPlayer().getX() + enemy.getGsm().getPlayer().getScreenX();
         int screenY = enemy.getY() - enemy.getGsm().getPlayer().getY() + enemy.getGsm().getPlayer().getScreenY();
 
-        if (deadImage != null && enemy.getGsm().getMapManager().getCurrentMap() == enemy.getTileManager()) {
-            graphics2D.drawImage(deadImage, screenX - (deadImage.getWidth() / 2), screenY - (deadImage.getHeight() / 2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+        if (images != null && enemy.getGsm().getMapManager().getCurrentMap() == enemy.getTileManager()) {
+            if(enemy.getDeadAnimationCompleted())
+                graphics2D.drawImage(images[images.length-1], screenX-(enemy.getIdle1().getWidth()/2), screenY-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+            else
+                graphics2D.drawImage(images[enemy.getSpriteNum()], screenX-(enemy.getIdle1().getWidth()/2), screenY-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
         }
     }
 }

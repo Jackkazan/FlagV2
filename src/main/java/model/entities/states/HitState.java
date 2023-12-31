@@ -1,6 +1,7 @@
 package model.entities.states;
 
 import model.entities.Entity;
+import model.entities.EntityState;
 import model.entities.enemies.Enemy;
 import model.entities.player.Player;
 
@@ -28,17 +29,27 @@ public class HitState implements EntityState {
         }
     }
     private void updateEnemy(Enemy enemy) {
-        //logica per gestire l'hit dell'enemy
-        if(enemy.isHittingEnemy()){
+        if(enemy.getSpriteNum()==3) {
+            enemy.setHitAnimationCompleted(true);
+            //logica dell'hit
 
-            long currentTime = System.currentTimeMillis();
+        }
+        if(enemy.getSpriteNum()==0 && enemy.getHitAnimationCompleted()) {
+            enemy.setHitted(false);
+        }
+        long currentTime = System.currentTimeMillis();
 
-            // Verifica se è passato il periodo di cooldown
-            if (currentTime - enemy.getLastHitTime() >= enemy.getHitCooldown()) {
-                //System.out.println("Sto colpendo il nemico");
-                enemy.takeDamage(1);  // 1 danno per hit
-                enemy.setLastHitTime(currentTime);  // Aggiorna il tempo dell'ultima hit
-            }
+        // Verifica se è passato il periodo di cooldown
+        if (currentTime - enemy.getLastHitTime() >= enemy.getHitCooldown()) {
+            //System.out.println("Sto colpendo il nemico");
+            enemy.takeDamage(1);  // 1 danno per hit
+            enemy.setLastHitTime(currentTime);  // Aggiorna il tempo dell'ultima hit
+        }
+        enemy.incrementSpriteCounter();
+        //velocità di cambio sprite 5-10
+        if (enemy.getSpriteCounter() > 10) {
+            enemy.setSpriteNum((enemy.getSpriteNum() + 1) % 4);
+            enemy.setSpriteCounter(0);
         }
     }
     private void drawEnemy(Graphics2D graphics2D, Enemy enemy) {

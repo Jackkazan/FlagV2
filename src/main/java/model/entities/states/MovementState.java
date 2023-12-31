@@ -1,6 +1,7 @@
 package model.entities.states;
 
 import model.entities.Entity;
+import model.entities.EntityState;
 import model.entities.enemies.Enemy;
 import model.entities.npc.Npc;
 import model.entities.player.Player;
@@ -57,11 +58,14 @@ public class MovementState implements EntityState {
         if (!player.collidesWithObjects(nextX, nextY) && !player.collidesWithNpcs(nextX, nextY) && !player.collidesWithItems(nextX, nextY)) {
             player.setX(nextX);
             player.setY(nextY);
-            // Aggiorna la collisionArea del giocatore
-            player.getCollisionArea().setLocation(player.getX()-tileSize, player.getY()-tileSize);
 
             // Aggiorna l'area di interazione
-            player.getInteractionArea().setLocation(player.getX() - tileSize , player.getY() - tileSize); // Esempio: l'area di interazione è leggermente più grande di quella del giocatore
+            player.updateInteractionArea();
+            // Aggiorna la collisionArea del giocatore
+            player.updateCollisionArea();
+            // Aggiorna l'area di attacco del player a seconda della direzione
+            player.updateAttackArea();
+
 
             //alternatore di sprite
             player.incrementSpriteCounter();
