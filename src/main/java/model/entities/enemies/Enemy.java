@@ -20,16 +20,16 @@ public class Enemy extends Npc {
     protected int currentLife;
     protected int damage;
 
-    protected boolean isAttacking;
-    protected boolean isHitted;
-    protected boolean attackAnimationCompleted;
+    protected boolean isAttacking =false;
+    protected boolean isHitted = false;
+    protected boolean attackAnimationCompleted = true;
     private int aggroRange;
 
-    private boolean isDespawned;
+    private boolean isDespawned = false;
     private boolean isDead = false;
 
     private int despawnTimer = 0;
-    private int despawnCooldown = 200;
+    private int despawnCooldown = 500;
     private int respawnX; // Posizione di respawn X
     private int respawnY; // Posizione di respawn Y
 
@@ -41,7 +41,6 @@ public class Enemy extends Npc {
     protected BufferedImage dead1, dead2, dead3, dead4, dead5, dead6, dead7, dead8, dead9;
 
     protected BufferedImage idle1,idle2,idle3,idle4;
-    private int attackAnimationFrames;
     private boolean isHitAnimationCompleted = true;
     private boolean deadAnimationCompleted= true;
 
@@ -62,7 +61,7 @@ public class Enemy extends Npc {
     }
 
     public void setDead(boolean b) {
-        this.isDead=false;
+        this.isDead=b;
     }
 
     public enum State{IDLE, MOVEMENT,HIT,ATTACK, RESPAWN, DEAD}
@@ -93,12 +92,13 @@ public class Enemy extends Npc {
     public void update() {
         //System.out.println("Despawn Timer: " + despawnTimer);
         //System.out.println("Is Despawned: " + isDespawned);
-        if (this.isDespawned) {
-            this.setState(State.RESPAWN);
+        this.checkDeath();
+        if (this.isDead) {
+            this.setState(State.DEAD);
         }else {
-            this.checkDeath();
-            if (this.isDead) {
-                this.setState(State.DEAD);
+            if (this.isDespawned) {
+                this.reset();
+                this.setState(State.RESPAWN);
             } else {
                 if (this.isHitted) {
                     this.setState(State.HIT);
@@ -118,11 +118,19 @@ public class Enemy extends Npc {
         }
         currentState.update(this);
     }
+
+    private void reset() {
+        this.currentLife = this.maxLife;
+        this.isAttacking = false;
+        this.isHitted = false;
+    }
+
     public void checkDeath(){
-        if(this.currentLife <= 0 && !this.isDead) {
+        if(this.currentLife <= 0 && !this.isDead && !this.isDespawned) {
             this.isDead = true;
             this.deadAnimationCompleted = false;
             this.spriteNum = 0;
+            this.despawnTimer = this.despawnCooldown;
         }
     }
 
@@ -434,7 +442,7 @@ public class Enemy extends Npc {
 
     public void respawn(int respawnX, int respawnY) {
         //System.out.println("Respawning at X: " + respawnX + ", Y: " + respawnY);
-        isDespawned = false;
+        this.isDespawned = false;
         this.x = respawnX * tileSize;
         this.y = respawnY * tileSize;
 
