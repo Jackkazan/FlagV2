@@ -50,6 +50,11 @@ public class EnemyCreator {
         String greenSlime1AttackRight_2= "/enemy/GreenSlime/GreenSlime1AttackRight_2.png";
         String greenSlime1AttackRight_3= "/enemy/GreenSlime/GreenSlime1AttackRight_3.png";
 
+        String greenSlime1Hit_0="/enemy/GreenSlime/GreenSlime1Hit_0.png";
+        String greenSlime1Hit_1="/enemy/GreenSlime/GreenSlime1Hit_1.png";
+        String greenSlime1Hit_2="/enemy/GreenSlime/GreenSlime1Hit_2.png";
+        String greenSlime1Hit_3="/enemy/GreenSlime/GreenSlime1Hit_3.png";
+
         String greenSlime1Dead_0 = "/enemy/GreenSlime/GreenSlime1Dead_0.png";
         String greenSlime1Dead_1 = "/enemy/GreenSlime/GreenSlime1Dead_1.png";
         String greenSlime1Dead_2 = "/enemy/GreenSlime/GreenSlime1Dead_2.png";
@@ -87,6 +92,7 @@ public class EnemyCreator {
                 .set9DeadImage(greenSlime1Dead_0, greenSlime1Dead_1, greenSlime1Dead_2,
                         greenSlime1Dead_3, greenSlime1Dead_4, greenSlime1Dead_5,
                         greenSlime1Dead_6, greenSlime1Dead_7, greenSlime1Dead_8)
+                .set4HitImage(greenSlime1Hit_0,greenSlime1Hit_1,greenSlime1Hit_2,greenSlime1Hit_3)
                 .setAggroRange(10)
                 .setRespawnCoordinates(25,46)
                 .build();

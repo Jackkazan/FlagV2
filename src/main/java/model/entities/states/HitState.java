@@ -8,6 +8,8 @@ import model.entities.player.Player;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static view.GamePanel.tileSize;
+
 public class HitState implements EntityState {
 
 
@@ -47,7 +49,14 @@ public class HitState implements EntityState {
         }
         enemy.incrementSpriteCounter();
         //velocità di cambio sprite 5-10
-        if (enemy.getSpriteCounter() > 10) {
+        if (enemy.getSpriteCounter() > 5) {
+
+            //da sistemare per tutte le direzioni e per le collisioni con la mappa
+            int nextX = enemy.getX()/tileSize;
+            int nextY = enemy.getY()/tileSize;
+            if(!enemy.collidesWithObjects(nextX-1,nextY))
+                enemy.setPosition(nextX-1, nextY);
+
             enemy.setSpriteNum((enemy.getSpriteNum() + 1) % 4);
             enemy.setSpriteCounter(0);
         }
@@ -55,7 +64,7 @@ public class HitState implements EntityState {
     private void drawEnemy(Graphics2D graphics2D, Enemy enemy) {
         //PER ORA METTO L'IDLE PERCHE' SE NO L'IMMAGINE RIMANE INVISIBILE DURANTE L'HIT
         BufferedImage[] images = switch (enemy.getDirection()){
-            case "up","up&attack","down","down&attack","left","left&attack","right", "right&attack" -> new BufferedImage[]{enemy.getIdle1(), enemy.getIdle2(), enemy.getIdle3(), enemy.getIdle4()};
+            case "up","up&attack","down","down&attack","left","left&attack","right", "right&attack" -> new BufferedImage[]{enemy.getHit1(), enemy.getHit2(), enemy.getHit3(), enemy.getHit4()};
             default -> null;
         };
 

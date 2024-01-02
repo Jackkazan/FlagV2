@@ -41,6 +41,8 @@ public class Enemy extends Npc {
     protected BufferedImage dead1, dead2, dead3, dead4, dead5, dead6, dead7, dead8, dead9;
 
     protected BufferedImage idle1,idle2,idle3,idle4;
+
+    protected BufferedImage hit1,hit2,hit3,hit4;
     private boolean isHitAnimationCompleted = true;
     private boolean deadAnimationCompleted= true;
 
@@ -294,6 +296,18 @@ public class Enemy extends Npc {
                 this.entity.idle2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_idle2)));
                 this.entity.idle3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_idle3)));
                 this.entity.idle4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_idle4)));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return this;
+        }
+        public Enemy.EnemyBuilder set4HitImage(String path_hit1, String path_hit2, String path_hit3, String path_hit4) {
+            try {
+                this.entity.hit1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hit1)));
+                this.entity.hit2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hit2)));
+                this.entity.hit3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hit3)));
+                this.entity.hit4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hit4)));
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -658,4 +672,31 @@ public class Enemy extends Npc {
         isHitted = hitted;
     }
 
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public BufferedImage getHit1() {
+        return hit1;
+    }
+
+    public BufferedImage getHit2() {
+        return hit2;
+    }
+
+    public BufferedImage getHit3() {
+        return hit3;
+    }
+
+    public BufferedImage getHit4() {
+        return hit4;
+    }
+
+    public boolean isHitAnimationCompleted() {
+        return isHitAnimationCompleted;
+    }
+
+    public boolean isDeadAnimationCompleted() {
+        return deadAnimationCompleted;
+    }
 }
