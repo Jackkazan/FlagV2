@@ -24,7 +24,7 @@ class ItemPrototype {
         // Modificare alcuni valori del nuovo oggetto, se necessario
         newKeyItem.setName(name);
         newKeyItem.setPosition(x, y);
-        newKeyItem.setCollisionArea(new Rectangle(x,y,collisionWidth,collisionHeight));
+        newKeyItem.setCollisionArea(x,y,collisionWidth,collisionHeight);
 
         // Restituire il nuovo oggetto
         return newKeyItem;

@@ -4,6 +4,7 @@ import model.entities.Entity;
 import model.entities.Prototype;
 import model.gameState.GameStateManager;
 import model.quests.Quest;
+import model.tile.TileManager;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -21,6 +22,7 @@ public class Item extends Entity implements Prototype {
     private BufferedImage animateImage1, animateImage2, animateImage3, animateImage4;
     private int speedChangeAnimateSprite;
     private List<Quest> relatedQuests= new ArrayList<>();
+    private int offsetY;
 
     public Item() {
         this.gsm = GameStateManager.gp.getGsm();
@@ -34,17 +36,14 @@ public class Item extends Entity implements Prototype {
         int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
 
         if(staticImage != null && gsm.getMapManager().getCurrentMap() == this.tileManager)
-            graphics2D.drawImage(staticImage, screenX, screenY, (tileSize*imageWidth)/16, (tileSize*imageHeight)/16, null);
+            graphics2D.drawImage(this.staticImage, screenX, screenY+ this.offsetY, (tileSize*this.imageWidth)/16, (tileSize*this.imageHeight)/16, null);
 
     }
     @Override
-    public void update() {
+    public void update(){
 
-        if(collisionArea != null)
-            collisionArea.setLocation(x, y);
         // animazione se succede evento o altro
         interact();
-
     }
 
     public void interact() {
@@ -95,6 +94,10 @@ public class Item extends Entity implements Prototype {
         return true;
     }
 
+    public void setCollisionArea(int x, int y, int collisionWidth, int collisionHeight) {
+        this.collisionArea = new Rectangle(x*tileSize,y*tileSize,collisionWidth,collisionHeight);
+    }
+
     public static class ItemBuilder extends EntityBuilder<Item,ItemBuilder>{
 
         public ItemBuilder(int x, int y){
@@ -120,6 +123,13 @@ public class Item extends Entity implements Prototype {
             }
             return this;
         }
+
+
+        public ItemBuilder setOffsetY(int offsetY) {
+            this.entity.offsetY = offsetY;
+            return this;
+        }
+
         public ItemBuilder setStaticImage(BufferedImage staticImage) {
             this.entity.staticImage = staticImage;
             return this;

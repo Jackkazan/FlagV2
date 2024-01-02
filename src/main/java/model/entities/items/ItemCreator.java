@@ -13,6 +13,8 @@ import model.tile.MapManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import static view.GamePanel.tileSize;
+
 public class ItemCreator {
 
     static List<Quest> questList = QuestInitializer.createQuestList();
@@ -33,13 +35,14 @@ public class ItemCreator {
                 .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
 
-        Item portaCasettaInizialeChiusa = new Item.ItemBuilder(4,7)
+        Item portaCasettaInizialeChiusa = new Item.ItemBuilder(4,8)
                 .setName("portaCasettaInizialeChiusa")
                 .setStaticImage("/object/PortaChiusaInterno.png")
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())
+                .setOffsetY(-tileSize)
                 .setInteractable(true)
                 .setImageDimension(32,48)
-                .setCollisionArea(48,48)
+                .setCollisionArea(4*tileSize,9*tileSize,48,16)
                 .setRelatedQuests(questList.get(1))
                 .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
@@ -64,11 +67,12 @@ public class ItemCreator {
 
 
 
-        Item spaventaPasseri1 = new Item.ItemBuilder(43, 27)
+        Item spaventaPasseri1 = new Item.ItemBuilder(43, 28)
                 .setName("spaventaPasseri1")
                 .setStaticImage("/object/spaventaPasseri.png")
                 .setImageDimension(32,48)
-                .setCollisionArea(32,64)
+                .setCollisionArea(32,32)
+                .setOffsetY(-48)
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
                 .setRelatedQuests(questList.get(0))
                 .setInteractable(true)
@@ -77,11 +81,11 @@ public class ItemCreator {
 
         prototypeManager = new ItemPrototype(spaventaPasseri1);
 
-        Prototype spaventaPasseri2 = prototypeManager.createKeyItems("spaventaPasseri2",64,27,32,64);
-        Prototype spaventaPasseri3 = prototypeManager.createKeyItems("spaventaPasseri3", 82,30,32,64);
-        Prototype spaventaPasseri4 = prototypeManager.createKeyItems("spaventaPasseri4",44,40,32,64);
-        Prototype spaventaPasseri5 = prototypeManager.createKeyItems("spaventaPasseri5", 64,43,32,64);
-        Prototype spaventaPasseri6 = prototypeManager.createKeyItems("spaventaPasseri6", 85,42,32,64);
+        Prototype spaventaPasseri2 = prototypeManager.createKeyItems("spaventaPasseri2",64,28,32,32);
+        Prototype spaventaPasseri3 = prototypeManager.createKeyItems("spaventaPasseri3", 82,31,32,32);
+        Prototype spaventaPasseri4 = prototypeManager.createKeyItems("spaventaPasseri4",44,41,32,32);
+        Prototype spaventaPasseri5 = prototypeManager.createKeyItems("spaventaPasseri5", 64,44,32,32);
+        Prototype spaventaPasseri6 = prototypeManager.createKeyItems("spaventaPasseri6", 85,43,32,32);
 
 
         //Aggiunta di tutti gli oggetti alla lista
