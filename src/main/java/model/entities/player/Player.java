@@ -39,16 +39,16 @@ public class Player extends Enemy {
     public void updateAttackArea() {
         switch(direction){
             case "up":
-                attackArea = new Rectangle(x-tileSize,y-tileSize*2-16,tileSize*3,tileSize*3);
+                attackArea = new Rectangle(x-tileSize,y-tileSize*2,tileSize*3,tileSize*2);
                 break;
             case "down":
-                attackArea = new Rectangle(x-tileSize,y-tileSize,tileSize*3,tileSize*3);
+                attackArea = new Rectangle(x-tileSize,y,tileSize*3,tileSize*2);
                 break;
             case "left":
-                attackArea = new Rectangle(x-tileSize*2,y-tileSize,tileSize*3,tileSize*3);
+                attackArea = new Rectangle(x-tileSize-24,y-tileSize,tileSize*2,tileSize*3);
                 break;
             case "right":
-                attackArea = new Rectangle(x,y-tileSize,tileSize*3,tileSize*3);
+                attackArea = new Rectangle(x+24,y-tileSize,tileSize*2,tileSize*3);
                 break;
         }
 
@@ -161,7 +161,11 @@ public class Player extends Enemy {
     public void hitAnEnemy(){
         for(Enemy enemy: gsm.getEnemyList()) {
             if (attackArea.intersects(enemy.getCollisionArea())) {
-                System.out.println(enemy.getName() + " è stato hittato");
+                //System.out.println(enemy.getName() + " è stato hittato");
+                if(!enemy.isHitted()) {
+                    enemy.setSpriteNum(0);
+                    enemy.setHitAnimationCompleted(false);
+                }
                 enemy.setHitted(true);
             }
         }

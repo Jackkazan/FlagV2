@@ -40,7 +40,7 @@ public class AttackState implements EntityState {
         //alternatore di sprite
         enemy.incrementSpriteCounter();
         //velocità di cambio sprite 5-10
-        if (enemy.getSpriteCounter() > 10) {
+        if (enemy.getSpriteCounter() > 7) {
             enemy.setSpriteNum((enemy.getSpriteNum() + 1) % 4);
             enemy.setSpriteCounter(0);
         }

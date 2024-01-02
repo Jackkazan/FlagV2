@@ -51,29 +51,35 @@ public class HitState implements EntityState {
         //velocità di cambio sprite 5-10
         if (enemy.getSpriteCounter() > 5) {
             //da sistemare per tutte le direzioni e per le collisioni con la mappa
-            int nextX = enemy.getX()/tileSize;
-            int nextY = enemy.getY()/tileSize;
-
+            int nextX = enemy.getX();
+            int nextY = enemy.getY();
+            int pushback = enemy.getSpeed()*4;
             switch (enemy.getDirection()) {
                 case "up","up&attack":
-                    if(!enemy.collidesWithObjects(nextX,nextY+1))
-                        enemy.setPosition(nextX, nextY+1);
+                    if(!enemy.collidesWithObjects(nextX,nextY+pushback)) {
+                        enemy.setX(nextX);
+                        enemy.setY(nextY + pushback);
+                    }
                     break;
                 case "down","down&attack" :
-                    if(!enemy.collidesWithObjects(nextX,nextY-1))
-                        enemy.setPosition(nextX, nextY-1);
+                    if(!enemy.collidesWithObjects(nextX,nextY-pushback)){
+                        enemy.setX(nextX);
+                        enemy.setY(nextY-pushback);
+                    }
                     break;
                 case "left","left&attack" :
-                    if(!enemy.collidesWithObjects(nextX+1,nextY))
-                        enemy.setPosition(nextX+1, nextY);
+                    if(!enemy.collidesWithObjects(nextX+pushback,nextY)) {
+                        enemy.setX(nextX +pushback);
+                        enemy.setY(nextY);
+                    }
                     break;
                 case "right","right&attack" :
-                    if(!enemy.collidesWithObjects(nextX-1,nextY))
-                        enemy.setPosition(nextX-1, nextY);
+                    if(!enemy.collidesWithObjects(nextX-pushback,nextY)) {
+                        enemy.setX(nextX - pushback);
+                        enemy.setY(nextY);
+                    }
                     break;
             }
-
-
             enemy.setSpriteNum((enemy.getSpriteNum() + 1) % 4);
             enemy.setSpriteCounter(0);
         }

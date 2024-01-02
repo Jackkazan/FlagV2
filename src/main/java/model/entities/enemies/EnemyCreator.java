@@ -93,7 +93,7 @@ public class EnemyCreator {
                         greenSlime1Dead_3, greenSlime1Dead_4, greenSlime1Dead_5,
                         greenSlime1Dead_6, greenSlime1Dead_7, greenSlime1Dead_8)
                 .set4HitImage(greenSlime1Hit_0,greenSlime1Hit_1,greenSlime1Hit_2,greenSlime1Hit_3)
-                .setAggroRange(10)
+                .setAggroRange(10) //10
                 .setRespawnCoordinates(25,46)
                 .build();
 
