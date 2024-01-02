@@ -42,7 +42,7 @@ public class HitState implements EntityState {
         long currentTime = System.currentTimeMillis();
 
         // Verifica se è passato il periodo di cooldown
-        if (currentTime - enemy.getLastHitTime() >= enemy.getHitCooldown()) {
+        if (currentTime - enemy.getLastHitTime() >= enemy.getHitCooldown()){
             //System.out.println("Sto colpendo il nemico");
             enemy.takeDamage(1);  // 1 danno per hit
             enemy.setLastHitTime(currentTime);  // Aggiorna il tempo dell'ultima hit
@@ -50,12 +50,29 @@ public class HitState implements EntityState {
         enemy.incrementSpriteCounter();
         //velocità di cambio sprite 5-10
         if (enemy.getSpriteCounter() > 5) {
-
             //da sistemare per tutte le direzioni e per le collisioni con la mappa
             int nextX = enemy.getX()/tileSize;
             int nextY = enemy.getY()/tileSize;
-            if(!enemy.collidesWithObjects(nextX-1,nextY))
-                enemy.setPosition(nextX-1, nextY);
+
+            switch (enemy.getDirection()) {
+                case "up","up&attack":
+                    if(!enemy.collidesWithObjects(nextX,nextY+1))
+                        enemy.setPosition(nextX, nextY+1);
+                    break;
+                case "down","down&attack" :
+                    if(!enemy.collidesWithObjects(nextX,nextY-1))
+                        enemy.setPosition(nextX, nextY-1);
+                    break;
+                case "left","left&attack" :
+                    if(!enemy.collidesWithObjects(nextX+1,nextY))
+                        enemy.setPosition(nextX+1, nextY);
+                    break;
+                case "right","right&attack" :
+                    if(!enemy.collidesWithObjects(nextX-1,nextY))
+                        enemy.setPosition(nextX-1, nextY);
+                    break;
+            }
+
 
             enemy.setSpriteNum((enemy.getSpriteNum() + 1) % 4);
             enemy.setSpriteCounter(0);
