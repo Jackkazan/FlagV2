@@ -78,7 +78,7 @@ public class PlayState implements GameState{
         //ordina la lista
         gsm.entityList = gsm.getEntityList().stream()
                 .sorted(Comparator.comparing(Entity:: getY))
-                        .collect(Collectors.toList());
+                .collect(Collectors.toList());
 
 
         // Gestione delle transizioni della mappa
@@ -94,6 +94,7 @@ public class PlayState implements GameState{
         Graphics2D bufferGraphics = buffer.createGraphics();
         // Cancella completamente l'immagine del buffer
         bufferGraphics.clearRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
+
         mapManager.draw(bufferGraphics);
         /*
         for (Npc npc : gsm.getNpcList()) {
