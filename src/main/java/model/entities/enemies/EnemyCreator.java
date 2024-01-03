@@ -95,6 +95,7 @@ public class EnemyCreator {
                 .set4HitImage(greenSlime1Hit_0,greenSlime1Hit_1,greenSlime1Hit_2,greenSlime1Hit_3)
                 .setAggroRange(10) //10
                 .setRespawnCoordinates(25,46)
+                .setMaxHealthBarWidth(65)  // Imposta la lunghezza massima della barra della vita
                 .build();
 
         enemyList.add(slime1);

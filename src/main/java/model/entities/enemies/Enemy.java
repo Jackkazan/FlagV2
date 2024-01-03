@@ -25,6 +25,8 @@ public class Enemy extends Npc {
     protected boolean attackAnimationCompleted = true;
     private int aggroRange;
 
+    private int maxHealthBarWidth; //lunghezza massima della barra della vita
+
     private boolean isDespawned = false;
     private boolean isDead = false;
 
@@ -74,7 +76,9 @@ public class Enemy extends Npc {
         this.keyH = GameStateManager.keyH;
         this.currentState = new IdleState();
         this.lastHitTime = System.currentTimeMillis();
+
     }
+
 
     public boolean isNearPlayer() {
         // puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
@@ -89,7 +93,21 @@ public class Enemy extends Npc {
     @Override
     public void draw(Graphics2D graphics2D) {
         currentState.draw(graphics2D, this);
+
+
+        if(!this.isDespawned) {
+            // Disegna la barra della vita
+            int healthBarWidth = (int) (((double) this.currentLife / this.maxLife) * this.maxHealthBarWidth); //calcola la larghezza della barra della vita in base alla percentuale di vita attuale rispetto alla vita massima
+            int screenX = this.x - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX() - this.maxHealthBarWidth/2 + this.idle1.getWidth()/2;
+            int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
+            graphics2D.setColor(Color.RED);  // Colore della barra
+            graphics2D.fillRect(screenX, screenY - tileSize, healthBarWidth, 7);  // Disegna la barra
+            graphics2D.setColor(Color.BLACK);  // Colore del bordo della barra
+            graphics2D.drawRect(screenX, screenY - tileSize, maxHealthBarWidth, 7);  // Disegna il bordo della barra
+            System.out.println("Bar Coordinates - X: " + screenX + ", Y: " + screenY);
+        }
     }
+
     @Override
     public void update() {
         //System.out.println("Despawn Timer: " + despawnTimer);
@@ -118,6 +136,7 @@ public class Enemy extends Npc {
                 }
             }
         }
+
         currentState.update(this);
     }
 
@@ -428,6 +447,11 @@ public class Enemy extends Npc {
         public EnemyBuilder setRespawnCoordinates(int respawnX, int respawnY) {
             this.entity.respawnX = respawnX;
             this.entity.respawnY = respawnY;
+            return this;
+        }
+
+        public Enemy.EnemyBuilder setMaxHealthBarWidth(int maxHealthBarWidth) {
+            this.entity.maxHealthBarWidth = maxHealthBarWidth;
             return this;
         }
 
