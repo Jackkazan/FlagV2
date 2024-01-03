@@ -70,7 +70,7 @@ public class TileManager {
         // Assegna la matrice alla corretta posizione in mapTileNum
         mapTileNum[layerIndex] = matrice;
 
-        createBufferedImage();
+
     }
     /*
     public void draw(Graphics2D g2){
@@ -108,13 +108,11 @@ public class TileManager {
 
      */
     public void draw(Graphics2D g2){
-        int playerScreenX = gsm.getPlayer().getScreenX();
-        int playerScreenY = gsm.getPlayer().getScreenY();
-
         // Calcola le coordinate del player nella mappa
-        int playerMapX = -gsm.getPlayer().getX() + playerScreenX;
-        int playerMapY = -gsm.getPlayer().getY() + playerScreenY;
+        int playerMapX = -gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
+        int playerMapY = -gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
 
+        createBufferedImage();
         // Disegna il bufferedImage considerando la posizione del player
         g2.drawImage(bufferedImage, playerMapX, playerMapY, null);
     }
@@ -126,6 +124,7 @@ public class TileManager {
             for (int worldRow = 0; worldRow < maxMapRow; worldRow++) {
                 for (int worldCol = 0; worldCol < maxMapCol; worldCol++) {
                     int tileNum = mapTileNum[layerIndex][worldRow][worldCol];
+
                     int worldX = worldCol * tileSize;
                     int worldY = worldRow * tileSize;
                     if(isTileNearPlayer(worldX,worldY))
@@ -139,8 +138,18 @@ public class TileManager {
 
     //da definire per memorizzare nel buffer solo ciò che sta attorno al player
     private boolean isTileNearPlayer(int worldX, int worldY) {
-        return true;
+
+        int playerMapX = gsm.getPlayer().getX();
+        int playerMapY = gsm.getPlayer().getY();
+
+        int buffer = tileSize * 3;
+
+        return worldX  + buffer> playerMapX  &&
+                worldX  - buffer< playerMapX  &&
+                worldY  + buffer> playerMapY  &&
+                worldY  - buffer< playerMapY ;
     }
+
 
     public ArrayList<CollisionObject> getCollisionMap() {
         return this.collisionMap;
