@@ -1,6 +1,8 @@
 package model.entities.player;
 
 import controller.KeyHandler;
+import model.entities.Entity;
+import model.entities.EntityState;
 import model.entities.enemies.Enemy;
 import model.entities.items.Item;
 import model.entities.npc.Npc;
@@ -14,20 +16,45 @@ import view.GamePanel;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
 import static view.GamePanel.tileSize;
 
-public class Player extends Enemy {
+public class Player extends Entity{
     private final GamePanel gamePanel;
+    protected int speed;
+    protected int speedChangeSprite;
 
+    protected int spriteNum;
+    protected BufferedImage
+            up1, up2, up3, up4,
+            down1, down2, down3, down4,
+            left1, left2, left3, left4,
+            right1, right2, right3, right4;
+
+    protected String direction;
+    protected int spriteCounter = 0;
+    protected int totalSprite;
 
     private boolean hitAnimationCompleted;
     private final int screenX;
     private final int screenY;
 
+    protected int maxLife;
+    protected int currentLife;
+    protected EntityState currentState;
+
+    protected boolean isAttacking =false;
+    protected boolean isHitted = false;
+    protected boolean attackAnimationCompleted = true;
+    protected BufferedImage attackUp1, attackUp2, attackUp3, attackUp4, attackDown1, attackDown2, attackDown3, attackDown4, attackLeft1, attackLeft2, attackLeft3, attackLeft4, attackRight1, attackRight2, attackRight3, attackRight4;
+    protected ArrayList<CollisionObject> currentCollisionMap;
+
+    private boolean isHitAnimationCompleted = true;
+    private boolean deadAnimationCompleted= true;
     public void updateInteractionArea() {
         interactionArea.setLocation(x -tileSize , y-tileSize);
     }
@@ -67,6 +94,8 @@ public class Player extends Enemy {
     private Rectangle attackArea;
 
 
+    public enum State{IDLE, MOVEMENT,HIT,ATTACK, RESPAWN, DEAD}
+
 
     public Player(GamePanel gamePanel, GameStateManager gsm, KeyHandler keyH) {
         this.gamePanel = gamePanel;
@@ -104,7 +133,7 @@ public class Player extends Enemy {
         interactionArea = new Rectangle(x-16, y-16, tileSize*3, tileSize*3);
 
     }
-    @Override
+
     public void setState(State playerState) {
         switch (playerState) {
             case IDLE -> currentState = new IdleState();
@@ -215,7 +244,30 @@ public class Player extends Enemy {
                 y < objectY + objectHeight &&
                 y + tileSize > objectY;
     }
+    public boolean collidesWithObjects(int nextX, int nextY) {
+        // Verifica la collisione con gli oggetti di collisione della mappa corrente
+        for (CollisionObject collisionObject : currentCollisionMap) {
+            if (checkCollisionObject(nextX, nextY, collisionObject)) {
+                return true; // Collisione rilevata
+            }
+        }
+        return false; // Nessuna collisione rilevata
+    }
 
+    public boolean checkCollisionObject(int x, int y, CollisionObject collisionObject) {
+        double objectX = collisionObject.getX() * gsm.getGamePanel().getScale();
+        double objectY = collisionObject.getY() * gsm.getGamePanel().getScale();
+        double objectWidth = collisionObject.getWidth() * gsm.getGamePanel().getScale();
+        double objectHeight = collisionObject.getHeight() * gsm.getGamePanel().getScale();
+
+        return x < objectX + objectWidth &&
+                x + tileSize > objectX &&
+                y < objectY + objectHeight &&
+                y + tileSize > objectY;
+    }
+    public boolean isAttacking() {
+        return this.isAttacking;
+    }
     public void setCurrentCollisionMap(ArrayList<CollisionObject> collisionMap) {
         this.currentCollisionMap = collisionMap;
     }
@@ -291,6 +343,12 @@ public class Player extends Enemy {
             e.printStackTrace();
         }
     }
+    public int getMaxLife() {
+        return maxLife;
+    }
+    public int getCurrentLife() {
+        return currentLife;
+    }
 
     public int getScreenX() {
         return this.screenX;
@@ -344,4 +402,208 @@ public class Player extends Enemy {
     public boolean isHitAnimationCompleted() {
         return hitAnimationCompleted;
     }
+
+    public EntityState getCurrentState() {
+        return currentState;
+    }
+
+    public void incrementSpriteCounter() {
+        this.spriteCounter = spriteCounter +1;
+    }
+
+    public BufferedImage getAttackUp1() {
+        return this.attackUp1;
+    }
+
+    public BufferedImage getAttackUp2() {
+        return this.attackUp2;
+    }
+
+    public BufferedImage getAttackUp3() {
+        return this.attackUp3;
+    }
+
+    public BufferedImage getAttackUp4() {
+        return this.attackUp4;
+    }
+
+    public BufferedImage getAttackDown1() {
+        return this.attackDown1;
+    }
+
+    public BufferedImage getAttackDown2() {
+        return this.attackDown2;
+    }
+
+    public BufferedImage getAttackDown3() {
+        return this.attackDown3;
+    }
+
+    public BufferedImage getAttackDown4() {
+        return this.attackDown4;
+    }
+
+    public BufferedImage getAttackLeft1() {
+        return attackLeft1;
+    }
+
+    public BufferedImage getAttackLeft2() {
+        return this.attackLeft2;
+    }
+
+    public BufferedImage getAttackLeft3() {
+        return this.attackLeft3;
+    }
+
+    public BufferedImage getAttackLeft4() {
+        return this.attackLeft4;
+    }
+
+    public BufferedImage getAttackRight1() {
+        return this.attackRight1;
+    }
+
+    public BufferedImage getAttackRight2() {
+        return this.attackRight2;
+    }
+
+    public BufferedImage getAttackRight3() {
+        return this.attackRight3;
+    }
+
+    public BufferedImage getAttackRight4() {
+        return this.attackRight4;
+    }
+
+
+    public void setAttacking(boolean isAttacking) {
+        this.isAttacking = isAttacking;
+    }
+    public void setAttackAnimationCompleted(boolean attackAnimationCompleted) {
+        this.attackAnimationCompleted = attackAnimationCompleted;
+    }
+
+
+    public boolean getAttackAnimationCompleted() {
+        return this.attackAnimationCompleted;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public void setCurrentLife(int currentLife) {
+        this.currentLife = currentLife;
+    }
+
+
+    public int getSpeed() {
+        return this.speed;
+    }
+
+    public String getDirection() {
+        return this.direction;
+    }
+
+    public int getSpeedChangeSprite() {
+        return speedChangeSprite;
+    }
+
+    public int getSpriteNum() {
+        return spriteNum;
+    }
+
+    public BufferedImage getUp1() {
+        return up1;
+    }
+
+    public BufferedImage getUp2() {
+        return up2;
+    }
+
+    public BufferedImage getUp3() {
+        return up3;
+    }
+
+    public BufferedImage getUp4() {
+        return up4;
+    }
+
+    public BufferedImage getDown1() {
+        return down1;
+    }
+
+    public BufferedImage getDown2() {
+        return down2;
+    }
+
+    public BufferedImage getDown3() {
+        return down3;
+    }
+
+    public BufferedImage getDown4() {
+        return down4;
+    }
+
+    public BufferedImage getLeft1() {
+        return left1;
+    }
+
+    public BufferedImage getLeft2() {
+        return left2;
+    }
+
+    public BufferedImage getLeft3() {
+        return left3;
+    }
+
+    public BufferedImage getLeft4() {
+        return left4;
+    }
+
+    public BufferedImage getRight1() {
+        return right1;
+    }
+
+    public BufferedImage getRight2() {
+        return right2;
+    }
+
+    public BufferedImage getRight3() {
+        return right3;
+    }
+
+    public BufferedImage getRight4() {
+        return right4;
+    }
+
+    public int getSpriteCounter() {
+        return spriteCounter;
+    }
+
+    public int getTotalSprite() {
+        return totalSprite;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public void setSpeedChangeSprite(int speedChangeSprite) {
+        this.speedChangeSprite = speedChangeSprite;
+    }
+
+    public void setSpriteNum(int spriteNum) {
+        this.spriteNum = spriteNum;
+    }
+
+    public void setSpriteCounter(int spriteCounter) {
+        this.spriteCounter = spriteCounter;
+    }
+
+    public void setTotalSprite(int totalSprite) {
+        this.totalSprite = totalSprite;
+    }
+
+
 }

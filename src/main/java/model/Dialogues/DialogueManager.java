@@ -1,15 +1,57 @@
-package model.entity;
+package model.Dialogues;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.entities.Entity;
+import model.entities.npc.Npc;
+import model.gameState.GameStateManager;
 
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
 public class DialogueManager {
+    private static ArrayList<String> test;
+    private GameStateManager gsm;
+    static private int i;
+    private int pigrizia = 1;
+
+    public DialogueManager(GameStateManager gsm) {
+        this.gsm = gsm;
+        this.test = new ArrayList<>();
+        test.add("dialogo" + String.valueOf(pigrizia++));
+        test.add("dialogo" + String.valueOf(pigrizia++));
+        test.add("dialogo" + String.valueOf(pigrizia++));
+        test.add("dialogo" + String.valueOf(pigrizia++));
+        test.add("dialogo" + String.valueOf(pigrizia++));
+        test.add("dialogo" + String.valueOf(pigrizia++));
+        test.add("dialogo" + String.valueOf(pigrizia++));
+        test.add("dialogo" + String.valueOf(pigrizia++));
+        test.add("dialogo" + String.valueOf(pigrizia++));
+        test.add("dialogo" + String.valueOf(pigrizia++));
+        test.add("dialogo" + String.valueOf(pigrizia++));
+        test.add("dialogo" + String.valueOf(pigrizia++));
+        test.add("dialogo" + String.valueOf(pigrizia++));
+        test.add("dialogo" + String.valueOf(pigrizia++));
+
+
+        i = 0;
+    }
+    public void startDialogue(Npc npc){
+        if (i < test.size())
+            gsm.setState(GameStateManager.State.DIALOGUE);
+    }
+    public static String getDialogue (){
+        System.out.println("sono chiamato" + i);
+        if(i < test.size())
+            return test.get(i++);
+        else{
+            System.out.println("ELLEH");
+            return null;}
+
+    }
 
     private JsonNode npcDialogues;
 

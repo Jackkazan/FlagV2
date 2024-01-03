@@ -19,7 +19,7 @@ public class NpcDialogue implements Interactable {
     public void performAction(Npc npc) {
         //cambia direzione dell'entità
         npc.setDirection(calculateDirection(npc));
-        gsm.setDialogueState(npc);
+        gsm.getDialogueManager().startDialogue(npc);
 
     }
 

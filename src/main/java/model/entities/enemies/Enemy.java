@@ -554,9 +554,7 @@ public class Enemy extends Npc {
     public ArrayList<CollisionObject> getCurrentCollisionMap() {
         return this.currentCollisionMap;
     }
-    public boolean isAttacking() {
-        return this.isAttacking;
-    }
+
     public void setAttacking(boolean isAttacking) {
         this.isAttacking = isAttacking;
     }

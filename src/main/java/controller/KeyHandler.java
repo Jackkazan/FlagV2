@@ -14,6 +14,7 @@ public class KeyHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, attackVPressed, spacePressed, enterPressed, yPressed, pPressed;
     private boolean pauseSwitch;
+    public boolean interactRequest;
 
     private boolean showDebugText = false;
 
@@ -70,6 +71,7 @@ public class KeyHandler implements KeyListener {
         }
         if (code == KeyEvent.VK_E) {
             interactPressed = true;
+            interactRequest = true;
         }
         //PAUSA
         if (code == KeyEvent.VK_P) {
@@ -116,6 +118,7 @@ public class KeyHandler implements KeyListener {
     }
     public void releaseToggles(){
         pauseSwitch = false;
+        interactRequest = false;
     }
 
     public boolean pauseSwitch(){
