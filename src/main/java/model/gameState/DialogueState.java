@@ -1,22 +1,19 @@
 package model.gameState;
 
 import controller.KeyHandler;
-import model.entities.npc.Npc;
+import model.Dialogues.DialogueManager;
 import view.GamePanel;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class DialogueState implements GameState {
 
     private GamePanel gp;
     private GameStateManager gsm;
     private KeyHandler keyH;
-    private Npc npc;
-
     private String dialogue;
     private String dialogueText = "";
-    private ArrayList<String> test = new ArrayList<>();
+
     private int i = 0;
     private boolean dialogueAdvancing = false;
     private boolean dialogueDisplayed;
@@ -30,55 +27,49 @@ public class DialogueState implements GameState {
 
 
 
-    public DialogueState(GamePanel gp, GameStateManager gsm, KeyHandler keyH, Npc npc) {
+    public DialogueState(GamePanel gp, GameStateManager gsm, KeyHandler keyH) {
         this.gp = gp;
         this.gsm = gsm;
         this.keyH = keyH;
-        this.npc = npc;
         dialogueBoxWidth = gp.getScreenWidth() - (GamePanel.tileSize * 4);
         dialogueBoxHeight = GamePanel.tileSize*5;
         dialogueBoxX = GamePanel.tileSize * 2;
         dialogueBoxY = gp.getScreenHeight() -(dialogueBoxHeight + GamePanel.tileSize * 2);
-        test.add("dialogo 1 ");
-        test.add("dialogo 2 ");
-        test.add("dialogo 3 ");
-        dialogue = test.get(i);
+        dialogue = DialogueManager.getDialogue();
+        dialogueDisplayed = false;
+
     }
 
     @Override
     public void update() {
         gsm.getPlayState().update();
+        System.out.println("dialogo" + keyH.interactRequest);
         if (keyH.pauseSwitch()){
             gsm.setState(GameStateManager.State.PAUSE);
         }
-        if(keyH.interactPressed && eReleased &&!dialogueAdvancing && dialogueDisplayed){
+        if(keyH.interactRequest && eReleased && dialogueDisplayed){
            advanceDialogue();
-           dialogueAdvancing = true;
+           keyH.interactRequest = false;
            dialogueDisplayed = false;
-           ePressed = true;
+           //ePressed = true;
         }
-        if(!keyH.interactPressed) {
-            eReleased = true; // Rilasciato il tasto E
-            ePressed = false; // Resetta la variabile quando rilasci il tasto E
-            dialogueAdvancing = false;
-        }
-        else{
-            eReleased = false; //Quando si tiene premuto
-        }
+        //if(!keyH.interactPressed) {
+            //eReleased = true; // Rilasciato il tasto E
+           // ePressed = false; // Resetta la variabile quando rilasci il tasto E
+           // dialogueAdvancing = false;
+        //}
+        //else{
+            //eReleased = false; //Quando si tiene premuto
+        //}
 
 
         //logica dialoghi
     }
     public void advanceDialogue(){
-        if(i< test.size()-1) {
-            dialogueText = "";
-            index = 0;
-            i++;
-            dialogue = test.get(i);
-        }
-        else {
-            //per non far startare il dialogo non appena finito
-            keyH.interactPressed = false;
+        dialogue = DialogueManager.getDialogue();
+        dialogueText = "";
+        index = 0;
+        if (dialogue == null){
             gsm.exitDialogue();
         }
     }
@@ -86,7 +77,8 @@ public class DialogueState implements GameState {
     public void draw(Graphics g) {
         gsm.getPlayState().draw(g);
         this.drawDialogueBox(g, dialogueBoxX, dialogueBoxY, dialogueBoxWidth, dialogueBoxHeight);
-        this.drawDialogue(g, dialogueBoxX, dialogueBoxY);
+        if(dialogue != null)
+            this.drawDialogue(g, dialogueBoxX, dialogueBoxY);
     }
 
     public void drawDialogueBox(Graphics g, int x, int y, int width, int height){

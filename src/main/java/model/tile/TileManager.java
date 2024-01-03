@@ -18,7 +18,7 @@ public class TileManager {
     private HashMap<Integer, BufferedImage> mappaSprite;
     private ArrayList<String> listaMatrici;
     private int numLayer;
-    private int[][][] mapTileNum;
+     private int[][][] mapTileNum;
 
     private ArrayList<CollisionObject> collisionMap;
     private String currentMap;

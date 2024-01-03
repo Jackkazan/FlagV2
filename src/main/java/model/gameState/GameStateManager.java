@@ -9,6 +9,7 @@ import model.entities.npc.NpcCreator;
 import model.entities.player.Player;
 import model.entities.items.Item;
 import model.entities.items.ItemCreator;
+import model.Dialogues.DialogueManager;
 import model.sound.Playlist;
 import model.sound.Sound;
 import model.tile.MapManager;
@@ -17,7 +18,6 @@ import view.GamePanel;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class GameStateManager {
@@ -48,6 +48,7 @@ public class GameStateManager {
 
     //gestore mappe
     MapManager mapManager;
+    DialogueManager dialogueManager;
 
     List<Item> itemList;
     List<Npc> npcList;
@@ -62,10 +63,16 @@ public class GameStateManager {
     public GameStateManager(){
 
     }
+
+    public DialogueManager getDialogueManager() {
+        return dialogueManager;
+    }
+
     public GameStateManager(GamePanel gp) {
         this.gp = gp;
         this.keyH = new KeyHandler(this);
         this.currentState = new MenuState(gp, this, keyH);
+        this.dialogueManager = new DialogueManager(this);
 
     }
     public void Init(){ // inizializza il player e le mappe
@@ -93,7 +100,7 @@ public class GameStateManager {
 
     }
 
-    public enum State{MENU, PLAY, PAUSE, PREVIOUS};
+    public enum State{MENU, PLAY, PAUSE, DIALOGUE, PREVIOUS};
 
     public void setState(State state) {
         keyH.releaseToggles();
@@ -104,6 +111,7 @@ public class GameStateManager {
             case PLAY:
                 if(this.playState == null)
                     Init();
+                System.out.println("ohh");
                 currentState = playState; // playstate deve essere sempre in memoria
                 break;
             case PAUSE:
@@ -111,15 +119,14 @@ public class GameStateManager {
                 previousState = currentState;
                 currentState = new PauseState(gp, this, keyH);
                 break;
+            case DIALOGUE:
+                currentState = new DialogueState(gp, this, keyH);
+                inDialogue = true;
+                break;
             case PREVIOUS: //Uscendo dalla pausa bisogna tornare allo stato precedente (Non per forza playstate, ma anche dialogue, inventory ecc...)
                 currentState = previousState;
 
         }
-    }
-    public void setDialogueState(Npc npc){
-        currentState = new DialogueState(gp, this , keyH, npc);
-        inDialogue = true;
-
     }
     public void exitDialogue(){
         this.setState(GameStateManager.State.PLAY);
