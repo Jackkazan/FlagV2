@@ -142,12 +142,12 @@ public class TileManager {
         int playerMapX = gsm.getPlayer().getX();
         int playerMapY = gsm.getPlayer().getY();
 
-        int buffer = tileSize * 3;
+        int bufferRendering = tileSize * 16;
 
-        return worldX  + buffer> playerMapX  &&
-                worldX  - buffer< playerMapX  &&
-                worldY  + buffer> playerMapY  &&
-                worldY  - buffer< playerMapY ;
+        return worldX  + bufferRendering > playerMapX  &&
+                worldX  - bufferRendering < playerMapX  &&
+                worldY  + bufferRendering > playerMapY  &&
+                worldY  - bufferRendering < playerMapY ;
     }
 
 
