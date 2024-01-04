@@ -105,6 +105,8 @@ public class HitState implements EntityState {
     }
 
     private void updatePlayer(Player player) {
+        player.setAttacking(false);
+        player.setAttackAnimationCompleted(true);
         System.out.println(player.getSpriteNum());
         System.out.println(player.getHitAnimationCompleted());
         long currentTime = System.currentTimeMillis();

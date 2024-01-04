@@ -34,6 +34,10 @@ public class Player extends Characters {
         enemyHitDamage = damage;
     }
 
+    public int getDamage() {
+        return damage;
+    }
+
     public enum swordStateAndArmor { IronSwordNoArmor, IronSwordAndArmor, GoldSwordAndArmor, RubySwordAndArmor }
     swordStateAndArmor currentSwordStateAndArmor;
     private Rectangle interactionArea;
