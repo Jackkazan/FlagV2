@@ -72,41 +72,6 @@ public class TileManager {
 
 
     }
-    /*
-    public void draw(Graphics2D g2){
-
-        for(int layerIndex=0; layerIndex <numLayer; layerIndex++){
-
-            int worldCol=0;
-            int worldRow=0;
-
-            while(worldCol< maxMapCol && worldRow <maxMapRow){
-
-                int tileNum = mapTileNum[layerIndex][worldRow][worldCol];
-
-                int worldX = worldCol * tileSize;
-                int worldY = worldRow * tileSize;
-                int screenX = worldX - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
-                int screenY = worldY - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
-
-                if(worldX + tileSize > gsm.getPlayer().getX() - gsm.getPlayer().getScreenX() &&
-                        worldX - tileSize < gsm.getPlayer().getX() + gsm.getPlayer().getScreenX() &&
-                        worldY + tileSize > gsm.getPlayer().getY() - gsm.getPlayer().getScreenY() &&
-                        worldY - tileSize < gsm.getPlayer().getY() + gsm.getPlayer().getScreenY()){
-                    g2.drawImage(mappaSprite.get(tileNum), screenX, screenY, tileSize, tileSize, null);
-                }
-
-                worldCol++;
-                if(worldCol == maxMapCol){
-                    worldCol=0;
-                    worldRow++;
-
-                }
-            }
-        }
-    }
-
-     */
     public void draw(Graphics2D g2){
         // Calcola le coordinate del player nella mappa
         int playerMapX = -gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
@@ -136,7 +101,7 @@ public class TileManager {
         g2d.dispose();
     }
 
-    //da definire per memorizzare nel buffer solo ciò che sta attorno al player
+    //per memorizzare nel buffer solo ciò che sta attorno al player
     private boolean isTileNearPlayer(int worldX, int worldY) {
 
         int playerMapX = gsm.getPlayer().getX();

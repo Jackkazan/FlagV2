@@ -117,9 +117,9 @@ public class Player extends Characters {
         }else {
             if (isAttacking) {
                 this.setState(State.ATTACK);
-                hitAnEnemy();
             } else {
                 if (keyH.spacePressed && isAttackAnimationCompleted) {
+                    resetAttack();
                     this.setState(State.ATTACK);
                 } else {
                     if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
@@ -163,6 +163,12 @@ public class Player extends Characters {
                 enemy.setHitted(true);
             }
         }
+    }
+
+    public void resetAttack(){
+        this.isAttacking = true;
+        this.isAttackAnimationCompleted = false;
+        this.spriteNum=0;
     }
 
     public boolean collidesWithEnemies(int nextX, int nextY) {

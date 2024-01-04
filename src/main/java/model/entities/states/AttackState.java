@@ -70,7 +70,16 @@ public class AttackState implements EntityState {
     }
 
     private void updatePlayer(Player player){
-        if (player.isAttacking()) {
+        if(!player.isHitted()) {
+            if (player.getSpriteNum() == 3) {
+                player.setAttackAnimationCompleted(true);
+            }
+            if (player.getSpriteNum() == 2)
+                player.hitAnEnemy();
+
+            if (player.getSpriteNum() == 0 && player.getAttackAnimationCompleted()) {
+                player.setAttacking(false);
+            }
             //alternatore di sprite
             player.incrementSpriteCounter();
             //velocità di cambio sprite 5-10
@@ -78,60 +87,38 @@ public class AttackState implements EntityState {
                 player.setSpriteNum((player.getSpriteNum() + 1) % 4);
                 player.setSpriteCounter(0);
             }
-        }else{
-            player.setAttacking(true);
-            player.setAttackAnimationCompleted(false);
-
-            switch (player.getDirection()) {
-                case "left" -> player.setDirection("left&attack");
-                case "right" -> player.setDirection("right&attack");
-                case "down" -> player.setDirection("down&attack");
-                case "up" -> player.setDirection("up&attack");
-                default -> {}
-            }
-            player.setSpriteNum(0);
-
-            // Imposta un timer per la durata dell'animazione dell'attacco
-            Timer timer = new Timer(420, e -> {
-                player.setAttacking(false);
-                player.setAttackAnimationCompleted(true);
-                ((Timer) e.getSource()).stop();
-            });
-            timer.setRepeats(false);
-            timer.start();
-        }
-
+        }else player.setAttacking(false);
     }
 
     private void drawPlayer(Graphics2D graphics2D, Player player){
         BufferedImage[] images = switch (player.getDirection()) {
-            case "up&attack" -> new BufferedImage[]{player.getAttackUp1(), player.getAttackUp2(), player.getAttackUp3(), player.getAttackUp4()};
-            case "down&attack" -> new BufferedImage[]{player.getAttackDown1(), player.getAttackDown2(), player.getAttackDown3(), player.getAttackDown4()};
-            case "left&attack" -> new BufferedImage[]{player.getAttackLeft1(), player.getAttackLeft2(), player.getAttackLeft3(), player.getAttackLeft4()};
-            case "right&attack" -> new BufferedImage[]{player.getAttackRight1(), player.getAttackRight2(), player.getAttackRight3(), player.getAttackRight4()};
+            case "up" -> new BufferedImage[]{player.getAttackUp1(), player.getAttackUp2(), player.getAttackUp3(), player.getAttackUp4()};
+            case "down" -> new BufferedImage[]{player.getAttackDown1(), player.getAttackDown2(), player.getAttackDown3(), player.getAttackDown4()};
+            case "left" -> new BufferedImage[]{player.getAttackLeft1(), player.getAttackLeft2(), player.getAttackLeft3(), player.getAttackLeft4()};
+            case "right" -> new BufferedImage[]{player.getAttackRight1(), player.getAttackRight2(), player.getAttackRight3(), player.getAttackRight4()};
             default -> null;
         };
         int offsetX, offsetY, imageWidth, imageHeight;
         switch (player.getDirection()) {
-            case "down&attack" -> {
+            case "down" -> {
                 offsetX = -16;
                 offsetY = -32;
                 imageWidth = 32;
                 imageHeight = 48;
             }
-            case "left&attack" -> {
+            case "left" -> {
                 offsetX = -58;
                 offsetY = -32;
                 imageWidth = 48;
                 imageHeight = 32;
             }
-            case "right&attack" -> {
+            case "right" -> {
                 offsetX = -14;
                 offsetY = -32;
                 imageWidth = 48;
                 imageHeight = 32;
             }
-            case "up&attack" -> {
+            case "up" -> {
                 offsetX = -16;
                 offsetY = -72;
                 imageWidth = 32;
@@ -147,7 +134,10 @@ public class AttackState implements EntityState {
 
         if (images != null) {
             int spriteIndex = player.getSpriteNum() % images.length;
-            graphics2D.drawImage(images[spriteIndex], player.getScreenX() + offsetX, player.getScreenY() + offsetY, (imageWidth / 2) * player.getScale(), (imageHeight / 2) * player.getScale(), null);
+            if (player.getAttackAnimationCompleted())
+                graphics2D.drawImage(images[images.length-1], player.getScreenX() + offsetX, player.getScreenY() + offsetY, (imageWidth / 2) * player.getScale(), (imageHeight / 2) * player.getScale(), null);
+            else
+                graphics2D.drawImage(images[spriteIndex], player.getScreenX() + offsetX, player.getScreenY() + offsetY, (imageWidth / 2) * player.getScale(), (imageHeight / 2) * player.getScale(), null);
         }
 
 

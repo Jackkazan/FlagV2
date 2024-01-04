@@ -178,8 +178,6 @@ public abstract class Characters extends Entity {
         return currentState;
     }
 
-
-
     public boolean getAttackAnimationCompleted() {
         return this.isAttackAnimationCompleted;
     }

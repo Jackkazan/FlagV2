@@ -72,6 +72,7 @@ public class HitState implements EntityState {
                 }
                 break;
         }
+        enemy.updateAttackArea();
         //System.out.println("Sprite num: "+ enemy.getSpriteNum());
         if (enemy.getSpriteCounter() > 4) {
             enemy.setSpriteNum((enemy.getSpriteNum() + 1) % 4);
@@ -121,7 +122,7 @@ public class HitState implements EntityState {
         int nextX = player.getX();
         int nextY = player.getY();
         int pushback = player.getSpeed();
-        System.out.println(player.getEnemyHitDirection());
+        //System.out.println(player.getEnemyHitDirection());
 
         switch (player.getEnemyHitDirection()){
             case "up","up&attack":
