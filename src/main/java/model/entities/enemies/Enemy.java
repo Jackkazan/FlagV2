@@ -20,23 +20,12 @@ public class Enemy extends Npc {
     protected int currentLife;
     protected int damage;
 
-    protected boolean isAttacking =false;
-    protected boolean isHitted = false;
-    protected boolean attackAnimationCompleted = true;
-    private int aggroRange;
+    protected boolean isAttacking;
+    protected boolean isHitted;
+    protected boolean isAttackAnimationCompleted;
+    protected boolean isDead;
 
-    private int maxHealthBarWidth; //lunghezza massima della barra della vita
-
-    private boolean isDespawned = false;
-    private boolean isDead = false;
-
-    private int despawnTimer = 0;
-    private int despawnCooldown = 500;
-    private int respawnX; // Posizione di respawn X
-    private int respawnY; // Posizione di respawn Y
-
-    private long lastHitTime;  // Memorizza il tempo dell'ultima hit
-    private long hitCooldown = 1000;  // Cooldown in millisecondi (1 secondo)
+    protected Rectangle attackArea;
 
     protected BufferedImage attackUp1, attackUp2, attackUp3, attackUp4, attackDown1, attackDown2, attackDown3, attackDown4, attackLeft1, attackLeft2, attackLeft3, attackLeft4, attackRight1, attackRight2, attackRight3, attackRight4;
 
@@ -45,30 +34,25 @@ public class Enemy extends Npc {
     protected BufferedImage idle1,idle2,idle3,idle4;
 
     protected BufferedImage hit1,hit2,hit3,hit4;
-    private boolean isHitAnimationCompleted = true;
-    private boolean deadAnimationCompleted= true;
+    protected int respawnX; // Posizione di respawn X
+    protected int respawnY; // Posizione di respawn Y
+    protected boolean isHitAnimationCompleted;
+    protected boolean isDeadAnimationCompleted;
 
-    public void setHitAnimationCompleted(boolean b) {
-        this.isHitAnimationCompleted = b;
-    }
+    protected long lastHitTime;  // Memorizza il tempo dell'ultima hit
+    protected long hitCooldown;  // Cooldown in millisecondi (1 secondo)
 
-    public boolean getHitAnimationCompleted() {
-        return this.isHitAnimationCompleted;
-    }
+    private int aggroRange;
 
-    public void setDeadAnimationCompleted(boolean b) {
-        this.deadAnimationCompleted = b;
-    }
+    private int maxHealthBarWidth; //lunghezza massima della barra della vita
+    private boolean isDespawned;
+    private int despawnTimer;
+    private int despawnCooldown;
 
-    public boolean getDeadAnimationCompleted() {
-        return  this.deadAnimationCompleted;
-    }
-
-    public void setDead(boolean b) {
-        this.isDead=b;
-    }
 
     public enum State{IDLE, MOVEMENT,HIT,ATTACK, RESPAWN, DEAD}
+
+
     protected ArrayList<CollisionObject> currentCollisionMap;
 
     public Enemy (){
@@ -76,6 +60,16 @@ public class Enemy extends Npc {
         this.keyH = GameStateManager.keyH;
         this.currentState = new IdleState();
         this.lastHitTime = System.currentTimeMillis();
+        isAttacking =false;
+        isHitted = false;
+        isAttackAnimationCompleted = true;
+        isDead = false;
+        isHitAnimationCompleted = true;
+        isDeadAnimationCompleted = true;
+        isDespawned = false;
+        despawnTimer = 0;
+        despawnCooldown = 500;
+        hitCooldown = 1000;  // Cooldown in millisecondi (1 secondo)
 
     }
 
@@ -104,7 +98,7 @@ public class Enemy extends Npc {
             graphics2D.fillRect(screenX, screenY - tileSize, healthBarWidth, 7);  // Disegna la barra
             graphics2D.setColor(Color.BLACK);  // Colore del bordo della barra
             graphics2D.drawRect(screenX, screenY - tileSize, maxHealthBarWidth, 7);  // Disegna il bordo della barra
-            System.out.println("Bar Coordinates - X: " + screenX + ", Y: " + screenY);
+            //System.out.println("Bar Coordinates - X: " + screenX + ", Y: " + screenY);
         }
     }
 
@@ -136,8 +130,8 @@ public class Enemy extends Npc {
                 }
             }
         }
-
         currentState.update(this);
+        System.out.println("Direzione "+ this.name+": "+ this.direction);
     }
 
     private void reset() {
@@ -149,9 +143,39 @@ public class Enemy extends Npc {
     public void checkDeath(){
         if(this.currentLife <= 0 && !this.isDead && !this.isDespawned) {
             this.isDead = true;
-            this.deadAnimationCompleted = false;
+            this.isDeadAnimationCompleted = false;
             this.spriteNum = 0;
             this.despawnTimer = this.despawnCooldown;
+        }
+    }
+
+    public void updateAttackArea() {
+        switch(direction){
+            case "up":
+                attackArea = new Rectangle(x-tileSize,y-tileSize,tileSize*3,tileSize);
+                break;
+            case "down":
+                attackArea = new Rectangle(x-tileSize,y,tileSize*3,tileSize);
+                break;
+            case "left":
+                attackArea = new Rectangle(x-tileSize-24,y-tileSize,tileSize,tileSize*3);
+                break;
+            case "right":
+                attackArea = new Rectangle(x+24,y-tileSize,tileSize,tileSize*3);
+                break;
+        }
+    }
+
+    public void hitPlayer(){
+        if(this.attackArea.intersects(gsm.getPlayer().getCollisionArea())){
+            gsm.getPlayer().setEnemyHitDirection(this.direction);
+            if(!gsm.getPlayer().isHitted()) {
+                gsm.getPlayer().setSpriteNum(0);
+                gsm.getPlayer().setHitAnimationCompleted(false);
+            }
+            gsm.getPlayer().setHitted(true);
+
+            System.out.println(this.name + " ha colpito il player");
         }
     }
 
@@ -194,7 +218,7 @@ public class Enemy extends Npc {
         if (distanceX < distanceThreshold && distanceY < distanceThreshold) {
             if(this.isNearPlayer()) {
                 this.isAttacking = true;
-                this.attackAnimationCompleted = false;
+                this.isAttackAnimationCompleted = false;
                 this.spriteNum=0;
             }
             return;
@@ -228,6 +252,7 @@ public class Enemy extends Npc {
                 this.setY(nextY+ this.speed);
             }
         }
+        this.updateAttackArea();
     }
 
     public void setState(State enemyState) {
@@ -485,7 +510,25 @@ public class Enemy extends Npc {
         this.y = respawnY * tileSize;
 
     }
+    public void setHitAnimationCompleted(boolean b) {
+        this.isHitAnimationCompleted = b;
+    }
 
+    public boolean getHitAnimationCompleted() {
+        return this.isHitAnimationCompleted;
+    }
+
+    public void setDeadAnimationCompleted(boolean b) {
+        this.isDeadAnimationCompleted = b;
+    }
+
+    public boolean getDeadAnimationCompleted() {
+        return  this.isDeadAnimationCompleted;
+    }
+
+    public void setDead(boolean b) {
+        this.isDead=b;
+    }
 
     public int getMaxLife() {
         return maxLife;
@@ -583,7 +626,7 @@ public class Enemy extends Npc {
         this.isAttacking = isAttacking;
     }
     public void setAttackAnimationCompleted(boolean attackAnimationCompleted) {
-        this.attackAnimationCompleted = attackAnimationCompleted;
+        this.isAttackAnimationCompleted = attackAnimationCompleted;
     }
 
     public boolean isHitted() {
@@ -591,7 +634,7 @@ public class Enemy extends Npc {
     }
 
     public boolean getAttackAnimationCompleted() {
-        return this.attackAnimationCompleted;
+        return this.isAttackAnimationCompleted;
     }
 
     public BufferedImage getIdle1() {
@@ -623,7 +666,7 @@ public class Enemy extends Npc {
     }
 
     public boolean isAttackAnimationCompleted() {
-        return attackAnimationCompleted;
+        return isAttackAnimationCompleted;
     }
 
     public boolean isDespawned() {
@@ -719,6 +762,6 @@ public class Enemy extends Npc {
     }
 
     public boolean isDeadAnimationCompleted() {
-        return deadAnimationCompleted;
+        return isDeadAnimationCompleted;
     }
 }

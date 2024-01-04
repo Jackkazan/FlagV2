@@ -30,6 +30,7 @@ public class AttackState implements EntityState {
 
     private void updateEnemy(Enemy enemy){
         if(enemy.getSpriteNum()==3) {
+            enemy.hitPlayer();
             enemy.setAttackAnimationCompleted(true);
             //logica dell'hit
 
@@ -44,7 +45,7 @@ public class AttackState implements EntityState {
             enemy.setSpriteNum((enemy.getSpriteNum() + 1) % 4);
             enemy.setSpriteCounter(0);
         }
-        System.out.println("Sprite num: "+ enemy.getSpriteNum());
+        //System.out.println("Sprite num: "+ enemy.getSpriteNum());
 
     }
     private void drawEnemy(Graphics2D graphics2D, Enemy enemy){

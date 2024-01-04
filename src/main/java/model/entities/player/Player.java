@@ -1,7 +1,6 @@
 package model.entities.player;
 
 import controller.KeyHandler;
-import model.entities.Entity;
 import model.entities.EntityState;
 import model.entities.enemies.Enemy;
 import model.entities.items.Item;
@@ -14,7 +13,6 @@ import model.gameState.GameStateManager;
 import model.collisions.CollisionObject;
 import view.GamePanel;
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -23,38 +21,21 @@ import java.util.Objects;
 
 import static view.GamePanel.tileSize;
 
-public class Player extends Entity{
+public class Player extends Enemy{
     private final GamePanel gamePanel;
-    protected int speed;
-    protected int speedChangeSprite;
-
-    protected int spriteNum;
-    protected BufferedImage
-            up1, up2, up3, up4,
-            down1, down2, down3, down4,
-            left1, left2, left3, left4,
-            right1, right2, right3, right4;
-
-    protected String direction;
-    protected int spriteCounter = 0;
-    protected int totalSprite;
-
-    private boolean hitAnimationCompleted;
     private final int screenX;
     private final int screenY;
 
-    protected int maxLife;
-    protected int currentLife;
-    protected EntityState currentState;
+    private String enemyHitDirection;
 
-    protected boolean isAttacking =false;
-    protected boolean isHitted = false;
-    protected boolean attackAnimationCompleted = true;
-    protected BufferedImage attackUp1, attackUp2, attackUp3, attackUp4, attackDown1, attackDown2, attackDown3, attackDown4, attackLeft1, attackLeft2, attackLeft3, attackLeft4, attackRight1, attackRight2, attackRight3, attackRight4;
-    protected ArrayList<CollisionObject> currentCollisionMap;
+    private BufferedImage hit5,hit6,hit7,hit8,hit9,hit10,hit11,hit12,hit13,hit14,hit15,hit16;
 
-    private boolean isHitAnimationCompleted = true;
-    private boolean deadAnimationCompleted= true;
+
+
+    public enum swordStateAndArmor { IronSwordNoArmor, IronSwordAndArmor, GoldSwordAndArmor, RubySwordAndArmor }
+    swordStateAndArmor currentSwordStateAndArmor;
+    private Rectangle interactionArea;
+
     public void updateInteractionArea() {
         interactionArea.setLocation(x -tileSize , y-tileSize);
     }
@@ -63,6 +44,7 @@ public class Player extends Entity{
         collisionArea.setLocation(x-tileSize, y-tileSize);
     }
 
+    @Override
     public void updateAttackArea() {
         switch(direction){
             case "up":
@@ -81,22 +63,7 @@ public class Player extends Entity{
 
     }
 
-
-    public enum swordStateAndArmor { IronSwordNoArmor, IronSwordAndArmor, GoldSwordAndArmor, RubySwordAndArmor }
-
-
-    swordStateAndArmor currentSwordStateAndArmor;
-
-
     // Nuova area di interazione
-    private Rectangle interactionArea;
-
-    private Rectangle attackArea;
-
-
-    public enum State{IDLE, MOVEMENT,HIT,ATTACK, RESPAWN, DEAD}
-
-
     public Player(GamePanel gamePanel, GameStateManager gsm, KeyHandler keyH) {
         this.gamePanel = gamePanel;
         this.gsm = gsm;
@@ -107,6 +74,7 @@ public class Player extends Entity{
         setDefaultValues();
         getEntityImage();
         getAttackImages();
+        getHitImage();
         setState(State.IDLE);
 
     }
@@ -126,12 +94,14 @@ public class Player extends Entity{
         imageHeight = tileSize;
         isAttacking=false;
         isHitted= false;
-        attackAnimationCompleted = true;
-        hitAnimationCompleted = true;
+        isAttackAnimationCompleted = true;
+        isHitAnimationCompleted = true;
         attackArea = new Rectangle();
         collisionArea = new Rectangle(x-tileSize,y-tileSize,tileSize*2,tileSize*2);
         interactionArea = new Rectangle(x-16, y-16, tileSize*3, tileSize*3);
-
+        hitCooldown = 1000;
+        isDead = false;
+        isDeadAnimationCompleted = true;
     }
 
     public void setState(State playerState) {
@@ -143,6 +113,13 @@ public class Player extends Entity{
             default -> {}
         }
     }
+    public void setEnemyHitDirection(String direction) {
+        enemyHitDirection = direction;
+    }
+
+    public String getEnemyHitDirection() {
+        return enemyHitDirection;
+    }
 
     public void setSwordStateAndArmor(swordStateAndArmor newSwordStateAndArmor) {
         this.currentSwordStateAndArmor = newSwordStateAndArmor;
@@ -150,17 +127,21 @@ public class Player extends Entity{
 
     @Override
     public void update() {
-        if (isAttacking) {
-            hitAnEnemy();
-            this.setState(State.ATTACK);
-        } else {
-            if (keyH.spacePressed && attackAnimationCompleted) {
+        if(isHitted){
+            setState(State.HIT);
+        }else {
+            if (isAttacking) {
                 this.setState(State.ATTACK);
+                hitAnEnemy();
             } else {
-                if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
-                    this.setState(State.MOVEMENT);
+                if (keyH.spacePressed && isAttackAnimationCompleted) {
+                    this.setState(State.ATTACK);
                 } else {
-                    this.setState(State.IDLE);
+                    if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+                        this.setState(State.MOVEMENT);
+                    } else {
+                        this.setState(State.IDLE);
+                    }
                 }
             }
         }
@@ -343,6 +324,41 @@ public class Player extends Entity{
             e.printStackTrace();
         }
     }
+
+    public void getHitImage() {
+        try {
+            switch (currentSwordStateAndArmor) {
+                case IronSwordNoArmor -> {
+                    //up
+                    hit1= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterHit_0.png")));
+                    hit2= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterHit_1.png")));
+                    hit3= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterHit_2.png")));
+                    hit4= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterHit_3.png")));
+                    //down
+                    hit5= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterHit_4.png")));
+                    hit6= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterHit_5.png")));
+                    hit7= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterHit_6.png")));
+                    hit8= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterHit_7.png")));
+                    //left
+                    hit9= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterHit_8.png")));
+                    hit10= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterHit_9.png")));
+                    hit11= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterHit_10.png")));
+                    hit12= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterHit_11.png")));
+                    //right
+                    hit13= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterHit_12.png")));
+                    hit14= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterHit_13.png")));
+                    hit15= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterHit_14.png")));
+                    hit16= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/MainCharacterHit_15.png")));
+                }
+                case IronSwordAndArmor -> {}
+                case GoldSwordAndArmor -> {}
+                case RubySwordAndArmor -> {}
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public int getMaxLife() {
         return maxLife;
     }
@@ -369,7 +385,7 @@ public class Player extends Entity{
 
 
     public boolean isAttackAnimationCompleted() {
-        return attackAnimationCompleted;
+        return isAttackAnimationCompleted;
     }
 
     public swordStateAndArmor getCurrentSwordStateAndArmor() {
@@ -383,7 +399,7 @@ public class Player extends Entity{
 
 
     public void setHitAnimationCompleted(boolean hitAnimationCompleted) {
-        this.hitAnimationCompleted = hitAnimationCompleted;
+        this.isHitAnimationCompleted = hitAnimationCompleted;
     }
 
 
@@ -400,7 +416,7 @@ public class Player extends Entity{
     }
 
     public boolean isHitAnimationCompleted() {
-        return hitAnimationCompleted;
+        return isHitAnimationCompleted;
     }
 
     public EntityState getCurrentState() {
@@ -480,12 +496,12 @@ public class Player extends Entity{
         this.isAttacking = isAttacking;
     }
     public void setAttackAnimationCompleted(boolean attackAnimationCompleted) {
-        this.attackAnimationCompleted = attackAnimationCompleted;
+        this.isAttackAnimationCompleted = attackAnimationCompleted;
     }
 
 
     public boolean getAttackAnimationCompleted() {
-        return this.attackAnimationCompleted;
+        return this.isAttackAnimationCompleted;
     }
 
     public void setDirection(String direction) {
@@ -605,5 +621,51 @@ public class Player extends Entity{
         this.totalSprite = totalSprite;
     }
 
+    public BufferedImage getHit5() {
+        return hit5;
+    }
 
+    public BufferedImage getHit6() {
+        return hit6;
+    }
+
+    public BufferedImage getHit7() {
+        return hit7;
+    }
+
+    public BufferedImage getHit8() {
+        return hit8;
+    }
+
+    public BufferedImage getHit9() {
+        return hit9;
+    }
+
+    public BufferedImage getHit10() {
+        return hit10;
+    }
+
+    public BufferedImage getHit11() {
+        return hit11;
+    }
+
+    public BufferedImage getHit12() {
+        return hit12;
+    }
+
+    public BufferedImage getHit13() {
+        return hit13;
+    }
+
+    public BufferedImage getHit14() {
+        return hit14;
+    }
+
+    public BufferedImage getHit15() {
+        return hit15;
+    }
+
+    public BufferedImage getHit16() {
+        return hit16;
+    }
 }

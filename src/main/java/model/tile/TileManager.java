@@ -142,6 +142,7 @@ public class TileManager {
         int playerMapX = gsm.getPlayer().getX();
         int playerMapY = gsm.getPlayer().getY();
 
+        //area renderizzata e disegnata
         int bufferRendering = tileSize * 16;
 
         return worldX  + bufferRendering > playerMapX  &&
