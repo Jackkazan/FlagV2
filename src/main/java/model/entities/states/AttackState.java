@@ -70,7 +70,11 @@ public class AttackState implements EntityState {
     }
 
     private void updatePlayer(Player player){
-        if(!player.isHitted()) {
+        if(player.isHitted()) {
+            player.setAttackAnimationCompleted(true);
+            player.setAttacking(false);
+        }else {
+
             if (player.getSpriteNum() == 3) {
                 player.setAttackAnimationCompleted(true);
             }
@@ -87,7 +91,8 @@ public class AttackState implements EntityState {
                 player.setSpriteNum((player.getSpriteNum() + 1) % 4);
                 player.setSpriteCounter(0);
             }
-        }else player.setAttacking(false);
+        }
+
     }
 
     private void drawPlayer(Graphics2D graphics2D, Player player){

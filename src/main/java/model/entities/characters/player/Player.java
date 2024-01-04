@@ -179,7 +179,7 @@ public class Player extends Characters {
     public void resetAttack(){
         this.isAttacking = true;
         this.isAttackAnimationCompleted = false;
-        this.spriteNum=0;
+        this.spriteNum = 0;
     }
 
     public boolean collidesWithEnemies(int nextX, int nextY) {
@@ -366,10 +366,4 @@ public class Player extends Characters {
     public Rectangle getAttackArea() {
         return attackArea;
     }
-
-
-
-
-
-
 }

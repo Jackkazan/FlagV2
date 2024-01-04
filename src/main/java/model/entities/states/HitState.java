@@ -155,6 +155,7 @@ public class HitState implements EntityState {
         }
 
         player.updateCollisionArea();
+        player.updateAttackArea();
         System.out.println("Sprite num: "+ player.getSpriteNum());
 
         if (player.getSpriteCounter() > 5) {
