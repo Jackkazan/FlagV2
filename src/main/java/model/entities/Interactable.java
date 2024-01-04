@@ -1,7 +1,7 @@
 package model.entities;
 
 import model.entities.items.Item;
-import model.entities.npc.Npc;
+import model.entities.characters.npc.Npc;
 
 public interface Interactable {
     void performAction(Item item);

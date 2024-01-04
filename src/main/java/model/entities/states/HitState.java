@@ -2,13 +2,11 @@ package model.entities.states;
 
 import model.entities.Entity;
 import model.entities.EntityState;
-import model.entities.enemies.Enemy;
-import model.entities.player.Player;
+import model.entities.characters.enemies.Enemy;
+import model.entities.characters.player.Player;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
-import static view.GamePanel.tileSize;
 
 public class HitState implements EntityState {
 
@@ -44,7 +42,7 @@ public class HitState implements EntityState {
         enemy.incrementSpriteCounter();
         //velocità di cambio sprite 5-10
 
-            //da sistemare per tutte le direzioni e per le collisioni con la mappa
+        //da sistemare per tutte le direzioni e per le collisioni con la mappa
         int nextX = enemy.getX();
         int nextY = enemy.getY();
         int pushback = enemy.getSpeed()*2;
@@ -106,6 +104,8 @@ public class HitState implements EntityState {
     }
 
     private void updatePlayer(Player player) {
+        System.out.println(player.getSpriteNum());
+        System.out.println(player.getHitAnimationCompleted());
         long currentTime = System.currentTimeMillis();
 
         // Verifica se è passato il periodo di cooldown
@@ -133,9 +133,9 @@ public class HitState implements EntityState {
 
             case "down","down&attack" :
                 if(!player.collidesWithObjects(nextX,nextY+pushback)) {
-                player.setX(nextX);
-                player.setY(nextY + pushback);
-            }
+                    player.setX(nextX);
+                    player.setY(nextY + pushback);
+                }
                 break;
 
             case "left","left&attack" :
@@ -147,9 +147,9 @@ public class HitState implements EntityState {
 
             case "right","right&attack" :
                 if(!player.collidesWithObjects(nextX+pushback,nextY)) {
-                player.setX(nextX +pushback);
-                player.setY(nextY);
-            }
+                    player.setX(nextX +pushback);
+                    player.setY(nextY);
+                }
                 break;
         }
 

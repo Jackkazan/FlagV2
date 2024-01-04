@@ -1,8 +1,5 @@
 package model.entities;
 
-import model.entities.Entity;
-import model.entities.enemies.Enemy;
-
 import java.awt.*;
 
 public interface EntityState {

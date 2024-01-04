@@ -1,4 +1,4 @@
-package model.entities.npc;
+package model.entities.characters.npc;
 
 import model.entities.Interactable;
 import model.entities.items.Item;

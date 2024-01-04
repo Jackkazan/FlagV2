@@ -1,4 +1,4 @@
-package model.entities.enemies;
+package model.entities.characters.enemies;
 
 import model.gameState.GameStateManager;
 import model.tile.MapManager;

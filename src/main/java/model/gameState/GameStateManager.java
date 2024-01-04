@@ -2,11 +2,11 @@ package model.gameState;
 
 import controller.KeyHandler;
 import model.entities.Entity;
-import model.entities.enemies.Enemy;
-import model.entities.enemies.EnemyCreator;
-import model.entities.npc.Npc;
-import model.entities.npc.NpcCreator;
-import model.entities.player.Player;
+import model.entities.characters.enemies.Enemy;
+import model.entities.characters.enemies.EnemyCreator;
+import model.entities.characters.npc.Npc;
+import model.entities.characters.npc.NpcCreator;
+import model.entities.characters.player.Player;
 import model.entities.items.Item;
 import model.entities.items.ItemCreator;
 import model.Dialogues.DialogueManager;
@@ -76,7 +76,7 @@ public class GameStateManager {
 
     }
     public void Init(){ // inizializza il player e le mappe
-        this.player = new Player(gp,this, keyH);
+        this.player = new Player(this, keyH);
         this.tileManagerZonaIniziale = new TileManager(gp, this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
         this.tileManagerCasettaIniziale = new TileManager(gp, this, "src/main/resources/Map/StanzaIntroduzione/CasettaIniziale.tmx");
         this.tileManagerVillaggioSud = new TileManager(gp, this, "src/main/resources/Map/VillaggioSud/VillaggioSud.tmx");

@@ -1,7 +1,8 @@
-package model.entities.npc;
+package model.entities.characters.npc;
 
 import model.entities.Entity;
 import model.entities.EntityState;
+import model.entities.characters.Characters;
 import model.entities.states.IdleState;
 import model.entities.states.MovementState;
 import model.gameState.GameStateManager;
@@ -15,31 +16,14 @@ import java.util.Objects;
 import static view.GamePanel.tileSize;
 
 //Class for npc
-public class Npc extends Entity {
-
-    protected int speed;
-    protected int speedChangeSprite;
-
-    protected int spriteNum;
-    protected BufferedImage
-            up1, up2, up3, up4,
-            down1, down2, down3, down4,
-            left1, left2, left3, left4,
-            right1, right2, right3, right4;
-
-    protected String direction;
-    protected int spriteCounter = 0;
-    protected int totalSprite;
-
-    protected enum State{IDLE, MOVEMENT,HIT,ATTACK}
-    protected EntityState currentState;
+public class Npc extends Characters {
 
     public Npc (){
         this.gsm = GameStateManager.gp.getGsm();
         this.keyH = GameStateManager.keyH;
     }
 
-    public static class NpcBuilder extends EntityBuilder<Npc,NpcBuilder>{
+    public static class NpcBuilder extends Entity.EntityBuilder<Npc,NpcBuilder> {
 
         private int[] pathX;  // Array delle coordinate x del percorso
         private int[] pathY;  // Array delle coordinate y del percorso
@@ -82,9 +66,9 @@ public class Npc extends Entity {
         }
 
         public NpcBuilder set16EntityImage(String path_up1, String path_up2, String path_up3, String path_up4,
-                                              String path_down1, String path_down2, String path_down3, String path_down4,
-                                              String path_left1, String path_left2, String path_left3, String path_left4,
-                                              String path_right1, String path_right2, String path_right3, String path_right4) {
+                                           String path_down1, String path_down2, String path_down3, String path_down4,
+                                           String path_left1, String path_left2, String path_left3, String path_left4,
+                                           String path_right1, String path_right2, String path_right3, String path_right4) {
             try {
                 this.entity.up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up1)));
                 this.entity.up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up2)));
@@ -113,7 +97,7 @@ public class Npc extends Entity {
         }
 
         public NpcBuilder set8EntityImage(String path_up1, String path_up2, String path_down1, String path_down2,
-                                             String path_left1, String path_left2, String path_right1, String path_right2) {
+                                          String path_left1, String path_left2, String path_right1, String path_right2) {
             try {
                 this.entity.up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up1)));
                 this.entity.up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up2)));
@@ -186,19 +170,6 @@ public class Npc extends Entity {
         setPath();
         interact();
     }
-
-    public void setState(State npcState) {
-        switch (npcState) {
-            case IDLE:
-                currentState =  new IdleState();
-                break;
-            case MOVEMENT:
-                currentState = new MovementState();
-                break;
-            // Aggiungi altri stati se necessario
-        }
-    }
-
     public void setPath(){
         // Definisci il percorso predefinito
         int[] pathX = new int[]{this.x, this.x + tileSize, this.x, this.x - tileSize};  // Esempio: movimento orizzontale a destra, poi su, poi a sinistra
@@ -223,9 +194,6 @@ public class Npc extends Entity {
         }
     }
 
-    public void setDirection(String direction) {
-        this.direction = direction;
-    }
 
     private boolean isPlayerNearby() {
         // puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
@@ -236,111 +204,5 @@ public class Npc extends Entity {
         else return false;
     }
 
-    public int getSpeed() {
-        return this.speed;
-    }
 
-    public String getDirection() {
-        return this.direction;
-    }
-
-    public int getSpeedChangeSprite() {
-        return speedChangeSprite;
-    }
-
-    public int getSpriteNum() {
-        return spriteNum;
-    }
-
-    public BufferedImage getUp1() {
-        return up1;
-    }
-
-    public BufferedImage getUp2() {
-        return up2;
-    }
-
-    public BufferedImage getUp3() {
-        return up3;
-    }
-
-    public BufferedImage getUp4() {
-        return up4;
-    }
-
-    public BufferedImage getDown1() {
-        return down1;
-    }
-
-    public BufferedImage getDown2() {
-        return down2;
-    }
-
-    public BufferedImage getDown3() {
-        return down3;
-    }
-
-    public BufferedImage getDown4() {
-        return down4;
-    }
-
-    public BufferedImage getLeft1() {
-        return left1;
-    }
-
-    public BufferedImage getLeft2() {
-        return left2;
-    }
-
-    public BufferedImage getLeft3() {
-        return left3;
-    }
-
-    public BufferedImage getLeft4() {
-        return left4;
-    }
-
-    public BufferedImage getRight1() {
-        return right1;
-    }
-
-    public BufferedImage getRight2() {
-        return right2;
-    }
-
-    public BufferedImage getRight3() {
-        return right3;
-    }
-
-    public BufferedImage getRight4() {
-        return right4;
-    }
-
-    public int getSpriteCounter() {
-        return spriteCounter;
-    }
-
-    public int getTotalSprite() {
-        return totalSprite;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public void setSpeedChangeSprite(int speedChangeSprite) {
-        this.speedChangeSprite = speedChangeSprite;
-    }
-
-    public void setSpriteNum(int spriteNum) {
-        this.spriteNum = spriteNum;
-    }
-
-    public void setSpriteCounter(int spriteCounter) {
-        this.spriteCounter = spriteCounter;
-    }
-
-    public void setTotalSprite(int totalSprite) {
-        this.totalSprite = totalSprite;
-    }
 }

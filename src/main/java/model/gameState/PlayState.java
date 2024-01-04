@@ -2,10 +2,8 @@ package model.gameState;
 
 import controller.KeyHandler;
 import model.entities.Entity;
-import model.entities.enemies.Enemy;
-import model.entities.npc.Npc;
 import model.entities.items.Item;
-import model.entities.player.Player;
+import model.entities.characters.player.Player;
 import model.tile.MapManager;
 import view.GamePanel;
 

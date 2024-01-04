@@ -1,7 +1,7 @@
 package model.entity;
 
 import controller.KeyHandler;
-import model.entities.player.Player;
+import model.entities.characters.player.Player;
 import model.gameState.GameStateManager;
 import view.GamePanel;
 

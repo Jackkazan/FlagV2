@@ -1,10 +1,11 @@
-package model.entities.player;
+package model.entities.characters.player;
 
 import controller.KeyHandler;
 import model.entities.EntityState;
-import model.entities.enemies.Enemy;
+import model.entities.characters.Characters;
+import model.entities.characters.enemies.Enemy;
 import model.entities.items.Item;
-import model.entities.npc.Npc;
+import model.entities.characters.npc.Npc;
 import model.entities.states.AttackState;
 import model.entities.states.HitState;
 import model.entities.states.IdleState;
@@ -21,21 +22,16 @@ import java.util.Objects;
 
 import static view.GamePanel.tileSize;
 
-public class Player extends Enemy{
-    private final GamePanel gamePanel;
+public class Player extends Characters {
     private final int screenX;
     private final int screenY;
 
+
     private String enemyHitDirection;
-
-    private BufferedImage hit5,hit6,hit7,hit8,hit9,hit10,hit11,hit12,hit13,hit14,hit15,hit16;
-
-
-
     public enum swordStateAndArmor { IronSwordNoArmor, IronSwordAndArmor, GoldSwordAndArmor, RubySwordAndArmor }
     swordStateAndArmor currentSwordStateAndArmor;
     private Rectangle interactionArea;
-
+    private Rectangle attackArea;
     public void updateInteractionArea() {
         interactionArea.setLocation(x -tileSize , y-tileSize);
     }
@@ -44,7 +40,7 @@ public class Player extends Enemy{
         collisionArea.setLocation(x-tileSize, y-tileSize);
     }
 
-    @Override
+
     public void updateAttackArea() {
         switch(direction){
             case "up":
@@ -63,18 +59,17 @@ public class Player extends Enemy{
 
     }
 
-    // Nuova area di interazione
-    public Player(GamePanel gamePanel, GameStateManager gsm, KeyHandler keyH) {
-        this.gamePanel = gamePanel;
+
+    public Player(GameStateManager gsm, KeyHandler keyH) {
         this.gsm = gsm;
         this.keyH = keyH;
 
-        screenX = gamePanel.getScreenWidth()/2 - (tileSize/2);
-        screenY = gamePanel.getScreenHeight()/2 - (tileSize/2);
+        screenX = GamePanel.screenWidth/2 - (tileSize/2);
+        screenY = GamePanel.screenHeight/2 - (tileSize/2);
         setDefaultValues();
         getEntityImage();
-        getAttackImages();
         getHitImage();
+        getAttackImages();
         setState(State.IDLE);
 
     }
@@ -104,23 +99,13 @@ public class Player extends Enemy{
         isDeadAnimationCompleted = true;
     }
 
-    public void setState(State playerState) {
-        switch (playerState) {
-            case IDLE -> currentState = new IdleState();
-            case MOVEMENT -> currentState = new MovementState();
-            case ATTACK -> currentState = new AttackState();
-            case HIT -> currentState = new HitState();
-            default -> {}
-        }
-    }
+
     public void setEnemyHitDirection(String direction) {
         enemyHitDirection = direction;
     }
-
     public String getEnemyHitDirection() {
         return enemyHitDirection;
     }
-
     public void setSwordStateAndArmor(swordStateAndArmor newSwordStateAndArmor) {
         this.currentSwordStateAndArmor = newSwordStateAndArmor;
     }
@@ -148,7 +133,6 @@ public class Player extends Enemy{
         //System.out.println("Stato corrente "+ currentState);
         currentState.update(this);
     }
-
 
     @Override
     public void draw(Graphics2D graphics2D) {
@@ -225,27 +209,7 @@ public class Player extends Enemy{
                 y < objectY + objectHeight &&
                 y + tileSize > objectY;
     }
-    public boolean collidesWithObjects(int nextX, int nextY) {
-        // Verifica la collisione con gli oggetti di collisione della mappa corrente
-        for (CollisionObject collisionObject : currentCollisionMap) {
-            if (checkCollisionObject(nextX, nextY, collisionObject)) {
-                return true; // Collisione rilevata
-            }
-        }
-        return false; // Nessuna collisione rilevata
-    }
 
-    public boolean checkCollisionObject(int x, int y, CollisionObject collisionObject) {
-        double objectX = collisionObject.getX() * gsm.getGamePanel().getScale();
-        double objectY = collisionObject.getY() * gsm.getGamePanel().getScale();
-        double objectWidth = collisionObject.getWidth() * gsm.getGamePanel().getScale();
-        double objectHeight = collisionObject.getHeight() * gsm.getGamePanel().getScale();
-
-        return x < objectX + objectWidth &&
-                x + tileSize > objectX &&
-                y < objectY + objectHeight &&
-                y + tileSize > objectY;
-    }
     public boolean isAttacking() {
         return this.isAttacking;
     }
@@ -324,7 +288,6 @@ public class Player extends Enemy{
             e.printStackTrace();
         }
     }
-
     public void getHitImage() {
         try {
             switch (currentSwordStateAndArmor) {
@@ -359,12 +322,8 @@ public class Player extends Enemy{
             e.printStackTrace();
         }
     }
-    public int getMaxLife() {
-        return maxLife;
-    }
-    public int getCurrentLife() {
-        return currentLife;
-    }
+
+
 
     public int getScreenX() {
         return this.screenX;
@@ -378,292 +337,22 @@ public class Player extends Enemy{
         return interactionArea;
     }
 
-    public GamePanel getGamePanel() {
-        return gamePanel;
-    }
-
-
-
-    public boolean isAttackAnimationCompleted() {
-        return isAttackAnimationCompleted;
-    }
 
     public swordStateAndArmor getCurrentSwordStateAndArmor() {
         return currentSwordStateAndArmor;
-    }
-
-    public ArrayList<CollisionObject> getCurrentCollisionMap() {
-        return currentCollisionMap;
     }
 
     public void setHitAnimationCompleted(boolean hitAnimationCompleted) {
         this.isHitAnimationCompleted = hitAnimationCompleted;
     }
 
-
-    public void setHitted(boolean hitted) {
-        isHitted = hitted;
-    }
-
-    public boolean isHitted() {
-        return isHitted;
-    }
-
     public Rectangle getAttackArea() {
         return attackArea;
     }
 
-    public boolean isHitAnimationCompleted() {
-        return isHitAnimationCompleted;
-    }
 
-    public EntityState getCurrentState() {
-        return currentState;
-    }
 
-    public void incrementSpriteCounter() {
-        this.spriteCounter = spriteCounter +1;
-    }
 
-    public BufferedImage getAttackUp1() {
-        return this.attackUp1;
-    }
 
-    public BufferedImage getAttackUp2() {
-        return this.attackUp2;
-    }
 
-    public BufferedImage getAttackUp3() {
-        return this.attackUp3;
-    }
-
-    public BufferedImage getAttackUp4() {
-        return this.attackUp4;
-    }
-
-    public BufferedImage getAttackDown1() {
-        return this.attackDown1;
-    }
-
-    public BufferedImage getAttackDown2() {
-        return this.attackDown2;
-    }
-
-    public BufferedImage getAttackDown3() {
-        return this.attackDown3;
-    }
-
-    public BufferedImage getAttackDown4() {
-        return this.attackDown4;
-    }
-
-    public BufferedImage getAttackLeft1() {
-        return attackLeft1;
-    }
-
-    public BufferedImage getAttackLeft2() {
-        return this.attackLeft2;
-    }
-
-    public BufferedImage getAttackLeft3() {
-        return this.attackLeft3;
-    }
-
-    public BufferedImage getAttackLeft4() {
-        return this.attackLeft4;
-    }
-
-    public BufferedImage getAttackRight1() {
-        return this.attackRight1;
-    }
-
-    public BufferedImage getAttackRight2() {
-        return this.attackRight2;
-    }
-
-    public BufferedImage getAttackRight3() {
-        return this.attackRight3;
-    }
-
-    public BufferedImage getAttackRight4() {
-        return this.attackRight4;
-    }
-
-
-    public void setAttacking(boolean isAttacking) {
-        this.isAttacking = isAttacking;
-    }
-    public void setAttackAnimationCompleted(boolean attackAnimationCompleted) {
-        this.isAttackAnimationCompleted = attackAnimationCompleted;
-    }
-
-
-    public boolean getAttackAnimationCompleted() {
-        return this.isAttackAnimationCompleted;
-    }
-
-    public void setDirection(String direction) {
-        this.direction = direction;
-    }
-
-    public void setCurrentLife(int currentLife) {
-        this.currentLife = currentLife;
-    }
-
-
-    public int getSpeed() {
-        return this.speed;
-    }
-
-    public String getDirection() {
-        return this.direction;
-    }
-
-    public int getSpeedChangeSprite() {
-        return speedChangeSprite;
-    }
-
-    public int getSpriteNum() {
-        return spriteNum;
-    }
-
-    public BufferedImage getUp1() {
-        return up1;
-    }
-
-    public BufferedImage getUp2() {
-        return up2;
-    }
-
-    public BufferedImage getUp3() {
-        return up3;
-    }
-
-    public BufferedImage getUp4() {
-        return up4;
-    }
-
-    public BufferedImage getDown1() {
-        return down1;
-    }
-
-    public BufferedImage getDown2() {
-        return down2;
-    }
-
-    public BufferedImage getDown3() {
-        return down3;
-    }
-
-    public BufferedImage getDown4() {
-        return down4;
-    }
-
-    public BufferedImage getLeft1() {
-        return left1;
-    }
-
-    public BufferedImage getLeft2() {
-        return left2;
-    }
-
-    public BufferedImage getLeft3() {
-        return left3;
-    }
-
-    public BufferedImage getLeft4() {
-        return left4;
-    }
-
-    public BufferedImage getRight1() {
-        return right1;
-    }
-
-    public BufferedImage getRight2() {
-        return right2;
-    }
-
-    public BufferedImage getRight3() {
-        return right3;
-    }
-
-    public BufferedImage getRight4() {
-        return right4;
-    }
-
-    public int getSpriteCounter() {
-        return spriteCounter;
-    }
-
-    public int getTotalSprite() {
-        return totalSprite;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public void setSpeedChangeSprite(int speedChangeSprite) {
-        this.speedChangeSprite = speedChangeSprite;
-    }
-
-    public void setSpriteNum(int spriteNum) {
-        this.spriteNum = spriteNum;
-    }
-
-    public void setSpriteCounter(int spriteCounter) {
-        this.spriteCounter = spriteCounter;
-    }
-
-    public void setTotalSprite(int totalSprite) {
-        this.totalSprite = totalSprite;
-    }
-
-    public BufferedImage getHit5() {
-        return hit5;
-    }
-
-    public BufferedImage getHit6() {
-        return hit6;
-    }
-
-    public BufferedImage getHit7() {
-        return hit7;
-    }
-
-    public BufferedImage getHit8() {
-        return hit8;
-    }
-
-    public BufferedImage getHit9() {
-        return hit9;
-    }
-
-    public BufferedImage getHit10() {
-        return hit10;
-    }
-
-    public BufferedImage getHit11() {
-        return hit11;
-    }
-
-    public BufferedImage getHit12() {
-        return hit12;
-    }
-
-    public BufferedImage getHit13() {
-        return hit13;
-    }
-
-    public BufferedImage getHit14() {
-        return hit14;
-    }
-
-    public BufferedImage getHit15() {
-        return hit15;
-    }
-
-    public BufferedImage getHit16() {
-        return hit16;
-    }
 }

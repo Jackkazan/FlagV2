@@ -3,7 +3,7 @@ package model.entities.items;
 
 import controller.KeyHandler;
 import model.entities.Prototype;
-import model.entities.npc.Npc;
+import model.entities.characters.npc.Npc;
 import model.gameState.GameStateManager;
 import model.entities.Interactable;
 import model.quests.Quest;

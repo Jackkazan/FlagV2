@@ -1,16 +1,11 @@
 package model.Dialogues;
 
 import java.util.ArrayList;
-import java.util.List;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import model.entities.Entity;
-import model.entities.npc.Npc;
-import model.gameState.GameStateManager;
 
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.Map;
+import com.fasterxml.jackson.databind.JsonNode;
+import model.entities.Entity;
+import model.entities.characters.npc.Npc;
+import model.gameState.GameStateManager;
 
 public class DialogueManager {
     private static ArrayList<String> test;
