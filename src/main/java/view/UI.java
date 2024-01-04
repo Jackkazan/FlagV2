@@ -3,6 +3,7 @@ package view;
 import model.gameState.GameStateManager;
 import model.hud.OBJ_Heart;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -14,6 +15,7 @@ public class UI {
     private final GameStateManager gsm;
     private Graphics2D graphics2D;
     private final BufferedImage heart_full, heart_half, heart_blank;
+    private BufferedImage compassImage;
     private Font maruMonica;
     private OBJ_Heart heart;
     private static UI instance = null;
@@ -24,7 +26,17 @@ public class UI {
         this.heart_full = heart.getImage1();
         this.heart_half = heart.getImage2();
         this.heart_blank = heart.getImage3();
+
+        // Carica l'immagine desiderata
+        try {
+            InputStream inputStream = getClass().getResourceAsStream("/ui/bussola.png");
+            compassImage = ImageIO.read(inputStream);
+            compassImage = UtilityTool.scaleImage(compassImage, GamePanel.tileSize*3, GamePanel.tileSize*3); // Ridimensiona l'immagine
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     public static UI getInstance(){
         if (instance == null)
@@ -45,6 +57,7 @@ public class UI {
         this.graphics2D = graphics2D;
 
         drawPlayerLife();
+        drawCompass();
     }
 
     private void drawPlayerLife() {
@@ -69,6 +82,22 @@ public class UI {
 
             x += GamePanel.tileSize;
         }
+    }
+
+    private void drawCompass() {
+        if (compassImage == null) {
+            System.err.println("Error: Compass image not loaded.");
+            return;
+        }
+
+        int panelWidth = GamePanel.screenWidth;  // Ottieni la larghezza del pannello
+        int panelHeight = GamePanel.screenHeight;  // Ottieni l'altezza del pannello
+
+        int x = GamePanel.tileSize / 4;  // Adjust as needed
+        int y = panelHeight - compassImage.getHeight() - GamePanel.tileSize / 4;  // Regola la posizione Y come desiderato
+
+        // Draw the compass image
+        graphics2D.drawImage(compassImage, x, y, null);
     }
 }
 
