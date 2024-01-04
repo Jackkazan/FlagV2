@@ -39,6 +39,7 @@ public class Enemy extends Characters {
         despawnTimer = 0;
         despawnCooldown = 500;
         hitCooldown = 1000;
+        damage=1;
     }
 
     public boolean isNearPlayer() {
@@ -116,6 +117,7 @@ public class Enemy extends Characters {
     public void hitPlayer(){
         if(this.attackArea.intersects(gsm.getPlayer().getCollisionArea())){
             gsm.getPlayer().setEnemyHitDirection(this.direction);
+            gsm.getPlayer().setEnemyHitDamage(this.damage);
             if(!gsm.getPlayer().isHitted()) {
                 gsm.getPlayer().setSpriteNum(0);
                 gsm.getPlayer().setHitAnimationCompleted(false);
@@ -125,6 +127,7 @@ public class Enemy extends Characters {
             System.out.println(this.name + " ha colpito il player");
         }
     }
+
     public void decrementDespawnTimer(){
         this.despawnTimer--;
     }
@@ -402,7 +405,12 @@ public class Enemy extends Characters {
     }
 
 
+    public void takeDamage() {
 
+        currentLife -= gsm.getPlayer().getDamage();
+        System.out.println("La vita del nemico e' : " + currentLife);
+
+    }
 
     public void respawn(int respawnX, int respawnY) {
         //System.out.println("Respawning at X: " + respawnX + ", Y: " + respawnY);

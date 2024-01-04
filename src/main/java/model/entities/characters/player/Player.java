@@ -28,6 +28,12 @@ public class Player extends Characters {
 
 
     private String enemyHitDirection;
+    private int enemyHitDamage;
+
+    public void setEnemyHitDamage(int damage) {
+        enemyHitDamage = damage;
+    }
+
     public enum swordStateAndArmor { IronSwordNoArmor, IronSwordAndArmor, GoldSwordAndArmor, RubySwordAndArmor }
     swordStateAndArmor currentSwordStateAndArmor;
     private Rectangle interactionArea;
@@ -93,9 +99,10 @@ public class Player extends Characters {
         attackArea = new Rectangle();
         collisionArea = new Rectangle(x-tileSize,y-tileSize,tileSize*2,tileSize*2);
         interactionArea = new Rectangle(x-16, y-16, tileSize*3, tileSize*3);
-        hitCooldown = 1000;
+        hitCooldown = 2000;
         isDead = false;
         isDeadAnimationCompleted = true;
+        damage=1;
     }
 
 
@@ -107,6 +114,11 @@ public class Player extends Characters {
     }
     public void setSwordStateAndArmor(swordStateAndArmor newSwordStateAndArmor) {
         this.currentSwordStateAndArmor = newSwordStateAndArmor;
+    }
+
+    public void takeDamage(){
+        currentLife -= enemyHitDamage;
+
     }
 
     @Override

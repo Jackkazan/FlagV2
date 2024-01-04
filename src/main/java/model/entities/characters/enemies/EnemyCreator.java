@@ -70,7 +70,7 @@ public class EnemyCreator {
                 .setSpeed(2)
                 .setMaxLife(6)
                 .setCurrentLife(6)
-                .setDamage(3)
+                .setDamage(1)
                 .setSpeedChangeSprite(10)
                 .setSpriteNumLess1(3)
                 .setScale(4)
