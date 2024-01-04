@@ -396,8 +396,6 @@ public class Player extends Enemy{
         return currentCollisionMap;
     }
 
-
-
     public void setHitAnimationCompleted(boolean hitAnimationCompleted) {
         this.isHitAnimationCompleted = hitAnimationCompleted;
     }

@@ -120,7 +120,7 @@ public class HitState implements EntityState {
         //velocità di cambio sprite 5-10
         int nextX = player.getX();
         int nextY = player.getY();
-        int pushback = player.getSpeed()*2;
+        int pushback = player.getSpeed();
         System.out.println(player.getEnemyHitDirection());
 
         switch (player.getEnemyHitDirection()){
@@ -156,7 +156,7 @@ public class HitState implements EntityState {
         player.updateCollisionArea();
         System.out.println("Sprite num: "+ player.getSpriteNum());
 
-        if (player.getSpriteCounter() > 7) {
+        if (player.getSpriteCounter() > 5) {
             player.setSpriteNum((player.getSpriteNum() + 1) % 4);
             player.setSpriteCounter(0);
         }
