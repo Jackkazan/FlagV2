@@ -1,5 +1,6 @@
 package model.entities.items;
 
+import controller.KeyHandler;
 import model.entities.Entity;
 import model.entities.Prototype;
 import model.gameState.GameStateManager;
@@ -25,8 +26,7 @@ public class Item extends Entity implements Prototype {
     private int offsetY;
 
     public Item() {
-        this.gsm = GameStateManager.gp.getGsm();
-        this.keyH = GameStateManager.keyH;
+        super();
     }
 
     @Override

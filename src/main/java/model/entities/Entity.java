@@ -26,6 +26,10 @@ public abstract class Entity{
     protected int imageWidth;
     protected int imageHeight;
 
+    public Entity(){
+        this.gsm = GameStateManager.getInstance();
+        this.keyH = KeyHandler.getInstance();
+    }
     public abstract void draw(Graphics2D graphics2D);
 
     public abstract void update();

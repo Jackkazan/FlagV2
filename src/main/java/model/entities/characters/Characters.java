@@ -4,6 +4,7 @@ import model.collisions.CollisionObject;
 import model.entities.Entity;
 import model.entities.EntityState;
 import model.entities.states.*;
+import view.GamePanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -26,9 +27,13 @@ public abstract class Characters extends Entity {
             down1, down2, down3, down4,
             left1, left2, left3, left4,
             right1, right2, right3, right4;
-    protected BufferedImage attackUp1, attackUp2, attackUp3, attackUp4, attackDown1, attackDown2, attackDown3, attackDown4, attackLeft1, attackLeft2, attackLeft3, attackLeft4, attackRight1, attackRight2, attackRight3, attackRight4;
+    protected BufferedImage attackUp1, attackUp2, attackUp3, attackUp4,
+            attackDown1, attackDown2, attackDown3, attackDown4,
+            attackLeft1, attackLeft2, attackLeft3, attackLeft4,
+            attackRight1, attackRight2, attackRight3, attackRight4;
 
-    protected BufferedImage dead1, dead2, dead3, dead4, dead5, dead6, dead7, dead8, dead9;
+    protected BufferedImage dead1, dead2, dead3, dead4,
+            dead5, dead6, dead7, dead8, dead9;
 
     protected BufferedImage idle1,idle2,idle3,idle4;
 
@@ -54,6 +59,9 @@ public abstract class Characters extends Entity {
     protected long lastHitTime;  // Memorizza il tempo dell'ultima hit
     protected long hitCooldown;  // Cooldown in millisecondi (1 secondo)
     protected ArrayList<CollisionObject> currentCollisionMap;
+    public Characters() {
+        super();
+    }
     public void takeDamage(int damage) {
         currentLife -= damage;
         System.out.println("La vita del nemico e' : " + currentLife);
@@ -79,19 +87,18 @@ public abstract class Characters extends Entity {
     public void updateAttackArea() {
         switch(direction){
             case "up":
-                attackArea = new Rectangle(x-tileSize,y-tileSize*2,tileSize*3,tileSize*2);
+                attackArea = new Rectangle(x-tileSize,y-tileSize,tileSize*3,tileSize);
                 break;
             case "down":
-                attackArea = new Rectangle(x-tileSize,y,tileSize*3,tileSize*2);
+                attackArea = new Rectangle(x-tileSize,y,tileSize*3,tileSize);
                 break;
             case "left":
-                attackArea = new Rectangle(x-tileSize-24,y-tileSize,tileSize*2,tileSize*3);
+                attackArea = new Rectangle(x-tileSize-24,y-tileSize,tileSize,tileSize*3);
                 break;
             case "right":
-                attackArea = new Rectangle(x+24,y-tileSize,tileSize*2,tileSize*3);
+                attackArea = new Rectangle(x+24,y-tileSize,tileSize,tileSize*3);
                 break;
         }
-
     }
     public boolean collidesWithObjects(int nextX, int nextY) {
         // Verifica la collisione con gli oggetti di collisione della mappa corrente
@@ -103,10 +110,10 @@ public abstract class Characters extends Entity {
         return false; // Nessuna collisione rilevata
     }
     public boolean checkCollisionObject(int x, int y, CollisionObject collisionObject) {
-        double objectX = collisionObject.getX() * gsm.getGamePanel().getScale();
-        double objectY = collisionObject.getY() * gsm.getGamePanel().getScale();
-        double objectWidth = collisionObject.getWidth() * gsm.getGamePanel().getScale();
-        double objectHeight = collisionObject.getHeight() * gsm.getGamePanel().getScale();
+        double objectX = collisionObject.getX() * GamePanel.scale;
+        double objectY = collisionObject.getY() * GamePanel.scale;
+        double objectWidth = collisionObject.getWidth() * GamePanel.scale;
+        double objectHeight = collisionObject.getHeight() * GamePanel.scale;
 
         return x < objectX + objectWidth &&
                 x + tileSize > objectX &&

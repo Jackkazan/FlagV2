@@ -5,6 +5,7 @@ import view.GamePanel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.security.Key;
 import java.util.Arrays;
 
 public class KeyHandler implements KeyListener {
@@ -19,6 +20,7 @@ public class KeyHandler implements KeyListener {
     private boolean showDebugText = false;
 
     private boolean attacking = false;
+    private static KeyHandler instance = null;
 
     public KeyHandler(){}
 
@@ -26,15 +28,17 @@ public class KeyHandler implements KeyListener {
     public void keyTyped(KeyEvent e) {
 
     }
-    public void setGamePanel() {
-        this.gamePanel = gsm.getGamePanel();
-    }
+    //public void setGamePanel() {this.gamePanel = gsm.getGamePanel();}
     public KeyHandler(GameStateManager gsm) {  // Aggiunto
         this.gsm = gsm;
     }
 
 
-
+    public static KeyHandler getInstance(){
+        if (instance == null)
+            instance = new KeyHandler();
+        return instance;
+    }
 
     @Override
     public void keyPressed(KeyEvent e) {

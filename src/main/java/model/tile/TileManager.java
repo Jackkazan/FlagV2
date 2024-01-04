@@ -13,8 +13,7 @@ import java.util.HashMap;
 import static view.GamePanel.tileSize;
 
 public class TileManager {
-    private GamePanel gamePanel;
-    private GameStateManager gsm;
+   private GameStateManager gsm;
     private HashMap<Integer, BufferedImage> mappaSprite;
     private ArrayList<String> listaMatrici;
     private int numLayer;
@@ -29,9 +28,7 @@ public class TileManager {
     private BufferedImage bufferedImage;
 
 
-    public TileManager(GamePanel gamePanel, GameStateManager gsm, String pathTMXMap){
-
-        this.gamePanel = gamePanel;
+    public TileManager(GameStateManager gsm, String pathTMXMap){
         this.gsm = gsm;
         this.currentMap = pathTMXMap;
         TMXReader readMap = new TMXReader(pathTMXMap);

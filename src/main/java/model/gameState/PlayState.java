@@ -6,6 +6,7 @@ import model.entities.items.Item;
 import model.entities.characters.player.Player;
 import model.tile.MapManager;
 import view.GamePanel;
+import view.UI;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,8 +17,8 @@ import java.util.stream.Collectors;
 import static view.GamePanel.tileSize;
 
 public class PlayState implements GameState{
+
     private Player player;
-    private GamePanel gp;
     private GameStateManager gsm;
     private MapManager mapManager;
 
@@ -28,13 +29,12 @@ public class PlayState implements GameState{
 
 
     List<Item> itemList;
-    public PlayState(GamePanel gp, GameStateManager gsm, MapManager mapManager,Player player, KeyHandler keyH) {
-        this.gp = gp;
+    public PlayState(GameStateManager gsm, MapManager mapManager,Player player, KeyHandler keyH) {
         this.gsm = gsm;
         this.mapManager = mapManager;
         this.player = player;
         this.keyH = keyH;
-        this.buffer = new BufferedImage(gp.getScreenWidth(), gp.getScreenHeight(), BufferedImage.TYPE_INT_RGB);
+        this.buffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_RGB);
 
     }
 
@@ -91,7 +91,7 @@ public class PlayState implements GameState{
         // Disegna sulla buffer
         Graphics2D bufferGraphics = buffer.createGraphics();
         // Cancella completamente l'immagine del buffer
-        bufferGraphics.clearRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
+        bufferGraphics.clearRect(0, 0, screenWidth, screenHeight);
 
         mapManager.draw(bufferGraphics);
         /*
@@ -110,10 +110,10 @@ public class PlayState implements GameState{
             entity.draw(bufferGraphics);
 
         //player.draw(bufferGraphics);
-        gp.getUi().draw(bufferGraphics);
+        UI.getInstance().draw(bufferGraphics);
         drawToTempScreen();
         // Copia l'intera immagine buffer sulla schermata
-        g.drawImage(buffer, 0, 0, gp);
+        g.drawImage(buffer, 0, 0, null);
         //graphics2D.dispose();
         // Dispose del bufferGraphics
         bufferGraphics.dispose();

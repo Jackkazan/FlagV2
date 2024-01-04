@@ -41,6 +41,7 @@ public class Player extends Characters {
     }
 
 
+    @Override
     public void updateAttackArea() {
         switch(direction){
             case "up":
@@ -60,10 +61,8 @@ public class Player extends Characters {
     }
 
 
-    public Player(GameStateManager gsm, KeyHandler keyH) {
-        this.gsm = gsm;
-        this.keyH = keyH;
-
+    public Player() {
+        super();
         screenX = GamePanel.screenWidth/2 - (tileSize/2);
         screenY = GamePanel.screenHeight/2 - (tileSize/2);
         setDefaultValues();

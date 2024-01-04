@@ -8,12 +8,12 @@ import java.awt.*;
 
 public class MenuState implements GameState{
 
-    private GamePanel gp;
+   private int screenWidth = GamePanel.screenWidth;
+    private int screenHeight = GamePanel.screenHeight;
     private GameStateManager gsm;
     private KeyHandler keyH;
     private Graphics2D g2;
-    public MenuState(GamePanel gp, GameStateManager gsm, KeyHandler keyH) {
-        this.gp = gp;
+    public MenuState(GameStateManager gsm, KeyHandler keyH) {
         this.gsm = gsm;
         this.keyH = keyH;
 
@@ -51,11 +51,11 @@ public class MenuState implements GameState{
         //Carica l'immagine del titolo
         Image titleImage = new ImageIcon("src/main/resources/images/TitleFataDraconis2.png").getImage();
         // Disegna l'immagine di sfondo
-        g.drawImage(backgroundImage, 0, 0, gp.getScreenWidth(), gp.getScreenHeight(), null);
+        g.drawImage(backgroundImage, 0, 0, screenWidth, screenHeight, null);
 
         // Calcola le coordinate per centrare l'immagine del titolo in alto
-        int titleX = gp.getScreenWidth()/2 - titleImage.getWidth(null)/2;
-        int titleY = gp.getScreenHeight() /8;
+        int titleX = screenWidth/2 - titleImage.getWidth(null)/2;
+        int titleY = screenHeight /8;
         //Disegna l'immagine del titolo
         g.drawImage(titleImage, titleX,titleY,null);
 
@@ -67,8 +67,8 @@ public class MenuState implements GameState{
 
 
         int textWidth = g.getFontMetrics().stringWidth(menuText);
-        int x = (gp.getScreenWidth() - textWidth) / 2;
-        int y = gp.getScreenHeight() *2/3;
+        int x = (screenWidth - textWidth) / 2;
+        int y = screenHeight *2/3;
 
 
         g.drawString(menuText, x, y);

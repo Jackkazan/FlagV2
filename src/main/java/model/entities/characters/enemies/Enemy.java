@@ -1,5 +1,6 @@
 package model.entities.characters.enemies;
 
+import controller.KeyHandler;
 import model.collisions.CollisionObject;
 import model.entities.Entity;
 import model.entities.EntityState;
@@ -25,8 +26,7 @@ public class Enemy extends Characters {
     private int despawnCooldown;
 
     public Enemy (){
-        this.gsm = GameStateManager.gp.getGsm();
-        this.keyH = GameStateManager.keyH;
+        super();
         this.currentState = new IdleState();
         this.lastHitTime = System.currentTimeMillis();
         isAttacking =false;

@@ -1,5 +1,7 @@
 package view;
 
+import controller.KeyHandler;
+import controller.MouseHandler;
 import model.gameState.GameStateManager;
 import model.quests.Quest;
 import model.quests.QuestInitializer;
@@ -8,13 +10,14 @@ import model.sound.Sound;
 
 import javax.swing.*;
 import java.awt.*;
+import java.security.Key;
 import java.util.List;
 
 public class GamePanel extends JPanel implements Runnable{
 
     //SCREEN SETTINGS
     static final int originalTileSize = 16;
-    private static final int scale = 2;
+    public static final int scale = 2;
 
     static public final int tileSize = originalTileSize * scale; //48*48
     private static final int maxScreenCol = 25; //16 default
@@ -22,7 +25,8 @@ public class GamePanel extends JPanel implements Runnable{
     public static final int screenWidth = tileSize * maxScreenCol; //768 pixels
     public static final int screenHeight = tileSize * maxScreenRow;//576
     private GameStateManager gsm;
-
+    private MouseHandler mouseHandler;
+    private KeyHandler keyH;
 
     Thread gameThread;
 
@@ -36,9 +40,13 @@ public class GamePanel extends JPanel implements Runnable{
 
 
     public GamePanel(){
-        this.gsm = new GameStateManager(this);
-        this.addKeyListener(gsm.getKeyH());
-        this.ui = new UI(this, this.gsm);
+        this.gsm = GameStateManager.getInstance();
+        this.ui = UI.getInstance();
+        this.keyH = KeyHandler.getInstance();
+        this.addKeyListener(keyH);
+        mouseHandler = MouseHandler.getInstance();
+        addMouseListener(mouseHandler);
+        addMouseMotionListener(mouseHandler);
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
@@ -124,13 +132,6 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public int getScale() { return this.scale; }
-
-    public GameStateManager getGsm() {
-        return gsm;
-    }
-    public UI getUi() {
-        return ui;
-    }
 
 
     //transizione animata -------------------------------------------------------------------------------

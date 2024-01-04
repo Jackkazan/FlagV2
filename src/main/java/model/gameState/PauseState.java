@@ -9,12 +9,14 @@ import java.awt.*;
 
 public class PauseState implements GameState{
 
-    GamePanel gp;
+
     GameStateManager gsm;
     KeyHandler keyH;
 
+    int screenWidth = GamePanel.screenWidth;
+    int screenHeight = GamePanel.screenHeight;
     private static int volumeIndicator=90;
-    private GamePanel gamePanel;
+
     private int volumeBarHeight=20;
     private int volumeBarWidth =200;
 
@@ -22,16 +24,13 @@ public class PauseState implements GameState{
 
 
 
-    public PauseState(GamePanel gp, GameStateManager gsm, KeyHandler keyH) {
+    public PauseState(GameStateManager gsm, KeyHandler keyH) {
         System.out.println("costruttore pausestate");
-        this.gp = gp;
+        this.mouseHandler = MouseHandler.getInstance();
         this.gsm = gsm;
         this.keyH = keyH;
-        this.gamePanel = gp;
         gsm.stopMusic(0);
-        mouseHandler = new MouseHandler();
-        gamePanel.addMouseListener(mouseHandler);
-        gamePanel.addMouseMotionListener(mouseHandler);
+
     }
 
     @Override
@@ -54,8 +53,8 @@ public class PauseState implements GameState{
         int mouseX = mouseHandler.getMouseX();
         int mouseY = mouseHandler.getMouseY();
 
-        int volumeBarX = (gp.getScreenWidth() - volumeBarWidth) / 2;
-        int volumeBarY = gp.getScreenHeight() / 2 + 50;
+        int volumeBarX = (screenWidth - volumeBarWidth) / 2;
+        int volumeBarY = screenHeight / 2 + 50;
 
         if (mouseX >= volumeBarX && mouseX <= volumeBarX + volumeBarWidth
                 && mouseY >= volumeBarY && mouseY <= volumeBarY + volumeBarHeight) {
@@ -75,14 +74,14 @@ public class PauseState implements GameState{
     public void draw(Graphics g) {;
         gsm.getPlayState().draw(g);
         g.setColor(new Color(0, 0, 0, 150));
-        g.fillRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
+        g.fillRect(0, 0, screenWidth, screenHeight);
 
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 30));
         String volumeText = "Volume: ";
         int volumeTextWidth = g.getFontMetrics().stringWidth(volumeText);
-        int volumeTextX = (gp.getScreenWidth()- volumeTextWidth) / 2;
-        int volumeTextY = gp.getScreenHeight()/ 2+30;
+        int volumeTextX = (screenWidth - volumeTextWidth) / 2;
+        int volumeTextY = screenHeight/ 2+30;
         g.drawString(volumeText, volumeTextX, volumeTextY);
 
 
@@ -90,8 +89,8 @@ public class PauseState implements GameState{
         g.setColor(Color.GRAY);  // Change color as needed
         int volumeBarWidth = 200;  // Set width as needed
         int volumeBarHeight = 20;  // Set height as needed
-        int volumeBarX = (gp.getScreenWidth() - volumeBarWidth) / 2;
-        int volumeBarY = gp.getScreenHeight() / 2 + 50;
+        int volumeBarX = (screenWidth - volumeBarWidth) / 2;
+        int volumeBarY = screenHeight / 2 + 50;
         g.fillRect(volumeBarX, volumeBarY, volumeBarWidth, volumeBarHeight);
 
         // Draw volume indicator
@@ -105,7 +104,7 @@ public class PauseState implements GameState{
         g.setFont(new Font("Arial", Font.BOLD, 24));
         String exitText = "Press P to Exit";
         int exitTextWidth = g.getFontMetrics().stringWidth(exitText);
-        int exitX = (gp.getScreenWidth() - exitTextWidth) / 2;
+        int exitX = (screenWidth - exitTextWidth) / 2;
         int exitY = volumeBarY + volumeBarHeight + 100;
         g.drawString(exitText, exitX, exitY);
 
@@ -113,8 +112,8 @@ public class PauseState implements GameState{
         g.setFont(new Font("Arial", Font.BOLD, 30));
         String pauseText = "Menù Pausa";
         int textWidth = g.getFontMetrics().stringWidth(pauseText);
-        int x = (gp.getScreenWidth()- textWidth) / 2;
-        int y = gp.getScreenHeight()/ 4;
+        int x = (screenWidth - textWidth) / 2;
+        int y = screenHeight/ 4;
         g.drawString(pauseText, x, y);
 
     }

@@ -19,8 +19,7 @@ import static view.GamePanel.tileSize;
 public class Npc extends Characters {
 
     public Npc (){
-        this.gsm = GameStateManager.gp.getGsm();
-        this.keyH = GameStateManager.keyH;
+        super();
     }
 
     public static class NpcBuilder extends Entity.EntityBuilder<Npc,NpcBuilder> {

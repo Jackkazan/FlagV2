@@ -16,12 +16,11 @@ public class OBJ_Heart {
     private String name;
     private int value;
 
-    private GamePanel gamePanel;
+
     // Images
     private BufferedImage image1, image2, image3;
 
-    public OBJ_Heart(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
+    public OBJ_Heart() {
         setName("Heart");
         setValue(2);
 

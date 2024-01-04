@@ -7,9 +7,7 @@ import view.GamePanel;
 import java.awt.*;
 
 public class DialogueState implements GameState {
-
-    private GamePanel gp;
-    private GameStateManager gsm;
+        private GameStateManager gsm;
     private KeyHandler keyH;
     private String dialogue;
     private String dialogueText = "";
@@ -27,14 +25,13 @@ public class DialogueState implements GameState {
 
 
 
-    public DialogueState(GamePanel gp, GameStateManager gsm, KeyHandler keyH) {
-        this.gp = gp;
+    public DialogueState(GameStateManager gsm, KeyHandler keyH) {
         this.gsm = gsm;
         this.keyH = keyH;
-        dialogueBoxWidth = gp.getScreenWidth() - (GamePanel.tileSize * 4);
+        dialogueBoxWidth = screenWidth - (GamePanel.tileSize * 4);
         dialogueBoxHeight = GamePanel.tileSize*5;
         dialogueBoxX = GamePanel.tileSize * 2;
-        dialogueBoxY = gp.getScreenHeight() -(dialogueBoxHeight + GamePanel.tileSize * 2);
+        dialogueBoxY = screenHeight -(dialogueBoxHeight + GamePanel.tileSize * 2);
         dialogue = DialogueManager.getDialogue();
         dialogueDisplayed = false;
 

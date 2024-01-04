@@ -30,7 +30,7 @@ public class GameStateManager {
     private GameState currentState;
     private GameState previousState;
 
-    public static GamePanel gp;
+    //public static GamePanel gp;
     public static KeyHandler keyH;
 
     private boolean inDialogue = false; //necessario per la logica della pausa durante i dialoghi
@@ -57,34 +57,34 @@ public class GameStateManager {
     List<Entity> entityList;
     Playlist playlist = new Playlist();
     List<Sound> songList = playlist.getSongList();
+    private static GameStateManager instance = null;
 
 
-
-    public GameStateManager(){
-
-    }
-
-    public DialogueManager getDialogueManager() {
+      public DialogueManager getDialogueManager() {
         return dialogueManager;
     }
 
-    public GameStateManager(GamePanel gp) {
-        this.gp = gp;
-        this.keyH = new KeyHandler(this);
-        this.currentState = new MenuState(gp, this, keyH);
+    public GameStateManager() {
+        this.keyH = KeyHandler.getInstance();
+        this.currentState = new MenuState(this, keyH);
         this.dialogueManager = new DialogueManager(this);
 
     }
+    public static GameStateManager getInstance(){
+          if (instance == null)
+              instance = new GameStateManager();
+          return instance;
+    }
     public void Init(){ // inizializza il player e le mappe
-        this.player = new Player(this, keyH);
-        this.tileManagerZonaIniziale = new TileManager(gp, this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
-        this.tileManagerCasettaIniziale = new TileManager(gp, this, "src/main/resources/Map/StanzaIntroduzione/CasettaIniziale.tmx");
-        this.tileManagerVillaggioSud = new TileManager(gp, this, "src/main/resources/Map/VillaggioSud/VillaggioSud.tmx");
-        this.tileManagerNegozioItemsVillaggioSud = new TileManager(gp, this, "src/main/resources/Map/NegozioItemsVillaggioSud/NegozioItemsVillaggioSud.tmx");
-        this.tileManagerPianoTerraTavernaVillaggio = new TileManager(gp,this,"src/main/resources/Map/TavernaVillaggio/PianoTerraTavernaVillaggio.tmx");
-        this.tileManagerPrimoPianoTavernaVillaggio = new TileManager(gp,this,"src/main/resources/Map/TavernaVillaggio/PrimoPianoTavernaVillaggio.tmx");
-        this.mapManager = new MapManager(gp, player, tileManagerCasettaIniziale, tileManagerZonaIniziale, tileManagerVillaggioSud, tileManagerNegozioItemsVillaggioSud,tileManagerPianoTerraTavernaVillaggio,tileManagerPrimoPianoTavernaVillaggio);
-        this.playState = new PlayState(gp, this, mapManager, player, keyH);
+        this.player = new Player();
+        this.tileManagerZonaIniziale = new TileManager(this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
+        this.tileManagerCasettaIniziale = new TileManager(this, "src/main/resources/Map/StanzaIntroduzione/CasettaIniziale.tmx");
+        this.tileManagerVillaggioSud = new TileManager(this, "src/main/resources/Map/VillaggioSud/VillaggioSud.tmx");
+        this.tileManagerNegozioItemsVillaggioSud = new TileManager(this, "src/main/resources/Map/NegozioItemsVillaggioSud/NegozioItemsVillaggioSud.tmx");
+        this.tileManagerPianoTerraTavernaVillaggio = new TileManager(this,"src/main/resources/Map/TavernaVillaggio/PianoTerraTavernaVillaggio.tmx");
+        this.tileManagerPrimoPianoTavernaVillaggio = new TileManager(this,"src/main/resources/Map/TavernaVillaggio/PrimoPianoTavernaVillaggio.tmx");
+        this.mapManager = new MapManager(player, tileManagerCasettaIniziale, tileManagerZonaIniziale, tileManagerVillaggioSud, tileManagerNegozioItemsVillaggioSud,tileManagerPianoTerraTavernaVillaggio,tileManagerPrimoPianoTavernaVillaggio);
+        this.playState = new PlayState(this, mapManager, player, keyH);
         playMusicLoop(0);
         //this.pauseState = new PauseState(gp, this, keyH);
 
@@ -106,7 +106,7 @@ public class GameStateManager {
         keyH.releaseToggles();
         switch (state) {
             case MENU:
-                currentState = new MenuState(gp, this, keyH);
+                currentState = new MenuState(this, keyH);
                 break;
             case PLAY:
                 if(this.playState == null)
@@ -117,10 +117,10 @@ public class GameStateManager {
             case PAUSE:
                 stopMusic(0);
                 previousState = currentState;
-                currentState = new PauseState(gp, this, keyH);
+                currentState = new PauseState(this, keyH);
                 break;
             case DIALOGUE:
-                currentState = new DialogueState(gp, this, keyH);
+                currentState = new DialogueState(this, keyH);
                 inDialogue = true;
                 break;
             case PREVIOUS: //Uscendo dalla pausa bisogna tornare allo stato precedente (Non per forza playstate, ma anche dialogue, inventory ecc...)
@@ -163,9 +163,7 @@ public class GameStateManager {
         return itemList;
     }
 
-    public GamePanel getGamePanel() {
-        return gp;
-    }
+    //public GamePanel getGamePanel() {return gp;}
 
     public KeyHandler getKeyH() {
         return keyH;

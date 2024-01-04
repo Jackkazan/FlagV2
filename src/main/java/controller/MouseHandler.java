@@ -8,13 +8,17 @@ public class MouseHandler extends MouseAdapter {
     private boolean mousePressed;
     private int mouseX;
     private int mouseY;
-
+    private static MouseHandler instance = null;
     public MouseHandler() {
         mousePressed = false;
         mouseX = 0;
         mouseY = 0;
     }
-
+    public static MouseHandler getInstance(){
+        if (instance == null)
+            instance = new MouseHandler();
+        return instance;
+    }
     @Override
     public void mousePressed(MouseEvent e) {
         mousePressed = true;

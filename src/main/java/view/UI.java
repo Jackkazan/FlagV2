@@ -11,23 +11,25 @@ import java.util.Objects;
 
 public class UI {
 
-    private final GamePanel gamePanel;
     private final GameStateManager gsm;
     private Graphics2D graphics2D;
     private final BufferedImage heart_full, heart_half, heart_blank;
     private Font maruMonica;
     private OBJ_Heart heart;
-
-    public UI(GamePanel gamePanel, GameStateManager gsm) {
-        this.gamePanel = gamePanel;
-        this.gsm = gsm;
-
+    private static UI instance = null;
+    public UI() {
+        this.gsm = GameStateManager.getInstance();
         setupFonts();
-
-        this.heart = new OBJ_Heart(gamePanel);
+        this.heart = new OBJ_Heart();
         this.heart_full = heart.getImage1();
         this.heart_half = heart.getImage2();
         this.heart_blank = heart.getImage3();
+    }
+
+    public static UI getInstance(){
+        if (instance == null)
+            instance = new UI();
+        return instance;
     }
 
     private void setupFonts() {

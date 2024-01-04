@@ -19,12 +19,10 @@ public class MapManager {
     private TileManager tileManagerPianoTerraTavernaVillaggio;
 
     private TileManager tileManagerPrimoPianoTavernaVillaggio;
-    GamePanel gamePanel;
 
     public MapManager(){}
 
-    public MapManager(GamePanel gamePanel, Player player, TileManager tileManagerCasettaIniziale, TileManager tileManagerZonaIniziale, TileManager tileManagerVillaggioSud, TileManager tileManagerNegozioItemsVillaggioSud, TileManager tileManagerPianoTerraTavernaVillaggio, TileManager tileManagerPrimoPianoTavernaVillaggio) {
-        this.gamePanel = gamePanel;
+    public MapManager(Player player, TileManager tileManagerCasettaIniziale, TileManager tileManagerZonaIniziale, TileManager tileManagerVillaggioSud, TileManager tileManagerNegozioItemsVillaggioSud, TileManager tileManagerPianoTerraTavernaVillaggio, TileManager tileManagerPrimoPianoTavernaVillaggio) {
         this.player = player;
         this.tileManagerZonaIniziale = tileManagerZonaIniziale;//Mappa iniziale
         this.tileManagerCasettaIniziale = tileManagerCasettaIniziale;
