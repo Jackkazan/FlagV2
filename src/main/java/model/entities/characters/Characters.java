@@ -54,17 +54,7 @@ public abstract class Characters extends Entity {
     protected long lastHitTime;  // Memorizza il tempo dell'ultima hit
     protected long hitCooldown;  // Cooldown in millisecondi (1 secondo)
     protected ArrayList<CollisionObject> currentCollisionMap;
-    public void takeDamage(int damage) {
-        currentLife -= damage;
-        System.out.println("La vita del nemico e' : " + currentLife);
-/*
-        if(currentLife <= 0) {
-            setState(State.DEAD);
-        } else {
-            setState(State.HIT);
-        }
-        */
-    }
+
     public void setState(State entityState) {
         switch (entityState) {
             case IDLE -> currentState = new IdleState();
@@ -457,6 +447,7 @@ public abstract class Characters extends Entity {
         return dead9;
     }
 
-
-
+    public int getDamage() {
+        return damage;
+    }
 }

@@ -36,7 +36,7 @@ public class HitState implements EntityState {
             //System.out.println("Sto colpendo il nemico");
 
             //da cambiare, dipende dal danno del nemico
-            enemy.takeDamage(1);  // 1 danno per hit
+            enemy.takeDamage();  // 1 danno per hit
             enemy.setLastHitTime(currentTime);  // Aggiorna il tempo dell'ultima hit
         }
         enemy.incrementSpriteCounter();
@@ -114,7 +114,7 @@ public class HitState implements EntityState {
             //System.out.println("Sto colpendo il nemico");
 
             //da cambiare, dipende dal danno del nemico
-            player.takeDamage(1);  // 1 danno per hit
+            player.takeDamage();  // 1 danno per hit
             player.setLastHitTime(currentTime);  // Aggiorna il tempo dell'ultima hit
         }
         player.incrementSpriteCounter();
