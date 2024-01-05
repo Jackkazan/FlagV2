@@ -1,6 +1,7 @@
 package model.tile;
 
 import model.entities.characters.player.Player;
+import model.gameState.GameStateManager;
 import view.GamePanel;
 
 import java.awt.*;
@@ -9,6 +10,8 @@ public class MapManager {
 
     private TileManager currentMap;
     private Player player;
+
+    private GameStateManager gsm;
 
     //Tutte le mappe
     private TileManager tileManagerCasettaIniziale;
@@ -22,8 +25,9 @@ public class MapManager {
 
     public MapManager(){}
 
-    public MapManager(Player player, TileManager tileManagerCasettaIniziale, TileManager tileManagerZonaIniziale, TileManager tileManagerVillaggioSud, TileManager tileManagerNegozioItemsVillaggioSud, TileManager tileManagerPianoTerraTavernaVillaggio, TileManager tileManagerPrimoPianoTavernaVillaggio) {
+    public MapManager(GameStateManager gsm, Player player, TileManager tileManagerCasettaIniziale, TileManager tileManagerZonaIniziale, TileManager tileManagerVillaggioSud, TileManager tileManagerNegozioItemsVillaggioSud, TileManager tileManagerPianoTerraTavernaVillaggio, TileManager tileManagerPrimoPianoTavernaVillaggio) {
         this.player = player;
+        this.gsm = gsm;
         this.tileManagerZonaIniziale = tileManagerZonaIniziale;//Mappa iniziale
         this.tileManagerCasettaIniziale = tileManagerCasettaIniziale;
         this.tileManagerVillaggioSud = tileManagerVillaggioSud;
@@ -36,6 +40,7 @@ public class MapManager {
 
 
     public void setMap(TileManager nextMap){
+
         currentMap = nextMap;
         player.setCurrentCollisionMap(currentMap.getCollisionMap());
     }
