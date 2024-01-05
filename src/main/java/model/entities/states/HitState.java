@@ -109,8 +109,8 @@ public class HitState implements EntityState {
     private void updatePlayer(Player player) {
         player.setAttacking(false);
         player.setAttackAnimationCompleted(true);
-        System.out.println(player.getSpriteNum());
-        System.out.println(player.getHitAnimationCompleted());
+        //System.out.println(player.getSpriteNum());
+        //System.out.println(player.getHitAnimationCompleted());
         long currentTime = System.currentTimeMillis();
 
         // Verifica se è passato il periodo di cooldown
@@ -160,7 +160,7 @@ public class HitState implements EntityState {
 
         player.updateCollisionArea();
         player.updateAttackArea();
-        System.out.println("Sprite num: "+ player.getSpriteNum());
+        //System.out.println("Sprite num: "+ player.getSpriteNum());
 
         if (player.getSpriteCounter() > 5) {
             player.setSpriteNum((player.getSpriteNum() + 1) % 4);

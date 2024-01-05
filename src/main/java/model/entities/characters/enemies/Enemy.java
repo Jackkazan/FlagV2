@@ -408,7 +408,7 @@ public class Enemy extends Characters {
     public void takeDamage() {
 
         currentLife -= gsm.getPlayer().getDamage();
-        System.out.println("La vita del nemico e' : " + currentLife);
+        //System.out.println("La vita del nemico e' : " + currentLife);
 
     }
 

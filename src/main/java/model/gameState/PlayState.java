@@ -72,7 +72,7 @@ public class PlayState implements GameState{
         mapManager.draw(bufferGraphics);
 
         for(Entity entity : gsm.getCurrentEntityList()) {
-            System.out.println("Entità da disegnare "+ entity.getName());
+            //System.out.println("Entità da disegnare "+ entity.getName());
             entity.draw(bufferGraphics);
         }
 
