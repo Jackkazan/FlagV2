@@ -38,7 +38,7 @@ public class Enemy extends Characters {
         isDespawned = false;
         despawnTimer = 0;
         despawnCooldown = 500;
-        hitCooldown = 1000;
+        hitCooldown = 500;
         damage=1;
     }
 

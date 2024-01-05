@@ -19,6 +19,7 @@ import view.GamePanel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameStateManager {
 
@@ -55,6 +56,7 @@ public class GameStateManager {
     List<Enemy> enemyList;
 
     List<Entity> entityList;
+    List<Entity> currentEntityList;
     Playlist playlist = new Playlist();
     List<Sound> songList = playlist.getSongList();
     private static GameStateManager instance = null;
@@ -68,6 +70,7 @@ public class GameStateManager {
         this.keyH = KeyHandler.getInstance();
         this.currentState = new MenuState(this, keyH);
         this.dialogueManager = new DialogueManager(this);
+        this.entityList = new ArrayList<>();
 
     }
     public static GameStateManager getInstance(){
@@ -92,11 +95,13 @@ public class GameStateManager {
         this.itemList = ItemCreator.createObjects(this, mapManager, keyH);
         this.enemyList = EnemyCreator.createEnemies(this, mapManager);
 
-        this.entityList = new ArrayList<>();
+
         this.entityList.add(player);
         this.entityList.addAll(this.npcList);
         this.entityList.addAll(this.enemyList);
         this.entityList.addAll(this.itemList);
+
+        this.currentEntityList= entityList.stream().filter(entity -> entity.getTileManager().equals(mapManager.getCurrentMap())).collect(Collectors.toList());
 
     }
 
@@ -190,5 +195,17 @@ public class GameStateManager {
 
     public List<Entity> getEntityList() {
         return entityList;
+    }
+
+    public void setEntityList(List<Entity> entityList) {
+        this.entityList = entityList;
+    }
+
+    public void setCurrentEntityList(List<Entity> currentEntityList) {
+        this.currentEntityList = currentEntityList;
+    }
+
+    public List<Entity> getCurrentEntityList() {
+        return currentEntityList;
     }
 }

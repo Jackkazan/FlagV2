@@ -67,17 +67,16 @@ public class PlayState implements GameState{
 
          */
 
-        for(Entity entity : gsm.getEntityList()){
+        for(Entity entity : gsm.getCurrentEntityList()){
             if(!entity.equals(gsm.player) && entity.getTileManager().equals(mapManager.getCurrentMap()))
                 entity.update();
 
         }
 
         //ordina la lista
-        gsm.entityList = gsm.getEntityList().stream()
+        gsm.setCurrentEntityList(gsm.getCurrentEntityList().stream()
                 .sorted(Comparator.comparing(Entity:: getY))
-                .collect(Collectors.toList());
-
+                .collect(Collectors.toList()));
 
         // Gestione delle transizioni della mappa
         mapManager.manageTransitions();
@@ -94,27 +93,17 @@ public class PlayState implements GameState{
         bufferGraphics.clearRect(0, 0, screenWidth, screenHeight);
 
         mapManager.draw(bufferGraphics);
-        /*
-        for (Npc npc : gsm.getNpcList()) {
-            npc.draw(bufferGraphics);
-        }
-        for (Item item : gsm.getKeyItemsList()) {
-            item.draw(bufferGraphics);
-        }
-        for (Enemy enemy : gsm.getEnemyList()) {
-            enemy.draw(bufferGraphics);
-        }
 
-         */
-        for(Entity entity : gsm.getEntityList())
+        for(Entity entity : gsm.getCurrentEntityList()) {
+            System.out.println("Entità da disegnare "+ entity.getName());
             entity.draw(bufferGraphics);
+        }
 
-        //player.draw(bufferGraphics);
         UI.getInstance().draw(bufferGraphics);
         drawToTempScreen();
         // Copia l'intera immagine buffer sulla schermata
         g.drawImage(buffer, 0, 0, null);
-        //graphics2D.dispose();
+
         // Dispose del bufferGraphics
         bufferGraphics.dispose();
 

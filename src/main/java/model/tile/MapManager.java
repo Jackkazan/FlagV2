@@ -5,6 +5,7 @@ import model.gameState.GameStateManager;
 import view.GamePanel;
 
 import java.awt.*;
+import java.util.stream.Collectors;
 
 public class MapManager {
 
@@ -40,9 +41,10 @@ public class MapManager {
 
 
     public void setMap(TileManager nextMap){
-
         currentMap = nextMap;
-        player.setCurrentCollisionMap(currentMap.getCollisionMap());
+        player.setTileManager(nextMap);
+        player.setCurrentCollisionMap(nextMap.getCollisionMap());
+        gsm.setCurrentEntityList(gsm.getEntityList().stream().filter(entity -> entity.getTileManager().equals(nextMap)).collect(Collectors.toList()));
     }
 
     public void manageTransitions(){

@@ -12,6 +12,7 @@ import model.entities.states.IdleState;
 import model.entities.states.MovementState;
 import model.gameState.GameStateManager;
 import model.collisions.CollisionObject;
+import model.tile.TileManager;
 import view.GamePanel;
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -26,6 +27,7 @@ public class Player extends Characters {
     private final int screenX;
     private final int screenY;
 
+    private TileManager currentTile;
 
     private String enemyHitDirection;
     private int enemyHitDamage;
@@ -370,4 +372,5 @@ public class Player extends Characters {
     public Rectangle getAttackArea() {
         return attackArea;
     }
+
 }
