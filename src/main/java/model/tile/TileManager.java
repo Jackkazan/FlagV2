@@ -3,7 +3,6 @@ package model.tile;
 import model.gameState.GameStateManager;
 import model.collisions.CollisionObject;
 import model.tile.toolTMX.TMXReader;
-import view.GamePanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -69,19 +68,18 @@ public class TileManager {
 
 
     }
-    public void draw(Graphics2D g2){
+    public void draw(Graphics2D g2d){
         // Calcola le coordinate del player nella mappa
         int playerMapX = -gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
         int playerMapY = -gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
 
         createBufferedImage();
         // Disegna il bufferedImage considerando la posizione del player
-        g2.drawImage(bufferedImage, playerMapX, playerMapY, null);
+        g2d.drawImage(bufferedImage, playerMapX, playerMapY, null);
     }
     private void createBufferedImage() {
-        Graphics2D g2d = bufferedImage.createGraphics();
-        g2d.clearRect(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight());
 
+        Graphics2D g2d = bufferedImage.createGraphics();
         for (int layerIndex = 0; layerIndex < numLayer; layerIndex++) {
             for (int worldRow = 0; worldRow < maxMapRow; worldRow++) {
                 for (int worldCol = 0; worldCol < maxMapCol; worldCol++) {
@@ -94,8 +92,6 @@ public class TileManager {
                 }
             }
         }
-
-        g2d.dispose();
     }
 
     //per memorizzare nel buffer solo ciò che sta attorno al player
