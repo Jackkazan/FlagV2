@@ -63,6 +63,7 @@ public class UI {
         this.graphics2D = graphics2D;
 
         drawPlayerLife();
+        drawCompass();
     }
 
     private void drawPlayerLife() {
@@ -81,9 +82,8 @@ public class UI {
             graphics2D.drawImage(heart_half, x, y, null);
             i++;
 
-            if (i < gsm.getPlayer().getCurrentLife()) {
+            if (i < gsm.getPlayer().getCurrentLife())
                 graphics2D.drawImage(heart_full, x, y, null);
-            }
 
             x += GamePanel.tileSize;
         }
@@ -95,7 +95,7 @@ public class UI {
             return;
         }
 
-        int panelWidth = GamePanel.screenWidth;  // Ottieni la larghezza del pannello
+        //int panelWidth = GamePanel.screenWidth;  // Ottieni la larghezza del pannello
         int panelHeight = GamePanel.screenHeight;  // Ottieni l'altezza del pannello
 
         int x = GamePanel.tileSize / 4;  // Adjust as needed

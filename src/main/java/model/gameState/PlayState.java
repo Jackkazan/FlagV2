@@ -40,38 +40,15 @@ public class PlayState implements GameState{
 
     @Override
     public void update() {
-        if (keyH.pauseSwitch() && !gsm.isInDialogue()){
+        if (keyH.pauseSwitch() && !gsm.isInDialogue())
             gsm.setState(GameStateManager.State.PAUSE);
-        }
+
         if(!gsm.isInDialogue())
             player.update();
 
-        /*
-        // Aggiornamento degli NPC
-        for (Npc npc : gsm.getNpcList()) {
-            if(npc.getTileManager().equals(mapManager.getCurrentMap()))
-                npc.update();
-        }
-
-        // Aggiornamento degli oggetti
-        for (Item item : gsm.getKeyItemsList()) {
-            if(item.getTileManager().equals(mapManager.getCurrentMap()))
-                item.update();
-        }
-
-        for (Enemy enemy : gsm.getEnemyList()) {
-            if (enemy.getTileManager().equals(mapManager.getCurrentMap())) {
-                enemy.update();
-            }
-        }
-
-         */
-
-        for(Entity entity : gsm.getCurrentEntityList()){
+        for(Entity entity : gsm.getCurrentEntityList())
             if(!entity.equals(gsm.player) && entity.getTileManager().equals(mapManager.getCurrentMap()))
                 entity.update();
-
-        }
 
         //ordina la lista
         gsm.setCurrentEntityList(gsm.getCurrentEntityList().stream()
