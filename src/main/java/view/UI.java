@@ -1,6 +1,7 @@
 package view;
 
 import model.gameState.GameStateManager;
+import model.gameState.PauseState;
 import model.hud.OBJ_Heart;
 
 import javax.imageio.ImageIO;
@@ -10,12 +11,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
+import static java.awt.Image.SCALE_DEFAULT;
+import static java.awt.Image.SCALE_SMOOTH;
+
 public class UI {
 
     private final GameStateManager gsm;
     private Graphics2D graphics2D;
     private final BufferedImage heart_full, heart_half, heart_blank;
-    private BufferedImage compassImage;
+    private Image compassImage;
     private Font maruMonica;
     private OBJ_Heart heart;
     private static UI instance = null;
@@ -31,7 +35,9 @@ public class UI {
         try {
             InputStream inputStream = getClass().getResourceAsStream("/ui/bussola.png");
             compassImage = ImageIO.read(inputStream);
-            compassImage = UtilityTool.scaleImage(compassImage, GamePanel.tileSize*3, GamePanel.tileSize*3); // Ridimensiona l'immagine
+            compassImage = compassImage.getScaledInstance(1543/15, 1868/15, SCALE_DEFAULT);
+
+            //compassImage = UtilityTool.scaleImage(compassImage, GamePanel.tileSize, GamePanel.tileSize); // Ridimensiona l'immagine
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,7 +63,6 @@ public class UI {
         this.graphics2D = graphics2D;
 
         drawPlayerLife();
-        drawCompass();
     }
 
     private void drawPlayerLife() {
@@ -94,7 +99,7 @@ public class UI {
         int panelHeight = GamePanel.screenHeight;  // Ottieni l'altezza del pannello
 
         int x = GamePanel.tileSize / 4;  // Adjust as needed
-        int y = panelHeight - compassImage.getHeight() - GamePanel.tileSize / 4;  // Regola la posizione Y come desiderato
+        int y = panelHeight - 1868/15 - GamePanel.tileSize / 4;  // Regola la posizione Y come desiderato
 
         // Draw the compass image
         graphics2D.drawImage(compassImage, x, y, null);
