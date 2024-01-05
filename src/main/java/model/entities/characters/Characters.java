@@ -120,6 +120,19 @@ public abstract class Characters extends Entity {
                 y < objectY + objectHeight &&
                 y + tileSize > objectY;
     }
+
+    public boolean checkCollisionRectangle(int x, int y, Rectangle collisionArea) {
+        double objectX = collisionArea.getX();
+        double objectY = collisionArea.getY();
+        double objectWidth = collisionArea.getWidth();
+        double objectHeight = collisionArea.getHeight();
+
+        return x < objectX + objectWidth &&
+                x + tileSize > objectX &&
+                y < objectY + objectHeight &&
+                y + tileSize > objectY;
+    }
+
     public void setHitted(boolean hitted) {
         isHitted = hitted;
     }

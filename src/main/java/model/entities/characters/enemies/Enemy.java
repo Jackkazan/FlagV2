@@ -4,8 +4,10 @@ import controller.KeyHandler;
 import model.collisions.CollisionObject;
 import model.entities.Entity;
 import model.entities.EntityState;
+import model.entities.Prototype;
 import model.entities.characters.Characters;
 import model.entities.characters.npc.Npc;
+import model.entities.items.Item;
 import model.entities.states.*;
 import model.gameState.GameStateManager;
 
@@ -18,7 +20,7 @@ import java.util.Objects;
 
 import static view.GamePanel.tileSize;
 
-public class Enemy extends Characters {
+public class Enemy extends Characters implements Prototype {
     private int aggroRange;
     private int maxHealthBarWidth; //lunghezza massima della barra della vita
     private boolean isDespawned;
@@ -153,13 +155,13 @@ public class Enemy extends Characters {
         int nextY;
         if (playerX < this.x) {
             nextX = this.x;
-            if(!collidesWithObjects(nextX - this.speed,this.y)) {
+            if(!collidesWithObjects(nextX - this.speed,this.y) && !collidesWithEnemies(nextX - this.speed,this.y)) {
                 this.setDirection("left");
                 this.setX(nextX - this.speed);
             }
         } else if (playerX > this.x) {
             nextX = this.x;
-            if(!collidesWithObjects(nextX + this.speed,this.y)) {
+            if(!collidesWithObjects(nextX + this.speed,this.y) && !collidesWithEnemies(nextX + this.speed,this.y)) {
                 this.setDirection("right");
                 this.setX(nextX + this.speed);
             }
@@ -167,13 +169,13 @@ public class Enemy extends Characters {
 
         if (playerY < this.y) {
             nextY = this.y ;
-            if(!collidesWithObjects(this.x,nextY- this.speed)) {
+            if(!collidesWithObjects(this.x,nextY- this.speed) && !collidesWithEnemies(this.x,nextY- this.speed)) {
                 this.setDirection("up");
                 this.setY(nextY- this.speed);
             }
         } else if (playerY > this.y) {
             nextY = this.y ;
-            if(!collidesWithObjects(this.x,nextY+ this.speed)) {
+            if(!collidesWithObjects(this.x,nextY+ this.speed) && !collidesWithEnemies(this.x,nextY+ this.speed)) {
                 this.setDirection("down");
                 this.setY(nextY+ this.speed);
             }
@@ -181,6 +183,33 @@ public class Enemy extends Characters {
         this.updateAttackArea();
     }
 
+    public boolean collidesWithEnemies(int nextX, int nextY) {
+        // Verifica la collisione con le entità della lista npcList
+        for (Enemy enemy : gsm.getEnemyList()) {
+            if(enemy.equals(this))
+                return false;
+            if (enemy.getTileManager().equals(gsm.getMapManager().getCurrentMap()) && checkCollisionRectangle(nextX, nextY, enemy.getCollisionArea())) {
+                //System.out.println("Sei stato hittato da "+ enemy.getName());
+
+                return true; // Collisione rilevata
+            }
+        }
+        return false; // Nessuna collisione rilevata
+    }
+    @Override
+    public Prototype clone() {
+        try {
+            return (Enemy) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void setRespawn(int x, int y) {
+        this.respawnX = x;
+        this.respawnY = y;
+    }
 
 
     public static class EnemyBuilder extends Entity.EntityBuilder<Enemy,EnemyBuilder> {

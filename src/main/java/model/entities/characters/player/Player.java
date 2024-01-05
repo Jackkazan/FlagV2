@@ -188,17 +188,6 @@ public class Player extends Characters {
         this.spriteNum = 0;
     }
 
-    public boolean collidesWithEnemies(int nextX, int nextY) {
-        // Verifica la collisione con le entità della lista npcList
-        for (Enemy enemy : gsm.getEnemyList()) {
-            if (enemy.getTileManager().equals(gsm.getMapManager().getCurrentMap()) && checkCollisionRectangle(nextX, nextY, enemy.getCollisionArea())) {
-                System.out.println("Sei stato hittato da "+ enemy.getName());
-
-                return true; // Collisione rilevata
-            }
-        }
-        return false; // Nessuna collisione rilevata
-    }
 
     // metodo per verificare la collisione con le entità
     public boolean collidesWithNpcs(int nextX, int nextY) {
@@ -221,17 +210,7 @@ public class Player extends Characters {
         return false; // Nessuna collisione rilevata
     }
     //metodo per verificare la collisione con i Rectangle degli Items
-    private boolean checkCollisionRectangle(int x, int y, Rectangle collisionArea) {
-        double objectX = collisionArea.getX();
-        double objectY = collisionArea.getY();
-        double objectWidth = collisionArea.getWidth();
-        double objectHeight = collisionArea.getHeight();
 
-        return x < objectX + objectWidth &&
-                x + tileSize > objectX &&
-                y < objectY + objectHeight &&
-                y + tileSize > objectY;
-    }
 
     public boolean isAttacking() {
         return this.isAttacking;

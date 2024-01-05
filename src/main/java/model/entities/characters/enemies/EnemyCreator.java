@@ -1,5 +1,6 @@
 package model.entities.characters.enemies;
 
+import model.entities.Prototype;
 import model.gameState.GameStateManager;
 import model.tile.MapManager;
 
@@ -7,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnemyCreator {
+
+    static EnemyPrototype prototypeManager;
     public static List<Enemy> createEnemies(GameStateManager gsm, MapManager mapManager) {
 
         List<Enemy> enemyList = new ArrayList<>();
@@ -98,7 +101,11 @@ public class EnemyCreator {
                 .setMaxHealthBarWidth(65)  // Imposta la lunghezza massima della barra della vita
                 .build();
 
+        prototypeManager = new EnemyPrototype(slime1);
+        Prototype slime2 = prototypeManager.createEnemy("Slime2", 25,55, 32,32);
+
         enemyList.add(slime1);
+        enemyList.add((Enemy) slime2);
 
         return enemyList;
     }

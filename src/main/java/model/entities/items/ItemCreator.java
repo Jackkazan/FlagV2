@@ -60,10 +60,10 @@ public class ItemCreator {
                 .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
         prototypeManager = new ItemPrototype(zuccaMarcia1);
-        Prototype zuccaMarcia2 = prototypeManager.createItems("zuccaMarcia2",47,46,16,16);
-        Prototype zuccaMarcia3 = prototypeManager.createItems("zuccaMarcia3", 42,48,16,16);
-        Prototype zuccaMarcia4 = prototypeManager.createItems("zuccaMarcia4",45,52,16,16);
-        Prototype zuccaMarcia5 = prototypeManager.createItems("zuccaMarcia5", 50,50,16,16);
+        Prototype zuccaMarcia2 = prototypeManager.createItem("zuccaMarcia2",47,46,16,16);
+        Prototype zuccaMarcia3 = prototypeManager.createItem("zuccaMarcia3", 42,48,16,16);
+        Prototype zuccaMarcia4 = prototypeManager.createItem("zuccaMarcia4",45,52,16,16);
+        Prototype zuccaMarcia5 = prototypeManager.createItem("zuccaMarcia5", 50,50,16,16);
 
 
         Item spaventaPasseri1 = new Item.ItemBuilder(43, 28)
@@ -78,11 +78,11 @@ public class ItemCreator {
                 .setInteractionAction(new DisappearOrChangeImageAction())
                 .build();
         prototypeManager = new ItemPrototype(spaventaPasseri1);
-        Prototype spaventaPasseri2 = prototypeManager.createItems("spaventaPasseri2",64,28,32,32);
-        Prototype spaventaPasseri3 = prototypeManager.createItems("spaventaPasseri3", 82,31,32,32);
-        Prototype spaventaPasseri4 = prototypeManager.createItems("spaventaPasseri4",44,41,32,32);
-        Prototype spaventaPasseri5 = prototypeManager.createItems("spaventaPasseri5", 64,44,32,32);
-        Prototype spaventaPasseri6 = prototypeManager.createItems("spaventaPasseri6", 85,43,32,32);
+        Prototype spaventaPasseri2 = prototypeManager.createItem("spaventaPasseri2",64,28,32,32);
+        Prototype spaventaPasseri3 = prototypeManager.createItem("spaventaPasseri3", 82,31,32,32);
+        Prototype spaventaPasseri4 = prototypeManager.createItem("spaventaPasseri4",44,41,32,32);
+        Prototype spaventaPasseri5 = prototypeManager.createItem("spaventaPasseri5", 64,44,32,32);
+        Prototype spaventaPasseri6 = prototypeManager.createItem("spaventaPasseri6", 85,43,32,32);
 
 
         //Aggiunta di tutti gli item alla lista

@@ -11,7 +11,7 @@ class ItemPrototype {
     }
 
     // Metodo per ottenere un nuovo oggetto prototipato
-    public Prototype createItems(String name, int x, int y, int collisionWidth, int collisionHeight) {
+    public Prototype createItem(String name, int x, int y, int collisionWidth, int collisionHeight) {
         // Clonare l'oggetto prototipo
         Item newItem = (Item) prototype.clone();
 
