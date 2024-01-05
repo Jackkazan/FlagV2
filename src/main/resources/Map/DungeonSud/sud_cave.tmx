@@ -33,6 +33,9 @@
  <tileset firstgid="26209" name="LightShadow_pipo" tilewidth="16" tileheight="16" tilecount="192" columns="16">
   <image source="../../Tileset/Pipoya RPG Tileset 32x32/SampleMap/LightShadow_pipo.png" width="256" height="192"/>
  </tileset>
+ <tileset firstgid="26401" name="MainLev2.0" tilewidth="16" tileheight="16" tilecount="416" columns="26">
+  <image source="../../Tileset/Altri Tileset/MainLev2.0.png" width="416" height="256"/>
+ </tileset>
  <layer id="1" name="PavimentoBase" width="100" height="100">
   <data encoding="csv">
 2400,2401,2402,2403,2404,2405,2400,2401,2402,2403,2404,2405,2400,2401,2402,2403,2404,2405,2400,2401,2402,2403,2404,2405,2400,2401,2402,2403,2404,2405,2400,2401,2402,2403,2404,2405,2400,2401,2402,2403,2404,2405,2400,2401,2402,2403,2404,2405,2400,2401,2402,2403,2404,2405,2400,2401,2402,2403,2404,2405,2400,2401,2402,2403,2404,2405,2400,2401,2402,2403,2404,2405,2400,2401,2402,2403,2404,2405,2400,2401,2402,2403,2404,2405,2400,2401,2402,2403,2404,2405,2400,2401,2402,2403,2404,2405,2400,2401,2402,2403,
