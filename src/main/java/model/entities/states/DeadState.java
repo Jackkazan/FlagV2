@@ -27,6 +27,7 @@ public class DeadState implements EntityState {
 
     private void updateEnemy(Enemy enemy) {
         if(enemy.getSpriteNum()==8) {
+            enemy.setCollisionArea(new Rectangle(enemy.getRespawnX(),enemy.getRespawnY(),0,0));
             enemy.setDeadAnimationCompleted(true);
             //logica dell'hit
 
