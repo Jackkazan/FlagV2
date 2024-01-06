@@ -114,6 +114,7 @@ public class TileManager {
         return this.collisionMap;
     }
 
+
     public String getCurrentMap() {
         return this.currentMap;
     }

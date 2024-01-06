@@ -45,6 +45,7 @@ public class GameStateManager {
 
     public TileManager tileManagerPianoTerraTavernaVillaggio;
     public TileManager tileManagerPrimoPianoTavernaVillaggio;
+    public TileManager tileManagerDungeonSud;
 
 
     //gestore mappe
@@ -60,7 +61,6 @@ public class GameStateManager {
     Playlist playlist = new Playlist();
     List<Sound> songList = playlist.getSongList();
     private static GameStateManager instance = null;
-
 
       public DialogueManager getDialogueManager() {
         return dialogueManager;
@@ -86,7 +86,8 @@ public class GameStateManager {
         this.tileManagerNegozioItemsVillaggioSud = new TileManager(this, "src/main/resources/Map/NegozioItemsVillaggioSud/NegozioItemsVillaggioSud.tmx");
         this.tileManagerPianoTerraTavernaVillaggio = new TileManager(this,"src/main/resources/Map/TavernaVillaggio/PianoTerraTavernaVillaggio.tmx");
         this.tileManagerPrimoPianoTavernaVillaggio = new TileManager(this,"src/main/resources/Map/TavernaVillaggio/PrimoPianoTavernaVillaggio.tmx");
-        this.mapManager = new MapManager(this, player, tileManagerCasettaIniziale, tileManagerZonaIniziale, tileManagerVillaggioSud, tileManagerNegozioItemsVillaggioSud,tileManagerPianoTerraTavernaVillaggio,tileManagerPrimoPianoTavernaVillaggio);
+        this.tileManagerDungeonSud = new TileManager(this,"src/main/resources/Map/DungeonSud/sud_cave.tmx");
+        this.mapManager = new MapManager(this, player, tileManagerCasettaIniziale, tileManagerZonaIniziale, tileManagerVillaggioSud, tileManagerNegozioItemsVillaggioSud,tileManagerPianoTerraTavernaVillaggio,tileManagerPrimoPianoTavernaVillaggio, tileManagerDungeonSud);
         this.playState = new PlayState(this, mapManager, player, keyH);
         playMusicLoop(0);
         //this.pauseState = new PauseState(gp, this, keyH);
@@ -105,7 +106,7 @@ public class GameStateManager {
 
     }
 
-    public enum State{MENU, PLAY, PAUSE, DIALOGUE, PREVIOUS};
+    public enum State{ MENU, PLAY, PAUSE, DIALOGUE, PREVIOUS}
 
     public void setState(State state) {
         keyH.releaseToggles();
@@ -167,8 +168,6 @@ public class GameStateManager {
     public List<Item> getKeyItemsList() {
         return itemList;
     }
-
-    //public GamePanel getGamePanel() {return gp;}
 
     public KeyHandler getKeyH() {
         return keyH;

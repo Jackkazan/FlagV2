@@ -102,7 +102,7 @@ public class EnemyCreator {
                 .build();
 
         prototypeManager = new EnemyPrototype(slime1);
-        Prototype slime2 = prototypeManager.createEnemy("Slime2", 25,55, 32,32);
+        Prototype slime2 = prototypeManager.createEnemy("Slime2", 15,76, 32,32);
 
         enemyList.add(slime1);
         enemyList.add((Enemy) slime2);

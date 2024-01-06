@@ -22,7 +22,7 @@ public class NpcCreatorTest {
     public void setUp() {
         mockGamePanel = new GamePanel(); // Assuming you have a MockGamePanel class for testing
         mockGSM = new GameStateManager(); // Assuming you have a MockGameStateManager class for testing
-        mockMapManager = new MapManager(); // Assuming you have a MockMapManager class for testing
+        //mockMapManager = new MapManager(); // Assuming you have a MockMapManager class for testing
         mockKeyHandler = new KeyHandler(); // Assuming you have a MockKeyHandler class for testing
     }
 

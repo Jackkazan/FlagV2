@@ -23,10 +23,10 @@ public class MapManager {
     private TileManager tileManagerPianoTerraTavernaVillaggio;
 
     private TileManager tileManagerPrimoPianoTavernaVillaggio;
+    private TileManager tileManagerDungeonSud;
 
-    public MapManager(){}
-
-    public MapManager(GameStateManager gsm, Player player, TileManager tileManagerCasettaIniziale, TileManager tileManagerZonaIniziale, TileManager tileManagerVillaggioSud, TileManager tileManagerNegozioItemsVillaggioSud, TileManager tileManagerPianoTerraTavernaVillaggio, TileManager tileManagerPrimoPianoTavernaVillaggio) {
+    public MapManager(GameStateManager gsm, Player player, TileManager tileManagerCasettaIniziale, TileManager tileManagerZonaIniziale, TileManager tileManagerVillaggioSud,
+                      TileManager tileManagerNegozioItemsVillaggioSud, TileManager tileManagerPianoTerraTavernaVillaggio, TileManager tileManagerPrimoPianoTavernaVillaggio, TileManager tileManagerDungeonSud) {
         this.player = player;
         this.gsm = gsm;
         this.tileManagerZonaIniziale = tileManagerZonaIniziale;//Mappa iniziale
@@ -35,8 +35,10 @@ public class MapManager {
         this.tileManagerNegozioItemsVillaggioSud = tileManagerNegozioItemsVillaggioSud;
         this.tileManagerPianoTerraTavernaVillaggio = tileManagerPianoTerraTavernaVillaggio;
         this.tileManagerPrimoPianoTavernaVillaggio = tileManagerPrimoPianoTavernaVillaggio;
+        this.tileManagerDungeonSud = tileManagerDungeonSud;
 
-        setMap(tileManagerCasettaIniziale);
+        //da cambiare
+        setMap(tileManagerVillaggioSud);
     }
 
 
@@ -76,6 +78,10 @@ public class MapManager {
                 setMap(tileManagerPianoTerraTavernaVillaggio);
                 player.teleport(17, 9);
             }
+            if(player.onTransitionPoint(49,84,1)){
+                setMap(tileManagerDungeonSud);
+                player.teleport(12,89);
+            }
 
         }
 
@@ -105,8 +111,11 @@ public class MapManager {
             }
         }
 
-
-
+        if(currentMap == tileManagerDungeonSud)
+            if(player.onTransitionPoint(12,92,2)){
+                setMap(tileManagerVillaggioSud);
+                player.teleport(49,87);
+            }
 
     }
 
@@ -141,4 +150,9 @@ public class MapManager {
     public TileManager getTileManagerPrimoPianoTavernaVillaggio() {
         return tileManagerPrimoPianoTavernaVillaggio;
     }
+
+    public TileManager getTileManagerDungeonSud() {
+        return tileManagerDungeonSud;
+    }
+
 }

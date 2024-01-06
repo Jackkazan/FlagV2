@@ -86,8 +86,8 @@ public class Player extends Characters {
     }
 
     public void setDefaultValues() {
-        x = tileSize*3;  //3
-        y = tileSize*4;  //4
+        x = tileSize*46;  //3
+        y = tileSize*89;  //4
         maxLife = 6;
         currentLife = 6;
         speed = 4;
