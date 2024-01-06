@@ -135,7 +135,7 @@ public class EnemyCreator {
                 .setStaticEnemy(true)
                 .setActivateWhenPlayerNear(true)
                 .setTotalSprite(12)
-                .setCollisionArea(32,32)
+                .setCollisionArea(22,45,32,32)
                 .setImageDimension(32,32)
                 .setDefaultDirection("down")
                 .setOffsetY(tileSize*2)

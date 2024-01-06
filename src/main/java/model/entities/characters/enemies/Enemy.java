@@ -90,8 +90,8 @@ public class Enemy extends Characters implements Prototype {
                         this.setState(State.ATTACK);
                     } else {
 
-                        double distance = Math.hypot(gsm.getPlayer().getX() - this.getX(), gsm.getPlayer().getY() - this.getY());
-                        if (distance <= this.aggroRange) {
+                        double distance = Math.hypot(gsm.getPlayer().getX() - this.getX(), gsm.getPlayer().getY() - this.getY()+offsetY);
+                        if (distance <= this.aggroRange && !this.isStatic) {
                             this.setState(State.MOVEMENT);
 
                         } else {
@@ -141,7 +141,7 @@ public class Enemy extends Characters implements Prototype {
             }
         }
         else
-            attackArea = new Rectangle(this.x , this.y + this.offsetY, this.imageWidth, this.imageHeight);
+            attackArea = new Rectangle(this.x , this.y + this.offsetY/2, this.imageWidth, this.imageHeight);
 
     }
     public void hitPlayer(){
@@ -218,7 +218,6 @@ public class Enemy extends Characters implements Prototype {
                 return true;
             if (enemy.getTileManager().equals(gsm.getMapManager().getCurrentMap()) && checkCollisionRectangle(nextX, nextY, enemy.getCollisionArea())) {
                 //System.out.println("Sei stato hittato da "+ enemy.getName());
-
                 return false; // Collisione rilevata
             }
         }

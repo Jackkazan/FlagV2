@@ -29,7 +29,7 @@ public class IdleState implements EntityState {
         }
     }
     public void updateEnemy(Enemy enemy) {
-        enemy.getCollisionArea().setLocation(enemy.getX(), enemy.getY());
+        enemy.getCollisionArea().setLocation(enemy.getX(), enemy.getY()+ enemy.getOffsetY());
         if (enemy.getTotalSprite() == 16) {
             // alternatore di sprite
             enemy.incrementSpriteCounter();
