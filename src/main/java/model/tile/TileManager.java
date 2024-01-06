@@ -109,11 +109,9 @@ public class TileManager {
                 worldY  - bufferRendering < playerMapY ;
     }
 
-
     public ArrayList<CollisionObject> getCollisionMap() {
         return this.collisionMap;
     }
-
 
     public String getCurrentMap() {
         return this.currentMap;

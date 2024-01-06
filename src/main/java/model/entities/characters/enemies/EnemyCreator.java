@@ -68,7 +68,7 @@ public class EnemyCreator {
         String greenSlime1Dead_7 = "/enemy/GreenSlime/GreenSlime1Dead_7.png";
         String greenSlime1Dead_8 = "/enemy/GreenSlime/GreenSlime1Dead_8.png";
 
-        Enemy slime1 = new Enemy.EnemyBuilder(25,46)
+        Enemy slime1 = new Enemy.EnemyBuilder(15,76)
                 .setName("Slime1")
                 .setSpeed(2)
                 .setMaxLife(6)
@@ -81,8 +81,8 @@ public class EnemyCreator {
                 .setCollisionArea(32,32)
                 .setImageDimension(48,48)
                 .setDefaultDirection("left")
-                .setContainedMap(mapManager.getTileManagerZonaIniziale())
-                .setCollisionMap(mapManager.getTileManagerZonaIniziale().getCollisionMap())
+                .setContainedMap(mapManager.getTileManagerDungeonSud())
+                .setCollisionMap(mapManager.getTileManagerDungeonSud().getCollisionMap())
                 .set16EntityImage(greenSlime1Up_0,greenSlime1Up_1,greenSlime1Up_2,greenSlime1Up_3,
                         greenSlime1Down_0,greenSlime1Down_1,greenSlime1Down_2,greenSlime1Down_3,
                         greenSlime1Left_0,greenSlime1Left_1,greenSlime1Left_2,greenSlime1Left_3,
@@ -96,16 +96,24 @@ public class EnemyCreator {
                         greenSlime1Dead_3, greenSlime1Dead_4, greenSlime1Dead_5,
                         greenSlime1Dead_6, greenSlime1Dead_7, greenSlime1Dead_8)
                 .set4HitImage(greenSlime1Hit_0,greenSlime1Hit_1,greenSlime1Hit_2,greenSlime1Hit_3)
-                .setAggroRange(10) //10
-                .setRespawnCoordinates(25,46)
+                .setAggroRange(6) //10
+                .setRespawnCoordinates(15,76)
                 .setMaxHealthBarWidth(65)  // Imposta la lunghezza massima della barra della vita
                 .build();
 
         prototypeManager = new EnemyPrototype(slime1);
-        Prototype slime2 = prototypeManager.createEnemy("Slime2", 15,76, 32,32);
+        Prototype slime2 = prototypeManager.createEnemy("Slime2", 8,66, 32,32);
+        Prototype slime3 = prototypeManager.createEnemy("Slime3", 21,64, 32,32);
+        Prototype slime4 = prototypeManager.createEnemy("Slime4", 27,72, 32,32);
+        Prototype slime5 = prototypeManager.createEnemy("Slime5", 34,64, 32,32);
+        Prototype slime6 = prototypeManager.createEnemy("Slime6", 35,81, 32,32);
 
         enemyList.add(slime1);
         enemyList.add((Enemy) slime2);
+        enemyList.add((Enemy) slime3);
+        enemyList.add((Enemy) slime4);
+        enemyList.add((Enemy) slime5);
+        enemyList.add((Enemy) slime6);
 
         return enemyList;
     }
