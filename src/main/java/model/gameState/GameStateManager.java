@@ -10,6 +10,8 @@ import model.entities.characters.player.Player;
 import model.entities.items.Item;
 import model.entities.items.ItemCreator;
 import model.Dialogues.DialogueManager;
+import model.entities.traps.Trap;
+import model.entities.traps.TrapCreator;
 import model.sound.Playlist;
 import model.sound.Sound;
 import model.tile.MapManager;
@@ -56,6 +58,7 @@ public class GameStateManager {
     List<Npc> npcList;
     List<Enemy> enemyList;
 
+    List<Trap> trapList;
     List<Entity> entityList;
     List<Entity> currentEntityList;
     Playlist playlist = new Playlist();
@@ -95,7 +98,7 @@ public class GameStateManager {
         this.npcList = NpcCreator.createNPCs(this, mapManager);
         this.itemList = ItemCreator.createObjects(this, mapManager, keyH);
         this.enemyList = EnemyCreator.createEnemies(this, mapManager);
-
+        this.trapList = TrapCreator.createTraps(mapManager);
 
         this.entityList.add(player);
         this.entityList.addAll(this.npcList);
@@ -206,5 +209,9 @@ public class GameStateManager {
 
     public List<Entity> getCurrentEntityList() {
         return currentEntityList;
+    }
+
+    public List<Trap> getTrapList(){
+        return trapList;
     }
 }

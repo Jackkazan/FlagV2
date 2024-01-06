@@ -5,10 +5,13 @@ import model.entities.Entity;
 import model.entities.EntityState;
 import model.entities.characters.enemies.Enemy;
 import model.entities.characters.player.Player;
+import model.entities.traps.Trap;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+
+import static view.GamePanel.tileSize;
 
 public class AttackState implements EntityState {
     @Override
@@ -16,15 +19,58 @@ public class AttackState implements EntityState {
         switch (entity.getClass().getSimpleName()) {
             case "Player" -> updatePlayer((Player) entity);
             case "Enemy" -> updateEnemy((Enemy) entity);
+            case "Trap" -> updateTrap((Trap) entity);
             default -> {}
         }
     }
+
     @Override
     public void draw(Graphics2D graphics2D, Entity entity) {
         switch (entity.getClass().getSimpleName()) {
             case "Player" -> drawPlayer(graphics2D, (Player) entity);
             case "Enemy" -> drawEnemy(graphics2D, (Enemy) entity);
+            case "Trap" -> drawTrap(graphics2D, (Trap) entity);
             default -> {}
+        }
+    }
+
+    private void updateTrap(Trap trap) {
+
+        if(trap.getSpriteNum()>=6 && trap.getSpriteNum()<=8) {
+            trap.hitPlayer();
+            //logica dell'hit
+        }
+
+        if(trap.getSpriteNum() == 11)
+            trap.setAttackAnimationCompleted(true);
+
+        //alternatore di sprite
+        trap.incrementSpriteCounter();
+        //velocità di cambio sprite 5-10
+        if (trap.getSpriteCounter() > 7) {
+            trap.setSpriteNum((trap.getSpriteNum() + 1) % 12);
+            trap.setSpriteCounter(0);
+        }
+
+        if(trap.getSpriteNum()==0 && trap.isAttackAnimationCompleted()) {
+            trap.setAttacking(false);
+        }
+
+        System.out.println("Sprite NUM: "+ trap.getSpriteNum());
+
+    }
+
+    private void drawTrap(Graphics2D graphics2D, Trap trap) {
+        BufferedImage[] images = { trap.getAnimateImage1(),trap.getAnimateImage2(), trap.getAnimateImage3(), trap.getAnimateImage4(),
+                                trap.getAnimateImage5(), trap.getAnimateImage6(), trap.getAnimateImage7(), trap.getAnimateImage8(),
+                                trap.getAnimateImage9(), trap.getAnimateImage10(),trap.getAnimateImage11(), trap.getAnimateImage12()};
+
+        int screenX = trap.getX() - trap.getGsm().getPlayer().getX() + trap.getGsm().getPlayer().getScreenX();
+        int screenY = trap.getY() - trap.getGsm().getPlayer().getY() + trap.getGsm().getPlayer().getScreenY();
+
+        if ( trap.getGsm().getMapManager().getCurrentMap() == trap.getTileManager()) {
+            //perché altrimenti prima di finire disegnava lo sprite 0 da capo
+            graphics2D.drawImage(images[trap.getSpriteNum()], screenX, screenY, ((tileSize*trap.getImageWidth())/16)*trap.getScale(), ((tileSize*trap.getImageHeight())/16)*trap.getScale(), null);
         }
     }
 

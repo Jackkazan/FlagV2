@@ -5,9 +5,13 @@ import model.entities.EntityState;
 import model.entities.characters.enemies.Enemy;
 import model.entities.characters.npc.Npc;
 import model.entities.characters.player.Player;
+import model.entities.traps.Trap;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+
+import static view.GamePanel.scale;
+import static view.GamePanel.tileSize;
 
 public class IdleState implements EntityState {
     @Override
@@ -16,18 +20,33 @@ public class IdleState implements EntityState {
             case "Npc" -> updateNpc((Npc) entity);
             case "Player" -> updatePlayer((Player) entity);
             case "Enemy" -> updateEnemy((Enemy) entity);
+            case "Trap" -> updateTrap((Trap) entity);
             default -> {}
         }
     }
+
     @Override
     public void draw(Graphics2D graphics2D, Entity entity) {
         switch (entity.getClass().getSimpleName()) {
             case "Npc" -> drawNpc(graphics2D, (Npc) entity);
             case "Player" -> drawPlayer(graphics2D, (Player) entity);
             case "Enemy" -> drawEnemy(graphics2D, (Enemy) entity);
+            case "Trap" -> drawTrap(graphics2D, (Trap) entity);
             default -> {}
         }
     }
+    private void updateTrap(Trap trap) {
+
+    }
+    private void drawTrap(Graphics2D graphics2D, Trap trap) {
+        int screenX = trap.getX() - trap.getGsm().getPlayer().getX() + trap.getGsm().getPlayer().getScreenX();
+        int screenY = trap.getY() - trap.getGsm().getPlayer().getY() + trap.getGsm().getPlayer().getScreenY();
+
+        if(trap.getStaticImage() != null && trap.getGsm().getMapManager().getCurrentMap() == trap.getTileManager())
+            graphics2D.drawImage(trap.getStaticImage(), screenX, screenY, ((tileSize*trap.getImageWidth())/16)*trap.getScale(), ((tileSize*trap.getImageHeight())/16)*trap.getScale(), null);
+
+    }
+
     public void updateEnemy(Enemy enemy) {
         enemy.getCollisionArea().setLocation(enemy.getX(), enemy.getY());
         if (enemy.getTotalSprite() == 16) {

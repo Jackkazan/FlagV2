@@ -19,11 +19,11 @@ import java.util.Objects;
 import static view.GamePanel.tileSize;
 
 public class Item extends Entity implements Prototype {
-    private BufferedImage staticImage;
-    private BufferedImage animateImage1, animateImage2, animateImage3, animateImage4;
-    private int speedChangeAnimateSprite;
+    protected BufferedImage staticImage;
+    protected BufferedImage animateImage1, animateImage2, animateImage3, animateImage4;
+    protected int speedChangeAnimateSprite;
     private List<Quest> relatedQuests= new ArrayList<>();
-    private int offsetY;
+    protected int offsetY;
 
     public Item() {
         super();
@@ -41,7 +41,6 @@ public class Item extends Entity implements Prototype {
     }
     @Override
     public void update(){
-
         // animazione se succede evento o altro
         interact();
     }
@@ -56,7 +55,7 @@ public class Item extends Entity implements Prototype {
         }
     }
 
-    private boolean isPlayerNearby() {
+    public boolean isPlayerNearby() {
         //Definisci la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
         if(this.collisionArea!= null && gsm.getPlayer().getInteractionArea().intersects(this.collisionArea)){
             System.out.println("Sto collidendo con "+ this.name);
@@ -166,7 +165,33 @@ public class Item extends Entity implements Prototype {
         }
     }
 
+    public BufferedImage getStaticImage() {
+        return staticImage;
+    }
 
+    public BufferedImage getAnimateImage1() {
+        return animateImage1;
+    }
+
+    public BufferedImage getAnimateImage2() {
+        return animateImage2;
+    }
+
+    public BufferedImage getAnimateImage3() {
+        return animateImage3;
+    }
+
+    public BufferedImage getAnimateImage4() {
+        return animateImage4;
+    }
+
+    public int getSpeedChangeAnimateSprite() {
+        return speedChangeAnimateSprite;
+    }
+
+    public int getOffsetY() {
+        return offsetY;
+    }
 
     public List<Quest> getRelatedQuests() {
         return relatedQuests;

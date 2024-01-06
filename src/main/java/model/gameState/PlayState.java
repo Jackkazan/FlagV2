@@ -4,6 +4,7 @@ import controller.KeyHandler;
 import model.entities.Entity;
 import model.entities.items.Item;
 import model.entities.characters.player.Player;
+import model.entities.traps.Trap;
 import model.tile.MapManager;
 import view.GamePanel;
 import view.UI;
@@ -46,6 +47,11 @@ public class PlayState implements GameState{
         if(!gsm.isInDialogue())
             player.update();
 
+        for(Trap trap : gsm.getTrapList())
+            if(trap.getTileManager().equals(mapManager.getCurrentMap()))
+                trap.update();
+
+
         for(Entity entity : gsm.getCurrentEntityList())
             if(!entity.equals(gsm.player) && entity.getTileManager().equals(mapManager.getCurrentMap()))
                 entity.update();
@@ -70,6 +76,9 @@ public class PlayState implements GameState{
         bufferGraphics.clearRect(0, 0, screenWidth, screenHeight);
 
         mapManager.draw(bufferGraphics);
+
+        for(Trap trap: gsm.getTrapList())
+            trap.draw(bufferGraphics);
 
         for(Entity entity : gsm.getCurrentEntityList()) {
             //System.out.println("Entità da disegnare "+ entity.getName());

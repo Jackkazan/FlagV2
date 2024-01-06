@@ -83,6 +83,8 @@ public class HitState implements EntityState {
 
         if(enemy.getSpriteNum()==3) {
             enemy.setHitAnimationCompleted(true);
+            enemy.setAttacking(false);
+            enemy.setAttackAnimationCompleted(true);
             //logica dell'hit
 
         }
@@ -155,6 +157,10 @@ public class HitState implements EntityState {
                     player.setX(nextX +pushback);
                     player.setY(nextY);
                 }
+                break;
+            case "null":
+                player.setX(nextX);
+                player.setY(nextY);
                 break;
         }
 

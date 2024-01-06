@@ -263,7 +263,6 @@ public class Enemy extends Characters implements Prototype {
             return this;
         }
 
-
         public Enemy.EnemyBuilder setSpriteNumLess1(int numSpriteEachDirection) {
             this.entity.spriteNum = numSpriteEachDirection;
             return this;

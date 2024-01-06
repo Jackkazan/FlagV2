@@ -18,9 +18,9 @@ public abstract class Characters extends Entity {
 
     protected int spriteNum;
 
-
-    protected String direction;
     protected int spriteCounter = 0;
+    protected String direction;
+
     protected int totalSprite;
     protected BufferedImage
             up1, up2, up3, up4,
