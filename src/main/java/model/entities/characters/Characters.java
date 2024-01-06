@@ -84,22 +84,7 @@ public abstract class Characters extends Entity {
             default -> {}
         }
     }
-    public void updateAttackArea() {
-        switch(direction){
-            case "up":
-                attackArea = new Rectangle(x-tileSize,y-tileSize,tileSize*3,tileSize);
-                break;
-            case "down":
-                attackArea = new Rectangle(x-tileSize,y,tileSize*3,tileSize);
-                break;
-            case "left":
-                attackArea = new Rectangle(x-tileSize-24,y-tileSize,tileSize,tileSize*3);
-                break;
-            case "right":
-                attackArea = new Rectangle(x+24,y-tileSize,tileSize,tileSize*3);
-                break;
-        }
-    }
+
     public boolean collidesWithObjects(int nextX, int nextY) {
         // Verifica la collisione con gli oggetti di collisione della mappa corrente
         for (CollisionObject collisionObject : currentCollisionMap) {

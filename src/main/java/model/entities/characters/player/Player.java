@@ -52,8 +52,6 @@ public class Player extends Characters {
         collisionArea.setLocation(x-tileSize, y-tileSize);
     }
 
-
-    @Override
     public void updateAttackArea() {
         switch(direction){
             case "up":
