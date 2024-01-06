@@ -6,7 +6,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import model.entities.Entity;
 import model.entities.characters.npc.Npc;
 import model.gameState.GameStateManager;
-
+import static model.Dialogues.Tutorial.tutorialComandi;
+import static model.Dialogues.Tutorial.tutorialComandiIndex;
 public class DialogueManager {
     private static ArrayList<String> test;
     private GameStateManager gsm;
@@ -16,23 +17,27 @@ public class DialogueManager {
     public DialogueManager(GameStateManager gsm) {
         this.gsm = gsm;
         this.test = new ArrayList<>();
-        test.add("dialogo" + String.valueOf(pigrizia++));
-        test.add("dialogo" + String.valueOf(pigrizia++));
-        test.add("dialogo" + String.valueOf(pigrizia++));
-        test.add("dialogo" + String.valueOf(pigrizia++));
-        test.add("dialogo" + String.valueOf(pigrizia++));
-        test.add("dialogo" + String.valueOf(pigrizia++));
-        test.add("dialogo" + String.valueOf(pigrizia++));
-        test.add("dialogo" + String.valueOf(pigrizia++));
-        test.add("dialogo" + String.valueOf(pigrizia++));
-        test.add("dialogo" + String.valueOf(pigrizia++));
-        test.add("dialogo" + String.valueOf(pigrizia++));
-        test.add("dialogo" + String.valueOf(pigrizia++));
-        test.add("dialogo" + String.valueOf(pigrizia++));
-        test.add("dialogo" + String.valueOf(pigrizia++));
+        test.add("dialogo" + pigrizia++);
+        test.add("dialogo" + pigrizia++);
+        test.add("dialogo" + pigrizia++);
+        test.add("dialogo" + pigrizia++);
+        test.add("dialogo" + pigrizia++);
+        test.add("dialogo" + pigrizia++);
+        test.add("dialogo" + pigrizia++);
+        test.add("dialogo" + pigrizia++);
+        test.add("dialogo" + pigrizia++);
+        test.add("dialogo" + pigrizia++);
+        test.add("dialogo" + pigrizia++);
+        test.add("dialogo" + pigrizia++);
+        test.add("dialogo" + pigrizia++);
+        test.add("dialogo" + pigrizia++);
 
 
         i = 0;
+    }
+
+    public void startTutorial(int index){
+        
     }
     public void startDialogue(Npc npc){
         if (i < test.size())

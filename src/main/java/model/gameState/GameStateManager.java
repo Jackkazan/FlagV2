@@ -32,7 +32,7 @@ public class GameStateManager {
     private GameState previousState;
 
     //public static GamePanel gp;
-    public static KeyHandler keyH;
+    private KeyHandler keyH;
 
     private boolean inDialogue = false; //necessario per la logica della pausa durante i dialoghi
     Player player;

@@ -73,6 +73,9 @@ public abstract class Characters extends Entity {
         }
         */
     }
+    public int getDamage() {
+        return damage;
+    }
     public void setState(State entityState) {
         switch (entityState) {
             case IDLE -> currentState = new IdleState();

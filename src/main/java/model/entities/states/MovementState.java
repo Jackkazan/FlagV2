@@ -1,5 +1,6 @@
 package model.entities.states;
 
+import controller.KeyHandler;
 import model.entities.Entity;
 import model.entities.EntityState;
 import model.entities.characters.enemies.Enemy;
@@ -9,7 +10,6 @@ import model.entities.characters.player.Player;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static model.gameState.GameStateManager.keyH;
 
 
 public class MovementState implements EntityState {
