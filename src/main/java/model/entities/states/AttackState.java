@@ -29,7 +29,7 @@ public class AttackState implements EntityState {
     }
 
     private void updateEnemy(Enemy enemy){
-        enemy.getCollisionArea().setLocation(enemy.getX(), enemy.getY()+ enemy.getOffsetY());
+        enemy.getCollisionArea().setLocation(enemy.getX(), enemy.getY());
         if(enemy.getSpriteNum()==3) {
             enemy.hitPlayer();
             enemy.setAttackAnimationCompleted(true);

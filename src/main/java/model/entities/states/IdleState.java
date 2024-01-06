@@ -29,7 +29,7 @@ public class IdleState implements EntityState {
         }
     }
     public void updateEnemy(Enemy enemy) {
-        enemy.getCollisionArea().setLocation(enemy.getX(), enemy.getY()+ enemy.getOffsetY());
+        enemy.getCollisionArea().setLocation(enemy.getX(), enemy.getY());
         if (enemy.getTotalSprite() == 16) {
             // alternatore di sprite
             enemy.incrementSpriteCounter();
@@ -57,7 +57,7 @@ public class IdleState implements EntityState {
         int screenY = enemy.getY() - enemy.getGsm().getPlayer().getY() + enemy.getGsm().getPlayer().getScreenY();
 
         if (images != null && enemy.getGsm().getMapManager().getCurrentMap() == enemy.getTileManager()) {
-            graphics2D.drawImage(images[enemy.getSpriteNum()], screenX-(enemy.getIdle1().getWidth()/2), screenY-(enemy.getIdle1().getHeight()/2)+enemy.getOffsetY(), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+            graphics2D.drawImage(images[enemy.getSpriteNum()], screenX-(enemy.getIdle1().getWidth()/2), screenY-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
         }
     }
     public void updateNpc(Npc npc) {
