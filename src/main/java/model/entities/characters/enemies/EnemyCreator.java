@@ -7,6 +7,8 @@ import model.tile.MapManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import static view.GamePanel.tileSize;
+
 public class EnemyCreator {
 
     static EnemyPrototype prototypeManager;
@@ -108,12 +110,50 @@ public class EnemyCreator {
         Prototype slime5 = prototypeManager.createEnemy("Slime5", 34,64, 32,32);
         Prototype slime6 = prototypeManager.createEnemy("Slime6", 35,81, 32,32);
 
+
+        String spikeAnimation1 = "/enemy/Spike/spikeAnimations_00.png";
+        String spikeAnimation2 = "/enemy/Spike/spikeAnimations_01.png";
+        String spikeAnimation3 = "/enemy/Spike/spikeAnimations_02.png";
+        String spikeAnimation4 = "/enemy/Spike/spikeAnimations_03.png";
+        String spikeAnimation5 = "/enemy/Spike/spikeAnimations_04.png";
+        String spikeAnimation6 = "/enemy/Spike/spikeAnimations_05.png";
+        String spikeAnimation7 = "/enemy/Spike/spikeAnimations_06.png";
+        String spikeAnimation8 = "/enemy/Spike/spikeAnimations_07.png";
+        String spikeAnimation9 = "/enemy/Spike/spikeAnimations_08.png";
+        String spikeAnimation10 = "/enemy/Spike/spikeAnimations_09.png";
+        String spikeAnimation11= "/enemy/Spike/spikeAnimations_10.png";
+        String spikeAnimation12= "/enemy/Spike/spikeAnimations_11.png";
+
+        Enemy spike1 = new Enemy.EnemyBuilder(22,44)
+                .setName("Spike1")
+                .setCurrentLife(1)
+                .setDamage(2)
+                .setSpeedChangeSprite(10)
+                .setSpriteNumLess1(3)
+                .setScale(4)
+                .setImmortal(true)
+                .setStaticEnemy(true)
+                .setActivateWhenPlayerNear(true)
+                .setTotalSprite(12)
+                .setCollisionArea(22,45,32,32)
+                .setImageDimension(32,32)
+                .setDefaultDirection("down")
+                .setOffsetY(tileSize*2)
+                .setContainedMap(mapManager.getTileManagerDungeonSud())
+                .setCollisionMap(mapManager.getTileManagerDungeonSud().getCollisionMap())
+                .set4IdleImage(spikeAnimation1,spikeAnimation1,spikeAnimation1,spikeAnimation1)
+                .set12AttackImage(spikeAnimation1,spikeAnimation2, spikeAnimation3, spikeAnimation4,
+                        spikeAnimation5, spikeAnimation6, spikeAnimation7, spikeAnimation8,
+                        spikeAnimation9, spikeAnimation10, spikeAnimation11, spikeAnimation12)
+                .build();
+
         enemyList.add(slime1);
         enemyList.add((Enemy) slime2);
         enemyList.add((Enemy) slime3);
         enemyList.add((Enemy) slime4);
         enemyList.add((Enemy) slime5);
         enemyList.add((Enemy) slime6);
+        enemyList.add(spike1);
 
         return enemyList;
     }

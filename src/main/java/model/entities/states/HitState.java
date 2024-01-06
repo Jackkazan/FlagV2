@@ -72,7 +72,7 @@ public class HitState implements EntityState {
                 }
                 break;
         }
-        enemy.getCollisionArea().setLocation(enemy.getX(), enemy.getY());
+        enemy.getCollisionArea().setLocation(enemy.getX(), enemy.getY()+enemy.getOffsetY());
         enemy.updateAttackArea();
 
         //System.out.println("Sprite num: "+ enemy.getSpriteNum());

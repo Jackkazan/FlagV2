@@ -1,15 +1,10 @@
 package model.entities.characters.enemies;
 
-import controller.KeyHandler;
 import model.collisions.CollisionObject;
 import model.entities.Entity;
-import model.entities.EntityState;
 import model.entities.Prototype;
 import model.entities.characters.Characters;
-import model.entities.characters.npc.Npc;
-import model.entities.items.Item;
 import model.entities.states.*;
-import model.gameState.GameStateManager;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -21,11 +16,17 @@ import java.util.Objects;
 import static view.GamePanel.tileSize;
 
 public class Enemy extends Characters implements Prototype {
+
+    private boolean isStatic;
     private int aggroRange;
     private int maxHealthBarWidth; //lunghezza massima della barra della vita
     private boolean isDespawned;
     private int despawnTimer;
     private int despawnCooldown;
+    private BufferedImage attack1,attack2,attack3,attack4,attack5,attack6,attack7,attack8,attack9,attack10,attack11,attack12;
+    private boolean isImmortal;
+    private int offsetY;
+    private boolean activateWhenPlayerNear;
 
     public Enemy (){
         super();
@@ -45,6 +46,7 @@ public class Enemy extends Characters implements Prototype {
     }
 
     public boolean isNearPlayer() {
+        updateAttackArea();
         // puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
         if(this.collisionArea!= null && gsm.getPlayer().getCollisionArea().intersects(this.collisionArea)){
             System.out.println(this.name+" mi sta hittando" );
@@ -57,7 +59,7 @@ public class Enemy extends Characters implements Prototype {
     @Override
     public void draw(Graphics2D graphics2D) {
         currentState.draw(graphics2D, this);
-        if(!this.isDespawned) {
+        if(!this.isDespawned && !isImmortal) {
             // Disegna la barra della vita
             int healthBarWidth = (int) (((double) this.currentLife / this.maxLife) * this.maxHealthBarWidth); //calcola la larghezza della barra della vita in base alla percentuale di vita attuale rispetto alla vita massima
             int screenX = this.x - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX() - this.maxHealthBarWidth/2 + this.idle1.getWidth()/2;
@@ -81,17 +83,22 @@ public class Enemy extends Characters implements Prototype {
                 this.reset();
                 this.setState(State.RESPAWN);
             } else {
-                if (this.isHitted) {
+                if (this.isHitted && !isImmortal) {
                     this.setState(State.HIT);
                 } else {
                     if (this.isAttacking) {
                         this.setState(State.ATTACK);
                     } else {
-                        double distance = Math.hypot(gsm.getPlayer().getX() - this.getX(), gsm.getPlayer().getY() - this.getY());
-                        if (distance <= this.aggroRange) {
+
+                        double distance = Math.hypot(gsm.getPlayer().getX() - this.getX(), gsm.getPlayer().getY() - this.getY()+offsetY);
+                        if (distance <= this.aggroRange && !this.isStatic) {
                             this.setState(State.MOVEMENT);
+
                         } else {
-                            this.setState(State.IDLE);
+                            if(this.activateWhenPlayerNear && this.isNearPlayer())
+                                this.setState(State.ATTACK);
+                            else
+                                this.setState(State.IDLE);
                         }
                     }
                 }
@@ -108,7 +115,7 @@ public class Enemy extends Characters implements Prototype {
     }
 
     public void checkDeath(){
-        if(this.currentLife <= 0 && !this.isDead && !this.isDespawned) {
+        if(!this.isImmortal && this.currentLife <= 0 && !this.isDead && !this.isDespawned ) {
             this.isDead = true;
             this.isDeadAnimationCompleted = false;
             this.spriteNum = 0;
@@ -116,6 +123,27 @@ public class Enemy extends Characters implements Prototype {
         }
     }
 
+    public void updateAttackArea() {
+        if(!this.isStatic) {
+            switch (direction) {
+                case "up":
+                    attackArea = new Rectangle(x - tileSize, y - tileSize, tileSize * 3, tileSize);
+                    break;
+                case "down":
+                    attackArea = new Rectangle(x - tileSize, y, tileSize * 3, tileSize);
+                    break;
+                case "left":
+                    attackArea = new Rectangle(x - tileSize - 24, y - tileSize, tileSize, tileSize * 3);
+                    break;
+                case "right":
+                    attackArea = new Rectangle(x + 24, y - tileSize, tileSize, tileSize * 3);
+                    break;
+            }
+        }
+        else
+            attackArea = new Rectangle(this.x , this.y + this.offsetY/2, this.imageWidth, this.imageHeight);
+
+    }
     public void hitPlayer(){
         if(this.attackArea.intersects(gsm.getPlayer().getCollisionArea())){
             gsm.getPlayer().setEnemyHitDirection(this.direction);
@@ -155,13 +183,13 @@ public class Enemy extends Characters implements Prototype {
         int nextY;
         if (playerX < this.x) {
             nextX = this.x;
-            if(!collidesWithObjects(nextX - this.speed,this.y) && !collidesWithEnemies(nextX - this.speed,this.y)) {
+            if(!collidesWithObjects(nextX - this.speed,this.y) && collidesWithEnemies(nextX - this.speed, this.y)) {
                 this.setDirection("left");
                 this.setX(nextX - this.speed);
             }
         } else if (playerX > this.x) {
             nextX = this.x;
-            if(!collidesWithObjects(nextX + this.speed,this.y) && !collidesWithEnemies(nextX + this.speed,this.y)) {
+            if(!collidesWithObjects(nextX + this.speed,this.y) && collidesWithEnemies(nextX + this.speed, this.y)) {
                 this.setDirection("right");
                 this.setX(nextX + this.speed);
             }
@@ -169,13 +197,13 @@ public class Enemy extends Characters implements Prototype {
 
         if (playerY < this.y) {
             nextY = this.y ;
-            if(!collidesWithObjects(this.x,nextY- this.speed) && !collidesWithEnemies(this.x,nextY- this.speed)) {
+            if(!collidesWithObjects(this.x,nextY- this.speed) && collidesWithEnemies(this.x, nextY - this.speed)) {
                 this.setDirection("up");
                 this.setY(nextY- this.speed);
             }
         } else if (playerY > this.y) {
             nextY = this.y ;
-            if(!collidesWithObjects(this.x,nextY+ this.speed) && !collidesWithEnemies(this.x,nextY+ this.speed)) {
+            if(!collidesWithObjects(this.x,nextY+ this.speed) && collidesWithEnemies(this.x, nextY + this.speed)) {
                 this.setDirection("down");
                 this.setY(nextY+ this.speed);
             }
@@ -187,14 +215,13 @@ public class Enemy extends Characters implements Prototype {
         // Verifica la collisione con le entità della lista npcList
         for (Enemy enemy : gsm.getEnemyList()) {
             if(enemy.equals(this))
-                return false;
+                return true;
             if (enemy.getTileManager().equals(gsm.getMapManager().getCurrentMap()) && checkCollisionRectangle(nextX, nextY, enemy.getCollisionArea())) {
                 //System.out.println("Sei stato hittato da "+ enemy.getName());
-
-                return true; // Collisione rilevata
+                return false; // Collisione rilevata
             }
         }
-        return false; // Nessuna collisione rilevata
+        return true; // Nessuna collisione rilevata
     }
     @Override
     public Prototype clone() {
@@ -210,6 +237,8 @@ public class Enemy extends Characters implements Prototype {
         this.respawnX = x;
         this.respawnY = y;
     }
+
+
 
 
     public static class EnemyBuilder extends Entity.EntityBuilder<Enemy,EnemyBuilder> {
@@ -237,6 +266,11 @@ public class Enemy extends Characters implements Prototype {
             return this;
         }
 
+        public Enemy.EnemyBuilder setStaticEnemy(boolean isStatic){
+            this.entity.isStatic = isStatic;
+            return this;
+        }
+
         public Enemy.EnemyBuilder setAggroRange(int aggroRange) {
             this.entity.aggroRange = aggroRange * tileSize;
             return this;
@@ -252,6 +286,10 @@ public class Enemy extends Characters implements Prototype {
             return this;
         }
 
+        public Enemy.EnemyBuilder setOffsetY(int offsetY) {
+            this.entity.offsetY = offsetY;
+            return this;
+        }
 
         public EnemyBuilder setCollisionMap(ArrayList<CollisionObject> collisionMap) {
             this.entity.currentCollisionMap = collisionMap;
@@ -385,6 +423,28 @@ public class Enemy extends Characters implements Prototype {
             }
             return this;
         }
+        public EnemyBuilder set12AttackImage(String path_attack1, String path_attack2, String path_attack3, String path_attack4,
+                                             String path_attack5, String path_attack6,String path_attack7, String path_attack8,
+                                             String path_attack9, String path_attack10, String path_attack11, String path_attack12) {
+            try {
+                this.entity.attack1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attack1)));
+                this.entity.attack2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attack2)));
+                this.entity.attack3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attack3)));
+                this.entity.attack4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attack4)));
+                this.entity.attack5 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attack5)));
+                this.entity.attack6 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attack6)));
+                this.entity.attack7 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attack7)));
+                this.entity.attack8 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attack8)));
+                this.entity.attack9 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attack9)));
+                this.entity.attack10 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attack10)));
+                this.entity.attack11 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attack11)));
+                this.entity.attack12 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attack12)));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return this;
+        }
         public EnemyBuilder set4DeadImage(String path_dead1, String path_dead2, String path_dead3, String path_dead4) {
             try {
                 this.entity.dead1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_dead1)));
@@ -414,6 +474,15 @@ public class Enemy extends Characters implements Prototype {
             }
             return this;
         }
+
+        public EnemyBuilder setImmortal(boolean b) {
+            this.entity.isImmortal = b;
+            return this;
+        }
+        public EnemyBuilder setActivateWhenPlayerNear(boolean b) {
+            this.entity.activateWhenPlayerNear = b;
+            return this;
+        }
         public EnemyBuilder setRespawnCoordinates(int respawnX, int respawnY) {
             this.entity.respawnX = respawnX;
             this.entity.respawnY = respawnY;
@@ -430,6 +499,8 @@ public class Enemy extends Characters implements Prototype {
         public Enemy build() {
             return (Enemy) this.entity;
         }
+
+
 
     }
 
@@ -497,7 +568,68 @@ public class Enemy extends Characters implements Prototype {
         return respawnY;
     }
 
+    public boolean isStatic() {
+        return isStatic;
+    }
 
+    public int getMaxHealthBarWidth() {
+        return maxHealthBarWidth;
+    }
 
+    public BufferedImage getAttack1() {
+        return attack1;
+    }
+
+    public BufferedImage getAttack2() {
+        return attack2;
+    }
+
+    public BufferedImage getAttack3() {
+        return attack3;
+    }
+
+    public BufferedImage getAttack4() {
+        return attack4;
+    }
+
+    public BufferedImage getAttack5() {
+        return attack5;
+    }
+
+    public BufferedImage getAttack6() {
+        return attack6;
+    }
+
+    public BufferedImage getAttack7() {
+        return attack7;
+    }
+
+    public BufferedImage getAttack8() {
+        return attack8;
+    }
+
+    public BufferedImage getAttack9() {
+        return attack9;
+    }
+
+    public BufferedImage getAttack10() {
+        return attack10;
+    }
+
+    public BufferedImage getAttack11() {
+        return attack11;
+    }
+
+    public BufferedImage getAttack12() {
+        return attack12;
+    }
+
+    public boolean isImmortal() {
+        return isImmortal;
+    }
+
+    public int getOffsetY() {
+        return offsetY;
+    }
 }
 
