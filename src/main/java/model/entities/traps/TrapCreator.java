@@ -1,5 +1,6 @@
 package model.entities.traps;
 
+import model.entities.Prototype;
 import model.tile.MapManager;
 
 import java.util.ArrayList;
@@ -43,7 +44,13 @@ public class TrapCreator {
                 .setContainedMap(mapManager.getTileManagerDungeonSud())
                 .build();
 
+        prototypeManager = new TrapPrototype(spike1);
+
+        Prototype spike2 = prototypeManager.createTrap("Spike2",18,44);
+
+
         trapList.add(spike1);
+        trapList.add((Trap) spike2);
 
         return trapList;
     }

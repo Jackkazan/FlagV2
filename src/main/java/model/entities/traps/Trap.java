@@ -19,7 +19,6 @@ import static view.GamePanel.tileSize;
 public class Trap extends Item implements Prototype {
 
     public enum State {IDLE,ATTACK}
-
     private int damage;
     protected int spriteNum;
 
@@ -101,6 +100,10 @@ public class Trap extends Item implements Prototype {
         }
     }
 
+    @Override
+    public Prototype clone() {
+        return super.clone();
+    }
 
     public static class TrapBuilder extends Entity.EntityBuilder<Trap, Trap.TrapBuilder>{
 
@@ -253,8 +256,8 @@ public class Trap extends Item implements Prototype {
         isAttackAnimationCompleted = attackAnimationCompleted;
     }
 
-    public void setAttackArea(Rectangle attackArea) {
-        this.attackArea = attackArea;
+    public void setAttackArea(int x, int y, int width, int height) {
+        this.attackArea = new Rectangle(x*tileSize, y*tileSize, width, height);
     }
 
     public void setCurrentState(EntityState currentState) {
