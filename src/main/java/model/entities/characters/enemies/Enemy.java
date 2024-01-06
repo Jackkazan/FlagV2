@@ -98,7 +98,7 @@ public class Enemy extends Characters implements Prototype {
             }
         }
         currentState.update(this);
-        //System.out.println("Direzione "+ this.name+": "+ this.direction);
+        System.out.println("Direzione "+ this.name+": "+ this.direction);
     }
 
     private void reset() {
