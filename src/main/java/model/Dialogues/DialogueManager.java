@@ -37,7 +37,7 @@ public class DialogueManager {
     public void startTutorial(int index){
         
     }
-    public void startDialogue(Npc npc){
+    public void startDialogue(Entity entity){
         if (i < test.size())
             gsm.setState(GameStateManager.State.DIALOGUE);
     }

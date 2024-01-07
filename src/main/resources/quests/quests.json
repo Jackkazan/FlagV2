@@ -9,7 +9,14 @@
       [
         {
           "objectiveTitle": "Prendi la chiave",
-          "objectiveAssociatedEntities": ["Chiave"]}
+          "objectiveAssociatedEntities": ["Chiave"],
+          "finalObjective": false
+        },
+        {
+          "objectiveTitle": "Apri la porta",
+          "objectiveAssociatedEntities": ["Porta"],
+          "finalObjective": true
+        }
       ]
     }
   ]

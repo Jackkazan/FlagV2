@@ -5,6 +5,7 @@ import model.entities.Entity;
 import model.entities.items.Item;
 import model.entities.characters.player.Player;
 import model.entities.traps.Trap;
+import model.quests.QuestManager;
 import model.tile.MapManager;
 import view.GamePanel;
 import view.UI;
@@ -60,6 +61,7 @@ public class PlayState implements GameState{
 
         // Gestione delle transizioni della mappa
         mapManager.manageTransitions();
+        //QuestManager.load();
 
     }
 

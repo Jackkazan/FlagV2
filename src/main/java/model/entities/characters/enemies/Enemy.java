@@ -143,7 +143,7 @@ public class Enemy extends Characters implements Prototype {
         int distanceY = Math.abs(playerY - this.y);
 
         if (distanceX < distanceThreshold && distanceY < distanceThreshold) {
-            if (this.isNearPlayer()) {
+            if (this.isPlayerNearby()) {
                 this.isAttacking = true;
                 this.isAttackAnimationCompleted = false;
                 this.spriteNum = 0;

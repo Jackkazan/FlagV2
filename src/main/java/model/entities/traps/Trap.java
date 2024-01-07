@@ -82,7 +82,7 @@ public class Trap extends Item implements Prototype {
         }
     }
 
-    @Override
+
     public boolean isPlayerNearby() {
         //Definisci la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
         if(this.attackArea!= null && gsm.getPlayer().getCollisionArea().intersects(this.attackArea)){

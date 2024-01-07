@@ -182,26 +182,4 @@ public class Npc extends Characters {
         if(pathIndex == 3) pathIndex = 0;
         // Se hai raggiunto la fine del percorso, ricomincia da capo
     }
-
-    public void interact() {
-        // Verifica se il giocatore è nelle vicinanze e ha premuto il tasto "E"
-        if (this.tileManager == gsm.getMapManager().getCurrentMap() && this.isInteractable && !gsm.getPlayer().isAttacking() && isPlayerNearby()) {
-            if(keyH.interactPressed && interactionAction != null && !gsm.isInDialogue()) {
-                //System.out.println("Ho interagito con "+this.name);
-                interactionAction.performAction(this);
-            }
-        }
-    }
-
-
-    private boolean isPlayerNearby() {
-        // puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
-        if(this.collisionArea!= null && gsm.getPlayer().getInteractionArea().intersects(this.collisionArea)){
-            System.out.println("Sto collidendo con "+ this.name);
-            return true;
-        }
-        else return false;
-    }
-
-
 }

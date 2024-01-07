@@ -1,15 +1,14 @@
 package model.entities;
 
 import controller.KeyHandler;
-import model.entities.items.Item;
+import model.entities.Interaction.Interactable;
 import model.gameState.GameStateManager;
 import model.quests.Quest;
 import model.quests.QuestManager;
 import model.tile.TileManager;
 
 import java.awt.*;
-import java.util.Arrays;
-import java.util.List;
+import java.awt.image.BufferedImage;
 
 import static view.GamePanel.tileSize;
 
@@ -24,7 +23,7 @@ public abstract class Entity{
     protected GameStateManager gsm;
     protected KeyHandler keyH;
     protected TileManager tileManager;
-
+    protected BufferedImage staticImage;
     protected boolean isInteractable;
     protected Interactable interactionAction;
 
@@ -38,6 +37,10 @@ public abstract class Entity{
     public abstract void draw(Graphics2D graphics2D);
 
     public abstract void update();
+    public void changeImage() {
+        this.staticImage = interactImage;
+    }
+    protected BufferedImage interactImage;
 
 
     public static class EntityBuilder<T extends Entity, B extends EntityBuilder<T, B>> {
@@ -97,6 +100,10 @@ public abstract class Entity{
             this.entity.imageHeight = imageHeigth;
             return (B) this;
         }
+        public B setStaticImage(BufferedImage staticImage) {
+            this.entity.staticImage = staticImage;
+            return (B) this;
+        }
         public B setInteractionAction(Interactable interactionActionItems){
             this.entity.interactionAction = interactionActionItems;
             return (B) this;
@@ -124,6 +131,26 @@ public abstract class Entity{
 
     public TileManager getTileManager() {
         return tileManager;
+    }
+    public void interact() {
+        // Verifica se il giocatore è nelle vicinanze e ha premuto il tasto "E"
+        if (this.tileManager == gsm.getMapManager().getCurrentMap() && this.isInteractable && !gsm.getPlayer().isAttacking() && isPlayerNearby()) {
+            if(keyH.interactPressed && interactionAction != null && !gsm.isInDialogue()) {
+                //System.out.println("Ho interagito con "+this.name);
+                interactionAction.performAction(this);
+            }
+        }
+    }
+    public void loadProgress(){
+        interactionAction.performAction(this);
+    }
+    protected boolean isPlayerNearby() {
+        // puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
+        if(this.collisionArea!= null && gsm.getPlayer().getInteractionArea().intersects(this.collisionArea)){
+            System.out.println("Sto collidendo con "+ this.name);
+            return true;
+        }
+        else return false;
     }
 
     public boolean getIsInteractable() {

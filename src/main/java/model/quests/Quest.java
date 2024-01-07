@@ -6,9 +6,10 @@ import java.util.function.Predicate;
 public class  Quest {
 
     private String title;
+    private Progress progress = Progress.START;
     List<String> associatedEntities;
     List<Objective> objectives;
-    private boolean isCompleted;
+    private boolean started, inProgress, Completed;
 
     /*public Quest(String title, boolean b){
 
@@ -16,6 +17,15 @@ public class  Quest {
         this.isDone = b;
 
     }*/
+    public void setProgress(Progress progress){
+        switch (progress){
+            case START ->
+                progress = Progress.START;
+
+        }
+    }
+    public enum Progress{START, INPROGRESS, COMPLETED};
+
 
     public List<Objective> getObjectives() {
         return objectives;
@@ -31,12 +41,12 @@ public class  Quest {
 
 
    public boolean isCompleted(){
-        return isCompleted;
+        return Completed;
     }
 
     public void complete() {
-        isCompleted = true;
+        Completed = true;
+        QuestManager.addCompletedQuest(this);
     }
-    public Predicate<Quest> isQuestCompleted;
 
 }

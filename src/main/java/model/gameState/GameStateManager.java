@@ -10,8 +10,11 @@ import model.entities.characters.player.Player;
 import model.entities.items.Item;
 import model.entities.items.ItemCreator;
 import model.Dialogues.DialogueManager;
+import model.entities.traps.Trap;
+import model.entities.traps.TrapCreator;
 import model.quests.Quest;
 import model.quests.QuestInitializer;
+import model.quests.QuestManager;
 import model.sound.Playlist;
 import model.sound.Sound;
 import model.tile.MapManager;
@@ -38,16 +41,14 @@ public class GameStateManager {
 
     private boolean inDialogue = false; //necessario per la logica della pausa durante i dialoghi
     Player player;
-    public TileManager tileManagerZonaIniziale;
-    public TileManager tileManagerCasettaIniziale;
+    private TileManager tileManagerZonaIniziale;
+    private TileManager tileManagerCasettaIniziale;
 
-    public TileManager tileManagerVillaggioSud;
-
-    public TileManager tileManagerNegozioItemsVillaggioSud;
-
-    public TileManager tileManagerPianoTerraTavernaVillaggio;
-    public TileManager tileManagerPrimoPianoTavernaVillaggio;
-    public TileManager tileManagerDungeonSud;
+    private TileManager tileManagerVillaggioSud;
+    private TileManager tileManagerNegozioItemsVillaggioSud;
+    private TileManager tileManagerPianoTerraTavernaVillaggio;
+    private TileManager tileManagerPrimoPianoTavernaVillaggio;
+    private TileManager tileManagerDungeonSud;
 
 
     //gestore mappe
@@ -58,10 +59,14 @@ public class GameStateManager {
     private List<Npc> npcList;
     private List<Enemy> enemyList;
     private List<Entity> entityList;
+
+
+
     private List<Entity> currentEntityList;
     private Playlist playlist = new Playlist();
     private List<Sound> songList = playlist.getSongList();
-    static List<Quest> questList;
+    private List<Quest> questList;
+    private List<Trap> trapList;
     private boolean initialized, initializing;
     private static GameStateManager instance = null;
 
@@ -103,6 +108,8 @@ public class GameStateManager {
         this.entityList.addAll(this.itemList);
         this.entityList.add(player);
         questList = QuestInitializer.createQuestList();
+        QuestManager.addCompletedQuest(questList.get(0));
+        this.trapList = TrapCreator.createTraps(mapManager);
         this.currentEntityList= entityList.stream().filter(entity -> entity.getTileManager().equals(mapManager.getCurrentMap())).collect(Collectors.toList());
         initialized = true;
     }
@@ -118,27 +125,23 @@ public class GameStateManager {
     public void setState(State state) {
         keyH.releaseToggles();
         switch (state) {
-            case MENU:
+            case MENU ->
                 currentState = new MenuState();
-                break;
-            case PLAY:
+            case PLAY ->
                 currentState = playState; // playstate deve essere sempre in memoria
-                break;
-            case PAUSE:
+            case PAUSE -> {
                 stopMusic(0);
                 previousState = currentState;
-                currentState = new PauseState();
-                break;
-            case DIALOGUE:
+                currentState = new PauseState();}
+            case DIALOGUE -> {
                 currentState = new DialogueState();
                 inDialogue = true;
-                break;
-            case GAMEOVER:
+            }
+            case GAMEOVER ->
                 currentState = new GameOverState();
-                break;
-            case PREVIOUS: //Uscendo dalla pausa bisogna tornare allo stato precedente (Non per forza playstate, ma anche dialogue, inventory ecc...)
+
+            case PREVIOUS ->//Uscendo dalla pausa bisogna tornare allo stato precedente (Non per forza playstate, ma anche dialogue, inventory ecc...)
                 currentState = previousState;
-                break;
         }
     }
     public void exitDialogue(){
@@ -155,6 +158,7 @@ public class GameStateManager {
     }
     public void reload(){
           this.playState = null;
+          init();
           setState(State.PLAY);
     }
 
@@ -172,6 +176,9 @@ public class GameStateManager {
     public MapManager getMapManager() {
         return this.mapManager;
     }
+    public List<Quest> getQuestList() {
+        return questList;
+    }
 
     public List<Npc> getNpcList() { return this.npcList; }
     public List<Enemy> getEnemyList(){return this.enemyList;}
@@ -182,6 +189,9 @@ public class GameStateManager {
 
     public KeyHandler getKeyH() {
         return keyH;
+    }
+    public List<Trap> getTrapList(){
+        return trapList;
     }
 
     public boolean isInDialogue() {
