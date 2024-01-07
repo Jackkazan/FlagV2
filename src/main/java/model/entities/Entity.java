@@ -161,7 +161,6 @@ public abstract class Entity{
         this.collisionArea = collisionArea;
     }
 
-
     public void setScale(int scale) {
         this.scale = scale;
     }

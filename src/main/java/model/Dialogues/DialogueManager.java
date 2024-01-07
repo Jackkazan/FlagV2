@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import model.entities.Entity;
 import model.entities.characters.npc.Npc;
 import model.gameState.GameStateManager;
-import static model.Dialogues.Tutorial.tutorialComandi;
-import static model.Dialogues.Tutorial.tutorialComandiIndex;
 public class DialogueManager {
     private static ArrayList<String> test;
     private GameStateManager gsm;
