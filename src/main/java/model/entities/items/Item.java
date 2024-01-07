@@ -19,7 +19,7 @@ import java.util.Objects;
 import static view.GamePanel.tileSize;
 
 public class Item extends Entity implements Prototype {
-    private BufferedImage staticImage;
+    private BufferedImage staticImage, interactImage;
     private BufferedImage animateImage1, animateImage2, animateImage3, animateImage4;
     private int speedChangeAnimateSprite;
     private List<Quest> relatedQuests= new ArrayList<>();
@@ -65,14 +65,11 @@ public class Item extends Entity implements Prototype {
         else return false;
     }
 
-    public void setStaticImage(String pathImage){
-        try {
-            this.staticImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(pathImage)));
 
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+    public void changeImage() {
+        this.staticImage = interactImage;
     }
+
 
     // Metodo per clonare l'oggetto
     @Override
@@ -88,7 +85,7 @@ public class Item extends Entity implements Prototype {
     public boolean questListIsDone() {
 
         for(Quest quest : relatedQuests){
-            if(!quest.isDone())
+            if(!quest.isCompleted())
                 return false;
         }
         return true;
@@ -104,15 +101,6 @@ public class Item extends Entity implements Prototype {
             super();
             this.entity.x = x *tileSize;
             this.entity.y = y *tileSize;
-        }
-
-        public ItemBuilder setRelatedQuests(Quest... quests) {
-            this.entity.relatedQuests.addAll(Arrays.asList(quests));
-            return this;
-        }
-        public ItemBuilder setRelatedQuests(List<Quest> relatedQuests) {
-            this.entity.relatedQuests = relatedQuests;
-            return this;
         }
 
         public ItemBuilder setStaticImage(String pathImage) {
@@ -132,6 +120,14 @@ public class Item extends Entity implements Prototype {
 
         public ItemBuilder setStaticImage(BufferedImage staticImage) {
             this.entity.staticImage = staticImage;
+            return this;
+        }
+        public ItemBuilder setInteractImage(String pathImage){
+            try{
+                this.entity.interactImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(pathImage)));
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
             return this;
         }
 

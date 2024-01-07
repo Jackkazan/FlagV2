@@ -19,21 +19,18 @@ import static view.GamePanel.tileSize;
 public class PlayState implements GameState{
 
     private Player player;
-    private GameStateManager gsm;
+
     private MapManager mapManager;
 
-    private KeyHandler keyH;
     private Graphics2D graphics2D;
 
     private BufferedImage buffer;
 
 
     List<Item> itemList;
-    public PlayState(GameStateManager gsm, MapManager mapManager,Player player, KeyHandler keyH) {
-        this.gsm = gsm;
+    public PlayState(MapManager mapManager,Player player) {
         this.mapManager = mapManager;
         this.player = player;
-        this.keyH = keyH;
         this.buffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_RGB);
 
     }

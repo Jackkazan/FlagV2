@@ -12,10 +12,10 @@ public class NpcCreator {
     private int spriteNum = 3;
     private int speed;
 
-
+    public static List<Npc> npcList = new ArrayList<>();
     public static List<Npc> createNPCs(GameStateManager gsm, MapManager mapManager) {
 
-        List<Npc> npcList = new ArrayList<>();
+
         // Inizializza le entità e aggiungile alla lista
 
         String vecchietta_up1 = "/npc/Vecchietta/VecchiettaLookUp_0.png";

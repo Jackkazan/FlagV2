@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable{
     int FPS = 60;
 
 
-    List<Quest> questList = QuestInitializer.createQuestList();
+
     //transizione
 
 
@@ -51,6 +51,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
         this.setFocusable(true);
+        gsm.setState(GameStateManager.State.MENU);
 
     }
 

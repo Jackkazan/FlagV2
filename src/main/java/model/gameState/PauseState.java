@@ -10,9 +10,6 @@ import java.awt.*;
 public class PauseState implements GameState{
 
 
-    GameStateManager gsm;
-    KeyHandler keyH;
-
     int screenWidth = GamePanel.screenWidth;
     int screenHeight = GamePanel.screenHeight;
     private static int volumeIndicator=90;
@@ -24,11 +21,9 @@ public class PauseState implements GameState{
 
 
 
-    public PauseState(GameStateManager gsm, KeyHandler keyH) {
+    public PauseState() {
         System.out.println("costruttore pausestate");
         this.mouseHandler = MouseHandler.getInstance();
-        this.gsm = gsm;
-        this.keyH = keyH;
         gsm.stopMusic(0);
 
     }

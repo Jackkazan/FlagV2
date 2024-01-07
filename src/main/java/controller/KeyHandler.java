@@ -13,7 +13,7 @@ public class KeyHandler implements KeyListener {
     private GamePanel gamePanel;
     private GameStateManager gsm;
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, attackVPressed, spacePressed, enterPressed, yPressed, pPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, attackVPressed, spacePressed, enterPressed, yPressed, pPressed, startGame;
     private boolean pauseSwitch;
     public boolean interactRequest;
 
@@ -52,6 +52,7 @@ public class KeyHandler implements KeyListener {
         }
         if (code == KeyEvent.VK_ENTER)
             enterPressed = true;
+            startGame = true;
 
         if (code == KeyEvent.VK_V) {
             attackVPressed = true;

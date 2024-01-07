@@ -1,10 +1,15 @@
 package model.entities;
 
 import controller.KeyHandler;
+import model.entities.items.Item;
 import model.gameState.GameStateManager;
+import model.quests.Quest;
+import model.quests.QuestManager;
 import model.tile.TileManager;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 
 import static view.GamePanel.tileSize;
 
@@ -60,6 +65,14 @@ public abstract class Entity{
             this.entity.y = y;
             return (B) this;
         }
+        public B setRelatedQuests(Quest quest) {
+            QuestManager.setQuest(entity, quest);
+            return (B) this;
+        }
+        /*public B setRelatedQuests(List<Quest> relatedQuests) {
+            this.entity.relatedQuests = relatedQuests;
+            return (B) this;
+        }*/
 
         // ... (aggiungi altri setter comuni)
         public B setCollisionArea(int larghezza, int altezza) {

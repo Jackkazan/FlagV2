@@ -1,0 +1,17 @@
+{
+  "quests": [
+    {
+      "title":"Esci dalla Casetta",
+      "associatedEntities": [
+        "Porta",
+        "Chiave"],
+      "objectives":
+      [
+        {
+          "objectiveTitle": "Prendi la chiave",
+          "objectiveAssociatedEntities": ["Chiave"]}
+      ]
+    }
+  ]
+}
+
