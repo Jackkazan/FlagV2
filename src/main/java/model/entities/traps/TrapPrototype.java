@@ -20,7 +20,7 @@ public class TrapPrototype {
         // Modificare alcuni valori del nuovo oggetto, se necessario
         newTrap.setName(name);
         newTrap.setPosition(x, y);
-        newTrap.setAttackArea(x,y,16,16);
+        newTrap.setAttackArea(x,y,64,64);
 
         // Restituire il nuovo oggetto
         return newTrap;
