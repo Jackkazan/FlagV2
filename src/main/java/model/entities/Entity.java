@@ -104,8 +104,8 @@ public abstract class Entity{
             this.entity.staticImage = staticImage;
             return (B) this;
         }
-        public B setInteractionAction(Interactable interactionActionItems){
-            this.entity.interactionAction = interactionActionItems;
+        public B setInteractionAction(Interactable interactionAction){
+            this.entity.interactionAction = interactionAction;
             return (B) this;
         }
         public B setScale(int scale) {

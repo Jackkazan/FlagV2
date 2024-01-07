@@ -3,7 +3,8 @@ package model.entities.items;
 
 import controller.KeyHandler;
 import model.entities.Entity;
-import model.entities.Interaction.DisappearOrChangeImageAction;
+import model.entities.Interaction.InteractionAction;
+import model.entities.Interaction.InteractionAction;
 import model.entities.Prototype;
 import model.gameState.GameStateManager;
 import model.entities.Interaction.Interactable;
@@ -33,7 +34,7 @@ public class ItemCreator {
                 .setContainedMap(mapManager.getTileManagerCasettaIniziale())
                 // .setRelatedQuests(questList.get(0))
                 .setInteractable(true)
-                .setInteractionAction(new DisappearOrChangeImageAction())
+                .setInteractionAction(new InteractionAction.DisappearAction())
                 .build();
 
 
@@ -47,7 +48,7 @@ public class ItemCreator {
                 .setImageDimension(32, 48)
                 .setCollisionArea(4 * tileSize, 9 * tileSize, 48, 16)
                 // .setRelatedQuests(questList.get(1))
-                .setInteractionAction(new DisappearOrChangeImageAction())
+                .setInteractionAction(new InteractionAction.DisappearAction())
                 .build();
         //System.out.println(QuestManager.getQuestMap().get(portaCasettaInizialeChiusa).getQuestName());
         Item zuccaMarcia1 = new Item.ItemBuilder(39, 44)
@@ -59,7 +60,7 @@ public class ItemCreator {
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
                 //.setRelatedQuests(questList.get(0))
                 .setInteractable(true)
-                .setInteractionAction(new DisappearOrChangeImageAction())
+                .setInteractionAction(new InteractionAction.DisappearAction())
                 .build();
         prototypeManager = new ItemPrototype(zuccaMarcia1);
         Prototype zuccaMarcia2 = prototypeManager.createItem("zuccaMarcia2", 47, 46, 16, 16);
@@ -78,7 +79,7 @@ public class ItemCreator {
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
                 // .setRelatedQuests(questList.get(0))
                 .setInteractable(true)
-                .setInteractionAction(new DisappearOrChangeImageAction())
+                .setInteractionAction(new InteractionAction.ChangeImageAction())
                 .build();
         prototypeManager = new ItemPrototype(spaventaPasseri1);
         Prototype spaventaPasseri2 = prototypeManager.createItem("spaventaPasseri2", 64, 28, 32, 32);

@@ -14,25 +14,19 @@ public class QuestManager {
     private static List<Quest> completedQuestList = new ArrayList<>();
     private static Map<Entity, Objective> objectiveMap = new HashMap();
 
-    public static Map<Entity, Quest> getQuestMap(){
-        return questMap;
-    }
 
-    public static Map<Entity, Objective> getObjectiveMap() {
-        return objectiveMap;
-    }
 
     public static void setQuest (Entity entity, Quest quest){
         questMap.put(entity, quest);
     }
+    public static void setObjective (Entity entity, Objective objective) {objectiveMap.put(entity, objective);}
     public static boolean handleObjective(Entity entity, Objective objective){
         if(objective.isFinalObjective()){
             System.out.println("final");
             Quest quest = questMap.get(entity);
             if(quest.getObjectives().stream().filter(not(Objective::isFinalObjective)).allMatch(Objective::isCompleted)){
+                objective.complete();
                 quest.complete();
-                System.out.println("COMPLETATA");
-                completedQuestList.forEach(quest1 -> System.out.println(quest1.getTitle()));
                 return true;
             }
         }
@@ -82,5 +76,12 @@ public class QuestManager {
             }
         }
     }
-    public static void setObjective (Entity entity, Objective objective) {objectiveMap.put(entity, objective);}
+    public static Map<Entity, Quest> getQuestMap(){
+        return questMap;
+    }
+
+    public static Map<Entity, Objective> getObjectiveMap() {
+        return objectiveMap;
+    }
+
 }

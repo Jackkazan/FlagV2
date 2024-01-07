@@ -3,13 +3,18 @@ package model.entities.Interaction;
 import model.entities.Entity;
 import model.quests.Objective;
 import model.quests.QuestManager;
-public class DisappearOrChangeImageAction implements Interactable {
+public class InteractionAction {
+    public static boolean questAction(Entity entity) {
+        Objective objective;
+        if ((objective = QuestManager.getObjectiveMap().get(entity)) == null)
+            return true;
+        else return !objective.isCompleted() && QuestManager.handleObjective(entity, objective);
+    }
      /*@Override
         public void performAction(Item item) {
            /* item.changeImage();
             item.setInteractable(false);
             item.setCollisionArea(null);*/
-
 
 
     //Se le quest prima di interagire con questo oggetto sono state fatte
@@ -62,19 +67,25 @@ public class DisappearOrChangeImageAction implements Interactable {
     /* @Override
      public void performAction(Npc npc) {
      }*/
-    public void defaultAction(Entity entity) {
-        entity.changeImage();
-        entity.setInteractable(false);
-        entity.setCollisionArea(null);
+
+    public static class DisappearAction implements Interactable {
+        @Override
+        public void performAction(Entity entity) {
+            if (questAction(entity)) {
+                entity.changeImage();
+                entity.setInteractable(false);
+                entity.setCollisionArea(null);
+            }
+
+        }
     }
+    public static class ChangeImageAction implements Interactable {
+        @Override
+        public void performAction(Entity entity) {
+            if (questAction(entity)) {
+                entity.changeImage();
+            }
 
-    @Override
-    public void performAction(Entity entity) {
-        Objective objective;
-        if ((objective = QuestManager.getObjectiveMap().get(entity)) == null)
-            defaultAction(entity);
-        else if (!objective.isCompleted() && QuestManager.handleObjective(entity, objective))
-            defaultAction(entity);
-
+        }
     }
 }
