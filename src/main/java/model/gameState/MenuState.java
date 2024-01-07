@@ -10,19 +10,21 @@ public class MenuState implements GameState{
 
    private int screenWidth = GamePanel.screenWidth;
     private int screenHeight = GamePanel.screenHeight;
-    private GameStateManager gsm;
-    private KeyHandler keyH;
+
+    private boolean start = false;
     private Graphics2D g2;
-    public MenuState(GameStateManager gsm, KeyHandler keyH) {
-        this.gsm = gsm;
-        this.keyH = keyH;
-
-
+    public MenuState() {
     }
 
     @Override
     public void update() {
-        if(keyH.enterPressed){
+        if (keyH.startGame){ start = true; keyH.startGame = false;}
+        if (!gsm.isInitializing() && !gsm.isInitialized()){
+            gsm.init();
+        }
+        if(start){
+            do{}
+            while (!gsm.isInitialized());
             gsm.setState(GameStateManager.State.PLAY);
         }
 

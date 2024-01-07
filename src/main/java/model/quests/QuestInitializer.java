@@ -1,11 +1,17 @@
 package model.quests;
+import com.google.gson.Gson;
+import model.entities.Entity;
+import model.gameState.GameStateManager;
 
-import java.util.ArrayList;
+import java.io.FileReader;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class QuestInitializer {
 
-    public static ArrayList<Quest> createQuestList(){
-        ArrayList<Quest> questList=new ArrayList<>();
+    public static List<Quest> createQuestList() {
+        /*ArrayList<Quest> questList=new ArrayList<>();
         Quest appenaSveglio = new Quest("AppenaSveglioTiALziDalLetto", true);
         Quest chiaveRaccoltaCasettaIniziale = new Quest("ChiaveRaccoltaCI", false);
         Quest portaSbloccataCasettaIniziale = new Quest("PortaSbloccataCI", false);
@@ -14,7 +20,7 @@ public class QuestInitializer {
         Quest parlaColContadino2PerSpaventapasseri = new Quest("HaiParlaColContadino2PerSpaventapasseri", false);
         Quest interagitoConGliSpaventapasseriOrdineCorretto = new Quest("HaiInteragitoConGliSpaventapasseriNellOrdineCorretto", false);
         Quest estirpatoTutteLeZuccheConIVermi = new Quest("HaiEstirpatoLeZuccheConIVermi", false);
-
+        Quest esciDallaCasetta = new Quest("Esci dalla Casetta", false);
 
         //0
         questList.add(appenaSveglio);
@@ -33,11 +39,58 @@ public class QuestInitializer {
         //7
         questList.add(estirpatoTutteLeZuccheConIVermi);
 
-        return questList;
+        return questList;*/
+
+        Gson gson = new Gson();
+
+        try (FileReader reader = new FileReader("src/main/resources/quests/quests.json")) {
+            QuestData questData = gson.fromJson(reader, QuestData.class);
+            questData.getQuests().forEach(quest -> System.out.println(quest.getAssociatedEntities()));
+            if (questData != null && questData.getQuests() != null) {
+                for (Quest quest : questData.getQuests()) {
+                    if (!quest.getAssociatedEntities().isEmpty()) {
+                        quest.getAssociatedEntities().stream()
+                                .map(entity -> findEntityByName(entity))
+                                .filter(Objects::nonNull)
+                                .forEach(entity -> QuestManager.setQuest(entity, quest));
+
+                    }
+                    if (!quest.getObjectives().isEmpty()) {
+                        quest.getObjectives().forEach(objective -> {
+                            objective.getObjectiveAssociatedEntities().stream()
+                                    .map(entityname -> findEntityByName(entityname))
+                                    .filter(Objects::nonNull)
+                                    .forEach(entity -> QuestManager.setObjective(entity, objective));
+                        });
+                    }
+                }
+                for (Map.Entry<Entity, Quest> entry :  QuestManager.getQuestMap().entrySet()) {
+                System.out.println("Entity: " + entry.getKey().getName() + ", Quest: " + entry.getValue().getTitle());
+                }
+                for (Map.Entry<Entity, Objective> entry : QuestManager.getObjectiveMap().entrySet()){
+                    System.out.println("Entity: " + entry.getKey().getName() + ", Objective: " + entry.getValue().getTitle());
+                }
+                return questData.getQuests();
+            }
+
+            else{
+                throw new RuntimeException();
+                }
+            }
+        catch(Exception e){
+                throw new RuntimeException();
+        }
+    }
+    private static Entity findEntityByName(String entityName) {
+        for (Entity entity : GameStateManager.getInstance().getEntityList())
+        {
+            if(entityName.equals(entity.getName()))
+                return entity;
+        }
+
+        return null;
     }
 
-
-
-
-
 }
+
+

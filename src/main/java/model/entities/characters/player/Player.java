@@ -73,6 +73,7 @@ public class Player extends Characters {
 
     public Player() {
         super();
+        this.name = "Player";
         screenX = GamePanel.screenWidth/2 - (tileSize/2);
         screenY = GamePanel.screenHeight/2 - (tileSize/2);
         setDefaultValues();
@@ -84,8 +85,8 @@ public class Player extends Characters {
     }
 
     public void setDefaultValues() {
-        x = tileSize*46;  //3
-        y = tileSize*89;  //4
+        x = tileSize*3;  //3
+        y = tileSize*4;  //4
         maxLife = 6;
         currentLife = 6;
         speed = 4;
@@ -127,20 +128,25 @@ public class Player extends Characters {
 
     @Override
     public void update() {
-        if(isHitted){
-            setState(State.HIT);
-        }else {
-            if (isAttacking) {
-                this.setState(State.ATTACK);
-            } else {
-                if (keyH.spacePressed && isAttackAnimationCompleted) {
-                    resetAttack();
+        if(currentLife <= 0){
+            setState(State.DEAD);
+        }
+        else{
+            if(isHitted){
+                setState(State.HIT);
+            }else {
+                if (isAttacking) {
                     this.setState(State.ATTACK);
                 } else {
-                    if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
-                        this.setState(State.MOVEMENT);
+                    if (keyH.spacePressed && isAttackAnimationCompleted) {
+                        resetAttack();
+                        this.setState(State.ATTACK);
                     } else {
-                        this.setState(State.IDLE);
+                        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+                            this.setState(State.MOVEMENT);
+                        } else {
+                            this.setState(State.IDLE);
+                        }
                     }
                 }
             }

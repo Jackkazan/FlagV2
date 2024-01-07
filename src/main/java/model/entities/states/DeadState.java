@@ -4,6 +4,7 @@ import model.entities.Entity;
 
 import model.entities.EntityState;
 import model.entities.characters.enemies.Enemy;
+import model.gameState.GameStateManager;
 
 
 import java.awt.*;
@@ -13,6 +14,7 @@ public class DeadState implements EntityState {
     public void update(Entity entity) {
         switch (entity.getClass().getSimpleName()) {
             case "Enemy" -> updateEnemy((Enemy) entity);
+            case "Player" -> GameStateManager.getInstance().setState(GameStateManager.State.GAMEOVER);
             default -> {}
         }
     }

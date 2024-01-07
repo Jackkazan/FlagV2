@@ -5,6 +5,7 @@ import model.gameState.GameStateManager;
 import view.GamePanel;
 
 import java.awt.*;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MapManager {
@@ -25,10 +26,10 @@ public class MapManager {
     private TileManager tileManagerPrimoPianoTavernaVillaggio;
     private TileManager tileManagerDungeonSud;
 
-    public MapManager(GameStateManager gsm, Player player, TileManager tileManagerCasettaIniziale, TileManager tileManagerZonaIniziale, TileManager tileManagerVillaggioSud,
+    public MapManager(Player player, TileManager tileManagerCasettaIniziale, TileManager tileManagerZonaIniziale, TileManager tileManagerVillaggioSud,
                       TileManager tileManagerNegozioItemsVillaggioSud, TileManager tileManagerPianoTerraTavernaVillaggio, TileManager tileManagerPrimoPianoTavernaVillaggio, TileManager tileManagerDungeonSud) {
         this.player = player;
-        this.gsm = gsm;
+        this.gsm = GameStateManager.getInstance();
         this.tileManagerZonaIniziale = tileManagerZonaIniziale;//Mappa iniziale
         this.tileManagerCasettaIniziale = tileManagerCasettaIniziale;
         this.tileManagerVillaggioSud = tileManagerVillaggioSud;
@@ -38,7 +39,10 @@ public class MapManager {
         this.tileManagerDungeonSud = tileManagerDungeonSud;
 
         //da cambiare
-        setMap(tileManagerVillaggioSud);
+       setMap(tileManagerCasettaIniziale);
+    }
+    public void setPlayer(Player player){
+        this.player = player;
     }
 
 

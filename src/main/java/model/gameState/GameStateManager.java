@@ -10,8 +10,8 @@ import model.entities.characters.player.Player;
 import model.entities.items.Item;
 import model.entities.items.ItemCreator;
 import model.Dialogues.DialogueManager;
-import model.entities.traps.Trap;
-import model.entities.traps.TrapCreator;
+import model.quests.Quest;
+import model.quests.QuestInitializer;
 import model.sound.Playlist;
 import model.sound.Sound;
 import model.tile.MapManager;
@@ -51,18 +51,18 @@ public class GameStateManager {
 
 
     //gestore mappe
-    MapManager mapManager;
-    DialogueManager dialogueManager;
+    private MapManager mapManager;
+    private DialogueManager dialogueManager;
 
-    List<Item> itemList;
-    List<Npc> npcList;
-    List<Enemy> enemyList;
-
-    List<Trap> trapList;
-    List<Entity> entityList;
-    List<Entity> currentEntityList;
-    Playlist playlist = new Playlist();
-    List<Sound> songList = playlist.getSongList();
+    private List<Item> itemList;
+    private List<Npc> npcList;
+    private List<Enemy> enemyList;
+    private List<Entity> entityList;
+    private List<Entity> currentEntityList;
+    private Playlist playlist = new Playlist();
+    private List<Sound> songList = playlist.getSongList();
+    static List<Quest> questList;
+    private boolean initialized, initializing;
     private static GameStateManager instance = null;
 
       public DialogueManager getDialogueManager() {
@@ -71,7 +71,7 @@ public class GameStateManager {
 
     public GameStateManager() {
         this.keyH = KeyHandler.getInstance();
-        this.currentState = new MenuState(this, keyH);
+        this.currentState = new MenuState();
         this.dialogueManager = new DialogueManager(this);
         this.entityList = new ArrayList<>();
 
@@ -81,7 +81,8 @@ public class GameStateManager {
               instance = new GameStateManager();
           return instance;
     }
-    public void Init(){ // inizializza il player e le mappe
+    public void init(){ // inizializza il player e le mappe
+        initializing = true;
         this.player = new Player();
         this.tileManagerZonaIniziale = new TileManager(this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
         this.tileManagerCasettaIniziale = new TileManager(this, "src/main/resources/Map/StanzaIntroduzione/CasettaIniziale.tmx");
@@ -90,51 +91,54 @@ public class GameStateManager {
         this.tileManagerPianoTerraTavernaVillaggio = new TileManager(this,"src/main/resources/Map/TavernaVillaggio/PianoTerraTavernaVillaggio.tmx");
         this.tileManagerPrimoPianoTavernaVillaggio = new TileManager(this,"src/main/resources/Map/TavernaVillaggio/PrimoPianoTavernaVillaggio.tmx");
         this.tileManagerDungeonSud = new TileManager(this,"src/main/resources/Map/DungeonSud/sud_cave.tmx");
-        this.mapManager = new MapManager(this, player, tileManagerCasettaIniziale, tileManagerZonaIniziale, tileManagerVillaggioSud, tileManagerNegozioItemsVillaggioSud,tileManagerPianoTerraTavernaVillaggio,tileManagerPrimoPianoTavernaVillaggio, tileManagerDungeonSud);
-        this.playState = new PlayState(this, mapManager, player, keyH);
+        this.mapManager = new MapManager(player, tileManagerCasettaIniziale, tileManagerZonaIniziale, tileManagerVillaggioSud, tileManagerNegozioItemsVillaggioSud,tileManagerPianoTerraTavernaVillaggio,tileManagerPrimoPianoTavernaVillaggio, tileManagerDungeonSud);
+        this.playState = new PlayState(mapManager, player);
         playMusicLoop(0);
         //this.pauseState = new PauseState(gp, this, keyH);
-
         this.npcList = NpcCreator.createNPCs(this, mapManager);
         this.itemList = ItemCreator.createObjects(this, mapManager, keyH);
         this.enemyList = EnemyCreator.createEnemies(this, mapManager);
-        this.trapList = TrapCreator.createTraps(mapManager);
-
-        this.entityList.add(player);
         this.entityList.addAll(this.npcList);
         this.entityList.addAll(this.enemyList);
         this.entityList.addAll(this.itemList);
-
+        this.entityList.add(player);
+        questList = QuestInitializer.createQuestList();
         this.currentEntityList= entityList.stream().filter(entity -> entity.getTileManager().equals(mapManager.getCurrentMap())).collect(Collectors.toList());
-
+        initialized = true;
+    }
+    public boolean isInitialized(){
+          return initialized;
+    }
+    public boolean isInitializing(){
+          return initializing;
     }
 
-    public enum State{ MENU, PLAY, PAUSE, DIALOGUE, PREVIOUS}
+    public enum State{ MENU, PLAY, PAUSE, DIALOGUE, GAMEOVER, PREVIOUS}
 
     public void setState(State state) {
         keyH.releaseToggles();
         switch (state) {
             case MENU:
-                currentState = new MenuState(this, keyH);
+                currentState = new MenuState();
                 break;
             case PLAY:
-                if(this.playState == null)
-                    Init();
-                System.out.println("ohh");
                 currentState = playState; // playstate deve essere sempre in memoria
                 break;
             case PAUSE:
                 stopMusic(0);
                 previousState = currentState;
-                currentState = new PauseState(this, keyH);
+                currentState = new PauseState();
                 break;
             case DIALOGUE:
-                currentState = new DialogueState(this, keyH);
+                currentState = new DialogueState();
                 inDialogue = true;
+                break;
+            case GAMEOVER:
+                currentState = new GameOverState();
                 break;
             case PREVIOUS: //Uscendo dalla pausa bisogna tornare allo stato precedente (Non per forza playstate, ma anche dialogue, inventory ecc...)
                 currentState = previousState;
-
+                break;
         }
     }
     public void exitDialogue(){
@@ -148,6 +152,10 @@ public class GameStateManager {
 
     public void draw(Graphics g) {
         currentState.draw(g);
+    }
+    public void reload(){
+          this.playState = null;
+          setState(State.PLAY);
     }
 
     public GameState getCurrentState() {
@@ -209,9 +217,5 @@ public class GameStateManager {
 
     public List<Entity> getCurrentEntityList() {
         return currentEntityList;
-    }
-
-    public List<Trap> getTrapList(){
-        return trapList;
     }
 }

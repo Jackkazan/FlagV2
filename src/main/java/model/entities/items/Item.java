@@ -19,11 +19,11 @@ import java.util.Objects;
 import static view.GamePanel.tileSize;
 
 public class Item extends Entity implements Prototype {
-    protected BufferedImage staticImage;
-    protected BufferedImage animateImage1, animateImage2, animateImage3, animateImage4;
-    protected int speedChangeAnimateSprite;
+    private BufferedImage staticImage, interactImage;
+    private BufferedImage animateImage1, animateImage2, animateImage3, animateImage4;
+    private int speedChangeAnimateSprite;
     private List<Quest> relatedQuests= new ArrayList<>();
-    protected int offsetY;
+    private int offsetY;
 
     public Item() {
         super();
@@ -41,6 +41,7 @@ public class Item extends Entity implements Prototype {
     }
     @Override
     public void update(){
+
         // animazione se succede evento o altro
         interact();
     }
@@ -55,7 +56,7 @@ public class Item extends Entity implements Prototype {
         }
     }
 
-    public boolean isPlayerNearby() {
+    private boolean isPlayerNearby() {
         //Definisci la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
         if(this.collisionArea!= null && gsm.getPlayer().getInteractionArea().intersects(this.collisionArea)){
             System.out.println("Sto collidendo con "+ this.name);
@@ -64,14 +65,11 @@ public class Item extends Entity implements Prototype {
         else return false;
     }
 
-    public void setStaticImage(String pathImage){
-        try {
-            this.staticImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(pathImage)));
 
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+    public void changeImage() {
+        this.staticImage = interactImage;
     }
+
 
     // Metodo per clonare l'oggetto
     @Override
@@ -87,7 +85,7 @@ public class Item extends Entity implements Prototype {
     public boolean questListIsDone() {
 
         for(Quest quest : relatedQuests){
-            if(!quest.isDone())
+            if(!quest.isCompleted())
                 return false;
         }
         return true;
@@ -103,15 +101,6 @@ public class Item extends Entity implements Prototype {
             super();
             this.entity.x = x *tileSize;
             this.entity.y = y *tileSize;
-        }
-
-        public ItemBuilder setRelatedQuests(Quest... quests) {
-            this.entity.relatedQuests.addAll(Arrays.asList(quests));
-            return this;
-        }
-        public ItemBuilder setRelatedQuests(List<Quest> relatedQuests) {
-            this.entity.relatedQuests = relatedQuests;
-            return this;
         }
 
         public ItemBuilder setStaticImage(String pathImage) {
@@ -131,6 +120,14 @@ public class Item extends Entity implements Prototype {
 
         public ItemBuilder setStaticImage(BufferedImage staticImage) {
             this.entity.staticImage = staticImage;
+            return this;
+        }
+        public ItemBuilder setInteractImage(String pathImage){
+            try{
+                this.entity.interactImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(pathImage)));
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
             return this;
         }
 
@@ -165,33 +162,7 @@ public class Item extends Entity implements Prototype {
         }
     }
 
-    public BufferedImage getStaticImage() {
-        return staticImage;
-    }
 
-    public BufferedImage getAnimateImage1() {
-        return animateImage1;
-    }
-
-    public BufferedImage getAnimateImage2() {
-        return animateImage2;
-    }
-
-    public BufferedImage getAnimateImage3() {
-        return animateImage3;
-    }
-
-    public BufferedImage getAnimateImage4() {
-        return animateImage4;
-    }
-
-    public int getSpeedChangeAnimateSprite() {
-        return speedChangeAnimateSprite;
-    }
-
-    public int getOffsetY() {
-        return offsetY;
-    }
 
     public List<Quest> getRelatedQuests() {
         return relatedQuests;
