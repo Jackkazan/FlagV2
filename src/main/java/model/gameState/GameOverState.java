@@ -6,8 +6,8 @@ import java.awt.*;
 
 public class GameOverState implements GameState{ //BOZZA
 
-    public GameOverState(){
-    }
+    public GameOverState(){}
+
     @Override
     public void update() {
         if(keyH.enterPressed){
@@ -19,6 +19,5 @@ public class GameOverState implements GameState{ //BOZZA
     public void draw(Graphics g) {
         if(gsm.getPlayState() !=null)
             gsm.getPlayState().draw(g);
-
     }
 }

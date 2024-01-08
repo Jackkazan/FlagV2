@@ -70,6 +70,18 @@ public class Player extends Characters {
 
     }
 
+    public Player(int x, int y){
+        super();
+        this.name = "Player";
+        screenX = GamePanel.screenWidth/2 - (tileSize/2);
+        screenY = GamePanel.screenHeight/2 - (tileSize/2);
+        setDefaultValues();
+        getEntityImage();
+        getHitImage();
+        getAttackImages();
+        setState(State.IDLE);
+        super.setPosition(x, y);
+    }
 
     public Player() {
         super();
@@ -81,14 +93,13 @@ public class Player extends Characters {
         getHitImage();
         getAttackImages();
         setState(State.IDLE);
-
     }
 
     public void setDefaultValues() {
         x = tileSize*3;  //3
         y = tileSize*4;  //4
         maxLife = 6;
-        currentLife = 6;
+        currentLife = 0;
         speed = 4;
         scale = 5;
         spriteCounter = 0;
@@ -186,6 +197,9 @@ public class Player extends Characters {
         }
     }
 
+    public void setCurrentLife(int h){
+        this.currentLife = h;
+    }
     public void resetAttack(){
         this.isAttacking = true;
         this.isAttackAnimationCompleted = false;

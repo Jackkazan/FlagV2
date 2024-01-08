@@ -2,6 +2,7 @@ package model.gameState;
 
 import controller.KeyHandler;
 import model.entities.Entity;
+import model.entities.characters.Characters;
 import model.entities.characters.enemies.Enemy;
 import model.entities.characters.enemies.EnemyCreator;
 import model.entities.characters.npc.Npc;
@@ -86,9 +87,19 @@ public class GameStateManager {
               instance = new GameStateManager();
           return instance;
     }
+
+    public void checkPoint(){
+        this.player.setCurrentLife(6);
+        this.player.setState(Characters.State.IDLE);
+        if(this.mapManager.getCurrentMap() == tileManagerDungeonSud){
+        this.mapManager.setMap(tileManagerDungeonSud);
+        this.player.teleport(12, 89);
+        }
+    }
     public void init(){ // inizializza il player e le mappe
         initializing = true;
         this.player = new Player();
+        this.player.setCurrentLife(6);
         this.tileManagerZonaIniziale = new TileManager(this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
         this.tileManagerCasettaIniziale = new TileManager(this, "src/main/resources/Map/StanzaIntroduzione/CasettaIniziale.tmx");
         this.tileManagerVillaggioSud = new TileManager(this, "src/main/resources/Map/VillaggioSud/VillaggioSud.tmx");
@@ -157,8 +168,7 @@ public class GameStateManager {
         currentState.draw(g);
     }
     public void reload(){
-          this.playState = null;
-          init();
+          checkPoint();
           setState(State.PLAY);
     }
 
