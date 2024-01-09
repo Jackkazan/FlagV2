@@ -12,11 +12,11 @@ import java.util.HashMap;
 import static view.GamePanel.tileSize;
 
 public class TileManager {
-   private GameStateManager gsm;
+    private GameStateManager gsm;
     private HashMap<Integer, BufferedImage> mappaSprite;
     private ArrayList<String> listaMatrici;
     private int numLayer;
-     private int[][][] mapTileNum;
+    private int[][][] mapTileNum;
 
     private ArrayList<CollisionObject> collisionMap;
     private String currentMap;
