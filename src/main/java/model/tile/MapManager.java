@@ -41,6 +41,10 @@ public class MapManager {
         //da cambiare
        setMap(tileManagerCasettaIniziale);
     }
+
+    public MapManager() {
+    }
+
     public void setPlayer(Player player){
         this.player = player;
     }

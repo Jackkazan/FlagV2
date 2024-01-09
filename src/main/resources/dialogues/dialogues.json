@@ -21,6 +21,13 @@
     {
     "speaker": "Tutorial",
     "defaultDialogue": ["Premi Wasd per muoverti"]
+    },
+    {
+      "speaker": "Fabbro1",
+      "questStart": ["sadf"],
+      "questInProgress": ["afdfaf"],
+      "questCompleted": ["afasd"],
+      "defaultDialogue": ["FORZA NAPOLI!!!"]
     }
   ]
 }

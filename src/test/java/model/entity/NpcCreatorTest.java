@@ -1,41 +1,32 @@
 package model.entity;
 
-import static org.junit.Assert.*;
-
-import controller.KeyHandler;
+import model.entities.characters.npc.Npc;
+import model.entities.characters.npc.NpcCreator;
 import model.gameState.GameStateManager;
 import model.tile.MapManager;
-import org.junit.Before;
-import org.junit.Test;
-import view.GamePanel;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 public class NpcCreatorTest {
 
-    private GamePanel mockGamePanel;
-    private GameStateManager mockGSM;
-    private MapManager mockMapManager;
-    private KeyHandler mockKeyHandler;
-
-    @Before
-    public void setUp() {
-        mockGamePanel = new GamePanel(); // Assuming you have a MockGamePanel class for testing
-        mockGSM = new GameStateManager(); // Assuming you have a MockGameStateManager class for testing
-        //mockMapManager = new MapManager(); // Assuming you have a MockMapManager class for testing
-        mockKeyHandler = new KeyHandler(); // Assuming you have a MockKeyHandler class for testing
-    }
-
-    /*
     @Test
     public void testCreateNPCs() {
-        List<Npc> npcList = NPCCreator.createNPCs(mockGamePanel, mockGSM, mockMapManager, mockKeyHandler);
+        // Mock GameStateManager and MapManager
+        GameStateManager mockGSM = new GameStateManager();
+        MapManager mockMapManager = new MapManager();
+
+        // Call the createNPCs method to get the list of NPCs
+        List<Npc> npcList = NpcCreator.createNPCs(mockGSM, mockMapManager);
+
+        // Assert that the list is not null and contains the expected number of NPCs
         assertNotNull(npcList);
-        assertEquals(3, npcList.size());
+        assertEquals(6, npcList.size());
 
-        // Add more assertions based on your expected behavior
-        // For example, check the properties of each NPC in the list
+        // Add more assertions based on your specific requirements for the created NPCs
+        // For example, you can check if certain NPCs are present in the list with specific properties.
     }
-
-     */
 }

@@ -1,22 +1,14 @@
 package model.entities.characters.player;
 
-import controller.KeyHandler;
-import model.entities.EntityState;
 import model.entities.characters.Characters;
 import model.entities.characters.enemies.Enemy;
 import model.entities.items.Item;
 import model.entities.characters.npc.Npc;
-import model.entities.states.AttackState;
-import model.entities.states.HitState;
-import model.entities.states.IdleState;
-import model.entities.states.MovementState;
-import model.gameState.GameStateManager;
 import model.collisions.CollisionObject;
 import model.tile.TileManager;
 import view.GamePanel;
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;

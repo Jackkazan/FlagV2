@@ -1,41 +1,56 @@
 package model.entity;
 
-import controller.KeyHandler;
 import model.entities.characters.player.Player;
-import model.gameState.GameStateManager;
-import view.GamePanel;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
 
-    private GamePanel mockGamePanel;
-    private GameStateManager mockGSM;
-    private KeyHandler mockKeyHandler;
-    private Player player;
-
-    /*
-    @Before
-    public void setUp() {
-        mockGamePanel = new GamePanel(); // Assuming you have a MockGamePanel class for testing
-        mockGSM = new GameStateManager(); // Assuming you have a MockGameStateManager class for testing
-        mockKeyHandler = new KeyHandler(mockGSM);
-        player = new Player(mockGamePanel, mockGSM, mockKeyHandler);
-    }
-
     @Test
     public void testDefaultValues() {
-        assertEquals(tileSize * 3, player.getX());
-        assertEquals(tileSize * 4, player.getY());
+        Player player = new Player();
+
+        assertEquals("Player", player.getName());
+        assertEquals(0, player.getCurrentLife());
         assertEquals(6, player.getMaxLife());
         assertEquals(4, player.getSpeed());
+        assertEquals(5, player.getScale());
+        assertEquals(0, player.getSpriteCounter());
+        assertEquals(3, player.getSpriteNum());
         assertEquals("down", player.getDirection());
-        assertEquals(Player.swordStateAndArmor.IronSwordNoArmor, player.currentSwordStateAndArmor);
+        assertEquals(Player.swordStateAndArmor.IronSwordNoArmor, player.getCurrentSwordStateAndArmor());
+        assertEquals(false, player.isAttacking());
+        assertEquals(false, player.isHitted());
+        assertEquals(true, player.isAttackAnimationCompleted());
+        assertNotNull(player.getAttackArea());
+        assertNotNull(player.getCollisionArea());
+        assertNotNull(player.getInteractionArea());
+        assertEquals(2000, player.getHitCooldown());
+        assertEquals(1, player.getDamage());
     }
 
     @Test
-    public void testSetCurrentSwordStateAndArmor() {
-        player.setCurrentSwordStateAndArmor(Player.swordStateAndArmor.GoldSwordAndArmor);
-        assertEquals(Player.swordStateAndArmor.GoldSwordAndArmor, player.currentSwordStateAndArmor);
+    public void testUpdateInteractionArea() {
+        Player player = new Player();
+        player.setPosition(10, 10);
+        player.updateInteractionArea();
     }
 
-     */
+    @Test
+    public void testUpdateCollisionArea() {
+        Player player = new Player();
+        player.setPosition(20, 20);
+        player.updateCollisionArea();
+    }
+
+    @Test
+    public void testUpdateAttackArea() {
+        Player player = new Player();
+        player.setPosition(30, 30);
+        player.setDirection("up");
+        player.updateAttackArea();
+    }
+
+    // Add more tests based on specific functionality and behavior of the Player class.
 }
