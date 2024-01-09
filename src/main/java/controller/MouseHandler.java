@@ -39,6 +39,9 @@ public class MouseHandler extends MouseAdapter {
     public boolean isMousePressed() {
         return mousePressed;
     }
+    public boolean isMouseReleased(){
+        return !mousePressed;
+    }
 
     public int getMouseX() {
         return mouseX;

@@ -1,7 +1,7 @@
 package model.gameState;
 
-import controller.KeyHandler;
 import controller.MouseHandler;
+import model.Dialogues.DialogueManager;
 import model.sound.Sound;
 import view.GamePanel;
 
@@ -16,9 +16,10 @@ public class PauseState implements GameState{
 
     private int volumeBarHeight=20;
     private int volumeBarWidth =200;
+    private boolean obscure = false;
+    private boolean released = false;
 
     private MouseHandler mouseHandler;
-
 
 
     public PauseState() {
@@ -40,8 +41,30 @@ public class PauseState implements GameState{
         // Aggiorna il volume quando il mouse è premuto sulla barra del volume
         if (mouseHandler.isMousePressed()) {
             updateVolume();
+            obscureCommandButton();
         }
 
+        if(mouseHandler.isMouseReleased() && released){
+            System.out.println("Rilasciato");
+            DialogueManager.showTutorial();
+            released = false;
+        }
+
+    }
+
+    private void obscureCommandButton(){
+        int mouseX = mouseHandler.getMouseX();
+        int mouseY = mouseHandler.getMouseY();
+
+        int commandButtonX = (screenWidth - volumeBarWidth) / 2;
+        int commandButtonY = screenHeight / 2 + 115;
+
+        if(mouseX >= commandButtonX && mouseX <= commandButtonX +120
+        && mouseY >= commandButtonY - 40 && mouseY <= commandButtonY){
+            System.out.println("Clicco");
+            obscure = true;
+            released = true;
+        }
     }
 
     private void updateVolume() {
@@ -92,6 +115,17 @@ public class PauseState implements GameState{
         g.setColor(Color.WHITE);  // Change color as needed
         int volumeIndicatorWidth = volumeIndicator*2;
         g.fillRect(volumeBarX, volumeBarY, volumeIndicatorWidth, volumeBarHeight);
+
+
+        g.drawString("Comandi", volumeBarX, volumeBarY + 65);
+
+        //Menu command
+        if(obscure) {
+            g.setColor(new Color(0, 0, 0, 150));
+            g.drawString("Comandi", volumeBarX, volumeBarY + 65);
+            obscure=false;
+        }
+
 
 
         // Draw exit option
