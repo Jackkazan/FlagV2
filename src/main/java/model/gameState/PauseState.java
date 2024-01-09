@@ -5,7 +5,13 @@ import model.Dialogues.DialogueManager;
 import model.sound.Sound;
 import view.GamePanel;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+
+import static java.awt.Image.SCALE_DEFAULT;
 
 public class PauseState implements GameState{
 
@@ -17,7 +23,11 @@ public class PauseState implements GameState{
     private int volumeBarHeight=20;
     private int volumeBarWidth =200;
     private boolean obscure = false;
-    private boolean released = false;
+    //private boolean released = false;
+    private boolean tutorialImageVisible = false;
+    private boolean commandButtonClicked = false;
+
+    private Image tutorialImage;
 
     private MouseHandler mouseHandler;
 
@@ -27,6 +37,15 @@ public class PauseState implements GameState{
         this.mouseHandler = MouseHandler.getInstance();
         gsm.stopMusic(0);
 
+
+        // Carica l'immagine del tutorial
+        try {
+            InputStream inputStream = getClass().getResourceAsStream("/ui/MappaComandi.png");
+            tutorialImage = ImageIO.read(inputStream);
+            tutorialImage = tutorialImage.getScaledInstance(2560/4, 1440/4, SCALE_DEFAULT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -44,11 +63,22 @@ public class PauseState implements GameState{
             obscureCommandButton();
         }
 
-        if(mouseHandler.isMouseReleased() && released){
+        // Nuova logica per l'immagine tutorial
+        if (keyH.isEnterToggle() && commandButtonClicked) {
+            // Inverti lo stato dell'immagine del tutorial
+            tutorialImageVisible = false;
+        }
+
+        // l'ho commentato per adesso
+        /*
+        if(mouseHandler.isMouseReleased() && released) {
             System.out.println("Rilasciato");
             DialogueManager.showTutorial();
             released = false;
         }
+         */
+
+
 
     }
 
@@ -56,14 +86,15 @@ public class PauseState implements GameState{
         int mouseX = mouseHandler.getMouseX();
         int mouseY = mouseHandler.getMouseY();
 
-        int commandButtonX = (screenWidth - volumeBarWidth) / 2;
-        int commandButtonY = screenHeight / 2 + 115;
+        int commandButtonX = (screenWidth - 100) / 2;
+        int commandButtonY = screenHeight/ 2 -40;
 
-        if(mouseX >= commandButtonX && mouseX <= commandButtonX +120
-        && mouseY >= commandButtonY - 40 && mouseY <= commandButtonY){
+        if (mouseX >= commandButtonX && mouseX <= commandButtonX + 120
+                && mouseY >= commandButtonY - 40 && mouseY <= commandButtonY) {
             System.out.println("Clicco");
-            obscure = true;
-            released = true;
+            commandButtonClicked = true;
+            // Inverti lo stato dell'immagine del tutorial
+            tutorialImageVisible = true;
         }
     }
 
@@ -117,12 +148,19 @@ public class PauseState implements GameState{
         g.fillRect(volumeBarX, volumeBarY, volumeIndicatorWidth, volumeBarHeight);
 
 
-        g.drawString("Comandi", volumeBarX, volumeBarY + 65);
+
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 30));
+        String commandText = "Comandi";
+        int commandTextWidth = g.getFontMetrics().stringWidth(commandText);
+        int commandTextX = (screenWidth - commandTextWidth) / 2;
+        int commandTextY = screenHeight/ 2 -50;
+        g.drawString("Comandi", commandTextX, commandTextY);
 
         //Menu command
         if(obscure) {
             g.setColor(new Color(0, 0, 0, 150));
-            g.drawString("Comandi", volumeBarX, volumeBarY + 65);
+            g.drawString("Comandi", commandTextX, commandTextY);
             obscure=false;
         }
 
@@ -134,7 +172,7 @@ public class PauseState implements GameState{
         String exitText = "Premi P per riprendere";
         int exitTextWidth = g.getFontMetrics().stringWidth(exitText);
         int exitX = (screenWidth - exitTextWidth) / 2;
-        int exitY = volumeBarY + volumeBarHeight + 100;
+        int exitY = volumeBarY + volumeBarHeight + 150;
         g.drawString(exitText, exitX, exitY);
 
         g.setColor(Color.WHITE);
@@ -142,8 +180,20 @@ public class PauseState implements GameState{
         String pauseText = "Menù Pausa";
         int textWidth = g.getFontMetrics().stringWidth(pauseText);
         int x = (screenWidth - textWidth) / 2;
-        int y = screenHeight/ 4;
+        int y = screenHeight/ 4 - 50;
         g.drawString(pauseText, x, y);
+
+        // Draw tutorial image if visible
+        if (tutorialImageVisible && tutorialImage != null) {
+
+            int panelWidth = GamePanel.screenWidth;  // Ottieni la larghezza del pannello
+            int panelHeight = GamePanel.screenHeight;  // Ottieni l'altezza del pannello
+            int tutorialx = panelWidth/2 - 2560/8;
+            // 2076/3 - panelWidth/2;  // Adjust as needed
+            int tutorialy = panelHeight/2 - 1440/8 ; // Regola la posizione Y come desiderato
+            g.drawImage(tutorialImage, tutorialx, tutorialy, null);
+        }
+
 
     }
 

@@ -129,7 +129,6 @@ public class MapManager {
 
 
         }
-
     }
 
     public void draw(Graphics2D g2){

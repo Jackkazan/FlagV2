@@ -17,6 +17,8 @@ public class KeyHandler implements KeyListener {
     private boolean pauseSwitch;
     public boolean interactRequest = false;
 
+    private boolean enterToggle = false;
+
     private boolean showDebugText = false;
 
     private boolean attacking = false;
@@ -83,6 +85,11 @@ public class KeyHandler implements KeyListener {
             pPressed = true;
             pauseSwitch = true;
         }
+        //Invio
+        if (code == KeyEvent.VK_ENTER) {
+            enterPressed = true;
+            enterToggle = true;
+        }
     }
 
 
@@ -120,10 +127,18 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_P) {
             pPressed = false;
         }
+        if (code == KeyEvent.VK_ENTER) {
+            enterPressed = false;
+            enterToggle = false;
+        }
     }
     public void releaseToggles(){
         pauseSwitch = false;
         //interactRequest = false;
+    }
+
+    public boolean isEnterToggle() {
+        return enterToggle;
     }
 
     public boolean pauseSwitch(){
