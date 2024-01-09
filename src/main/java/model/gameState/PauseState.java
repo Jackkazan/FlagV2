@@ -97,7 +97,7 @@ public class PauseState implements GameState{
         // Draw exit option
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 24));
-        String exitText = "Press P to Exit";
+        String exitText = "Premi P per riprendere";
         int exitTextWidth = g.getFontMetrics().stringWidth(exitText);
         int exitX = (screenWidth - exitTextWidth) / 2;
         int exitY = volumeBarY + volumeBarHeight + 100;

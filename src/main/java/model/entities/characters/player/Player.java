@@ -170,6 +170,8 @@ public class Player extends Characters {
     public void draw(Graphics2D graphics2D) {
 
         currentState.draw(graphics2D,this);
+
+        /*
         // Disegna l'area di collisione per debug
         graphics2D.setColor(Color.RED);
         graphics2D.drawRect((int) collisionArea.getX(), (int) collisionArea.getY(), (int) collisionArea.getWidth(), (int) collisionArea.getHeight());
@@ -182,6 +184,8 @@ public class Player extends Characters {
         graphics2D.setColor(Color.YELLOW);
         graphics2D.drawRect((int) attackArea.getX(), (int) attackArea.getY(), (int) attackArea.getWidth(), (int) attackArea.getHeight());
 
+
+         */
     }
 
     public void hitAnEnemy(){

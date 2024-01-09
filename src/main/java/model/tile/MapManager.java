@@ -115,11 +115,16 @@ public class MapManager {
             }
         }
 
-        if(currentMap == tileManagerDungeonSud)
-            if(player.onTransitionPoint(12,92,2)){
+        if(currentMap == tileManagerDungeonSud) {
+            if (player.onTransitionPoint(12, 92, 2)) {
                 setMap(tileManagerVillaggioSud);
-                player.teleport(49,87);
+                player.teleport(49, 87);
             }
+            if (player.onTransitionPoint(87, 14, 1))
+                player.teleport(63, 35);
+
+
+        }
 
     }
 
