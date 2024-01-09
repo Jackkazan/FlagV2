@@ -1,21 +1,77 @@
+
 {
   "quests": [
     {
-      "title":"Esci dalla Casetta",
+      "ID": 1,
+      "title": "Esci dalla casetta",
       "associatedEntities": [
         "Porta",
-        "Chiave"],
-      "objectives":
-      [
+        "Chiave"
+      ],
+      "objectives": [
         {
+          "objectiveID": 1,
           "objectiveTitle": "Prendi la chiave",
-          "objectiveAssociatedEntities": ["Chiave"],
-          "finalObjective": false
+          "objectiveAssociatedEntities": [
+            "Chiave"
+          ]
         },
         {
+          "objectiveID": 2,
           "objectiveTitle": "Apri la porta",
-          "objectiveAssociatedEntities": ["Porta"],
-          "finalObjective": true
+          "objectiveAssociatedEntities": [
+            "Porta"
+          ],
+          "requiredObjectivesID": [1]
+        }
+      ]
+    },
+    {
+      "ID": 2,
+      "title": "Togli zucche marce",
+      "associatedEntities": [
+        "Contadino1",
+        "ZuccaMarcia1",
+        "ZuccaMarcia2",
+        "ZuccaMarcia3",
+        "ZuccaMarcia4",
+        "ZuccaMarcia5"
+      ],
+      "objectives": [
+        {
+          "objectiveID": 1,
+          "objectiveTitle": "Togli zucca1",
+          "objectiveAssociatedEntities": [
+            "ZuccaMarcia1"
+          ]
+        },
+        {
+          "objectiveID": 2,
+          "objectiveTitle": "Togli zucca2",
+          "objectiveAssociatedEntities": [
+            "ZuccaMarcia2"
+          ]
+        },
+        {
+          "objectiveID": 3,
+          "objectiveTitle": "Togli zucca3",
+          "objectiveAssociatedEntities": [
+            "ZuccaMarcia3"
+          ]
+        },
+        {
+          "objectiveID": 4,
+          "objectiveTitle": "Togli zucca4",
+          "objectiveAssociatedEntities": [
+            "ZuccaMarcia4"
+          ]
+        },
+        {
+          "objectiveID": 5,
+          "objectiveTitle": "Togli zucca5",
+          "objectiveAssociatedEntities": [
+            "ZuccaMarcia5"
+          ]
         }
       ]
     }

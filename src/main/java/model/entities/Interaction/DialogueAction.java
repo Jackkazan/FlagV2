@@ -1,5 +1,7 @@
 package model.entities.Interaction;
 
+import model.Dialogues.Dialogue;
+import model.Dialogues.DialogueManager;
 import model.entities.Entity;
 import model.entities.characters.npc.Npc;
 import model.gameState.GameStateManager;
@@ -27,7 +29,7 @@ public class DialogueAction implements Interactable{
                 Npc npc = (Npc) entity;
                 npc.setDirection(calculateDirection(npc));
             }
-            gsm.getDialogueManager().startDialogue(entity);
+            DialogueManager.speak(entity);
         }
 
 

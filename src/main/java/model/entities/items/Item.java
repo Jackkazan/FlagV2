@@ -1,18 +1,12 @@
 package model.entities.items;
-
-import controller.KeyHandler;
 import model.entities.Entity;
 import model.entities.Prototype;
-import model.gameState.GameStateManager;
 import model.quests.Quest;
-import model.tile.TileManager;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +17,6 @@ public class Item extends Entity implements Prototype {
 
     protected BufferedImage animateImage1, animateImage2, animateImage3, animateImage4;
     protected int speedChangeAnimateSprite;
-    private List<Quest> relatedQuests= new ArrayList<>();
     private int offsetY;
 
     public Item() {
@@ -47,16 +40,6 @@ public class Item extends Entity implements Prototype {
         interact();
     }
 
-    public void interact() {
-        // Verifica se il giocatore è nelle vicinanze e ha premuto il tasto "E"
-        if (this.isInteractable && this.tileManager == gsm.getMapManager().getCurrentMap() && isPlayerNearby()) {
-            if(keyH.interactPressed && interactionAction != null) {
-                System.out.println("Ho interagioto con "+this.name);
-                interactionAction.performAction(this);
-            }
-        }
-    }
-
     /*private boolean isPlayerNearby() {
         //Definisci la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
         if(this.collisionArea!= null && gsm.getPlayer().getInteractionArea().intersects(this.collisionArea)){
@@ -76,15 +59,6 @@ public class Item extends Entity implements Prototype {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public boolean questListIsDone() {
-
-        for(Quest quest : relatedQuests){
-            if(!quest.isCompleted())
-                return false;
-        }
-        return true;
     }
 
     public void setCollisionArea(int x, int y, int collisionWidth, int collisionHeight) {
@@ -172,10 +146,6 @@ public class Item extends Entity implements Prototype {
 
     public BufferedImage getAnimateImage4() {
         return animateImage4;
-    }
-
-    public List<Quest> getRelatedQuests() {
-        return relatedQuests;
     }
 }
 

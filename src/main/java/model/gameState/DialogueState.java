@@ -19,6 +19,7 @@ public class DialogueState implements GameState {
     private final int dialogueBoxY;
     private final int dialogueBoxWidth;
     private final int dialogueBoxHeight;
+    private final int maxChars = 20;
     private boolean ePressed = false;
     private boolean eReleased = true;
 
@@ -41,11 +42,9 @@ public class DialogueState implements GameState {
         if (keyH.pauseSwitch()){
             gsm.setState(GameStateManager.State.PAUSE);
         }
-        if(keyH.interactRequest && eReleased && dialogueDisplayed){
+        if(keyH.interactRequest /*&& eReleased*/ && dialogueDisplayed){
            advanceDialogue();
-           keyH.interactRequest = false;
            dialogueDisplayed = false;
-           //ePressed = true;
         }
         //if(!keyH.interactPressed) {
             //eReleased = true; // Rilasciato il tasto E
@@ -113,21 +112,63 @@ public class DialogueState implements GameState {
 
 
     }
-    public void drawDialogue(Graphics g, int x, int y){
+    public void drawDialogue(Graphics g, int x, int y) {
         g.setColor(Color.BLACK);
-        g.setFont(new Font("Arial", Font.BOLD, 24));;
-        x += (GamePanel.tileSize - 3 );
+        g.setFont(new Font("Arial", Font.BOLD, 24));
+        ;
+        x += (GamePanel.tileSize - 3);
         y += (GamePanel.tileSize + 3);
-        char characterArray[] = dialogue.toCharArray();
-        if (index < characterArray.length){
+        char[] characterArray = dialogue.toCharArray();
+        if (index < characterArray.length) {
             String temp = String.valueOf(characterArray[index]); // logica per mostrare il testo lettera per lettera
             dialogueText = dialogueText + temp;
             index++;
-        }
-        else{
+        } else {
             dialogueDisplayed = true;
         }
         g.drawString(dialogueText, x, y);
     }
+        /*
+
+        StringBuilder lineBuilder = new StringBuilder();
+        StringBuilder wordBuilder = new StringBuilder();
+
+        for (int i = index; i < characterArray.length; i++) {
+            char currentChar = characterArray[i];
+
+            if (currentChar == ' ' || currentChar == '\n') {
+                // Check if adding the next word exceeds the maxWidth
+                if (g.getFontMetrics().stringWidth(lineBuilder.toString() + wordBuilder.toString()) <= maxChars) {
+                    lineBuilder.append(wordBuilder);
+                    if (currentChar == '\n') {
+                        // Start a new line if a newline character is encountered
+                        drawLine(g, lineBuilder.toString(), x, y);
+                        lineBuilder.setLength(0);  // Clear the lineBuilder for the next line
+                        y += g.getFontMetrics().getHeight();
+                    } else {
+                        lineBuilder.append(" ");  // Add a space between words
+                    }
+                    wordBuilder.setLength(0);  // Clear the wordBuilder for the next word
+                } else {
+                    // Start a new line since the word alone exceeds the maxWidth
+                    drawLine(g, lineBuilder.toString(), x, y);
+                    lineBuilder.setLength(0);
+                    y += g.getFontMetrics().getHeight();
+                }
+            } else {
+                wordBuilder.append(currentChar);  // Append characters to form a word
+            }
+        }
+
+        // Draw the remaining content
+        drawLine(g, lineBuilder.toString() + wordBuilder.toString(), x, y);
+    }
+
+    private void drawLine(Graphics g, String line, int x, int y) {
+        System.out.println(line);
+        g.drawString(line, x, y);
+    }*/
+
+
 
 }

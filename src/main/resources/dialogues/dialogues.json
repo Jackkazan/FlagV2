@@ -1,0 +1,28 @@
+{
+  "dialogues": [
+    {
+      "speaker": "Vecchietta",
+      "questStart": ["sadf"],
+      "questInProgress": ["afdfaf"],
+      "questCompleted": ["afasd"],
+      "defaultDialogue": ["ciao, sono vecchietta", "Dialogo1", "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsumw"]
+    },
+    {
+      "speaker": "Contadino1",
+      "questStart": [],
+      "questInProgress": [],
+      "questCompleted": [],
+      "defaultDialogue": ["ciao, sono contadino"]
+    },
+    {
+    "speaker": "Esci dalla casetta",
+    "failDialogue": ["Hai bisogno di una chiave per aprire la porta"]
+    },
+    {
+    "speaker": "Tutorial",
+    "defaultDialogue": ["Premi Wasd per muoverti"]
+    }
+  ]
+}
+
+

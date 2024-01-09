@@ -3,15 +3,9 @@ package view;
 import controller.KeyHandler;
 import controller.MouseHandler;
 import model.gameState.GameStateManager;
-import model.quests.Quest;
-import model.quests.QuestInitializer;
-import model.sound.Playlist;
-import model.sound.Sound;
 
 import javax.swing.*;
 import java.awt.*;
-import java.security.Key;
-import java.util.List;
 
 public class GamePanel extends JPanel implements Runnable{
 

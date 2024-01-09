@@ -15,7 +15,7 @@ public class KeyHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, attackVPressed, spacePressed, enterPressed, yPressed, pPressed, startGame;
     private boolean pauseSwitch;
-    public boolean interactRequest;
+    public boolean interactRequest = false;
 
     private boolean showDebugText = false;
 
@@ -123,7 +123,7 @@ public class KeyHandler implements KeyListener {
     }
     public void releaseToggles(){
         pauseSwitch = false;
-        interactRequest = false;
+        //interactRequest = false;
     }
 
     public boolean pauseSwitch(){

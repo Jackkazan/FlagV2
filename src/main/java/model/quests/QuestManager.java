@@ -1,5 +1,6 @@
 package model.quests;
 
+import model.Dialogues.DialogueManager;
 import model.entities.Entity;
 import model.entities.items.Item;
 import model.gameState.GameStateManager;
@@ -21,20 +22,24 @@ public class QuestManager {
     }
     public static void setObjective (Entity entity, Objective objective) {objectiveMap.put(entity, objective);}
     public static boolean handleObjective(Entity entity, Objective objective){
-        if(objective.isFinalObjective()){
-            System.out.println("final");
-            Quest quest = questMap.get(entity);
-            if(quest.getObjectives().stream().filter(not(Objective::isFinalObjective)).allMatch(Objective::isCompleted)){
-                objective.complete();
-                quest.complete();
-                return true;
-            }
-        }
-        else {
+        Quest quest = questMap.get(entity);
+        if (objective.getRequiredObjectivesID() == null){
+            if(quest.getProgress() == Quest.Progress.START)
+                quest.setProgress(Quest.Progress.INPROGRESS);
             objective.complete();
+            quest.setProgress(Quest.Progress.COMPLETED);
             return true;
         }
+        else if(Arrays.stream(objective.getRequiredObjectivesID()).mapToObj(quest::getObjectiveById).allMatch(Objective::isCompleted)){
+            objective.complete();
+            quest.setProgress(Quest.Progress.COMPLETED);
+            return true;
+        }
+        handleFail(quest);
         return false;
+    }
+    public static void handleFail(Quest quest){
+        DialogueManager.showQuestMessage(quest);
     }
     public static void addCompletedQuest(Quest quest){
         completedQuestList.add(quest);
@@ -76,6 +81,11 @@ public class QuestManager {
             }
         }
     }
+
+    public static List<Quest> getCompletedQuestList() {
+        return completedQuestList;
+    }
+
     public static Map<Entity, Quest> getQuestMap(){
         return questMap;
     }

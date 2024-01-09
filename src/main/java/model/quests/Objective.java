@@ -4,11 +4,13 @@ import java.util.List;
 
 public class Objective {
     String objectiveTitle;
+    int objectiveID;
     private boolean finalObjective;
 
     List<String> objectiveAssociatedEntities;
 
     private boolean isCompleted = false;
+    private int[] requiredObjectivesID;
 
     public String getTitle() {
         return objectiveTitle;
@@ -24,6 +26,13 @@ public class Objective {
     }
     public void setToComplete(){
         isCompleted = false;
+    }
+    public int[] getRequiredObjectivesID(){
+        return requiredObjectivesID;
+    };
+
+    public int getObjectiveID() {
+        return objectiveID;
     }
 
     public void complete(){

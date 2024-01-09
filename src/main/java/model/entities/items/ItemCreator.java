@@ -1,16 +1,9 @@
 package model.entities.items;
-
-
 import controller.KeyHandler;
-import model.entities.Entity;
-import model.entities.Interaction.InteractionAction;
 import model.entities.Interaction.InteractionAction;
 import model.entities.Prototype;
 import model.gameState.GameStateManager;
-import model.entities.Interaction.Interactable;
-import model.quests.*;
 import model.tile.MapManager;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +45,7 @@ public class ItemCreator {
                 .build();
         //System.out.println(QuestManager.getQuestMap().get(portaCasettaInizialeChiusa).getQuestName());
         Item zuccaMarcia1 = new Item.ItemBuilder(39, 44)
-                .setName("zuccaMarcia1")
+                .setName("ZuccaMarcia1")
                 .setStaticImage("/object/zuccaMarcia.png")
                 .setInteractImage("/object/spriteInvisibile16x16.png")
                 .setImageDimension(16, 16)
@@ -63,10 +56,10 @@ public class ItemCreator {
                 .setInteractionAction(new InteractionAction.DisappearAction())
                 .build();
         prototypeManager = new ItemPrototype(zuccaMarcia1);
-        Prototype zuccaMarcia2 = prototypeManager.createItem("zuccaMarcia2", 47, 46, 16, 16);
-        Prototype zuccaMarcia3 = prototypeManager.createItem("zuccaMarcia3", 42, 48, 16, 16);
-        Prototype zuccaMarcia4 = prototypeManager.createItem("zuccaMarcia4", 45, 52, 16, 16);
-        Prototype zuccaMarcia5 = prototypeManager.createItem("zuccaMarcia5", 50, 50, 16, 16);
+        Prototype zuccaMarcia2 = prototypeManager.createItem("ZuccaMarcia2", 47, 46, 16, 16);
+        Prototype zuccaMarcia3 = prototypeManager.createItem("ZuccaMarcia3", 42, 48, 16, 16);
+        Prototype zuccaMarcia4 = prototypeManager.createItem("ZuccaMarcia4", 45, 52, 16, 16);
+        Prototype zuccaMarcia5 = prototypeManager.createItem("ZuccaMarcia5", 50, 50, 16, 16);
 
 
         Item spaventaPasseri1 = new Item.ItemBuilder(43, 28)

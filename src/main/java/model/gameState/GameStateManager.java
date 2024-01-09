@@ -1,6 +1,7 @@
 package model.gameState;
 
 import controller.KeyHandler;
+import model.data.DataInitializer;
 import model.entities.Entity;
 import model.entities.characters.Characters;
 import model.entities.characters.enemies.Enemy;
@@ -14,13 +15,10 @@ import model.Dialogues.DialogueManager;
 import model.entities.traps.Trap;
 import model.entities.traps.TrapCreator;
 import model.quests.Quest;
-import model.quests.QuestInitializer;
-import model.quests.QuestManager;
 import model.sound.Playlist;
 import model.sound.Sound;
 import model.tile.MapManager;
 import model.tile.TileManager;
-import view.GamePanel;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -78,7 +76,7 @@ public class GameStateManager {
     public GameStateManager() {
         this.keyH = KeyHandler.getInstance();
         this.currentState = new MenuState();
-        this.dialogueManager = new DialogueManager(this);
+        //this.dialogueManager = new DialogueManager(this);
         this.entityList = new ArrayList<>();
 
     }
@@ -118,8 +116,7 @@ public class GameStateManager {
         this.entityList.addAll(this.enemyList);
         this.entityList.addAll(this.itemList);
         this.entityList.add(player);
-        questList = QuestInitializer.createQuestList();
-        QuestManager.addCompletedQuest(questList.get(0));
+        DataInitializer.initializeData();
         this.trapList = TrapCreator.createTraps(mapManager);
         this.currentEntityList= entityList.stream().filter(entity -> entity.getTileManager().equals(mapManager.getCurrentMap())).collect(Collectors.toList());
         initialized = true;
@@ -162,6 +159,7 @@ public class GameStateManager {
 
     public void update() {
         currentState.update();
+        keyH.interactRequest = false;
     }
 
     public void draw(Graphics g) {

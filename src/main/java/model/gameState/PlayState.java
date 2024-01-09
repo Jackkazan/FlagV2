@@ -1,6 +1,7 @@
 package model.gameState;
 
 import controller.KeyHandler;
+import model.Dialogues.DialogueManager;
 import model.entities.Entity;
 import model.entities.items.Item;
 import model.entities.characters.player.Player;
@@ -34,7 +35,6 @@ public class PlayState implements GameState{
         this.mapManager = mapManager;
         this.player = player;
         this.buffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_RGB);
-
     }
 
     @Override

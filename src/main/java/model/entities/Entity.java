@@ -135,7 +135,7 @@ public abstract class Entity{
     public void interact() {
         // Verifica se il giocatore è nelle vicinanze e ha premuto il tasto "E"
         if (this.tileManager == gsm.getMapManager().getCurrentMap() && this.isInteractable && !gsm.getPlayer().isAttacking() && isPlayerNearby()) {
-            if(keyH.interactPressed && interactionAction != null && !gsm.isInDialogue()) {
+            if(keyH.interactRequest && interactionAction != null && !gsm.isInDialogue()) {
                 //System.out.println("Ho interagito con "+this.name);
                 interactionAction.performAction(this);
             }
