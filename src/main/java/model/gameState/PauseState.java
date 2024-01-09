@@ -40,9 +40,9 @@ public class PauseState implements GameState{
 
         // Carica l'immagine del tutorial
         try {
-            InputStream inputStream = getClass().getResourceAsStream("/ui/tutorial.png");
+            InputStream inputStream = getClass().getResourceAsStream("/ui/MappaComandi.png");
             tutorialImage = ImageIO.read(inputStream);
-            tutorialImage = tutorialImage.getScaledInstance(2076/3, 1151/3, SCALE_DEFAULT);
+            tutorialImage = tutorialImage.getScaledInstance(2560/4, 1440/4, SCALE_DEFAULT);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -86,8 +86,8 @@ public class PauseState implements GameState{
         int mouseX = mouseHandler.getMouseX();
         int mouseY = mouseHandler.getMouseY();
 
-        int commandButtonX = (screenWidth - volumeBarWidth) / 2;
-        int commandButtonY = screenHeight / 2 + 115;
+        int commandButtonX = (screenWidth - 100) / 2;
+        int commandButtonY = screenHeight/ 2 -40;
 
         if (mouseX >= commandButtonX && mouseX <= commandButtonX + 120
                 && mouseY >= commandButtonY - 40 && mouseY <= commandButtonY) {
@@ -148,12 +148,19 @@ public class PauseState implements GameState{
         g.fillRect(volumeBarX, volumeBarY, volumeIndicatorWidth, volumeBarHeight);
 
 
-        g.drawString("Comandi", volumeBarX, volumeBarY + 65);
+
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 30));
+        String commandText = "Comandi";
+        int commandTextWidth = g.getFontMetrics().stringWidth(commandText);
+        int commandTextX = (screenWidth - commandTextWidth) / 2;
+        int commandTextY = screenHeight/ 2 -50;
+        g.drawString("Comandi", commandTextX, commandTextY);
 
         //Menu command
         if(obscure) {
             g.setColor(new Color(0, 0, 0, 150));
-            g.drawString("Comandi", volumeBarX, volumeBarY + 65);
+            g.drawString("Comandi", commandTextX, commandTextY);
             obscure=false;
         }
 
@@ -181,9 +188,9 @@ public class PauseState implements GameState{
 
             int panelWidth = GamePanel.screenWidth;  // Ottieni la larghezza del pannello
             int panelHeight = GamePanel.screenHeight;  // Ottieni l'altezza del pannello
-            int tutorialx = panelWidth/2 - 2076/6;
+            int tutorialx = panelWidth/2 - 2560/8;
             // 2076/3 - panelWidth/2;  // Adjust as needed
-            int tutorialy = panelHeight/2 - 1151/6 ; // Regola la posizione Y come desiderato
+            int tutorialy = panelHeight/2 - 1440/8 ; // Regola la posizione Y come desiderato
             g.drawImage(tutorialImage, tutorialx, tutorialy, null);
         }
 
