@@ -209,10 +209,6 @@ public class Enemy extends Characters implements Prototype {
 
     public static class EnemyBuilder extends Entity.EntityBuilder<Enemy, EnemyBuilder> {
 
-        private int[] pathX;  // Array delle coordinate x del percorso
-        private int[] pathY;  // Array delle coordinate y del percorso
-        private int pathIndex;
-
         public EnemyBuilder(int x, int y) {
             super();
             this.entity.x = x * tileSize;
