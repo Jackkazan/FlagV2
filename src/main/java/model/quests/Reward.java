@@ -4,6 +4,15 @@ public class Reward {
     private int coin = 0;
     private boolean unlock = false;
     private boolean weapon;
+    public Reward(){}
+
+    public boolean isUnlock() {
+        return unlock;
+    }
+
+    public boolean isWeapon() {
+        return weapon;
+    }
 
     public int getCoin() {
         return coin;

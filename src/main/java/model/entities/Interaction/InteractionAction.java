@@ -8,9 +8,6 @@ public class InteractionAction {
     public static boolean questAction(Entity entity) {
         QuestManager questManager = QuestManager.getInstance();
         Objective objective = questManager.getObjectiveMap().get(entity);
-        if (objective == null) {
-            objective = questManager.getTrickObjectiveMap().get(entity);
-        }
         return objective == null || (!objective.isCompleted() && questManager.handleObjective(entity, objective));
     }
      /*@Override

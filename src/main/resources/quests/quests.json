@@ -156,16 +156,15 @@
           ],
           "objectiveMessage": ["Hai toccato lo spaventapasseri con la maglia numero 5"],
           "requiredObjectivesID":[3]
-        }
-      ],
-      "trickObjectives": [
+        },
         {
           "objectiveID": 4,
           "objectiveTitle": "Interagisci con  Spaventapasseri4",
           "objectiveAssociatedEntitiesName": [
             "spaventaPasseri4"
-        ],
-          "objectiveMessage":  ["Hai toccato lo spaventapasseri con la maglia numero 4"]
+          ],
+          "objectiveMessage":  ["Hai toccato lo spaventapasseri con la maglia numero 4"],
+          "trick": true
         },
         {
           "objectiveID": 6,
@@ -173,7 +172,8 @@
           "objectiveAssociatedEntitiesName": [
             "spaventaPasseri6"
           ],
-          "objectiveMessage":  ["Hai toccato lo spaventapasseri con la maglia numero 6"]
+          "objectiveMessage":  ["Hai toccato lo spaventapasseri con la maglia numero 6"],
+          "trick": true
         }
       ],
       "questFailAction": "reset",

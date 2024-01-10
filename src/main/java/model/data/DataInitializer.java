@@ -60,14 +60,14 @@ public class DataInitializer {
                                 .filter(Objects::nonNull)
                                 .forEach(entity -> questManager.setObjective(entity, objective));
                     });
-                if(quest.getTrickObjectives()!= null){
+                /*if(quest.getTrickObjectives()!= null){
                     quest.getTrickObjectives().forEach(trickObjective -> System.out.println(trickObjective.getTitle()));
                     quest.getTrickObjectives().forEach(trickObjective -> {
                         trickObjective.getObjectiveAssociatedEntitiesName().stream()
                                 .map(DataInitializer::findEntityByName)
                                 .filter(Objects::nonNull)
                                 .forEach(entity -> questManager.setTrickObjective(entity, trickObjective));
-                    });}
+                    });}*/
             });
         } else {
             throw new RuntimeException("Quest non trovate");
