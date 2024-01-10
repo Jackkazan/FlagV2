@@ -1,36 +1,24 @@
 package model.gameState;
 
-import controller.KeyHandler;
-import model.Dialogues.DialogueManager;
+
 import model.entities.Entity;
-import model.entities.items.Item;
 import model.entities.characters.player.Player;
 import model.entities.traps.Trap;
-import model.quests.QuestManager;
 import model.tile.MapManager;
-import view.GamePanel;
 import view.UI;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Comparator;
-import java.util.List;
 import java.util.stream.Collectors;
-
 import static view.GamePanel.tileSize;
 
 public class PlayState implements GameState{
 
-    private Player player;
+    private final Player player;
 
-    private MapManager mapManager;
+    private final MapManager mapManager;
+    private final BufferedImage buffer;
 
-    private Graphics2D graphics2D;
-
-    private BufferedImage buffer;
-
-
-    List<Item> itemList;
     public PlayState(MapManager mapManager,Player player) {
         this.mapManager = mapManager;
         this.player = player;
@@ -124,6 +112,10 @@ public class PlayState implements GameState{
         graphics2D.drawString("X: " + player.getX(), x, y);
         y += lineHeight;
         graphics2D.drawString("Y: " + player.getY(), x, y);
+        y += lineHeight;
+        graphics2D.drawString("ScreenX: " + player.getScreenX(), x, y);
+        y += lineHeight;
+        graphics2D.drawString("ScreenY: " + player.getScreenY(), x, y);
         y += lineHeight;
         graphics2D.drawString("Col: " + (player.getX() + player.getCollisionArea().x) / tileSize, x, y);
         y += lineHeight;

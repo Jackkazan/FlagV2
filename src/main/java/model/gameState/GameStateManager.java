@@ -15,6 +15,7 @@ import model.Dialogues.DialogueManager;
 import model.entities.traps.Trap;
 import model.entities.traps.TrapCreator;
 import model.quests.Quest;
+import model.quests.QuestManager;
 import model.sound.Playlist;
 import model.sound.Sound;
 import model.tile.MapManager;
@@ -52,15 +53,13 @@ public class GameStateManager {
 
     //gestore mappe
     private MapManager mapManager;
-    private DialogueManager dialogueManager;
 
     private List<Item> itemList;
     private List<Npc> npcList;
     private List<Enemy> enemyList;
     private List<Entity> entityList;
-
-
-
+    private DialogueManager dialogueManager;
+    private QuestManager questManager;
     private List<Entity> currentEntityList;
     private Playlist playlist = new Playlist();
     private List<Sound> songList = playlist.getSongList();
@@ -68,10 +67,6 @@ public class GameStateManager {
     private List<Trap> trapList;
     private boolean initialized, initializing;
     private static GameStateManager instance = null;
-
-      public DialogueManager getDialogueManager() {
-        return dialogueManager;
-    }
 
     public GameStateManager() {
         this.keyH = KeyHandler.getInstance();
@@ -116,6 +111,8 @@ public class GameStateManager {
         this.entityList.addAll(this.enemyList);
         this.entityList.addAll(this.itemList);
         this.entityList.add(player);
+        //this.questManager = questManager.getInstance();
+        this.dialogueManager = dialogueManager.getInstance();
         DataInitializer.initializeData();
         this.trapList = TrapCreator.createTraps(mapManager);
         this.currentEntityList= entityList.stream().filter(entity -> entity.getTileManager().equals(mapManager.getCurrentMap())).collect(Collectors.toList());
@@ -170,6 +167,10 @@ public class GameStateManager {
           setState(State.PLAY);
     }
 
+    public void setQuestList(List<Quest> questList) {
+        this.questList = questList;
+    }
+
     public GameState getCurrentState() {
         return currentState;
     }
@@ -210,6 +211,10 @@ public class GameStateManager {
     public void playMusicLoop(int numSong) {
 
         songList.get(numSong).loop();
+
+    }
+    public void playSound(int numSong) {
+        songList.get(numSong).play();
 
     }
 

@@ -1,14 +1,17 @@
 package model.entities.Interaction;
 
 import model.entities.Entity;
+import model.gameState.GameStateManager;
 import model.quests.Objective;
 import model.quests.QuestManager;
 public class InteractionAction {
     public static boolean questAction(Entity entity) {
-        Objective objective;
-        if ((objective = QuestManager.getObjectiveMap().get(entity)) == null)
-            return true;
-        else return !objective.isCompleted() && QuestManager.handleObjective(entity, objective);
+        QuestManager questManager = QuestManager.getInstance();
+        Objective objective = questManager.getObjectiveMap().get(entity);
+        if (objective == null) {
+            objective = questManager.getTrickObjectiveMap().get(entity);
+        }
+        return objective == null || (!objective.isCompleted() && questManager.handleObjective(entity, objective));
     }
      /*@Override
         public void performAction(Item item) {
@@ -84,6 +87,7 @@ public class InteractionAction {
         public void performAction(Entity entity) {
             if (questAction(entity)) {
                 entity.changeImage();
+                entity.setInteractable(false);
             }
 
         }

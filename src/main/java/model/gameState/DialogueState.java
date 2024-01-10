@@ -5,6 +5,8 @@ import model.Dialogues.DialogueManager;
 import view.GamePanel;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DialogueState implements GameState {
 
@@ -19,9 +21,12 @@ public class DialogueState implements GameState {
     private final int dialogueBoxY;
     private final int dialogueBoxWidth;
     private final int dialogueBoxHeight;
-    private final int maxChars = 20;
+    private DialogueManager dialogueManager;
     private boolean ePressed = false;
     private boolean eReleased = true;
+    private static Font currentFont;
+    private static int maxChars = 50;
+    private List<String> wrappedDialogue;
 
 
 
@@ -30,42 +35,62 @@ public class DialogueState implements GameState {
         dialogueBoxHeight = GamePanel.tileSize*5;
         dialogueBoxX = GamePanel.tileSize * 2;
         dialogueBoxY = screenHeight -(dialogueBoxHeight + GamePanel.tileSize * 2);
-        dialogue = DialogueManager.getDialogue();
         dialogueDisplayed = false;
+        wrappedDialogue = new ArrayList<>();
+        dialogueManager = DialogueManager.getInstance();
+        currentFont = new Font("Arial", Font.BOLD, 24);
 
     }
 
     @Override
     public void update() {
         gsm.getPlayState().update();
-        System.out.println("dialogo" + keyH.interactRequest);
-        if (keyH.pauseSwitch()){
-            gsm.setState(GameStateManager.State.PAUSE);
+        // Inizializza il dialogo
+        if (dialogue == null)
+            advanceDialogue();
+        // Il dialogo avanza solo se è stato mostrato tutto
+        if (keyH.interactRequest && dialogueDisplayed) {
+            advanceDialogue();
+            dialogueDisplayed = false;
         }
-        if(keyH.interactRequest /*&& eReleased*/ && dialogueDisplayed){
-           advanceDialogue();
-           dialogueDisplayed = false;
+    }
+    public static String wrapText(String inputStr) {
+        if (inputStr == null || inputStr.length() <= maxChars) {
+            return inputStr;
         }
-        //if(!keyH.interactPressed) {
-            //eReleased = true; // Rilasciato il tasto E
-           // ePressed = false; // Resetta la variabile quando rilasci il tasto E
-           // dialogueAdvancing = false;
-        //}
-        //else{
-            //eReleased = false; //Quando si tiene premuto
-        //}
+        StringBuilder wrappedText = new StringBuilder();
+        String[] words = inputStr.split("\\s+");
+        int currentLength = 0;
 
+        for (String word : words) {
+            if (currentLength + word.length() <= maxChars) {
+                wrappedText.append(word).append(" ");
+                currentLength += word.length() + 1;
+            } else {
+                wrappedText.append("\n").append(word).append(" ");
+                currentLength = word.length() + 1;
+            }
+        }
+        System.out.println(wrappedText.toString().trim());
 
-        //logica dialoghi
+        return wrappedText.toString().trim();
     }
     public void advanceDialogue(){
-        dialogue = DialogueManager.getDialogue();
+        String temp = dialogueManager.getDialogue();
+        // Manda a capo il testo automaticamente se supera maxChars
+        dialogue = wrapText(temp);
         dialogueText = "";
         index = 0;
         if (dialogue == null){
-            gsm.exitDialogue();
+            dialogueManager.exitDialogue();
         }
     }
+   /* public static void setFont(String font){
+        currentFont = switch (font){
+            case "Message" -> new Font("Arial", Font.ITALIC, 24);
+            default -> new Font("Arial", Font.BOLD, 24);
+        };
+    };*/
     @Override
     public void draw(Graphics g) {
         gsm.getPlayState().draw(g);
@@ -80,7 +105,7 @@ public class DialogueState implements GameState {
         // Imposta il colore dello sfondo
         g.setColor(new Color(101,71,42));
         g.fillRoundRect(x, y, width, height, 40, 40);
-
+        g.setFont(currentFont);
         g.setColor(Color.BLACK);
         // Disegna il bordo del rettangolo
         g.drawRoundRect(x, y, width, height, 40, 40);
@@ -112,10 +137,9 @@ public class DialogueState implements GameState {
 
 
     }
+
     public void drawDialogue(Graphics g, int x, int y) {
         g.setColor(Color.BLACK);
-        g.setFont(new Font("Arial", Font.BOLD, 24));
-        ;
         x += (GamePanel.tileSize - 3);
         y += (GamePanel.tileSize + 3);
         char[] characterArray = dialogue.toCharArray();
@@ -126,49 +150,11 @@ public class DialogueState implements GameState {
         } else {
             dialogueDisplayed = true;
         }
-        g.drawString(dialogueText, x, y);
-    }
-        /*
-
-        StringBuilder lineBuilder = new StringBuilder();
-        StringBuilder wordBuilder = new StringBuilder();
-
-        for (int i = index; i < characterArray.length; i++) {
-            char currentChar = characterArray[i];
-
-            if (currentChar == ' ' || currentChar == '\n') {
-                // Check if adding the next word exceeds the maxWidth
-                if (g.getFontMetrics().stringWidth(lineBuilder.toString() + wordBuilder.toString()) <= maxChars) {
-                    lineBuilder.append(wordBuilder);
-                    if (currentChar == '\n') {
-                        // Start a new line if a newline character is encountered
-                        drawLine(g, lineBuilder.toString(), x, y);
-                        lineBuilder.setLength(0);  // Clear the lineBuilder for the next line
-                        y += g.getFontMetrics().getHeight();
-                    } else {
-                        lineBuilder.append(" ");  // Add a space between words
-                    }
-                    wordBuilder.setLength(0);  // Clear the wordBuilder for the next word
-                } else {
-                    // Start a new line since the word alone exceeds the maxWidth
-                    drawLine(g, lineBuilder.toString(), x, y);
-                    lineBuilder.setLength(0);
-                    y += g.getFontMetrics().getHeight();
-                }
-            } else {
-                wordBuilder.append(currentChar);  // Append characters to form a word
-            }
+        for(String line : dialogueText.split("\n")){
+            g.drawString(line, x, y);
+            y+=25;
         }
-
-        // Draw the remaining content
-        drawLine(g, lineBuilder.toString() + wordBuilder.toString(), x, y);
     }
-
-    private void drawLine(Graphics g, String line, int x, int y) {
-        System.out.println(line);
-        g.drawString(line, x, y);
-    }*/
-
 
 
 }

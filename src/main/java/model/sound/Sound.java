@@ -32,6 +32,10 @@ public class Sound {
     }
 
     public void play(){
+        if(clip.isRunning())
+            clip.stop();
+        clip.flush();
+        clip.setFramePosition(0);
         clip.start();
     }
     public void loop(){

@@ -73,7 +73,8 @@ public class PauseState implements GameState{
         /*
         if(mouseHandler.isMouseReleased() && released) {
             System.out.println("Rilasciato");
-            DialogueManager.showTutorial();
+            gsm.playMusicLoop(0);
+            DialogueManager.getInstance().showTutorial();
             released = false;
         }
          */

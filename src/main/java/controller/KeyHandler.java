@@ -1,17 +1,9 @@
 package controller;
 
-import model.gameState.GameStateManager;
-import view.GamePanel;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.security.Key;
-import java.util.Arrays;
 
 public class KeyHandler implements KeyListener {
-
-    private GamePanel gamePanel;
-    private GameStateManager gsm;
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, attackVPressed, spacePressed, enterPressed, yPressed, pPressed, startGame;
     private boolean pauseSwitch;
@@ -27,14 +19,7 @@ public class KeyHandler implements KeyListener {
     public KeyHandler(){}
 
     @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-    //public void setGamePanel() {this.gamePanel = gsm.getGamePanel();}
-    public KeyHandler(GameStateManager gsm) {  // Aggiunto
-        this.gsm = gsm;
-    }
-
+    public void keyTyped(KeyEvent e) {}
 
     public static KeyHandler getInstance(){
         if (instance == null)
@@ -52,10 +37,11 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_Y){
             yPressed = true;
         }
-        if (code == KeyEvent.VK_ENTER)
+        if (code == KeyEvent.VK_ENTER) {
             enterPressed = true;
             startGame = true;
-
+            enterToggle = true;
+        }
         if (code == KeyEvent.VK_V) {
             attackVPressed = true;
         }
@@ -85,20 +71,13 @@ public class KeyHandler implements KeyListener {
             pPressed = true;
             pauseSwitch = true;
         }
-        //Invio
-        if (code == KeyEvent.VK_ENTER) {
-            enterPressed = true;
-            enterToggle = true;
-        }
+
     }
 
 
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
-
-        if (code == KeyEvent.VK_ENTER)
-            enterPressed = false;
         if (code == KeyEvent.VK_Y){
             yPressed = false;
         }

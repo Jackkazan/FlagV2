@@ -5,9 +5,10 @@ import java.util.List;
 public class Objective {
     String objectiveTitle;
     int objectiveID;
-    private boolean finalObjective;
+    private List<String> objectiveMessage;
 
-    List<String> objectiveAssociatedEntities;
+    List<String> objectiveAssociatedEntitiesName;
+
 
     private boolean isCompleted = false;
     private int[] requiredObjectivesID;
@@ -15,11 +16,11 @@ public class Objective {
     public String getTitle() {
         return objectiveTitle;
     }
-    public boolean isFinalObjective(){
-        return finalObjective;
+    public List<String> getObjectiveAssociatedEntitiesName() {
+        return objectiveAssociatedEntitiesName;
     }
-    public List<String> getObjectiveAssociatedEntities() {
-        return objectiveAssociatedEntities;
+    public List<String> getObjectiveMessage() {
+        return objectiveMessage;
     }
     public boolean isCompleted(){
         return isCompleted;

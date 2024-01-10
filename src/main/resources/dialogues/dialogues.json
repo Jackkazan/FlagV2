@@ -2,32 +2,47 @@
   "dialogues": [
     {
       "speaker": "Vecchietta",
-      "questStart": ["sadf"],
-      "questInProgress": ["afdfaf"],
-      "questCompleted": ["afasd"],
-      "defaultDialogue": ["ciao, sono vecchietta", "Dialogo1", "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsumw"]
+      "questInactive": ["Ti sei svegliato, hai dormito per quasi una settimana! Sarai confuso no? Posso immaginare. Ti ho trovato in fin di vita sulla riva vicino la cascata,",
+        "i tuoi vestiti erano ormai stracci e l’unica cosa che portavi con te era questo amuleto",
+        "Comunque io sono l’Anziana del villaggio, ti trovi nella capitale chiamata Laplace. Sembra tu abbia perso la memoria, osservando il tuo amuleto ho notato una scritta stampata sul dietro",
+        "‘Meliodas’, dovrebbe essere il tuo nome. Avrai bisogno di soldi immagino, parla con i contadini nelle vicinanze, di sicuro avranno del lavoro per te, torna a trovarmi una volta finito"],
+      "questInProgress": ["Hai racimolato qualche soldo?"],
+      "questToComplete": ["Bravissimo, hai completato tutti i lavoretti! Con questo denaro potrai prendere il tuo primo equipaggiamento dal fabbro del villaggio a sud. Ti auguro un buon viaggio e che la fortuna sia dalla tua parte."],
+      "questCompleted": ["Ciao Meliodas"]
     },
     {
       "speaker": "Contadino1",
-      "questStart": [],
-      "questInProgress": [],
-      "questCompleted": [],
+      "questInactive": ["Hei tu! Sei nuovo da queste parti? Ah si Devi essere il ragazzo che ha trovato l'anziana! Vedo che ti sei ripreso.",
+        "Magari tu puoi aiutarmi. Questo mio amico ha incantato gli spaventapasseri dei campi e nascosto dentro uno di essi le chiavi della mia casa.",
+        "Mi ha detto che per trovarle avrei dovuto risolvere un indovinello che consiste nel toccare gli spaventapasseri seguendo la sequenza di... di......",
+        "....Fabiucci?......Fibonucci?.....Fibonicci?..... Insomma un nome simile! Aiutami perfavore. Ho provato a risolverlo da solo ma non so come fare",
+        "Ogni volta che sbaglio è come se gli spaventapasseri mi prendessero in giro. Ti prego. Se risolvi questo indovinello al posto mio ti pagherò!"],
+      "questInProgress": ["Ce l'hai fatta?"],
+      "questToComplete": ["Ma sei un maestro! Hai ritrovato le mie chiavi. Grazie mille, non so come avrei fatto senza di te, pigghia sti picciuli"],
+      "questCompleted": ["Grazie, finalmente posso tornare a casa"],
       "defaultDialogue": ["ciao, sono contadino"]
     },
     {
-    "speaker": "Esci dalla casetta",
-    "failDialogue": ["Hai bisogno di una chiave per aprire la porta"]
-    },
-    {
-    "speaker": "Tutorial",
-    "defaultDialogue": ["Premi Wasd per muoverti"]
+      "speaker": "Contadino2",
+      "questInactive": ["Sei il ragazzo che è stato trovato qualche giorno fa! Vedo che ti sei ripreso, eri in brutte condizioni.",
+        "Bando alle ciance, avrai bisogno di denaro per proseguire per queste terre, la mia vegetazione sta venendo invasa da vermi e le mie zucche sono in rovina se riuscirai a risolvermi questo problema ti ricompenserò!"],
+      "questInProgress": ["Hai già sistemato il mio orto?"],
+      "questToComplete": ["Grazie mille, adesso le mie zucche potranno crescere sane e rigogliose! Prendi queste monete come ricompensa!"],
+      "questCompleted": ["Grazie per il tuo aiuto"],
+      "defaultDialogue": ["Ciao"]
     },
     {
       "speaker": "Fabbro1",
-      "questStart": ["sadf"],
-      "questInProgress": ["afdfaf"],
-      "questCompleted": ["afasd"],
+      "questInactive": [],
+      "questInProgress": [],
+      "questToComplete": ["Ei giovanotto! qual buon vento ti porta in quest’ufficina? Hai bisogno di equipaggiamento per dirigerti verso la capitale?",
+        "Mhh ... ho capito, purtroppo per te con il denaro che ti ritrovi non potrai permetterti un set completo per andare avanti. Posso forgiarti una spada in Ferro! Prezzo d’amico."],
+      "questCompleted": ["Stai attento"],
       "defaultDialogue": ["FORZA NAPOLI!!!"]
+    },
+    {
+      "speaker": "Default",
+      "defaultDialogue": ["Ciao"]
     }
   ]
 }

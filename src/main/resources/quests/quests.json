@@ -4,7 +4,7 @@
     {
       "ID": 1,
       "title": "Esci dalla casetta",
-      "associatedEntities": [
+      "associatedEntitiesName": [
         "Porta",
         "Chiave"
       ],
@@ -12,68 +12,192 @@
         {
           "objectiveID": 1,
           "objectiveTitle": "Prendi la chiave",
-          "objectiveAssociatedEntities": [
+          "objectiveAssociatedEntitiesName": [
             "Chiave"
           ]
         },
         {
           "objectiveID": 2,
           "objectiveTitle": "Apri la porta",
-          "objectiveAssociatedEntities": [
+          "objectiveAssociatedEntitiesName": [
             "Porta"
           ],
           "requiredObjectivesID": [1]
         }
-      ]
+      ],
+      "questCompletedMessage": ["Hai aperto la porta, un anziana signora ti osserva con sguardo preoccupato"],
+      "questFailMessage": ["Ti serve una chiave per aprire la porta"]
     },
     {
       "ID": 2,
+      "title": "Parla con l'anziana",
+      "associatedEntitiesName": [
+        "Vecchietta",
+        "Wall1"
+      ],
+      "motherQuestID": 5,
+      "rewards": {
+        "unlock": true
+      },
+      "rewarder" : "Vecchietta",
+      "requiredQuestsID": [1, 3, 4],
+      "questProgressMessage": ["Narratore - Hai ottenuto un amuleto! Sembra esservi raffigurato un drago che si mangia la coda… chissà cosa simboleggia"],
+      "questToCompleteMessage": ["Narratore - Hai racimolato un bel gruzzoletto. Torna dall'anziana signora per chiederle dove andare."],
+      "questCompletedMessage": ["Narratore - Ora puoi andare alla parte sud del villaggio"]
+    },
+    {
+      "ID": 3,
       "title": "Togli zucche marce",
-      "associatedEntities": [
-        "Contadino1",
+      "associatedEntitiesName": [
+        "Contadino2",
         "ZuccaMarcia1",
         "ZuccaMarcia2",
         "ZuccaMarcia3",
         "ZuccaMarcia4",
         "ZuccaMarcia5"
-      ],
+        ],
+      "motherQuestID": 2,
+      "rewards": {
+        "coin": 50
+      },
+      "rewarder" : "Contadino2",
+     "entitiesInteractionDependency": true,
       "objectives": [
         {
           "objectiveID": 1,
           "objectiveTitle": "Togli zucca1",
-          "objectiveAssociatedEntities": [
+          "objectiveAssociatedEntitiesName": [
             "ZuccaMarcia1"
           ]
         },
         {
           "objectiveID": 2,
           "objectiveTitle": "Togli zucca2",
-          "objectiveAssociatedEntities": [
+          "objectiveAssociatedEntitiesName": [
             "ZuccaMarcia2"
           ]
         },
         {
           "objectiveID": 3,
           "objectiveTitle": "Togli zucca3",
-          "objectiveAssociatedEntities": [
+          "objectiveAssociatedEntitiesName": [
             "ZuccaMarcia3"
           ]
         },
         {
           "objectiveID": 4,
           "objectiveTitle": "Togli zucca4",
-          "objectiveAssociatedEntities": [
+          "objectiveAssociatedEntitiesName": [
             "ZuccaMarcia4"
           ]
         },
         {
           "objectiveID": 5,
           "objectiveTitle": "Togli zucca5",
-          "objectiveAssociatedEntities": [
+          "objectiveAssociatedEntitiesName": [
             "ZuccaMarcia5"
           ]
         }
-      ]
+      ],
+      "questProgressMessage" : ["Narratore - Hai ricevuto una nuova missione, aiuta il contadino a togliere le zucche marce dal suo orto"],
+      "questToCompleteMessage" : ["Narratore - Hai rimosso tutte le zucche, torna dal contadino per la tua ricompensa"],
+      "questCompletedMessage": ["Narratore - Hai ricevuto 50 monete"]
+    },
+    {
+      "ID": 4,
+      "title": "Fibonacci",
+      "associatedEntitiesName": [
+        "Contadino1",
+        "spaventaPasseri1",
+        "spaventaPasseri2",
+        "spaventaPasseri3",
+        "spaventaPasseri4",
+        "spaventaPasseri5",
+        "spaventaPasseri6"
+      ],
+      "motherQuestID": 2,
+      "rewards": {
+        "coin": 50
+      },
+      "rewarder" : "Contadino1",
+      "entitiesInteractionDependency": true,
+      "objectives": [
+        {
+          "objectiveID": 1,
+          "objectiveTitle": "Interagisci con Spaventapasseri1",
+          "objectiveAssociatedEntitiesName": [
+            "spaventaPasseri1"
+          ],
+          "objectiveMessage":  ["Hai toccato lo spaventapasseri con la maglia numero 1"]
+        },
+        {
+          "objectiveID": 2,
+          "objectiveTitle": "Interagisci con  Spaventapasseri2",
+          "objectiveAssociatedEntitiesName": [
+            "spaventaPasseri2"
+          ],
+          "objectiveMessage": ["Hai toccato lo spaventapasseri con la maglia numero 2"],
+          "requiredObjectivesID":[1]
+        },
+        {
+          "objectiveID": 3,
+          "objectiveTitle": "Interagisci con  Spaventapasseri3",
+          "objectiveAssociatedEntitiesName": [
+            "spaventaPasseri3"
+          ],
+          "objectiveMessage":  ["Hai toccato lo spaventapasseri con la maglia numero 3"],
+          "requiredObjectivesID":[2]
+        },
+        {
+          "objectiveID": 5,
+          "objectiveTitle": "Interagisci con  Spaventapasseri5",
+          "objectiveAssociatedEntitiesName": [
+            "spaventaPasseri5"
+          ],
+          "objectiveMessage": ["Hai toccato lo spaventapasseri con la maglia numero 5"],
+          "requiredObjectivesID":[3]
+        }
+      ],
+      "trickObjectives": [
+        {
+          "objectiveID": 4,
+          "objectiveTitle": "Interagisci con  Spaventapasseri4",
+          "objectiveAssociatedEntitiesName": [
+            "spaventaPasseri4"
+        ],
+          "objectiveMessage":  ["Hai toccato lo spaventapasseri con la maglia numero 4"]
+        },
+        {
+          "objectiveID": 6,
+          "objectiveTitle": "Interagisci con Spaventapasseri6",
+          "objectiveAssociatedEntitiesName": [
+            "spaventaPasseri6"
+          ],
+          "objectiveMessage":  ["Hai toccato lo spaventapasseri con la maglia numero 6"]
+        }
+      ],
+      "questFailAction": "reset",
+      "questSucceedSound" : true,
+      "questProgressMessage" : ["Narratore - Hai ricevuto una nuova missione, aiuta il contadino interagendo con gli spaventapasseri seguendo la successione di Fibonacci"],
+      "questToCompleteMessage" : ["Narratore - Una chiave cade ai piedi dello spaventapasseri. Un suono familiare ti fa capire che stavolta ce l'hai fatta"],
+      "questCompletedMessage": ["Narratore - Hai ricevuto 50 monete"],
+      "questFailMessage": ["Narratore - Un suono familiare ti fa capire che hai sbagliato"]
+    },
+    {
+      "ID": 5,
+      "title": "Parla con il fabbro",
+      "associatedEntitiesName": [
+        "Fabbro1",
+        "Wall2"
+      ],
+      "rewards": {
+        "unlock": true,
+        "weapon": true
+      },
+      "rewarder" : "Fabbro1",
+      "requiredQuestsID": [2],
+      "questToCompleteMessage": [],
+      "questCompletedMessage": ["Narratore Hai ricevuto una spada di ferro, ora puoi premere SPAZIO per attaccare"]
     }
   ]
 }

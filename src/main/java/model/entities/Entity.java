@@ -38,7 +38,9 @@ public abstract class Entity{
 
     public abstract void update();
     public void changeImage() {
-        this.staticImage = interactImage;
+        BufferedImage temp = staticImage;
+        staticImage = interactImage;
+        interactImage = temp;
     }
     protected BufferedImage interactImage;
 
@@ -69,7 +71,7 @@ public abstract class Entity{
             return (B) this;
         }
         public B setRelatedQuests(Quest quest) {
-            QuestManager.setQuest(entity, quest);
+            QuestManager.getInstance().setQuest(entity, quest);
             return (B) this;
         }
         /*public B setRelatedQuests(List<Quest> relatedQuests) {
@@ -147,7 +149,6 @@ public abstract class Entity{
     protected boolean isPlayerNearby() {
         // puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
         if(this.collisionArea!= null && gsm.getPlayer().getInteractionArea().intersects(this.collisionArea)){
-            System.out.println("Sto collidendo con "+ this.name);
             return true;
         }
         else return false;
@@ -185,7 +186,7 @@ public abstract class Entity{
         this.collisionArea = new Rectangle(this.x, this.y, larghezza, altezza);
     }
     public void setCollisionArea ( Rectangle collisionArea) {
-        this.collisionArea = collisionArea;
+        System.out.println(this.name + "Collisione annullata");this.collisionArea = collisionArea;
     }
 
     public void setScale(int scale) {

@@ -18,12 +18,13 @@ import static view.GamePanel.tileSize;
 public class Player extends Characters {
     private final int screenX;
     private final int screenY;
+    private int balance;
 
     private TileManager currentTile;
 
     private String enemyHitDirection;
     private int enemyHitDamage;
-
+    private boolean armed;
     public void setEnemyHitDamage(int damage) {
         enemyHitDamage = damage;
     }
@@ -94,6 +95,7 @@ public class Player extends Characters {
         currentLife = 0;
         speed = 4;
         scale = 5;
+        balance = 0;
         spriteCounter = 0;
         spriteNum = 3;
         direction = "down";
@@ -110,6 +112,7 @@ public class Player extends Characters {
         hitCooldown = 2000;
         isDead = false;
         isDeadAnimationCompleted = true;
+        armed = false;
         damage=1;
     }
 
@@ -128,31 +131,28 @@ public class Player extends Characters {
         currentLife -= enemyHitDamage;
 
     }
-
+    public void addBalance(int balance){
+        this.balance += balance;
+        System.out.println(this.balance);
+    }
+    public void setArmed(boolean armed){
+        this.armed = armed;
+    }
     @Override
     public void update() {
-        if(currentLife <= 0){
+        if (currentLife <= 0) {
             setState(State.DEAD);
-        }
-        else{
-            if(isHitted){
-                setState(State.HIT);
-            }else {
-                if (isAttacking) {
-                    this.setState(State.ATTACK);
-                } else {
-                    if (keyH.spacePressed && isAttackAnimationCompleted) {
-                        resetAttack();
-                        this.setState(State.ATTACK);
-                    } else {
-                        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
-                            this.setState(State.MOVEMENT);
-                        } else {
-                            this.setState(State.IDLE);
-                        }
-                    }
-                }
-            }
+        } else if (isHitted) {
+            setState(State.HIT);
+        } else if (isAttacking && this.armed) {
+            setState(State.ATTACK);
+        } else if (keyH.spacePressed && isAttackAnimationCompleted && this.armed) {
+            resetAttack();
+            setState(State.ATTACK);
+        } else if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+            setState(State.MOVEMENT);
+        } else {
+            setState(State.IDLE);
         }
         //System.out.println("Stato corrente "+ currentState);
         currentState.update(this);

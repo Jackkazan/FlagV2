@@ -12,7 +12,8 @@ public class Playlist {
         songList = new ArrayList<>();
         // Aggiungi le canzoni alla playlist
         addSong("src/main/resources/music/ost.wav");
-        //addSong("src/main/resources/music/ost2.wav");
+        addSong("src/main/resources/music/supermario.wav");
+        addSong("src/main/resources/music/Victory.wav");
         // Aggiungi altre canzoni quando necessario
         soundEffect= new ArrayList<>();
     }

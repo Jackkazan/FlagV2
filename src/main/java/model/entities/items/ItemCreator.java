@@ -52,7 +52,7 @@ public class ItemCreator {
                 .setCollisionArea(16, 16)
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
                 //.setRelatedQuests(questList.get(0))
-                .setInteractable(true)
+                .setInteractable(false)
                 .setInteractionAction(new InteractionAction.DisappearAction())
                 .build();
         prototypeManager = new ItemPrototype(zuccaMarcia1);
@@ -71,7 +71,7 @@ public class ItemCreator {
                 .setOffsetY(-48)
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
                 // .setRelatedQuests(questList.get(0))
-                .setInteractable(true)
+                .setInteractable(false)
                 .setInteractionAction(new InteractionAction.ChangeImageAction())
                 .build();
         prototypeManager = new ItemPrototype(spaventaPasseri1);
@@ -81,7 +81,16 @@ public class ItemCreator {
         Prototype spaventaPasseri5 = prototypeManager.createItem("spaventaPasseri5", 64, 44, 32, 32);
         Prototype spaventaPasseri6 = prototypeManager.createItem("spaventaPasseri6", 85, 43, 32, 32);
 
-
+        Item wall1 = new Item.ItemBuilder(60, 64)
+                .setName("Wall1")
+                .setCollisionArea(256,64)
+                .setContainedMap(mapManager.getTileManagerZonaIniziale())
+                        .build();
+        Item wall2 = new Item.ItemBuilder(48, 86)
+                .setName("Wall2")
+                .setCollisionArea(92, 16)
+                .setContainedMap(mapManager.getTileManagerVillaggioSud())
+                .build();
         //Aggiunta di tutti gli item alla lista
         objectList.add(keyCasettaIniziale);
         objectList.add(portaCasettaInizialeChiusa);
@@ -96,7 +105,8 @@ public class ItemCreator {
         objectList.add((Item) spaventaPasseri4);
         objectList.add((Item) spaventaPasseri5);
         objectList.add((Item) spaventaPasseri6);
-
+        objectList.add(wall1);
+        objectList.add(wall2);
         return objectList;
     }
 

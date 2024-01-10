@@ -2,9 +2,11 @@ package model.entities.Interaction;
 
 import model.Dialogues.Dialogue;
 import model.Dialogues.DialogueManager;
+import model.data.QuestData;
 import model.entities.Entity;
 import model.entities.characters.npc.Npc;
 import model.gameState.GameStateManager;
+import model.quests.QuestManager;
 
 public class DialogueAction implements Interactable{
     GameStateManager gsm;
@@ -29,7 +31,8 @@ public class DialogueAction implements Interactable{
                 Npc npc = (Npc) entity;
                 npc.setDirection(calculateDirection(npc));
             }
-            DialogueManager.speak(entity);
+            DialogueManager.getInstance().speak(entity);
+            QuestManager.getInstance().advanceQuest(entity);
         }
 
 
