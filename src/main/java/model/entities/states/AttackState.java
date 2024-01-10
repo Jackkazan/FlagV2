@@ -56,7 +56,7 @@ public class AttackState implements EntityState {
             trap.setAttacking(false);
         }
 
-        System.out.println("Sprite NUM: "+ trap.getSpriteNum());
+        //System.out.println("Sprite NUM: "+ trap.getSpriteNum());
 
     }
 

@@ -64,7 +64,7 @@ public abstract class Characters extends Entity {
     }
     public void takeDamage(int damage) {
         currentLife -= damage;
-        System.out.println("La vita del nemico e' : " + currentLife);
+        //System.out.println("La vita del nemico e' : " + currentLife);
 /*
         if(currentLife <= 0) {
             setState(State.DEAD);

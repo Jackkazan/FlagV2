@@ -51,6 +51,4 @@ public class PlayerTest {
         player.setDirection("up");
         player.updateAttackArea();
     }
-
-    // Add more tests based on specific functionality and behavior of the Player class.
 }

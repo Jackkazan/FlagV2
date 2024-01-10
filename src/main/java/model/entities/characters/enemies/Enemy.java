@@ -46,7 +46,6 @@ public class Enemy extends Characters implements Prototype {
     public boolean isNearPlayer() {
         // puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
         if (this.collisionArea != null && gsm.getPlayer().getCollisionArea().intersects(this.collisionArea)) {
-            System.out.println(this.name + " mi sta hittando");
             return true;
         } else return false;
     }
@@ -96,7 +95,6 @@ public class Enemy extends Characters implements Prototype {
             }
         }
         currentState.update(this);
-        //System.out.println("Direzione "+ this.name+": "+ this.direction);
     }
 
     private void reset() {
@@ -124,7 +122,6 @@ public class Enemy extends Characters implements Prototype {
             }
             gsm.getPlayer().setHitted(true);
 
-            System.out.println(this.name + " ha colpito il player");
         }
     }
 
@@ -188,7 +185,6 @@ public class Enemy extends Characters implements Prototype {
             if (enemy.equals(this))
                 return false;
             if (enemy.getTileManager().equals(gsm.getMapManager().getCurrentMap()) && checkCollisionRectangle(nextX, nextY, enemy.getCollisionArea())) {
-                //System.out.println("Sei stato hittato da "+ enemy.getName());
                 return true; // Collisione rilevata
             }
         }
@@ -436,7 +432,6 @@ public class Enemy extends Characters implements Prototype {
     public void takeDamage() {
 
         currentLife -= gsm.getPlayer().getDamage();
-        //System.out.println("La vita del nemico e' : " + currentLife);
 
     }
 

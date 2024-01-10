@@ -31,7 +31,7 @@ public class UI {
         this.heart_half = heart.getImage2();
         this.heart_blank = heart.getImage3();
 
-        // Carica l'immagine desideratah
+        // Carica l'immagine desiderata
         try {
             InputStream inputStream = getClass().getResourceAsStream("/ui/bussola.png");
             compassImage = ImageIO.read(inputStream);
