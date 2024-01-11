@@ -26,14 +26,16 @@ public class RespawnState implements EntityState {
     }
     private void updateEnemy(Enemy enemy) {
         // Logica di despawn
-        enemy.decrementDespawnTimer(); // Decrementa il timer di despawn
+        if(enemy.getCanRespawn()) {
+            enemy.decrementDespawnTimer(); // Decrementa il timer di despawn
 
-        if (enemy.getDespawnTimer() <= 0){
-            enemy.setCollisionArea(new Rectangle(enemy.getRespawnX(),enemy.getRespawnY(),32,32));
+            if (enemy.getDespawnTimer() <= 0) {
+                enemy.setCollisionArea(new Rectangle(enemy.getRespawnX(), enemy.getRespawnY(), 32, 32));
 
-            enemy.respawn(enemy.getRespawnX(),enemy.getRespawnY()); // Respawn dell'entità
-            enemy.setDespawnTimer(enemy.getDespawnCooldown()); // Reimposta il timer di despawn
-            enemy.setDespawned(false);
+                enemy.respawn(enemy.getRespawnX(), enemy.getRespawnY()); // Respawn dell'entità
+                enemy.setDespawnTimer(enemy.getDespawnCooldown()); // Reimposta il timer di despawn
+                enemy.setDespawned(false);
+            }
         }
     }
     private void drawEnemy(Graphics2D graphics2D, Enemy enemy) {}

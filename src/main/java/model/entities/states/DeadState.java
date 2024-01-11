@@ -9,6 +9,9 @@ import model.gameState.GameStateManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+
+import static view.GamePanel.tileSize;
+
 public class DeadState implements EntityState {
     @Override
     public void update(Entity entity) {
@@ -60,10 +63,20 @@ public class DeadState implements EntityState {
         int screenY = enemy.getY() - enemy.getGsm().getPlayer().getY() + enemy.getGsm().getPlayer().getScreenY();
 
         if (images != null && enemy.getGsm().getMapManager().getCurrentMap() == enemy.getTileManager()) {
-            if(enemy.getDeadAnimationCompleted())
-                graphics2D.drawImage(images[images.length-1], screenX-(enemy.getIdle1().getWidth()/2), screenY-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
-            else
-                graphics2D.drawImage(images[enemy.getSpriteNum()], screenX-(enemy.getIdle1().getWidth()/2), screenY-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
-        }
+            switch (enemy.getScale()){
+                case 4:
+                    if(enemy.getDeadAnimationCompleted())
+                        graphics2D.drawImage(images[images.length-1], screenX-(enemy.getIdle1().getWidth()/2), screenY-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+                    else
+                        graphics2D.drawImage(images[enemy.getSpriteNum()], screenX-(enemy.getIdle1().getWidth()/2), screenY-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+                    break;
+                case 8:
+                    if(enemy.getDeadAnimationCompleted())
+                        graphics2D.drawImage(images[images.length-1], screenX-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -8, screenY-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -tileSize, (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+                    else
+                        graphics2D.drawImage(images[enemy.getSpriteNum()], screenX-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -8, screenY-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -tileSize, (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+                    break;
+            }
+            }
     }
 }

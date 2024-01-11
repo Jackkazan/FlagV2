@@ -26,7 +26,7 @@
         }
       ],
       "questCompletedMessage": ["Hai aperto la porta, un anziana signora ti osserva con sguardo preoccupato"],
-      "questFailMessage": ["Ti serve una chiave per aprire la porta"]
+      "questFailMessage": ["La porta sembra essere bloccata, devo trovare qualcosa per aprirla"]
     },
     {
       "ID": 2,

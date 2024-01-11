@@ -108,12 +108,140 @@ public class EnemyCreator {
         Prototype slime5 = prototypeManager.createEnemy("Slime5", 34,64, 32,32);
         Prototype slime6 = prototypeManager.createEnemy("Slime6", 35,81, 32,32);
 
+        String greenGoblin1Down_0="/enemy/GreenGoblin/GreenGoblinMovement_00.png";
+        String greenGoblin1Down_1="/enemy/GreenGoblin/GreenGoblinMovement_01.png";
+        String greenGoblin1Down_2="/enemy/GreenGoblin/GreenGoblinMovement_02.png";
+        String greenGoblin1Down_3="/enemy/GreenGoblin/GreenGoblinMovement_03.png";
+        String greenGoblin1Down_4="/enemy/GreenGoblin/GreenGoblinMovement_04.png";
+        String greenGoblin1Down_5="/enemy/GreenGoblin/GreenGoblinMovement_05.png";
+
+        String greenGoblin1Up_0 = "/enemy/GreenGoblin/GreenGoblinMovement_06.png";
+        String greenGoblin1Up_1=  "/enemy/GreenGoblin/GreenGoblinMovement_07.png";
+        String greenGoblin1Up_2=  "/enemy/GreenGoblin/GreenGoblinMovement_08.png";
+        String greenGoblin1Up_3=  "/enemy/GreenGoblin/GreenGoblinMovement_09.png";
+        String greenGoblin1Up_4=  "/enemy/GreenGoblin/GreenGoblinMovement_10.png";
+        String greenGoblin1Up_5=  "/enemy/GreenGoblin/GreenGoblinMovement_11.png";
+
+        String greenGoblin1Left_0="/enemy/GreenGoblin/GreenGoblinMovement_12.png";
+        String greenGoblin1Left_1="/enemy/GreenGoblin/GreenGoblinMovement_13.png";
+        String greenGoblin1Left_2="/enemy/GreenGoblin/GreenGoblinMovement_14.png";
+        String greenGoblin1Left_3="/enemy/GreenGoblin/GreenGoblinMovement_15.png";
+        String greenGoblin1Left_4="/enemy/GreenGoblin/GreenGoblinMovement_16.png";
+        String greenGoblin1Left_5="/enemy/GreenGoblin/GreenGoblinMovement_17.png";
+
+        String greenGoblin1Right_0="/enemy/GreenGoblin/GreenGoblinMovement_18.png";
+        String greenGoblin1Right_1="/enemy/GreenGoblin/GreenGoblinMovement_19.png";
+        String greenGoblin1Right_2="/enemy/GreenGoblin/GreenGoblinMovement_20.png";
+        String greenGoblin1Right_3="/enemy/GreenGoblin/GreenGoblinMovement_21.png";
+        String greenGoblin1Right_4="/enemy/GreenGoblin/GreenGoblinMovement_22.png";
+        String greenGoblin1Right_5="/enemy/GreenGoblin/GreenGoblinMovement_23.png";
+
+        String greenGoblin1Idle_0 ="/enemy/GreenGoblin/GreenGoblinMovement_12.png";
+        String greenGoblin1Idle_1 ="/enemy/GreenGoblin/GreenGoblinMovement_15.png";
+        String greenGoblin1Idle_2 ="/enemy/GreenGoblin/GreenGoblinMovement_12.png";
+        String greenGoblin1Idle_3 ="/enemy/GreenGoblin/GreenGoblinMovement_15.png";
+
+        String greenGoblin1AttackDown_0="/enemy/GreenGoblin/GreenGoblinAttack_00.png";
+        String greenGoblin1AttackDown_1="/enemy/GreenGoblin/GreenGoblinAttack_01.png";
+        String greenGoblin1AttackDown_2="/enemy/GreenGoblin/GreenGoblinAttack_02.png";
+        String greenGoblin1AttackDown_3="/enemy/GreenGoblin/GreenGoblinAttack_03.png";
+        String greenGoblin1AttackUp_0=  "/enemy/GreenGoblin/GreenGoblinAttack_04.png";
+        String greenGoblin1AttackUp_1=  "/enemy/GreenGoblin/GreenGoblinAttack_05.png";
+        String greenGoblin1AttackUp_2=  "/enemy/GreenGoblin/GreenGoblinAttack_06.png";
+        String greenGoblin1AttackUp_3=  "/enemy/GreenGoblin/GreenGoblinAttack_07.png";
+        String greenGoblin1AttackLeft_0= "/enemy/GreenGoblin/GreenGoblinAttack_08.png";
+        String greenGoblin1AttackLeft_1= "/enemy/GreenGoblin/GreenGoblinAttack_09.png";
+        String greenGoblin1AttackLeft_2= "/enemy/GreenGoblin/GreenGoblinAttack_10.png";
+        String greenGoblin1AttackLeft_3= "/enemy/GreenGoblin/GreenGoblinAttack_11.png";
+        String greenGoblin1AttackRight_0="/enemy/GreenGoblin/GreenGoblinAttack_12.png";
+        String greenGoblin1AttackRight_1="/enemy/GreenGoblin/GreenGoblinAttack_13.png";
+        String greenGoblin1AttackRight_2="/enemy/GreenGoblin/GreenGoblinAttack_14.png";
+        String greenGoblin1AttackRight_3="/enemy/GreenGoblin/GreenGoblinAttack_15.png";
+
+        String greenGoblin1Hit_0 ="/enemy/GreenGoblin/GreenGoblinHit_00.png";
+        String greenGoblin1Hit_1 ="/enemy/GreenGoblin/GreenGoblinHit_01.png";
+        String greenGoblin1Hit_2 ="/enemy/GreenGoblin/GreenGoblinHit_02.png";
+        String greenGoblin1Hit_3 ="/enemy/GreenGoblin/GreenGoblinHit_03.png";
+        String greenGoblin1Hit_4 ="/enemy/GreenGoblin/GreenGoblinHit_04.png";
+        String greenGoblin1Hit_5 ="/enemy/GreenGoblin/GreenGoblinHit_05.png";
+        String greenGoblin1Hit_6 ="/enemy/GreenGoblin/GreenGoblinHit_06.png";
+        String greenGoblin1Hit_7 ="/enemy/GreenGoblin/GreenGoblinHit_07.png";
+        String greenGoblin1Hit_8 ="/enemy/GreenGoblin/GreenGoblinHit_08.png";
+        String greenGoblin1Hit_9 ="/enemy/GreenGoblin/GreenGoblinHit_09.png";
+        String greenGoblin1Hit_10="/enemy/GreenGoblin/GreenGoblinHit_10.png";
+        String greenGoblin1Hit_11="/enemy/GreenGoblin/GreenGoblinHit_11.png";
+        String greenGoblin1Hit_12="/enemy/GreenGoblin/GreenGoblinHit_12.png";
+        String greenGoblin1Hit_13="/enemy/GreenGoblin/GreenGoblinHit_13.png";
+        String greenGoblin1Hit_14="/enemy/GreenGoblin/GreenGoblinHit_14.png";
+        String greenGoblin1Hit_15="/enemy/GreenGoblin/GreenGoblinHit_15.png";
+
+
+        String greenGoblin1Dead_0 = "/enemy/GreenGoblin/GreenGoblinDeath_0.png";
+        String greenGoblin1Dead_1 = "/enemy/GreenGoblin/GreenGoblinDeath_1.png";
+        String greenGoblin1Dead_2 = "/enemy/GreenGoblin/GreenGoblinDeath_2.png";
+        String greenGoblin1Dead_3 = "/enemy/GreenGoblin/GreenGoblinDeath_3.png";
+        String greenGoblin1Dead_4 = "/enemy/GreenGoblin/GreenGoblinDeath_4.png";
+        String greenGoblin1Dead_5 = "/enemy/GreenGoblin/GreenGoblinDeath_5.png";
+        String greenGoblin1Dead_6 = "/enemy/GreenGoblin/GreenGoblinDeath_6.png";
+        String greenGoblin1Dead_7 = "/enemy/GreenGoblin/GreenGoblinDeath_7.png";
+        String greenGoblin1Dead_8 = "/enemy/GreenGoblin/GreenGoblinDeath_8.png";
+
+        Enemy goblin1 = new Enemy.EnemyBuilder(83,36)
+                .setName("Goblin1")
+                .setSpeed(1)
+                .setMaxLife(10)
+                .setCurrentLife(10)
+                .setDamage(2)
+                .setSpeedChangeSprite(10)
+                .setSpriteNumLess1(3)
+                .setScale(8)
+                .setTotalSprite(16)
+                .setCanRespawn(false)
+                .setCollisionArea(64,64)
+                .setImageDimension(48,48)
+                .setDefaultDirection("down")
+                .setContainedMap(mapManager.getTileManagerDungeonSud())
+                .setCollisionMap(mapManager.getTileManagerDungeonSud().getCollisionMap())
+                .set24EntityImage(greenGoblin1Up_0, greenGoblin1Up_1 ,greenGoblin1Up_2 ,greenGoblin1Up_3 ,greenGoblin1Up_4 ,greenGoblin1Up_5,
+                        greenGoblin1Down_0 ,greenGoblin1Down_1 ,greenGoblin1Down_2 ,greenGoblin1Down_3 ,greenGoblin1Down_4 ,greenGoblin1Down_5,
+                        greenGoblin1Left_0 ,greenGoblin1Left_1 ,greenGoblin1Left_2 ,greenGoblin1Left_3 ,greenGoblin1Left_4 ,greenGoblin1Left_5,
+                        greenGoblin1Right_0 ,greenGoblin1Right_1 ,greenGoblin1Right_2 ,greenGoblin1Right_3 ,greenGoblin1Right_4 ,greenGoblin1Right_5)
+                .set4IdleImage(greenGoblin1Idle_0,greenGoblin1Idle_1,greenGoblin1Idle_2,greenGoblin1Idle_3)
+                .set16AttackImage(greenGoblin1AttackUp_0 ,greenGoblin1AttackUp_1 ,greenGoblin1AttackUp_2 ,greenGoblin1AttackUp_3,
+                        greenGoblin1AttackDown_0 ,greenGoblin1AttackDown_1 ,greenGoblin1AttackDown_2 ,greenGoblin1AttackDown_3,
+                        greenGoblin1AttackLeft_0 ,greenGoblin1AttackLeft_1 ,greenGoblin1AttackLeft_2 ,greenGoblin1AttackLeft_3,
+                        greenGoblin1AttackRight_0 ,greenGoblin1AttackRight_1 ,greenGoblin1AttackRight_2 ,greenGoblin1AttackRight_3)
+                .set9DeadImage(greenGoblin1Dead_0 ,greenGoblin1Dead_1 ,greenGoblin1Dead_2 ,
+                        greenGoblin1Dead_3 , greenGoblin1Dead_4 ,greenGoblin1Dead_5 ,
+                        greenGoblin1Dead_6 , greenGoblin1Dead_7 ,greenGoblin1Dead_8)
+                .set16HitImage(greenGoblin1Hit_0 ,greenGoblin1Hit_1 ,greenGoblin1Hit_2 ,greenGoblin1Hit_3 ,greenGoblin1Hit_4 ,
+                        greenGoblin1Hit_5 ,greenGoblin1Hit_6 ,greenGoblin1Hit_7 ,greenGoblin1Hit_8 ,greenGoblin1Hit_9,
+                        greenGoblin1Hit_10 ,greenGoblin1Hit_11 ,greenGoblin1Hit_12 ,greenGoblin1Hit_13, greenGoblin1Hit_14 ,greenGoblin1Hit_15)
+                .setAggroRange(8) //10
+                .setRespawnCoordinates(83,36)
+                .setMaxHealthBarWidth(65)  // Imposta la lunghezza massima della barra della vita
+                .build();
+
+        prototypeManager = new EnemyPrototype(goblin1);
+
+        Prototype goblin2 = prototypeManager.createEnemy("Goblin2", 75,50, 64,64);
+        Prototype goblin3 = prototypeManager.createEnemy("Goblin3", 88,56, 64,64);
+        Prototype goblin4 = prototypeManager.createEnemy("Goblin4", 88,71, 64,64);
+
+
+
         enemyList.add(slime1);
         enemyList.add((Enemy) slime2);
         enemyList.add((Enemy) slime3);
         enemyList.add((Enemy) slime4);
         enemyList.add((Enemy) slime5);
         enemyList.add((Enemy) slime6);
+        enemyList.add(goblin1);
+
+        enemyList.add((Enemy) goblin2);
+        enemyList.add((Enemy) goblin3);
+        enemyList.add((Enemy) goblin4);
+
 
         return enemyList;
     }

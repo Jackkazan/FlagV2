@@ -89,8 +89,8 @@ public class Player extends Characters {
     }
 
     public void setDefaultValues() {
-        x = tileSize*3;  //3
-        y = tileSize*4;  //4
+        x = tileSize*64;  //3
+        y = tileSize*36;  //4
         maxLife = 6;
         currentLife = 0;
         speed = 4;
@@ -112,7 +112,7 @@ public class Player extends Characters {
         hitCooldown = 2000;
         isDead = false;
         isDeadAnimationCompleted = true;
-        armed = false;
+        armed = true;
         damage=1;
     }
 

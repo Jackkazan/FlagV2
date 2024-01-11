@@ -61,7 +61,6 @@ public class ItemCreator {
         Prototype zuccaMarcia4 = prototypeManager.createItem("ZuccaMarcia4", 45, 52, 16, 16);
         Prototype zuccaMarcia5 = prototypeManager.createItem("ZuccaMarcia5", 50, 50, 16, 16);
 
-
         Item spaventaPasseri1 = new Item.ItemBuilder(43, 28)
                 .setName("spaventaPasseri1")
                 .setStaticImage("/object/spaventaPasseri.png")
@@ -74,6 +73,7 @@ public class ItemCreator {
                 .setInteractable(false)
                 .setInteractionAction(new InteractionAction.ChangeImageAction())
                 .build();
+
         prototypeManager = new ItemPrototype(spaventaPasseri1);
         Prototype spaventaPasseri2 = prototypeManager.createItem("spaventaPasseri2", 64, 28, 32, 32);
         Prototype spaventaPasseri3 = prototypeManager.createItem("spaventaPasseri3", 82, 31, 32, 32);
@@ -91,6 +91,25 @@ public class ItemCreator {
                 .setCollisionArea(92, 16)
                 .setContainedMap(mapManager.getTileManagerVillaggioSud())
                 .build();
+
+        Item wall3 = new Item.ItemBuilder(41, 79)
+                .setName("Wall3")
+                .setCollisionArea(tileSize*3, tileSize*5)
+                .setContainedMap(mapManager.getTileManagerDungeonSud())
+                .build();
+
+        Item chest1 = new Item.ItemBuilder(87,80)
+                .setName("Chest1")
+                .setStaticImage("/object/goldenChest.png")
+                .setInteractImage("/object/spriteInvisibile16x16.png")
+                .setImageDimension(32, 64)
+                .setCollisionArea(48, 80)
+                .setContainedMap(mapManager.getTileManagerDungeonSud())
+                // .setRelatedQuests(questList.get(0))
+                .setInteractable(true)
+                .setInteractionAction(new InteractionAction.ChangeImageAction())
+                .build();
+
         //Aggiunta di tutti gli item alla lista
         objectList.add(keyCasettaIniziale);
         objectList.add(portaCasettaInizialeChiusa);
@@ -107,6 +126,8 @@ public class ItemCreator {
         objectList.add((Item) spaventaPasseri6);
         objectList.add(wall1);
         objectList.add(wall2);
+        objectList.add(wall3);
+        objectList.add(chest1);
         return objectList;
     }
 

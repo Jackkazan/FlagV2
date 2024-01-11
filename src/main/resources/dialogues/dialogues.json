@@ -38,7 +38,7 @@
       "questToComplete": ["Ei giovanotto! qual buon vento ti porta in quest’ufficina? Hai bisogno di equipaggiamento per dirigerti verso la capitale?",
         "Mhh ... ho capito, purtroppo per te con il denaro che ti ritrovi non potrai permetterti un set completo per andare avanti. Posso forgiarti una spada in Ferro! Prezzo d’amico."],
       "questCompleted": ["Stai attento"],
-      "defaultDialogue": ["FORZA NAPOLI!!!"]
+      "defaultDialogue": ["Chi si rivede"]
     },
     {
       "speaker": "Default",

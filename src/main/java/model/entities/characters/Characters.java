@@ -23,10 +23,10 @@ public abstract class Characters extends Entity {
 
     protected int totalSprite;
     protected BufferedImage
-            up1, up2, up3, up4,
-            down1, down2, down3, down4,
-            left1, left2, left3, left4,
-            right1, right2, right3, right4;
+            up1, up2, up3, up4, up5, up6,
+            down1, down2, down3, down4, down5,down6,
+            left1, left2, left3, left4, left5,left6,
+            right1, right2, right3, right4, right5, right6;
     protected BufferedImage attackUp1, attackUp2, attackUp3, attackUp4,
             attackDown1, attackDown2, attackDown3, attackDown4,
             attackLeft1, attackLeft2, attackLeft3, attackLeft4,
@@ -84,7 +84,7 @@ public abstract class Characters extends Entity {
             default -> {}
         }
     }
-    public void updateAttackArea() {
+    public void updateAttackArea(){
         switch(direction){
             case "up":
                 attackArea = new Rectangle(x-tileSize,y-tileSize,tileSize*3,tileSize);

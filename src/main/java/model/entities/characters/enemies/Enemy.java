@@ -25,6 +25,7 @@ public class Enemy extends Characters implements Prototype {
     private boolean isDespawned;
     private int despawnTimer;
     private int despawnCooldown;
+    private boolean canRespawn;
 
     public Enemy() {
         super();
@@ -46,6 +47,7 @@ public class Enemy extends Characters implements Prototype {
     public boolean isNearPlayer() {
         // puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
         if (this.collisionArea != null && gsm.getPlayer().getCollisionArea().intersects(this.collisionArea)) {
+            System.out.println(this.name + " mi sta hittando");
             return true;
         } else return false;
     }
@@ -95,6 +97,7 @@ public class Enemy extends Characters implements Prototype {
             }
         }
         currentState.update(this);
+        //System.out.println("Direzione "+ this.name+": "+ this.direction);
     }
 
     private void reset() {
@@ -122,6 +125,7 @@ public class Enemy extends Characters implements Prototype {
             }
             gsm.getPlayer().setHitted(true);
 
+            System.out.println(this.name + " ha colpito il player");
         }
     }
 
@@ -185,6 +189,7 @@ public class Enemy extends Characters implements Prototype {
             if (enemy.equals(this))
                 return false;
             if (enemy.getTileManager().equals(gsm.getMapManager().getCurrentMap()) && checkCollisionRectangle(nextX, nextY, enemy.getCollisionArea())) {
+                //System.out.println("Sei stato hittato da "+ enemy.getName());
                 return true; // Collisione rilevata
             }
         }
@@ -208,6 +213,10 @@ public class Enemy extends Characters implements Prototype {
 
 
     public static class EnemyBuilder extends Entity.EntityBuilder<Enemy, EnemyBuilder> {
+
+        private int[] pathX;  // Array delle coordinate x del percorso
+        private int[] pathY;  // Array delle coordinate y del percorso
+        private int pathIndex;
 
         public EnemyBuilder(int x, int y) {
             super();
@@ -270,6 +279,11 @@ public class Enemy extends Characters implements Prototype {
             return this;
         }
 
+        public Enemy.EnemyBuilder setCanRespawn(boolean b) {
+            this.entity.canRespawn = b;
+            return this;
+        }
+
         public Enemy.EnemyBuilder set4IdleImage(String path_idle1, String path_idle2, String path_idle3, String path_idle4) {
             try {
                 this.entity.idle1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_idle1)));
@@ -327,6 +341,47 @@ public class Enemy extends Characters implements Prototype {
             }
             return this;
         }
+        public Enemy.EnemyBuilder set24EntityImage(String path_up1, String path_up2, String path_up3, String path_up4, String path_up5, String path_up6,
+                                                   String path_down1, String path_down2, String path_down3, String path_down4, String path_down5, String path_down6,
+                                                   String path_left1, String path_left2, String path_left3, String path_left4, String path_left5, String path_left6,
+                                                   String path_right1, String path_right2, String path_right3, String path_right4, String path_right5, String path_right6) {
+            try {
+                this.entity.up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up1)));
+                this.entity.up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up2)));
+                this.entity.up3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up3)));
+                this.entity.up4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up4)));
+                this.entity.up5 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up5)));
+                this.entity.up6 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_up6)));
+
+                this.entity.down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down1)));
+                this.entity.down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down2)));
+                this.entity.down3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down3)));
+                this.entity.down4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down4)));
+                this.entity.down5 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down5)));
+                this.entity.down6 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_down6)));
+
+
+                this.entity.left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left1)));
+                this.entity.left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left2)));
+                this.entity.left3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left3)));
+                this.entity.left4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left4)));
+                this.entity.left5 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left5)));
+                this.entity.left6 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_left6)));
+
+
+                this.entity.right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right1)));
+                this.entity.right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right2)));
+                this.entity.right3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right3)));
+                this.entity.right4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right4)));
+                this.entity.right5 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right5)));
+                this.entity.right6 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_right6)));
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return this;
+        }
 
         public Enemy.EnemyBuilder set8EntityImage(String path_up1, String path_up2, String path_down1, String path_down2,
                                                   String path_left1, String path_left2, String path_right1, String path_right2) {
@@ -370,6 +425,33 @@ public class Enemy extends Characters implements Prototype {
                 this.entity.attackRight2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackright2)));
                 this.entity.attackRight3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackright3)));
                 this.entity.attackRight4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_attackright4)));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return this;
+        }
+        public EnemyBuilder set16HitImage(String path_hitup1, String path_hitup2, String path_hitup3, String path_hitup4,
+                                             String path_hitdown1, String path_hitdown2, String path_hitdown3, String path_hitdown4,
+                                             String path_hitleft1, String path_hitleft2, String path_hitleft3, String path_hitleft4,
+                                             String path_hitright1, String path_hitright2, String path_hitright3, String path_hitright4) {
+            try {
+                this.entity.hit1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hitup1)));
+                this.entity.hit2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hitup2)));
+                this.entity.hit3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hitup3)));
+                this.entity.hit4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hitup4)));
+                this.entity.hit5 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hitdown1)));
+                this.entity.hit6 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hitdown2)));
+                this.entity.hit7 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hitdown3)));
+                this.entity.hit8 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hitdown4)));
+                this.entity.hit9 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hitleft1)));
+                this.entity.hit10 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hitleft2)));
+                this.entity.hit11 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hitleft3)));
+                this.entity.hit12 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hitleft4)));
+                this.entity.hit13 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hitright1)));
+                this.entity.hit14 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hitright2)));
+                this.entity.hit15 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hitright3)));
+                this.entity.hit16 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path_hitright4)));
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -428,6 +510,7 @@ public class Enemy extends Characters implements Prototype {
     public void takeDamage() {
 
         currentLife -= gsm.getPlayer().getDamage();
+        //System.out.println("La vita del nemico e' : " + currentLife);
 
     }
 
@@ -486,6 +569,11 @@ public class Enemy extends Characters implements Prototype {
     public int getRespawnY() {
         return respawnY;
     }
+
+    public boolean getCanRespawn(){
+        return this.canRespawn;
+    }
+
 }
 
 
