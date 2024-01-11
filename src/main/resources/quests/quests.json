@@ -213,17 +213,18 @@
         "objectiveTitle": "Apri la cassa",
         "objectiveAssociatedEntitiesName": [
           "Chest1"
-        ],
-        "objectiveMessage":  ["Hai aperto la cassa"]
+        ]
         }
       ],
       "rewards": {
-        "unlock": true
+        "unlock": true,
+        "coin" : 1000
       },
 
       "rewarder" : "Chest1",
-      "questToCompleteMessage": [],
-      "questCompletedMessage": ["Hai finito il gioco"]
+      "questToCompleteMessage": ["Hai ricevuto 1000 monete"],
+      "questCompletedMessage": ["Il gioco è finito (per ora), speriamo sia stato apprezzato",
+        "dal Team Flag"]
     }
   ]
 }
