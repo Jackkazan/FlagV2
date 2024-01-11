@@ -22,31 +22,15 @@ public class MenuState implements GameState{
         if (!gsm.isInitializing() && !gsm.isInitialized()){
             gsm.init();
         }
-        if(start){
-            do{}
-            while (!gsm.isInitialized());
+        if(start && gsm.isInitialized()){
             gsm.setState(GameStateManager.State.PLAY);
+            gsm.setState(GameStateManager.State.PAUSE);
         }
 
     }
 
     @Override
     public void draw(Graphics g) {
-        /*
-        //this.g2 = (Graphics2D)g;
-        g.setColor(new Color(0, 0, 0, 150));
-        g.fillRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
-
-
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.BOLD, 24));
-        String menuText = "Press Enter to continue";
-        int textWidth = g.getFontMetrics().stringWidth(menuText);
-        int x = (gp.getScreenWidth()- textWidth) / 2;
-        int y = gp.getScreenHeight()/ 2;
-        g.drawString(menuText, x, y);
-        */
-
         // Carica l'immagine di sfondo
         Image backgroundImage = new ImageIcon("src/main/resources/images/backgroundMenu.jpg").getImage();
 

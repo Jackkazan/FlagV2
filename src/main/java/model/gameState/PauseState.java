@@ -28,7 +28,7 @@ public class PauseState implements GameState{
     private boolean commandButtonClicked = false;
 
     private Image tutorialImage;
-
+    private boolean neverShown = true;
     private MouseHandler mouseHandler;
 
 
@@ -42,17 +42,20 @@ public class PauseState implements GameState{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        neverShown = true;
     }
 
     @Override
     public void update() {
-        //gsm.getPlayState().update();
-
-
         if (keyH.pauseSwitch()){
-                gsm.setState(GameStateManager.State.PREVIOUS);// Uscendo dalla pausa bisogna ritornare allo stato precedente
-                gsm.playMusicLoop(0);
-                tutorialImageVisible = false;
+            gsm.setState(GameStateManager.State.PREVIOUS);// Uscendo dalla pausa bisogna ritornare allo stato precedente
+            gsm.playMusicLoop(0);
+            tutorialImageVisible = false;
+        }
+        //Mostra il tutorial all'inizio del gioco
+        if(neverShown){
+            tutorialImageVisible = true;
+            neverShown = false;
         }
         // Aggiorna il volume quando il mouse è premuto sulla barra del volume
         if (mouseHandler.isMousePressed()) {
@@ -65,19 +68,6 @@ public class PauseState implements GameState{
             // Inverti lo stato dell'immagine del tutorial
             tutorialImageVisible = false;
         }
-
-        // l'ho commentato per adesso
-        /*
-        if(mouseHandler.isMouseReleased() && released) {
-            System.out.println("Rilasciato");
-            gsm.playMusicLoop(0);
-            DialogueManager.getInstance().showTutorial();
-            released = false;
-        }
-         */
-
-
-
     }
 
     private void obscureCommandButton(){
