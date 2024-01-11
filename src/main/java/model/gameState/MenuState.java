@@ -10,9 +10,7 @@ public class MenuState implements GameState{
 
    private int screenWidth = GamePanel.screenWidth;
     private int screenHeight = GamePanel.screenHeight;
-
     private boolean start = false;
-    private Graphics2D g2;
     public MenuState() {
     }
 

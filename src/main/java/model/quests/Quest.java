@@ -12,28 +12,31 @@ import java.util.Objects;
 
 public class  Quest {
 
-    private Integer ID;
-    private String title;
+    private Integer ID; //Id della quest
+    private String title; // titolo , da usare se si vuole implementare un journal
     private Progress progress = Progress.INACTIVE;
-    private List<Integer> motherQuestIDs;
-    private boolean entitiesInteractionDependency;
+    private List<Integer> motherQuestIDs; // Quest che dipendono da this
+    private boolean entitiesInteractionDependency; // Se true non è possibile interagire agli oggetti collegati
+    // alle quest fin quando non startano (se ne necessario si può bypassare settando interazione nel entitybuilder)
 
-    private String questFailAction;
-    private List<String> associatedEntitiesName;
-    private List<Integer> requiredQuestsID;
-    private List<Objective> objectives;
+    private String questFailAction; // Azione da fare se si fallisce la quest, se null viene solo mostrato il messaggio di fail (se presente)
+    private List<String> associatedEntitiesName; // lista delle entità associate
+    private List<Integer> requiredQuestsID; // lista degli ID delle quest richieste
+    private List<Objective> objectives; // Lista degli obiettivi
+    //Messaggi da mostrare quando la quest avanza
     private List <String> questProgressMessage;
     private List <String> questToCompleteMessage;
     private List <String> questCompletedMessage;
     private List <String> questFailMessage;
+    //premio
     private Reward rewards;
-
+    //nome dell'entità che da il premio
     private String rewarder;
-
+    //se true la quest causa un suono una volta completata
     private boolean questSucceedSound;
 
     public Quest(int ID, String title, Progress progress, List<Integer> motherQuestIDs, boolean entitiesInteractionDependency, String questFailAction, List<String> associatedEntitiesName,
-                 List<Integer> requiredQuestsID, List<Objective> objectives/*, List<TrickObjective> trickObjectives*/, List<String> questProgressMessage, List<String> questToCompleteMessage, List<String> questCompletedMessage, List<String> questFailMessage, Reward rewards, String rewarder, boolean questSucceedSound) {
+                 List<Integer> requiredQuestsID, List<Objective> objectives, List<String> questProgressMessage, List<String> questToCompleteMessage, List<String> questCompletedMessage, List<String> questFailMessage, Reward rewards, String rewarder, boolean questSucceedSound) {
         this.ID = ID;
         this.title = title;
         this.progress = progress;
@@ -87,14 +90,15 @@ public class  Quest {
             this.setProgress(Progress.INPROGRESS);
         }
         if (this.progress == Progress.INPROGRESS){
-            if (this.checkRequirementsForCompletion())
-                if (this.hasRewards()){
+            if (this.checkRequirementsForCompletion())  // controlla se la quest può essere completata.
+                if (this.hasRewards()){                 // se la quest ha una reward viene settata a to complete
                     this.setProgress(Progress.TOCOMPLETE);
                 }
                 else {
                     this.setProgress(Progress.COMPLETED);
                 }
         }
+        // se l'entità con cui si ha interagito è collegata alla quest si da il premio
         if (this.progress == Progress.TOCOMPLETE && entityName.equals(rewarder)){
             this.reward();
             this.setProgress(Progress.COMPLETED);

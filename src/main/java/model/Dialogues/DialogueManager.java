@@ -52,7 +52,7 @@ public class DialogueManager {
         Dialogue dialogue = dialogueMap.getOrDefault(entity.getName(), dialogueMap.get("Default"));
         if(!dialogue.getSpeaker().equals("Default")) {
             currentQuest = QuestManager.getInstance().getEntityQuest(entity);
-            if (currentQuest != null) {
+            if (currentQuest != null) { // mostra il dialogo in base allo stato della quest collegata
                 switch (currentQuest.getProgress()) {
                     case INACTIVE -> dialogueString.addAll(dialogue.getQuestInactive());
                     case INPROGRESS -> dialogueString.addAll(dialogue.getQuestInProgress());
@@ -61,9 +61,11 @@ public class DialogueManager {
                 }
                 ;
             } else {
+                // se l'entità non ha una quest mostra il dialogo di default DA NON CONFONDERE CON L'ELSE DI SEGUITO A QUESTO
                 dialogueString.addAll(dialogue.getDefaultDialogue());
             }
         }
+        // se l'entità non ha un dialogo impostato mostra il default
         else dialogueString.addAll(dialogue.getDefaultDialogue());
         if (dialogueString.size()>0) {
             startDialogue();
@@ -74,12 +76,11 @@ public class DialogueManager {
     public void exitDialogue(){
         gsm.exitDialogue();
         dialogueString.clear();
-       // QuestManager.checkReward(currentQuest);
+        // di sicurezza
         currentQuest = null;
 
     }
     public String getDialogue (){
-        System.out.println("sono chiamato" + index);
         if(dialogueString.size()>0 && index < dialogueString.size())
             return dialogueString.get(index++);
         else

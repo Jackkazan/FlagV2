@@ -79,7 +79,7 @@ public class GameStateManager {
               instance = new GameStateManager();
           return instance;
     }
-    public void init(){ // inizializza il player e le mappe
+    public void init(){ // inizializza il player e tutti i dati
         initializing = true;
         this.player = new Player();
         this.player.setCurrentLife(6);
@@ -124,8 +124,7 @@ public class GameStateManager {
             case MENU ->
                 currentState = menuState;
             case PLAY ->{
-                currentState = playState; // playstate deve essere sempre in memoria
-
+                currentState = playState;
                  }
             case PAUSE -> {
                 stopMusic(0);

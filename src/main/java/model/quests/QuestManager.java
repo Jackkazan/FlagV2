@@ -34,14 +34,17 @@ public class QuestManager {
     public void setQuestIDMap(Integer id, Quest quest){
         questIDMap.put(id, quest);
     }
+    // restituisce all'entità con cui si ha interagito se quest'ultima è collegata ad un obiettivo e se tale obiettivo può essere completato
     public boolean questAction(Entity entity){
         Objective objective = this.objectiveMap.get(entity.getName());
         return objective == null || (!objective.isCompleted() && handleObjective(entity, objective));
     }
+    //gestione dell'obiettivo
     public boolean handleObjective(Entity entity, Objective objective){
         DialogueManager.getInstance().showObjectiveMessage(objective);
         Quest quest = questMap.get(entity.getName());
-        if (!(objective.isTrick())) {
+        // se l'obiettivo è un trick fallisce in automatico
+        if (!(objective.isTrick())) {                           // controlla se gli obiettivi propedeutici al corrente sono stati completati
             if (objective.getRequiredObjectivesID() == null || Arrays.stream(objective.getRequiredObjectivesID()).allMatch(id -> quest.getObjectiveById(id).isCompleted())){
                 if (!quest.started()) quest.start();
                 objective.complete();
@@ -55,11 +58,13 @@ public class QuestManager {
     public void addCompletedQuest(Quest quest){
         completedQuestList.add(quest);
     }
+    //avanza la quest madre dell'obiettivo
     public void advanceQuest(Entity entity){
         Quest quest;
         if((quest = questMap.get(entity.getName()))!= null)
             quest.advance(entity.getName());
     }
+    //notifica la quest madre del completamento del figlio, rimuovendo l'id del figlio dalla lista delle quest da completare prima del completamento
     public void advanceMotherQuest(String entityName, Quest quest){
         if(quest.getMotherQuestIDs()!=null) {
             for (Integer id : quest.getMotherQuestIDs()) {
@@ -71,19 +76,21 @@ public class QuestManager {
             }
         }
     }
+
+    // gestione del fallimento
     public void handleFail(Quest quest){
         String action = quest.getQuestFailAction();
         System.out.println(action);
         if(action != null)
             switch (action){
-                case "reset" ->{
+                case "reset" ->{ // ripristina l'interazione delle entità con cui si è già interagito e ripristina gli obiettivi
                     quest.getObjectives().forEach(Objective::setToComplete);
                     quest.getAssociatedEntitiesName().stream().map(DataInitializer::findEntityByName)
                             .filter(Objects::nonNull).forEach(entity -> entity.setInteractable(true));
                     GameStateManager.getInstance().playSound(1);
                 }
             }
-            DialogueManager.getInstance().showQuestMessage(quest.getQuestFailMessage());
+        DialogueManager.getInstance().showQuestMessage(quest.getQuestFailMessage());
     }
 
     public List<Quest> getCompletedQuestList() {
@@ -106,8 +113,5 @@ public class QuestManager {
         return questIDMap;
     }
 
-   /* public Map<Entity, TrickObjective> getTrickObjectiveMap() {
-        return trickObjectiveMap;
-    }*/
 }
 
