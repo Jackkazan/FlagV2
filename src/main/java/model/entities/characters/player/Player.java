@@ -148,6 +148,9 @@ public class Player extends Characters {
     }
     @Override
     public void update() {
+        updateAttackArea();
+        updateCollisionArea();
+        updateInteractionArea();
         if (currentLife <= 0) {
             setState(State.DEAD);
         } else if (isHitted) {

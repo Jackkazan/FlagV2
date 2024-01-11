@@ -81,6 +81,7 @@ public class EnemyCreator {
                 .setCollisionArea(32,32)
                 .setImageDimension(48,48)
                 .setDefaultDirection("left")
+                .setCanRespawn(true)
                 .setContainedMap(mapManager.getTileManagerDungeonSud())
                 .setCollisionMap(mapManager.getTileManagerDungeonSud().getCollisionMap())
                 .set16EntityImage(greenSlime1Up_0,greenSlime1Up_1,greenSlime1Up_2,greenSlime1Up_3,

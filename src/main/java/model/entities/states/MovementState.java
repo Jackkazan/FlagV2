@@ -100,6 +100,7 @@ public class MovementState implements EntityState {
 
     private void updateEnemy(Enemy enemy) {
         enemy.getCollisionArea().setLocation(enemy.getX(), enemy.getY());
+        enemy.updateAttackArea();
         if (enemy.getTotalSprite() == 16) {
             // alternatore di sprite
             enemy.incrementSpriteCounter();

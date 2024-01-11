@@ -32,7 +32,8 @@ public class HitState implements EntityState {
     }
     private void updateEnemy(Enemy enemy) {
         long currentTime = System.currentTimeMillis();
-
+        enemy.getCollisionArea().setLocation(enemy.getX(), enemy.getY());
+        enemy.updateAttackArea();
         // Verifica se è passato il periodo di cooldown
         if (currentTime - enemy.getLastHitTime() >= enemy.getHitCooldown()){
             //System.out.println("Sto colpendo il nemico");
@@ -152,7 +153,8 @@ public class HitState implements EntityState {
         int nextY = player.getY();
         int pushback = player.getSpeed();
         //System.out.println(player.getEnemyHitDirection());
-
+        player.updateCollisionArea();
+        player.updateAttackArea();
         switch (player.getEnemyHitDirection()){
             case "up","up&attack":
                 if(!player.collidesWithObjects(nextX,nextY-pushback)){
