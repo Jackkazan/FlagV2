@@ -65,8 +65,9 @@ public class PlayState implements GameState{
 
         mapManager.draw(bufferGraphics);
 
-        for(Trap trap: gsm.getTrapList())
-            trap.draw(bufferGraphics);
+        if(mapManager.getCurrentMap()== mapManager.getTileManagerDungeonSud())
+            for(Trap trap: gsm.getTrapList())
+                trap.draw(bufferGraphics);
 
         for(Entity entity : gsm.getCurrentEntityList()) {
             //System.out.println("Entità da disegnare "+ entity.getName());
