@@ -33,9 +33,10 @@ public class PlayState implements GameState{
         if(!gsm.isInDialogue())
             player.update();
 
-        for(Trap trap : gsm.getTrapList())
-            if(trap.getTileManager().equals(mapManager.getCurrentMap()))
-                trap.update();
+        if(mapManager.getCurrentMap()== mapManager.getTileManagerDungeonSud())
+            for(Trap trap : gsm.getTrapList())
+                if(trap.getTileManager().equals(mapManager.getCurrentMap()))
+                    trap.update();
 
 
         for(Entity entity : gsm.getCurrentEntityList())
