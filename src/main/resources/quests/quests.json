@@ -213,7 +213,8 @@
         "objectiveTitle": "Apri la cassa",
         "objectiveAssociatedEntitiesName": [
           "Chest1"
-        ]
+        ],
+        "objectiveMessage":  ["Narratore - Hai trovato una tascissima cassa dorata con dentro molte monete d'oro, evidentemente il bottino raccolto dai goblin"]
         }
       ],
       "rewards": {
@@ -222,7 +223,7 @@
       },
 
       "rewarder" : "Chest1",
-      "questToCompleteMessage": ["Hai ricevuto 1000 monete"],
+      "questToCompleteMessage": ["Narratore - Hai racoolto 1000 monete"],
       "questCompletedMessage": ["Il gioco è finito (per ora), speriamo sia stato apprezzato",
         "dal Team Flag"]
     }

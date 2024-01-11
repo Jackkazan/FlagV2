@@ -32,7 +32,7 @@ public class GameStateManager {
     private GameState playState;
     private GameState menuState;
     private GameState pauseState;
-
+    private GameState dialogueState;
     private GameState currentState;
     private GameState previousState;
 
@@ -69,7 +69,7 @@ public class GameStateManager {
 
     public GameStateManager() {
         this.keyH = KeyHandler.getInstance();
-        this.currentState = new MenuState();
+        this.menuState = new MenuState();
         //this.dialogueManager = new DialogueManager(this);
         this.entityList = new ArrayList<>();
 
@@ -92,7 +92,8 @@ public class GameStateManager {
         this.tileManagerDungeonSud = new TileManager(this,"src/main/resources/Map/DungeonSud/sud_cave.tmx");
         this.mapManager = new MapManager(player, tileManagerCasettaIniziale, tileManagerZonaIniziale, tileManagerVillaggioSud, tileManagerNegozioItemsVillaggioSud,tileManagerPianoTerraTavernaVillaggio,tileManagerPrimoPianoTavernaVillaggio, tileManagerDungeonSud);
         this.playState = new PlayState(mapManager, player);
-        //this.pauseState = new PauseState(gp, this, keyH);
+        this.pauseState = new PauseState();
+        this.dialogueState = new DialogueState();
         this.npcList = NpcCreator.createNPCs(this, mapManager);
         this.itemList = ItemCreator.createObjects(this, mapManager, keyH);
         this.enemyList = EnemyCreator.createEnemies(this, mapManager);
@@ -121,7 +122,7 @@ public class GameStateManager {
         keyH.releaseToggles();
         switch (state) {
             case MENU ->
-                currentState = new MenuState();
+                currentState = menuState;
             case PLAY ->{
                 currentState = playState; // playstate deve essere sempre in memoria
 
@@ -129,9 +130,9 @@ public class GameStateManager {
             case PAUSE -> {
                 stopMusic(0);
                 previousState = currentState;
-                currentState = new PauseState();}
+                currentState = pauseState;}
             case DIALOGUE -> {
-                currentState = new DialogueState();
+                currentState = dialogueState;
                 inDialogue = true;
             }
             case GAMEOVER ->

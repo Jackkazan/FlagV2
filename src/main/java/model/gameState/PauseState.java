@@ -33,7 +33,6 @@ public class PauseState implements GameState{
 
 
     public PauseState() {
-        System.out.println("costruttore pausestate");
         this.mouseHandler = MouseHandler.getInstance();
         gsm.stopMusic(0);
 

@@ -116,12 +116,12 @@ public class Player extends Characters {
         damage=1;
     }
     public void setRespawnValues(){
-        setState(State.IDLE);
-        currentLife = maxLife;
         isAttacking=false;
         isHitted= false;
         isAttackAnimationCompleted = true;
         isHitAnimationCompleted = true;
+        setState(State.IDLE);
+        currentLife = maxLife;
     }
 
 

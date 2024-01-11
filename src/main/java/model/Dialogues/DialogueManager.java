@@ -64,6 +64,7 @@ public class DialogueManager {
                 dialogueString.addAll(dialogue.getDefaultDialogue());
             }
         }
+        else dialogueString.addAll(dialogue.getDefaultDialogue());
         if (dialogueString.size()>0) {
             startDialogue();
         } else {
