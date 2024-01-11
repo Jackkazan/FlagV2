@@ -15,18 +15,10 @@ public class NpcCreatorTest {
 
     @Test
     public void testCreateNPCs() {
-        // Mock GameStateManager and MapManager
         GameStateManager mockGSM = new GameStateManager();
         MapManager mockMapManager = new MapManager();
-
-        // Call the createNPCs method to get the list of NPCs
         List<Npc> npcList = NpcCreator.createNPCs(mockGSM, mockMapManager);
-
-        // Assert that the list is not null and contains the expected number of NPCs
         assertNotNull(npcList);
         assertEquals(6, npcList.size());
-
-        // Add more assertions based on your specific requirements for the created NPCs
-        // For example, you can check if certain NPCs are present in the list with specific properties.
     }
 }

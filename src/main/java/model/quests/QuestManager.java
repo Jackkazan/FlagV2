@@ -10,45 +10,45 @@ import java.util.*;
 
 
 public class QuestManager {
-    private Map<Entity, Quest> questMap;
+    private Map<String, Quest> questMap;
     private List<Quest> completedQuestList;
-    private Map<Entity, Objective> objectiveMap;
-   // private Map<Entity, TrickObjective> trickObjectiveMap;
+    private Map<String, Objective> objectiveMap;
+    private Map<Integer, Quest> questIDMap;
     private static QuestManager instance;
     public QuestManager(){
         questMap = new HashMap();
         completedQuestList = new ArrayList<>();
         objectiveMap = new HashMap();
-        //trickObjectiveMap = new HashMap<>();
+        questIDMap = new HashMap<>();
     }
     public static QuestManager getInstance(){
         if (instance == null)
             instance = new QuestManager();
         return instance;
     }
-    public void setQuest(Entity entity, Quest quest){
-        questMap.put(entity, quest);
+    public void setQuest(String entityName, Quest quest) {
+        questMap.put(entityName, quest);
     }
-    public void setObjective(Entity entity, Objective objective){
-        objectiveMap.put(entity, objective);}
-    /*public void setTrickObjective(Entity entity, TrickObjective trickObjective) {
-        System.out.println(entity.getName()); trickObjectiveMap.put(entity, trickObjective);}*/
+    public void setObjective(String entityName, Objective objective){
+        objectiveMap.put(entityName, objective);}
+    public void setQuestIDMap(Integer id, Quest quest){
+        questIDMap.put(id, quest);
+    }
+    public boolean questAction(Entity entity){
+        Objective objective = this.objectiveMap.get(entity.getName());
+        return objective == null || (!objective.isCompleted() && handleObjective(entity, objective));
+    }
     public boolean handleObjective(Entity entity, Objective objective){
         DialogueManager.getInstance().showObjectiveMessage(objective);
-
-        Quest quest = getQuestMap().get(entity);
-
+        Quest quest = questMap.get(entity.getName());
         if (!(objective.isTrick())) {
             if (objective.getRequiredObjectivesID() == null || Arrays.stream(objective.getRequiredObjectivesID()).allMatch(id -> quest.getObjectiveById(id).isCompleted())){
-                if (quest.getProgress() == Quest.Progress.INACTIVE) {
-                    quest.setProgress(Quest.Progress.INPROGRESS);
-                }
+                if (!quest.started()) quest.start();
                 objective.complete();
                 advanceQuest(entity);
                 return true;
             }
         }
-
         handleFail(quest);
         return false;
     }
@@ -57,23 +57,19 @@ public class QuestManager {
     }
     public void advanceQuest(Entity entity){
         Quest quest;
-        if((quest = questMap.get(entity))!= null)
-            quest.advance(entity);
+        if((quest = questMap.get(entity.getName()))!= null)
+            quest.advance(entity.getName());
     }
-    public void advanceMotherQuest(Entity entity, Quest quest){
-        if(quest.getMotherQuestID()!=0){
-            Quest motherQuest = null;
-            for (Map.Entry<Entity, Quest> entry : questMap.entrySet()) {
-                if (entry.getValue().getID() == quest.getMotherQuestID()){
-                    motherQuest = entry.getValue();
-                    break;
+    public void advanceMotherQuest(String entityName, Quest quest){
+        if(quest.getMotherQuestIDs()!=null) {
+            for (Integer id : quest.getMotherQuestIDs()) {
+                Quest motherQuest = questIDMap.get(id);
+                if (motherQuest != null) {
+                    motherQuest.getRequiredQuestsList().remove(quest.getID());
+                    motherQuest.advance(entityName);
                 }
             }
-            if(motherQuest!=null) {
-               motherQuest.advance(entity);}
-
         }
-
     }
     public void handleFail(Quest quest){
         String action = quest.getQuestFailAction();
@@ -82,7 +78,8 @@ public class QuestManager {
             switch (action){
                 case "reset" ->{
                     quest.getObjectives().forEach(Objective::setToComplete);
-                    quest.getAssociatedEntitiesName().stream().map(DataInitializer::findEntityByName).forEach(entity -> entity.setInteractable(true));
+                    quest.getAssociatedEntitiesName().stream().map(DataInitializer::findEntityByName)
+                            .filter(Objects::nonNull).forEach(entity -> entity.setInteractable(true));
                     GameStateManager.getInstance().playSound(1);
                 }
             }
@@ -93,12 +90,20 @@ public class QuestManager {
         return completedQuestList;
     }
 
-    public Map<Entity, Quest> getQuestMap(){
+    public Map<String, Quest> getQuestMap(){
         return questMap;
     }
 
-    public Map<Entity, Objective> getObjectiveMap() {
+    public Map<String, Objective> getObjectiveMap() {
         return objectiveMap;
+    }
+
+    public Quest getEntityQuest(Entity entity) {
+        return questMap.get(entity.getName());
+    }
+
+    public Map<Integer, Quest> getQuestIDmap() {
+        return questIDMap;
     }
 
    /* public Map<Entity, TrickObjective> getTrickObjectiveMap() {

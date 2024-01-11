@@ -434,19 +434,22 @@ public class Enemy extends Characters implements Prototype {
 
 
     public void takeDamage() {
-
         currentLife -= gsm.getPlayer().getDamage();
-        //System.out.println("La vita del nemico e' : " + currentLife);
-
     }
 
     public void respawn(int respawnX, int respawnY) {
-        //System.out.println("Respawning at X: " + respawnX + ", Y: " + respawnY);
         this.isDespawned = false;
         this.x = respawnX * tileSize;
         this.y = respawnY * tileSize;
 
     }
+    public void respawn() {
+        this.isDespawned = false;
+        this.setCurrentLife(maxLife);
+        this.x = respawnX * tileSize;
+        this.y = respawnY * tileSize;
+    }
+
     public void setDespawned(boolean despawned) {
         isDespawned = despawned;
     }

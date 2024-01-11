@@ -15,8 +15,8 @@ public class KeyHandlerTest {
 
     @Before
     public void setUp() {
-        mockGSM = new GameStateManager(); // Assuming you have a MockGameStateManager class for testing
-        keyHandler = new KeyHandler(mockGSM);
+        mockGSM = GameStateManager.getInstance(); // Assuming you have a MockGameStateManager class for testing
+        keyHandler = KeyHandler.getInstance();
     }
 
     @Test

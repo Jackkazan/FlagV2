@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import model.Dialogues.DialogueManager;
 import model.entities.Entity;
 import model.gameState.GameStateManager;
+import model.quests.Quest;
 import model.quests.QuestManager;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
 public class DataInitializer {
@@ -25,8 +27,8 @@ public class DataInitializer {
             DialogueData dialogueData = gson.fromJson(reader, DialogueData.class);
 
             if (dialogueData != null && dialogueData.getDialogues() != null) {
-                dialogueData.getDialogues().forEach(dialogue -> System.out.println("Speaker: " + dialogue.getSpeaker()));
-                DialogueManager.getInstance().setDialogueList(dialogueData.getDialogues());
+                dialogueData.getDialogues().forEach(dialogue -> DialogueManager.getInstance().setDialogueMap(dialogue.getSpeaker(), dialogue));
+                ;
             } else {
                 System.out.println("Error: No dialogues found in JSON file.");
             }
@@ -49,25 +51,15 @@ public class DataInitializer {
             System.out.println("QuestData: " + questData);
             //QuestManager questManager = QuestManager.getInstance();
             questData.getQuests().forEach(quest -> {
-                quest.getAssociatedEntitiesName().stream()
-                        .map(DataInitializer::findEntityByName)
-                        .filter(Objects::nonNull)
-                        .forEach(entity -> questManager.setQuest(entity, quest));
+                quest.getAssociatedEntitiesName().stream().filter(Objects::nonNull)
+                        .forEach(entityName -> questManager.setQuest(entityName, quest));
+                questManager.setQuestIDMap(quest.getID(), quest);
                 if(quest.getObjectives()!= null)
                     quest.getObjectives().forEach(objective -> {
-                        objective.getObjectiveAssociatedEntitiesName()  .stream()
-                                .map(DataInitializer::findEntityByName)
+                        objective.getObjectiveAssociatedEntitiesName().stream()
                                 .filter(Objects::nonNull)
                                 .forEach(entity -> questManager.setObjective(entity, objective));
                     });
-                /*if(quest.getTrickObjectives()!= null){
-                    quest.getTrickObjectives().forEach(trickObjective -> System.out.println(trickObjective.getTitle()));
-                    quest.getTrickObjectives().forEach(trickObjective -> {
-                        trickObjective.getObjectiveAssociatedEntitiesName().stream()
-                                .map(DataInitializer::findEntityByName)
-                                .filter(Objects::nonNull)
-                                .forEach(entity -> questManager.setTrickObjective(entity, trickObjective));
-                    });}*/
             });
         } else {
             throw new RuntimeException("Quest non trovate");

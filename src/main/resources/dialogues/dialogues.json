@@ -4,11 +4,13 @@
       "speaker": "Vecchietta",
       "questInactive": ["Ti sei svegliato, hai dormito per quasi una settimana! Sarai confuso no? Posso immaginare. Ti ho trovato in fin di vita sulla riva vicino la cascata,",
         "i tuoi vestiti erano ormai stracci e l’unica cosa che portavi con te era questo amuleto",
+        "Narratore - Hai ottenuto un amuleto! Sembra esservi raffigurato un drago che si mangia la coda… chissà cosa simboleggia",
         "Comunque io sono l’Anziana del villaggio, ti trovi nella capitale chiamata Laplace. Sembra tu abbia perso la memoria, osservando il tuo amuleto ho notato una scritta stampata sul dietro",
         "‘Meliodas’, dovrebbe essere il tuo nome. Avrai bisogno di soldi immagino, parla con i contadini nelle vicinanze, di sicuro avranno del lavoro per te, torna a trovarmi una volta finito"],
       "questInProgress": ["Hai racimolato qualche soldo?"],
       "questToComplete": ["Bravissimo, hai completato tutti i lavoretti! Con questo denaro potrai prendere il tuo primo equipaggiamento dal fabbro del villaggio a sud. Ti auguro un buon viaggio e che la fortuna sia dalla tua parte."],
-      "questCompleted": ["Ciao Meliodas"]
+      "questCompleted": ["Ciao Meliodas"],
+      "defaultDialogue": ["Ciao Meliodas"]
     },
     {
       "speaker": "Contadino1",
@@ -20,7 +22,7 @@
       "questInProgress": ["Ce l'hai fatta?"],
       "questToComplete": ["Ma sei un maestro! Hai ritrovato le mie chiavi. Grazie mille, non so come avrei fatto senza di te, pigghia sti picciuli"],
       "questCompleted": ["Grazie, finalmente posso tornare a casa"],
-      "defaultDialogue": ["ciao, sono contadino"]
+      "defaultDialogue": ["Grazie per il tuo aiuto"]
     },
     {
       "speaker": "Contadino2",

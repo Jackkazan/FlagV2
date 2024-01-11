@@ -38,7 +38,6 @@ public class GameStateManager {
 
     //public static GamePanel gp;
     private KeyHandler keyH;
-
     private boolean inDialogue = false; //necessario per la logica della pausa durante i dialoghi
     Player player;
     private TileManager tileManagerZonaIniziale;
@@ -80,15 +79,6 @@ public class GameStateManager {
               instance = new GameStateManager();
           return instance;
     }
-
-    public void checkPoint(){
-        this.player.setCurrentLife(6);
-        this.player.setState(Characters.State.IDLE);
-        if(this.mapManager.getCurrentMap() == tileManagerDungeonSud){
-        this.mapManager.setMap(tileManagerDungeonSud);
-        this.player.teleport(12, 89);
-        }
-    }
     public void init(){ // inizializza il player e le mappe
         initializing = true;
         this.player = new Player();
@@ -102,7 +92,6 @@ public class GameStateManager {
         this.tileManagerDungeonSud = new TileManager(this,"src/main/resources/Map/DungeonSud/sud_cave.tmx");
         this.mapManager = new MapManager(player, tileManagerCasettaIniziale, tileManagerZonaIniziale, tileManagerVillaggioSud, tileManagerNegozioItemsVillaggioSud,tileManagerPianoTerraTavernaVillaggio,tileManagerPrimoPianoTavernaVillaggio, tileManagerDungeonSud);
         this.playState = new PlayState(mapManager, player);
-        playMusicLoop(0);
         //this.pauseState = new PauseState(gp, this, keyH);
         this.npcList = NpcCreator.createNPCs(this, mapManager);
         this.itemList = ItemCreator.createObjects(this, mapManager, keyH);
@@ -111,9 +100,10 @@ public class GameStateManager {
         this.entityList.addAll(this.enemyList);
         this.entityList.addAll(this.itemList);
         this.entityList.add(player);
-        //this.questManager = questManager.getInstance();
+        this.questManager = questManager.getInstance();
         this.dialogueManager = dialogueManager.getInstance();
         DataInitializer.initializeData();
+        playMusicLoop(0);
         this.trapList = TrapCreator.createTraps(mapManager);
         this.currentEntityList= entityList.stream().filter(entity -> entity.getTileManager().equals(mapManager.getCurrentMap())).collect(Collectors.toList());
         initialized = true;
@@ -132,8 +122,10 @@ public class GameStateManager {
         switch (state) {
             case MENU ->
                 currentState = new MenuState();
-            case PLAY ->
+            case PLAY ->{
                 currentState = playState; // playstate deve essere sempre in memoria
+
+                 }
             case PAUSE -> {
                 stopMusic(0);
                 previousState = currentState;
@@ -165,6 +157,14 @@ public class GameStateManager {
     public void reload(){
           checkPoint();
           setState(State.PLAY);
+    }
+    public void checkPoint(){
+        player.setRespawnValues();
+        if(this.mapManager.getCurrentMap() == tileManagerDungeonSud){
+            this.mapManager.setMap(tileManagerDungeonSud);
+            this.player.teleport(12, 89);
+        }
+        enemyList.forEach(Enemy::respawn);
     }
 
     public void setQuestList(List<Quest> questList) {
@@ -209,7 +209,6 @@ public class GameStateManager {
 
 
     public void playMusicLoop(int numSong) {
-
         songList.get(numSong).loop();
 
     }

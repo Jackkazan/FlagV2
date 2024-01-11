@@ -9,23 +9,9 @@ import model.gameState.GameStateManager;
 import model.quests.QuestManager;
 
 public class DialogueAction implements Interactable{
-    GameStateManager gsm;
-    public DialogueAction(GameStateManager gsm){
-        this.gsm = gsm;
+    public DialogueAction(){
     }
-        /*
-            @Override
-            public void performAction(Item item) {
-
-            }
-           @Override
-            public void performAction(Npc npc) {
-                //cambia direzione dell'entità
-
-            }
-
-            }*/
-        @Override
+       @Override
        public void performAction(Entity entity) {
             if(entity instanceof Npc) {
                 Npc npc = (Npc) entity;
@@ -38,6 +24,7 @@ public class DialogueAction implements Interactable{
 
 
         private String calculateDirection(Npc npc) {
+            GameStateManager gsm = GameStateManager.getInstance();
             double npcCenterX = npc.getX() + (npc.getImageWidth() * npc.getScale()) / 2.0;
             double npcCenterY = npc.getY() + (npc.getImageHeight() * npc.getScale()) / 2.0;
 
