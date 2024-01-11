@@ -34,9 +34,6 @@ public class PauseState implements GameState{
 
     public PauseState() {
         this.mouseHandler = MouseHandler.getInstance();
-        gsm.stopMusic(0);
-
-
         // Carica l'immagine del tutorial
         try {
             InputStream inputStream = getClass().getResourceAsStream("/ui/MappaComandi.png");
@@ -55,6 +52,7 @@ public class PauseState implements GameState{
         if (keyH.pauseSwitch()){
                 gsm.setState(GameStateManager.State.PREVIOUS);// Uscendo dalla pausa bisogna ritornare allo stato precedente
                 gsm.playMusicLoop(0);
+                tutorialImageVisible = false;
         }
         // Aggiorna il volume quando il mouse è premuto sulla barra del volume
         if (mouseHandler.isMousePressed()) {
