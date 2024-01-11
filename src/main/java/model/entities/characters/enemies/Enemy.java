@@ -438,6 +438,11 @@ public class Enemy extends Characters implements Prototype {
         this.y = respawnY * tileSize;
 
     }
+    public void respawn() {
+        this.isDespawned = false;
+        this.x = respawnX;
+        this.y = respawnY;
+    }
     public void setDespawned(boolean despawned) {
         isDespawned = despawned;
     }
