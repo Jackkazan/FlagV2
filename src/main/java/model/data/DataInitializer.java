@@ -30,15 +30,15 @@ public class DataInitializer {
                 dialogueData.getDialogues().forEach(dialogue -> DialogueManager.getInstance().setDialogueMap(dialogue.getSpeaker(), dialogue));
                 ;
             } else {
-                System.out.println("Error: No dialogues found in JSON file.");
+                System.out.println("Error: Dialoghi non trovati.");
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Error reading JSON file.");
+            System.out.println("Errore lettura JSON.");
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error deserializing JSON.");
+            System.out.println("Error deserializzazione JSON.");
         }
     }
     private static void initializeQuest() {
