@@ -22,6 +22,7 @@ public class RespawnState implements EntityState {
             //case "Player" -> drawPlayer(graphics2D, (Player) entity);
             case "Enemy" -> drawEnemy(graphics2D, (Enemy) entity);
             default -> {}
+
         }
     }
     private void updateEnemy(Enemy enemy) {
