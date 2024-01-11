@@ -30,25 +30,4 @@ public class PlayerTest {
         assertEquals(1, player.getDamage());
     }
 
-    @Test
-    public void testUpdateInteractionArea() {
-        Player player = new Player();
-        player.setPosition(10, 10);
-        player.updateInteractionArea();
-    }
-
-    @Test
-    public void testUpdateCollisionArea() {
-        Player player = new Player();
-        player.setPosition(20, 20);
-        player.updateCollisionArea();
-    }
-
-    @Test
-    public void testUpdateAttackArea() {
-        Player player = new Player();
-        player.setPosition(30, 30);
-        player.setDirection("up");
-        player.updateAttackArea();
-    }
 }

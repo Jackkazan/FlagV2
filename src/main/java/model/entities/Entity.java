@@ -71,7 +71,7 @@ public abstract class Entity{
             return (B) this;
         }
         public B setRelatedQuests(Quest quest) {
-            QuestManager.getInstance().setQuest(entity, quest);
+            QuestManager.getInstance().setQuest(entity.name, quest);
             return (B) this;
         }
         /*public B setRelatedQuests(List<Quest> relatedQuests) {

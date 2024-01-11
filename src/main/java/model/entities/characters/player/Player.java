@@ -115,6 +115,14 @@ public class Player extends Characters {
         armed = true;
         damage=1;
     }
+    public void setRespawnValues(){
+        setState(State.IDLE);
+        currentLife = maxLife;
+        isAttacking=false;
+        isHitted= false;
+        isAttackAnimationCompleted = true;
+        isHitAnimationCompleted = true;
+    }
 
 
     public void setEnemyHitDirection(String direction) {
@@ -160,24 +168,8 @@ public class Player extends Characters {
 
     @Override
     public void draw(Graphics2D graphics2D) {
-
         currentState.draw(graphics2D,this);
 
-        /*
-        // Disegna l'area di collisione per debug
-        graphics2D.setColor(Color.RED);
-        graphics2D.drawRect((int) collisionArea.getX(), (int) collisionArea.getY(), (int) collisionArea.getWidth(), (int) collisionArea.getHeight());
-
-        // Disegna l'area di interazione per debug
-        graphics2D.setColor(Color.BLUE);
-        graphics2D.drawRect((int) interactionArea.getX(), (int) interactionArea.getY(), (int) interactionArea.getWidth(), (int) interactionArea.getHeight());
-
-        // Disegna l'area di attacco per debug
-        graphics2D.setColor(Color.YELLOW);
-        graphics2D.drawRect((int) attackArea.getX(), (int) attackArea.getY(), (int) attackArea.getWidth(), (int) attackArea.getHeight());
-
-
-         */
     }
 
     public void hitAnEnemy(){

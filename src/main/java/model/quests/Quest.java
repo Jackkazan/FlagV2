@@ -12,37 +12,32 @@ import java.util.Objects;
 
 public class  Quest {
 
-    private int ID;
+    private Integer ID;
     private String title;
     private Progress progress = Progress.INACTIVE;
-    private int motherQuestID = 0;
-    public int getMotherQuestID() {
-        return motherQuestID;
-    }
-
+    private List<Integer> motherQuestIDs;
     private boolean entitiesInteractionDependency;
 
     private String questFailAction;
     private List<String> associatedEntitiesName;
     private List<Integer> requiredQuestsID;
-
     private List<Objective> objectives;
-    //private List<TrickObjective> trickObjectives;
     private List <String> questProgressMessage;
     private List <String> questToCompleteMessage;
     private List <String> questCompletedMessage;
     private List <String> questFailMessage;
     private Reward rewards;
+
     private String rewarder;
 
     private boolean questSucceedSound;
 
-    public Quest(int ID, String title, Progress progress, int motherQuestID, boolean entitiesInteractionDependency, String questFailAction, List<String> associatedEntitiesName,
+    public Quest(int ID, String title, Progress progress, List<Integer> motherQuestIDs, boolean entitiesInteractionDependency, String questFailAction, List<String> associatedEntitiesName,
                  List<Integer> requiredQuestsID, List<Objective> objectives/*, List<TrickObjective> trickObjectives*/, List<String> questProgressMessage, List<String> questToCompleteMessage, List<String> questCompletedMessage, List<String> questFailMessage, Reward rewards, String rewarder, boolean questSucceedSound) {
         this.ID = ID;
         this.title = title;
         this.progress = progress;
-        this.motherQuestID = motherQuestID;
+        this.motherQuestIDs = motherQuestIDs;
         this.entitiesInteractionDependency = entitiesInteractionDependency;
         this.questFailAction = questFailAction;
         this.associatedEntitiesName = associatedEntitiesName;
@@ -58,20 +53,7 @@ public class  Quest {
         this.questSucceedSound = questSucceedSound;
     }
     public Quest(){}
-    public List<String> getQuestProgressMessage() {
-        return questProgressMessage;
-    }
-
-    public List<String> getQuestToCompleteMessage() {
-        return questToCompleteMessage;
-    }
-
-    public List<String> getQuestCompletedMessage() {
-        return questCompletedMessage;
-    }
-    public List<String> getQuestFailMessage(){
-        return questFailMessage;
-    }
+    public enum Progress{INACTIVE, INPROGRESS, TOCOMPLETE, COMPLETED}
 
     public void setProgress(Progress progress){
         switch (progress){
@@ -79,31 +61,30 @@ public class  Quest {
                     this.progress = Progress.INACTIVE;
             case INPROGRESS ->{
                 this.progress = Progress.INPROGRESS;
+                this.setEntitiesInteractable();
                 if(questProgressMessage != null)
-                    DialogueManager.getInstance().showQuestMessage(questProgressMessage);
+                    DialogueManager.getInstance().showQuestMessage(getQuestProgressMessage());
             }
             case TOCOMPLETE ->{
                 this.progress = Progress.TOCOMPLETE;
                 if (questSucceedSound)
                     GameStateManager.getInstance().playSound(2);
                 if(questToCompleteMessage != null)
-                    DialogueManager.getInstance().showQuestMessage(questToCompleteMessage);
+                    DialogueManager.getInstance().showQuestMessage(getQuestToCompleteMessage());
             }
             case COMPLETED ->{
                 this.progress = Progress.COMPLETED;
                 QuestManager.getInstance().addCompletedQuest(this);
                 if(questCompletedMessage != null)
-                    DialogueManager.getInstance().showQuestMessage(questCompletedMessage);
+                    DialogueManager.getInstance().showQuestMessage(getQuestCompletedMessage());
             }
 
             }
     }
 
-    public void advance(Entity entity){
+    public void advance(String entityName){
         if (this.progress == Progress.INACTIVE){
             this.setProgress(Progress.INPROGRESS);
-            if (this.hasInteractionDependancy())
-                this.associatedEntitiesName.stream().map(DataInitializer::findEntityByName).forEach( (entity1 -> entity1.setInteractable(true)));
         }
         if (this.progress == Progress.INPROGRESS){
             if (this.checkRequirementsForCompletion())
@@ -114,25 +95,28 @@ public class  Quest {
                     this.setProgress(Progress.COMPLETED);
                 }
         }
-        if (this.progress == Progress.TOCOMPLETE && entity.getName().equals(rewarder)){
+        if (this.progress == Progress.TOCOMPLETE && entityName.equals(rewarder)){
             this.reward();
             this.setProgress(Progress.COMPLETED);
-            QuestManager.getInstance().advanceMotherQuest(entity, this);
+            QuestManager.getInstance().advanceMotherQuest(entityName, this);
         }
     }
+    public void start(){
+        this.setProgress(Progress.INPROGRESS);
+    }
+    public void setEntitiesInteractable(){
+        if (this.hasInteractionDependancy())
+            this.associatedEntitiesName.stream().map(DataInitializer::findEntityByName)
+                    .filter(Objects::nonNull).forEach( (entity1 -> entity1.setInteractable(true)));
+    }
     public boolean checkRequirementsForCompletion(){
-        if (this.requiredQuestsID != null) {
-            List<Integer> id = QuestManager.getInstance().getCompletedQuestList().stream().map(Quest::getID).toList();
-            if(!id.containsAll(requiredQuestsID)){
-                System.out.println(requiredQuestsID);
-                System.out.println(id);
-                return false;
-            }
-            if(this.getObjectives()!= null && id.containsAll(requiredQuestsID));
-            return true;
-
-        }
-        return this.getObjectives() != null && this.getObjectives().stream().filter(objective -> !objective.isTrick()).allMatch(Objective::isCompleted);
+        return isRequiredQuestListEmpty() && this.allObjectivesCompleted();
+    }
+    public boolean isRequiredQuestListEmpty(){
+        return this.requiredQuestsID == null || this.requiredQuestsID.isEmpty();
+    }
+    public boolean allObjectivesCompleted(){
+        return this.getObjectives() == null || this.getObjectives().stream().filter(objective -> !objective.isTrick()).allMatch(Objective::isCompleted);
     }
     public String getQuestFailAction() {
         return questFailAction;
@@ -158,22 +142,34 @@ public class  Quest {
             }
         }
     }
-
+    public boolean started(){
+        return this.progress != Progress.INACTIVE;
+    }
     public String  getRewards() {
         if (this.hasRewards())
             return rewards.toString();
         return null;
     }
+    public List<String> getQuestProgressMessage() {
+        return questProgressMessage;
+    }
 
-    public enum Progress{INACTIVE, INPROGRESS, TOCOMPLETE, COMPLETED}
+    public List<String> getQuestToCompleteMessage() {
+        return questToCompleteMessage;
+    }
 
-
+    public List<String> getQuestCompletedMessage() {
+        return questCompletedMessage;
+    }
+    public List<String> getQuestFailMessage(){
+        return questFailMessage;
+    }
+    public List<Integer> getRequiredQuestsList() {
+        return requiredQuestsID;
+    }
     public List<Objective> getObjectives(){
         return objectives;
     }
-   /* public List<TrickObjective> getTrickObjectives() {
-        return trickObjectives;
-    }*/
 
     public Objective getObjectiveById(int id){
         for(Objective objective : this.getObjectives()){
@@ -188,7 +184,7 @@ public class  Quest {
         return associatedEntitiesName;
     }
 
-    public int getID() {
+    public Integer getID() {
         return this.ID;
     }
 
@@ -199,9 +195,14 @@ public class  Quest {
     public Progress getProgress() {
         return progress;
     }
-
+    public String getRewarder() {
+        return rewarder;
+    }
     public boolean isCompleted(){
         return this.progress == Progress.COMPLETED;
+    }
+    public List<Integer> getMotherQuestIDs(){
+        return motherQuestIDs;
     }
 
 }

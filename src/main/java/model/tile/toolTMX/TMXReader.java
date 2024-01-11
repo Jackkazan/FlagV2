@@ -135,7 +135,7 @@ public class TMXReader {
                 String imageSource = listaPercorsiTilesets.get(i);
                 String patternToRemove = "\\.\\./";
                 String imagePath = "src/main/resources/" + imageSource.replaceAll(patternToRemove, "");
-                System.out.println("\n" + imagePath);
+                //System.out.println("\n" + imagePath);
 
                 // Grandezza desiderata dello sprite (16x16)
                 int subimageWidth = 16;
@@ -205,7 +205,7 @@ public class TMXReader {
                     }
                 }
 
-                System.out.println("Sprite estratti e salvati con successo.");
+                //System.out.println("Sprite estratti e salvati con successo.");
             } catch (IOException e) {
                 e.printStackTrace();
             }

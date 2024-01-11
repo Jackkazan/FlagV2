@@ -1,6 +1,9 @@
 package model.Dialogues;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import model.entities.Entity;
 import model.gameState.GameStateManager;
 import model.quests.Objective;
@@ -11,12 +14,13 @@ public class DialogueManager {
     private  List<String> dialogueString;
     private Quest currentQuest;
     private boolean shown = false;
-    private List <Dialogue> dialogueList;
+    private Map<String, Dialogue> dialogueMap;
     private static DialogueManager instance;
     private GameStateManager gsm;
     private int index;
     public DialogueManager(){
         gsm = GameStateManager.getInstance();
+        dialogueMap = new HashMap<>();
         dialogueString = new ArrayList<>();
     }
     public static DialogueManager getInstance(){
@@ -24,8 +28,8 @@ public class DialogueManager {
             instance = new DialogueManager();
         return instance;
     }
-    public void setDialogueList(List<Dialogue> dialogues) {
-        dialogueList = dialogues;
+    public void setDialogueMap(String speaker, Dialogue dialogue) {
+        dialogueMap.put(speaker, dialogue);
     }
     public void showQuestMessage(List<String> questMessage){
         questMessage.forEach(dialogueString::add);
@@ -45,32 +49,19 @@ public class DialogueManager {
         gsm.setState(GameStateManager.State.DIALOGUE);
     }
     public void speak(Entity entity) {
-        Dialogue dialogue = null;
-        for (Dialogue entityDialogue : dialogueList) {
-            if (entity.getName().equals(entityDialogue.getSpeaker())) {
-                dialogue = entityDialogue;
-                break;
-            }
-        }
-        if (dialogue != null) {
-            currentQuest = QuestManager.getInstance().getQuestMap().get(entity);
+        Dialogue dialogue = dialogueMap.getOrDefault(entity.getName(), dialogueMap.get("Default"));
+        if(!dialogue.getSpeaker().equals("Default")) {
+            currentQuest = QuestManager.getInstance().getEntityQuest(entity);
             if (currentQuest != null) {
                 switch (currentQuest.getProgress()) {
                     case INACTIVE -> dialogueString.addAll(dialogue.getQuestInactive());
                     case INPROGRESS -> dialogueString.addAll(dialogue.getQuestInProgress());
                     case TOCOMPLETE -> dialogueString.addAll(dialogue.getQuestToComplete());
                     case COMPLETED -> dialogueString.addAll(dialogue.getQuestCompleted());
-                };
-            } else {
-                System.out.println(dialogueString==null);
-                dialogueString.addAll(dialogue.getDefaultDialogue());
-            }
-        } else {
-            for (Dialogue entityDialogue : dialogueList) {
-                if ("Default".equals(entityDialogue.getSpeaker())) {
-                    dialogueString.addAll(entityDialogue.getDefaultDialogue());
-                    break;
                 }
+                ;
+            } else {
+                dialogueString.addAll(dialogue.getDefaultDialogue());
             }
         }
         if (dialogueString.size()>0) {
@@ -92,5 +83,8 @@ public class DialogueManager {
             return dialogueString.get(index++);
         else
             return null;
+    }
+    public Map<String, Dialogue> getDialogueMap(){
+        return dialogueMap;
     }
 }

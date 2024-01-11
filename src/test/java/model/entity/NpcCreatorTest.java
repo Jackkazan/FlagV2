@@ -15,17 +15,10 @@ public class NpcCreatorTest {
 
     @Test
     public void testCreateNPCs() {
-
         GameStateManager mockGSM = new GameStateManager();
         MapManager mockMapManager = new MapManager();
-
-
         List<Npc> npcList = NpcCreator.createNPCs(mockGSM, mockMapManager);
-
-
         assertNotNull(npcList);
         assertEquals(6, npcList.size());
-
-
     }
 }

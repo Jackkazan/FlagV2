@@ -37,7 +37,7 @@ public class NpcCreator {
                 .setTotalSprite(8)
                 .setImageDimension(32,32)
                 .setIsInteractible(true)
-                .setInteractionAction(new DialogueAction(gsm))
+                .setInteractionAction(new DialogueAction())
                 .setDefaultDirection("left")
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
                 .set8EntityImage(vecchietta_up1, vecchietta_up2,
@@ -64,7 +64,7 @@ public class NpcCreator {
                 .setTotalSprite(8)
                 .setImageDimension(32,32)
                 .setIsInteractible(true)
-                .setInteractionAction(new DialogueAction(gsm))
+                .setInteractionAction(new DialogueAction())
                 .setDefaultDirection("right")
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
                 .set8EntityImage(contadino1_up1, contadino1_up2,
@@ -91,7 +91,7 @@ public class NpcCreator {
                 .setTotalSprite(8)
                 .setImageDimension(32,32)
                 .setIsInteractible(true)
-                .setInteractionAction(new DialogueAction(gsm))
+                .setInteractionAction(new DialogueAction())
                 .setDefaultDirection("down")
                 .setContainedMap(mapManager.getTileManagerZonaIniziale())
                 .set8EntityImage(contadino2_up1, contadino2_up2,
@@ -112,7 +112,7 @@ public class NpcCreator {
                 .setTotalSprite(2)
                 .setImageDimension(16,32)
                 .setIsInteractible(true)
-                .setInteractionAction(new DialogueAction(gsm))
+                .setInteractionAction(new DialogueAction())
                 .setDefaultDirection("down")
                 .setContainedMap(mapManager.getTileManagerPianoTerraTavernaVillaggio())
                 .set8EntityImage(cameriera1Down_0, cameriera1Down_1,
@@ -133,7 +133,7 @@ public class NpcCreator {
                 .setTotalSprite(2)
                 .setImageDimension(16,32)
                 .setIsInteractible(true)
-                .setInteractionAction(new DialogueAction(gsm))
+                .setInteractionAction(new DialogueAction())
                 .setDefaultDirection("right")
                 .setContainedMap(mapManager.getTileManagerNegozioItemsVillaggioSud())
                 .set8EntityImage(mercante1Right_0, mercante1Right_1,
@@ -153,7 +153,7 @@ public class NpcCreator {
                 .setTotalSprite(1)
                 .setImageDimension(32,32)
                 .setIsInteractible(true)
-                .setInteractionAction(new DialogueAction(gsm))
+                .setInteractionAction(new DialogueAction())
                 .setDefaultDirection("down")
                 .setContainedMap(mapManager.getTileManagerVillaggioSud())
                 .set8EntityImage(fabbro1Down_0, fabbro1Down_0,

@@ -15,7 +15,7 @@ public class KeyHandlerTest {
 
     @Before
     public void setUp() {
-        mockGSM = new GameStateManager();
+        mockGSM = GameStateManager.getInstance(); // Assuming you have a MockGameStateManager class for testing
         keyHandler = KeyHandler.getInstance();
     }
 
@@ -23,9 +23,11 @@ public class KeyHandlerTest {
     public void testToggleDebugText() {
         assertFalse(keyHandler.isShowDebugText());
 
+        // Pressing 'T' should toggle debug text
         keyHandler.keyPressed(createKeyEvent(KeyEvent.VK_T));
         assertTrue(keyHandler.isShowDebugText());
 
+        // Pressing 'T' again should toggle it back
         keyHandler.keyPressed(createKeyEvent(KeyEvent.VK_T));
         assertFalse(keyHandler.isShowDebugText());
     }
@@ -44,19 +46,22 @@ public class KeyHandlerTest {
     public void testInteractionKey() {
         assertFalse(keyHandler.interactPressed);
 
+        // Pressing 'E' should set interactPressed to true
         keyHandler.keyPressed(createKeyEvent(KeyEvent.VK_E));
         assertTrue(keyHandler.interactPressed);
 
+        // Releasing 'E' should set interactPressed to false
         keyHandler.keyReleased(createKeyEvent(KeyEvent.VK_E));
         assertFalse(keyHandler.interactPressed);
     }
 
+    // Similar tests can be written for other keys and their interactions
 
     private KeyEvent createKeyEvent(int keyCode) {
         return new KeyEvent(new MockComponent(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, keyCode, KeyEvent.CHAR_UNDEFINED);
     }
 
-
+    // You might need to create a MockComponent class to simulate the component in KeyEvent
     private static class MockComponent extends java.awt.Component {
     }
 }
