@@ -207,8 +207,8 @@ public class Enemy extends Characters implements Prototype {
     }
 
     public void setRespawn(int x, int y) {
-        this.respawnX = x;
-        this.respawnY = y;
+        this.respawnX = x * tileSize;
+        this.respawnY = y * tileSize;
     }
 
 
@@ -489,8 +489,8 @@ public class Enemy extends Characters implements Prototype {
             return this;
         }
         public EnemyBuilder setRespawnCoordinates(int respawnX, int respawnY) {
-            this.entity.respawnX = respawnX;
-            this.entity.respawnY = respawnY;
+            this.entity.respawnX = respawnX * tileSize;
+            this.entity.respawnY = respawnY * tileSize;
             return this;
         }
         public Enemy.EnemyBuilder setMaxHealthBarWidth(int maxHealthBarWidth) {

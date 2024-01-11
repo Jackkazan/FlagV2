@@ -223,9 +223,9 @@
       },
 
       "rewarder" : "Chest1",
-      "questToCompleteMessage": ["Narratore - Hai racoolto 1000 monete"],
+      "questToCompleteMessage": ["Narratore - Hai raccolto 1000 monete"],
       "questCompletedMessage": ["Il gioco è finito (per ora), speriamo sia stato apprezzato",
-        "dal Team Flag"]
+        "dal Team Flag","Francesco Rinaldi, Luigi La Barbera, Antonio Rubino e Gioacchino Augello"]
     }
   ]
 }
