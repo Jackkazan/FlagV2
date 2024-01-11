@@ -37,7 +37,8 @@ public class QuestManager {
     // restituisce all'entità con cui si ha interagito se quest'ultima è collegata ad un obiettivo e se tale obiettivo può essere completato
     public boolean questAction(Entity entity){
         Objective objective = this.objectiveMap.get(entity.getName());
-        return objective == null || (!objective.isCompleted() && handleObjective(entity, objective));
+        Quest quest = getQuestMap().get(entity.getName());
+        return objective == null || (!quest.isCompleted() && !objective.isCompleted() && handleObjective(entity, objective));
     }
     //gestione dell'obiettivo
     public boolean handleObjective(Entity entity, Objective objective){

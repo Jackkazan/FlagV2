@@ -203,7 +203,7 @@ public class  Quest {
         return rewarder;
     }
     public boolean isCompleted(){
-        return this.progress == Progress.COMPLETED;
+        return this.progress == Progress.COMPLETED || this.progress == Progress.TOCOMPLETE;
     }
     public List<Integer> getMotherQuestIDs(){
         return motherQuestIDs;
