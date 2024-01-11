@@ -206,9 +206,21 @@
         "Chest1",
         "Wall3"
     ],
+      "objectives":
+      [
+        {
+        "objectiveID": 1,
+        "objectiveTitle": "Apri la cassa",
+        "objectiveAssociatedEntitiesName": [
+          "Chest1"
+        ],
+        "objectiveMessage":  ["Hai aperto la cassa"]
+        }
+      ],
       "rewards": {
         "unlock": true
       },
+
       "rewarder" : "Chest1",
       "questToCompleteMessage": [],
       "questCompletedMessage": ["Hai finito il gioco"]
