@@ -29,5 +29,12 @@ public class PlayerTest {
         assertEquals(2000, player.getHitCooldown());
         assertEquals(1, player.getDamage());
     }
+    @Test
+    public void testDamage() {
+        Player player = new Player();
+        player.setEnemyHitDamage(2);
+        player.takeDamage();
+        assertEquals( player.getMaxLife() - 2, player.getCurrentLife());
+    }
 
 }

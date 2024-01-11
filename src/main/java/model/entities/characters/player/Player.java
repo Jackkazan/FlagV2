@@ -92,7 +92,7 @@ public class Player extends Characters {
         x = tileSize*3;  //3
         y = tileSize*4;  //4
         maxLife = 6;
-        currentLife = 0;
+        currentLife = maxLife;
         speed = 4;
         scale = 5;
         balance = 0;
