@@ -78,7 +78,7 @@ public class Trap extends Item implements Prototype {
             }
             gsm.getPlayer().setHitted(true);
 
-            System.out.println(this.name + " ha colpito il player");
+            //System.out.println(this.name + " ha colpito il player");
         }
     }
 
@@ -86,7 +86,7 @@ public class Trap extends Item implements Prototype {
     public boolean isPlayerNearby() {
         //Definisci la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
         if(this.attackArea!= null && gsm.getPlayer().getCollisionArea().intersects(this.attackArea)){
-            System.out.println("Sto collidendo con "+ this.name);
+            //System.out.println("Sto collidendo con "+ this.name);
             return true;
         }
         else return false;

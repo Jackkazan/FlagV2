@@ -186,7 +186,8 @@ public abstract class Entity{
         this.collisionArea = new Rectangle(this.x, this.y, larghezza, altezza);
     }
     public void setCollisionArea ( Rectangle collisionArea) {
-        System.out.println(this.name + "Collisione annullata");this.collisionArea = collisionArea;
+        //System.out.println(this.name + "Collisione annullata");
+        this.collisionArea = collisionArea;
     }
 
     public void setScale(int scale) {

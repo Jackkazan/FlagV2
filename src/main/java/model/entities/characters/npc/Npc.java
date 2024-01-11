@@ -24,10 +24,6 @@ public class Npc extends Characters {
 
     public static class NpcBuilder extends Entity.EntityBuilder<Npc,NpcBuilder> {
 
-        private int[] pathX;  // Array delle coordinate x del percorso
-        private int[] pathY;  // Array delle coordinate y del percorso
-        private int pathIndex;
-
         public NpcBuilder( int x, int y) {
             super();
             this.entity.x = x * tileSize;
