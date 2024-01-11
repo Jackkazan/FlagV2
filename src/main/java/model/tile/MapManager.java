@@ -39,7 +39,7 @@ public class MapManager {
         this.tileManagerDungeonSud = tileManagerDungeonSud;
 
         //da cambiare
-        setMap(tileManagerDungeonSud);
+        setMap(tileManagerCasettaIniziale);
     }
 
     public MapManager() {}

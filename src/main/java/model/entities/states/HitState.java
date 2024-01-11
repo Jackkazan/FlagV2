@@ -96,10 +96,24 @@ public class HitState implements EntityState {
 
     }
     private void drawEnemy(Graphics2D graphics2D, Enemy enemy) {
-        BufferedImage[] images = switch (enemy.getDirection()){
-            case "up","up&attack","down","down&attack","left","left&attack","right", "right&attack" -> new BufferedImage[]{enemy.getHit1(), enemy.getHit2(), enemy.getHit3(), enemy.getHit4()};
-            default -> null;
-        };
+        BufferedImage[] images = new BufferedImage[]{};
+        switch (enemy.getScale()) {
+            case 4:
+                images = switch (enemy.getDirection()){
+                    case "up","up&attack","down","down&attack","left","left&attack","right", "right&attack" -> new BufferedImage[]{enemy.getHit1(), enemy.getHit2(), enemy.getHit3(), enemy.getHit4()};
+                    default -> null;
+                };
+                break;
+            case 8:
+                images = switch (enemy.getDirection()) {
+                    case "up", "up&attack" -> new BufferedImage[]{enemy.getHit13(), enemy.getHit14(), enemy.getHit15(), enemy.getHit16()};
+                    case "down", "down&attack" -> new BufferedImage[]{enemy.getHit9(), enemy.getHit10(), enemy.getHit11(), enemy.getHit12()};
+                    case "left", "left&attack" -> new BufferedImage[]{enemy.getHit1(), enemy.getHit2(), enemy.getHit3(), enemy.getHit4()};
+                    case "right", "right&attack" -> new BufferedImage[]{enemy.getHit5(), enemy.getHit6(), enemy.getHit7(), enemy.getHit8()};
+                    default -> null;
+                };
+        }
+
 
         int screenX = enemy.getX() - enemy.getGsm().getPlayer().getX() + enemy.getGsm().getPlayer().getScreenX();
         int screenY = enemy.getY() - enemy.getGsm().getPlayer().getY() + enemy.getGsm().getPlayer().getScreenY();

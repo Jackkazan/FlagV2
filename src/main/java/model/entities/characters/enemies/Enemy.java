@@ -504,6 +504,8 @@ public class Enemy extends Characters implements Prototype {
         public Enemy build() {
             return (Enemy) this.entity;
         }
+
+
     }
 
 
