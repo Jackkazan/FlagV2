@@ -72,6 +72,7 @@ public class Enemy extends Characters implements Prototype {
     public void update() {
         //System.out.println("Despawn Timer: " + despawnTimer);
         //System.out.println("Is Despawned: " + isDespawned);
+        //updateAttackArea()
         this.checkDeath();
         if (this.isDead) {
             this.setState(State.DEAD);
@@ -527,6 +528,7 @@ public class Enemy extends Characters implements Prototype {
         this.isDespawned = false;
         this.x = respawnX;
         this.y = respawnY;
+        this.updateAttackArea();
     }
     public void setDespawned(boolean despawned) {
         isDespawned = despawned;

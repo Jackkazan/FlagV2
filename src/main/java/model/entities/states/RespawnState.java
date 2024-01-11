@@ -32,8 +32,7 @@ public class RespawnState implements EntityState {
 
             if (enemy.getDespawnTimer() <= 0) {
                 enemy.setCollisionArea(new Rectangle(enemy.getRespawnX(), enemy.getRespawnY(), 32, 32));
-
-                enemy.respawn(enemy.getRespawnX(), enemy.getRespawnY()); // Respawn dell'entità
+                enemy.respawn(); // Respawn dell'entità
                 enemy.setDespawnTimer(enemy.getDespawnCooldown()); // Reimposta il timer di despawn
                 enemy.setDespawned(false);
             }

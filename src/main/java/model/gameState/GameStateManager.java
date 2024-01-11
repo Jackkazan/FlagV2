@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.function.Predicate.not;
+
 public class GameStateManager {
 
 
@@ -164,7 +166,7 @@ public class GameStateManager {
             this.mapManager.setMap(tileManagerDungeonSud);
             this.player.teleport(12, 89);
         }
-        enemyList.forEach(Enemy::respawn);
+        enemyList.stream().filter(not(Enemy::isDespawned)).forEach(Enemy::respawn);
     }
 
     public void setQuestList(List<Quest> questList) {
