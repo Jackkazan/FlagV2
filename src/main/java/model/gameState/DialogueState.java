@@ -101,7 +101,6 @@ public class DialogueState implements GameState {
 
     public void drawDialogueBox(Graphics g, int x, int y, int width, int height){
 
-
         // Imposta il colore dello sfondo
         g.setColor(new Color(101,71,42));
         g.fillRoundRect(x, y, width, height, 40, 40);
@@ -133,8 +132,6 @@ public class DialogueState implements GameState {
 
         // Disegna il rettangolo di sfondo
         g.fillRoundRect(x, y, width, height, 40, 40);
-
-
 
     }
 

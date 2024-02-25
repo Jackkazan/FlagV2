@@ -19,7 +19,7 @@ public class TileManager {
     private int[][][] mapTileNum;
 
     private ArrayList<CollisionObject> collisionMap;
-    private String currentMap;
+
     private int maxMapCol;
     private int maxMapRow;
     // int mapWidth = tileSize * maxMapCol;
@@ -29,7 +29,6 @@ public class TileManager {
 
     public TileManager(GameStateManager gsm, String pathTMXMap){
         this.gsm = gsm;
-        this.currentMap = pathTMXMap;
         TMXReader readMap = new TMXReader(pathTMXMap);
         this.mappaSprite= readMap.getMappaSprite();
         this.listaMatrici = readMap.getListaMatrici();
@@ -66,8 +65,8 @@ public class TileManager {
         // Assegna la matrice alla corretta posizione in mapTileNum
         mapTileNum[layerIndex] = matrice;
 
-
     }
+
     public void draw(Graphics2D g2d){
         // Calcola le coordinate del player nella mappa
         int playerMapX = -gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
@@ -77,6 +76,7 @@ public class TileManager {
         // Disegna il bufferedImage considerando la posizione del player
         g2d.drawImage(bufferedImage, playerMapX, playerMapY, null);
     }
+
     private void createBufferedImage() {
 
         Graphics2D g2d = bufferedImage.createGraphics();
@@ -113,7 +113,4 @@ public class TileManager {
         return this.collisionMap;
     }
 
-    public String getCurrentMap() {
-        return this.currentMap;
-    }
 }

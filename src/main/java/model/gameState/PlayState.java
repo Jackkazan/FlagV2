@@ -30,6 +30,14 @@ public class PlayState implements GameState{
         if (keyH.pauseSwitch() && !gsm.isInDialogue())
             gsm.setState(GameStateManager.State.PAUSE);
 
+
+        //ordina la lista
+        gsm.setCurrentEntityList(gsm.getCurrentEntityList().stream()
+                .sorted(Comparator.comparing(Entity:: getY))
+                .collect(Collectors.toList()));
+
+
+
         if(!gsm.isInDialogue())
             player.update();
 
@@ -43,10 +51,7 @@ public class PlayState implements GameState{
             if(!entity.equals(gsm.player) && entity.getTileManager().equals(mapManager.getCurrentMap()))
                 entity.update();
 
-        //ordina la lista
-        gsm.setCurrentEntityList(gsm.getCurrentEntityList().stream()
-                .sorted(Comparator.comparing(Entity:: getY))
-                .collect(Collectors.toList()));
+
 
         // Gestione delle transizioni della mappa
         mapManager.manageTransitions();
