@@ -1,14 +1,19 @@
 package model.tile;
 
+import model.entities.Entity;
 import model.gameState.GameStateManager;
-import model.collisions.CollisionObject;
 import model.tile.toolTMX.TMXReader;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+import static view.GamePanel.renderDistance;
 import static view.GamePanel.tileSize;
 
 public class TileManager {
@@ -18,7 +23,7 @@ public class TileManager {
     private int numLayer;
     private int[][][] mapTileNum;
 
-    private ArrayList<CollisionObject> collisionMap;
+    private ArrayList<Rectangle2D.Double> collisionMap;
 
     private int maxMapCol;
     private int maxMapRow;
@@ -67,19 +72,21 @@ public class TileManager {
 
     }
 
-    public void draw(Graphics2D g2d){
+    public void draw(Graphics2D g2d, List<Entity> nearEntityList){
         // Calcola le coordinate del player nella mappa
         int playerMapX = -gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
         int playerMapY = -gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
 
-        createBufferedImage();
+        createBufferedImage(nearEntityList);
         // Disegna il bufferedImage considerando la posizione del player
         g2d.drawImage(bufferedImage, playerMapX, playerMapY, null);
     }
 
-    private void createBufferedImage() {
-
+    private void createBufferedImage(List<Entity> nearEntityList) {
         Graphics2D g2d = bufferedImage.createGraphics();
+
+        g2d.clearRect(0,0,bufferedImage.getWidth(), bufferedImage.getHeight());
+        
         for (int layerIndex = 0; layerIndex < numLayer; layerIndex++) {
             for (int worldRow = 0; worldRow < maxMapRow; worldRow++) {
                 for (int worldCol = 0; worldCol < maxMapCol; worldCol++) {
@@ -92,6 +99,15 @@ public class TileManager {
                 }
             }
         }
+        nearEntityList = nearEntityList.stream()
+                .sorted(Comparator.comparing(Entity::getY))
+                .collect(toList());
+
+        for (Entity entity : nearEntityList) {
+            entity.draw(g2d);
+        }
+
+
     }
 
     //per memorizzare nel buffer solo ciò che sta attorno al player
@@ -101,7 +117,7 @@ public class TileManager {
         int playerMapY = gsm.getPlayer().getY();
 
         //area renderizzata e disegnata
-        int bufferRendering = tileSize * 16;
+        int bufferRendering = tileSize * renderDistance;
 
         return worldX  + bufferRendering > playerMapX  &&
                 worldX  - bufferRendering < playerMapX  &&
@@ -109,8 +125,15 @@ public class TileManager {
                 worldY  - bufferRendering < playerMapY ;
     }
 
-    public ArrayList<CollisionObject> getCollisionMap() {
+    public ArrayList<Rectangle2D.Double> getCollisionMap() {
         return this.collisionMap;
     }
 
+    public int getMaxMapCol() {
+        return maxMapCol;
+    }
+
+    public int getMaxMapRow() {
+        return maxMapRow;
+    }
 }

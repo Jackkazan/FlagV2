@@ -89,7 +89,7 @@ public class MovementState implements EntityState {
         if (images != null) {
             int spriteIndex = player.getSpriteNum() % images.length;
 
-            graphics2D.drawImage(images[spriteIndex], player.getScreenX()-16, player.getScreenY()-32, (player.getImageWidth()/2) *player.getScale(), (player.getImageHeight()/2)*player.getScale(), null);
+            graphics2D.drawImage(images[spriteIndex], player.getX()-16, player.getY()-32, (player.getImageWidth()/2) *player.getScale(), (player.getImageHeight()/2)*player.getScale(), null);
         }
     }
 
@@ -135,16 +135,14 @@ public class MovementState implements EntityState {
             default -> null;
         };
 
-        int screenX = enemy.getX() - enemy.getGsm().getPlayer().getX() + enemy.getGsm().getPlayer().getScreenX();
-        int screenY = enemy.getY() - enemy.getGsm().getPlayer().getY() + enemy.getGsm().getPlayer().getScreenY();
 
         if (images != null && enemy.getGsm().getMapManager().getCurrentMap() == enemy.getTileManager()) {
             switch (enemy.getScale()){
                 case 4:
-                    graphics2D.drawImage(images[enemy.getSpriteNum()], screenX-(enemy.getIdle1().getWidth()/2), screenY-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+                    graphics2D.drawImage(images[enemy.getSpriteNum()], enemy.getX()-(enemy.getIdle1().getWidth()/2), enemy.getY()-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
                     break;
                 case 8:
-                    graphics2D.drawImage(images[enemy.getSpriteNum()], screenX-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -8, screenY-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -tileSize, (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+                    graphics2D.drawImage(images[enemy.getSpriteNum()], enemy.getX()-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -8, enemy.getY()-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -tileSize, (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
                     break;
             }
         }

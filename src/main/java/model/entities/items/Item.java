@@ -2,6 +2,8 @@ package model.entities.items;
 import model.entities.Entity;
 import model.entities.Prototype;
 import model.quests.Quest;
+import view.GamePanel;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -26,11 +28,7 @@ public class Item extends Entity implements Prototype {
     @Override
     public void draw(Graphics2D graphics2D){
 
-        int screenX = this.x - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
-        int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
-
-        if(staticImage != null && gsm.getMapManager().getCurrentMap() == this.tileManager)
-            graphics2D.drawImage(this.staticImage, screenX, screenY+ this.offsetY, (tileSize*this.imageWidth)/16, (tileSize*this.imageHeight)/16, null);
+        graphics2D.drawImage(this.staticImage, this.x, this.y + this.offsetY, this.imageWidth*2, this.imageHeight*2, null);
 
     }
     @Override

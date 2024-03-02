@@ -1,7 +1,6 @@
 package model.tile.toolTMX;
 
 
-import model.collisions.CollisionObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -9,6 +8,7 @@ import org.w3c.dom.NodeList;
 import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import java.util.*;
 
 public class TMXReader {
 
-    private ArrayList<CollisionObject> collisionObjects;
+    private ArrayList<Rectangle2D.Double> collisionObjects;
     private ArrayList<String> listaMatrici = new ArrayList<>();
     private Set<Integer> insiemeCodici = new TreeSet<>();
     private List<Set<Integer>> listaInsiemi = new ArrayList<>();
@@ -33,7 +33,7 @@ public class TMXReader {
 
 
     public TMXReader(String filePathTMX) {
-        this.collisionObjects = new ArrayList<>();
+        this.collisionObjects = new ArrayList<Rectangle2D.Double>();
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -104,7 +104,7 @@ public class TMXReader {
                     double objectWidth = Double.parseDouble(objectElement.getAttribute("width"));
                     double objectHeight = Double.parseDouble(objectElement.getAttribute("height"));
 
-                    collisionObjects.add(new CollisionObject(objectX, objectY, objectWidth, objectHeight));
+                    collisionObjects.add(new Rectangle2D.Double(objectX, objectY, objectWidth, objectHeight));
                 }
             }
 
@@ -232,7 +232,7 @@ public class TMXReader {
         return mapHeigth;
     }
 
-    public ArrayList<CollisionObject> getCollisionObjects() {
+    public ArrayList<Rectangle2D.Double> getCollisionObjects() {
         return collisionObjects;
     }
 }

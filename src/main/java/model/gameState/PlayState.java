@@ -9,7 +9,11 @@ import view.UI;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Comparator;
+import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import static view.GamePanel.renderDistance;
 import static view.GamePanel.tileSize;
 
 public class PlayState implements GameState{
@@ -19,35 +23,35 @@ public class PlayState implements GameState{
     private final MapManager mapManager;
     private final BufferedImage buffer;
 
+    private List<Entity> nearEntityList;
+    private Graphics2D graphics2D;
+
     public PlayState(MapManager mapManager,Player player) {
         this.mapManager = mapManager;
         this.player = player;
         this.buffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_RGB);
+        this.nearEntityList = collectNearEntityList(gsm.getCurrentEntityList());
     }
 
     @Override
     public void update() {
+
         if (keyH.pauseSwitch() && !gsm.isInDialogue())
             gsm.setState(GameStateManager.State.PAUSE);
 
 
-        //ordina la lista
-        gsm.setCurrentEntityList(gsm.getCurrentEntityList().stream()
-                .sorted(Comparator.comparing(Entity:: getY))
-                .collect(Collectors.toList()));
+        //colleziona solo gli oggetti vicini al player
+        nearEntityList = collectNearEntityList(gsm.getCurrentEntityList());
 
+
+        System.out.println(nearEntityList);
 
 
         if(!gsm.isInDialogue())
             player.update();
 
-        if(mapManager.getCurrentMap()== mapManager.getTileManagerDungeonSud())
-            for(Trap trap : gsm.getTrapList())
-                if(trap.getTileManager().equals(mapManager.getCurrentMap()))
-                    trap.update();
 
-
-        for(Entity entity : gsm.getCurrentEntityList())
+        for(Entity entity : nearEntityList)
             if(!entity.equals(gsm.player) && entity.getTileManager().equals(mapManager.getCurrentMap()))
                 entity.update();
 
@@ -59,25 +63,23 @@ public class PlayState implements GameState{
 
     }
 
+    /*
     @Override
     public void draw(Graphics g) {
 
         //this.graphics2D = (Graphics2D) g;
         // Disegna sulla buffer
         Graphics2D bufferGraphics = buffer.createGraphics();
+
         // Cancella completamente l'immagine del buffer
         bufferGraphics.clearRect(0, 0, screenWidth, screenHeight);
 
         mapManager.draw(bufferGraphics);
 
-        if(mapManager.getCurrentMap()== mapManager.getTileManagerDungeonSud())
-            for(Trap trap: gsm.getTrapList())
-                trap.draw(bufferGraphics);
 
-        for(Entity entity : gsm.getCurrentEntityList()) {
-            //System.out.println("Entità da disegnare "+ entity.getName());
+        for(Entity entity : nearEntityList)
             entity.draw(bufferGraphics);
-        }
+
 
         UI.getInstance().draw(bufferGraphics);
         drawToTempScreen();
@@ -87,6 +89,21 @@ public class PlayState implements GameState{
         // Dispose del bufferGraphics
         bufferGraphics.dispose();
 
+    }
+
+     */
+    @Override
+    public void draw(Graphics g) {
+
+
+        this.graphics2D = (Graphics2D) g;
+
+        mapManager.draw(graphics2D , nearEntityList);
+
+
+        UI.getInstance().draw(graphics2D);
+
+        drawToTempScreen();
     }
 
 //DEBUG
@@ -131,4 +148,27 @@ public class PlayState implements GameState{
         graphics2D.drawString("Draw Time: " + passedTime, x, y);
     }
 
+    public List<Entity> collectNearEntityList(List<Entity> currentEntityList) {
+
+        // Ordina la lista in base alla distanza tra ciascuna entità e il player
+        return currentEntityList.stream()
+                .filter(entity -> {
+                    double distance = distanceToPlayer(entity, player);
+                    return distance < tileSize * renderDistance;
+                })
+                .sorted(Comparator.comparingDouble((Entity entity) -> distanceToPlayer(entity, player)))
+                .collect(Collectors.toList());
+    }
+
+
+    private double distanceToPlayer(Entity entity, Player player) {
+        // Calcola la distanza tra l'entità e il player (usando la distanza Euclidea)
+        double dx = entity.getX() - player.getX();
+        double dy = entity.getY() - player.getY();
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    public List<Entity> getNearEntityList() {
+        return nearEntityList;
+    }
 }

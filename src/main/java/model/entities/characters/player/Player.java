@@ -4,11 +4,11 @@ import model.entities.characters.Characters;
 import model.entities.characters.enemies.Enemy;
 import model.entities.items.Item;
 import model.entities.characters.npc.Npc;
-import model.collisions.CollisionObject;
 import model.tile.TileManager;
 import view.GamePanel;
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -153,6 +153,7 @@ public class Player extends Characters {
         updateInteractionArea();
         if (currentLife <= 0) {
             setState(State.DEAD);
+            // da sistemare l'invincibilità: se il cooldown dell'hit non è finito non può essere hittato
         } else if (isHitted) {
             setState(State.HIT);
         } else if (isAttacking && this.armed) {
@@ -224,7 +225,7 @@ public class Player extends Characters {
     public boolean isAttacking() {
         return this.isAttacking;
     }
-    public void setCurrentCollisionMap(ArrayList<CollisionObject> collisionMap) {
+    public void setCurrentCollisionMap(ArrayList<Rectangle2D.Double> collisionMap) {
         this.currentCollisionMap = collisionMap;
     }
 

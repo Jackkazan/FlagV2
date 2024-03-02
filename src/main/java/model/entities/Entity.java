@@ -245,4 +245,21 @@ public abstract class Entity{
     public void setTileManager(TileManager tileManager) {
         this.tileManager = tileManager;
     }
+
+    @Override
+    public String toString() {
+        return "Entity{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
+    public BufferedImage getStaticImage() {
+        return staticImage;
+    }
+
+    public BufferedImage getInteractImage() {
+        return interactImage;
+    }
+
+
 }

@@ -1,11 +1,11 @@
 package model.tile;
 
+import model.entities.Entity;
 import model.entities.characters.player.Player;
 import model.gameState.GameStateManager;
-import view.GamePanel;
 
 import java.awt.*;
-import java.util.Map;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class MapManager {
@@ -130,8 +130,8 @@ public class MapManager {
         }
     }
 
-    public void draw(Graphics2D g2){
-        currentMap.draw(g2);
+    public void draw(Graphics2D g2, List<Entity> nearEntityList){
+        currentMap.draw(g2, nearEntityList);
     }
 
     public TileManager getCurrentMap() {

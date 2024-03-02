@@ -1,12 +1,12 @@
 package model.entities.characters;
 
-import model.collisions.CollisionObject;
 import model.entities.Entity;
 import model.entities.EntityState;
 import model.entities.states.*;
 import view.GamePanel;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -58,7 +58,7 @@ public abstract class Characters extends Entity {
     protected int respawnY; // Posizione di respawn Y
     protected long lastHitTime;  // Memorizza il tempo dell'ultima hit
     protected long hitCooldown;  // Cooldown in millisecondi (1 secondo)
-    protected ArrayList<CollisionObject> currentCollisionMap;
+    protected ArrayList<Rectangle2D.Double> currentCollisionMap;
     public Characters() {
         super();
     }
@@ -102,14 +102,14 @@ public abstract class Characters extends Entity {
     }
     public boolean collidesWithObjects(int nextX, int nextY) {
         // Verifica la collisione con gli oggetti di collisione della mappa corrente
-        for (CollisionObject collisionObject : currentCollisionMap) {
+        for (Rectangle2D.Double collisionObject : currentCollisionMap) {
             if (checkCollisionObject(nextX, nextY, collisionObject)) {
                 return true; // Collisione rilevata
             }
         }
         return false; // Nessuna collisione rilevata
     }
-    public boolean checkCollisionObject(int x, int y, CollisionObject collisionObject) {
+    public boolean checkCollisionObject(int x, int y, Rectangle2D.Double collisionObject) {
         double objectX = collisionObject.getX() * GamePanel.scale;
         double objectY = collisionObject.getY() * GamePanel.scale;
         double objectWidth = collisionObject.getWidth() * GamePanel.scale;
@@ -217,7 +217,7 @@ public abstract class Characters extends Entity {
         return isAttackAnimationCompleted;
     }
 
-    public ArrayList<CollisionObject> getCurrentCollisionMap() {
+    public ArrayList<Rectangle2D.Double> getCurrentCollisionMap() {
         return this.currentCollisionMap;
     }
 

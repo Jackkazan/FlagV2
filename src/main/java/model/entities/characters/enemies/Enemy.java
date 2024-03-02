@@ -1,6 +1,5 @@
 package model.entities.characters.enemies;
 
-import model.collisions.CollisionObject;
 import model.entities.Entity;
 import model.entities.EntityState;
 import model.entities.characters.npc.Npc;
@@ -12,6 +11,7 @@ import model.entities.states.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,8 +59,8 @@ public class Enemy extends Characters implements Prototype {
         if (!this.isDespawned) {
             // Disegna la barra della vita
             int healthBarWidth = (int) (((double) this.currentLife / this.maxLife) * this.maxHealthBarWidth); //calcola la larghezza della barra della vita in base alla percentuale di vita attuale rispetto alla vita massima
-            int screenX = this.x - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX() - this.maxHealthBarWidth / 2 + this.idle1.getWidth() / 2;
-            int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
+            int screenX = this.x - this.maxHealthBarWidth / 2 + this.idle1.getWidth() / 2;
+            int screenY = this.y;
             graphics2D.setColor(Color.RED);  // Colore della barra
             graphics2D.fillRect(screenX, screenY - tileSize, healthBarWidth, 7);  // Disegna la barra
             graphics2D.setColor(Color.BLACK);  // Colore del bordo della barra
@@ -255,7 +255,7 @@ public class Enemy extends Characters implements Prototype {
             return this;
         }
 
-        public EnemyBuilder setCollisionMap(ArrayList<CollisionObject> collisionMap) {
+        public EnemyBuilder setCollisionMap(ArrayList<Rectangle2D.Double> collisionMap) {
             this.entity.currentCollisionMap = collisionMap;
             return this;
         }

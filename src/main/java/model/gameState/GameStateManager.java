@@ -96,18 +96,25 @@ public class GameStateManager {
         this.playState = new PlayState(mapManager, player);
         this.pauseState = new PauseState();
         this.dialogueState = new DialogueState();
+
         this.npcList = NpcCreator.createNPCs(this, mapManager);
         this.itemList = ItemCreator.createObjects(this, mapManager, keyH);
         this.enemyList = EnemyCreator.createEnemies(this, mapManager);
+        this.trapList = TrapCreator.createTraps(mapManager);
+
         this.entityList.addAll(this.npcList);
-        this.entityList.addAll(this.enemyList);
         this.entityList.addAll(this.itemList);
+        this.entityList.addAll(this.enemyList);
         this.entityList.add(player);
+        this.entityList.addAll(this.trapList);
+
+
         this.questManager = questManager.getInstance();
         this.dialogueManager = dialogueManager.getInstance();
+
         DataInitializer.initializeData();
         playMusicLoop(0);
-        this.trapList = TrapCreator.createTraps(mapManager);
+
         this.currentEntityList= entityList.stream().filter(entity -> entity.getTileManager().equals(mapManager.getCurrentMap())).collect(Collectors.toList());
         initialized = true;
     }
@@ -242,4 +249,6 @@ public class GameStateManager {
     public List<Entity> getCurrentEntityList() {
         return currentEntityList;
     }
+
+
 }
