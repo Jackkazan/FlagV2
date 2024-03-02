@@ -96,6 +96,9 @@ public class IdleState implements EntityState {
         */
     }
     private void drawPlayer(Graphics2D graphics2D, Player player){
+
+
+
         BufferedImage images = switch (player.getDirection()) {
             case "up","up&attack" -> player.getUp1();
             case "down","down&attack" -> player.getDown1();
@@ -104,7 +107,7 @@ public class IdleState implements EntityState {
             default -> null;
         };
         if (images != null) {
-            graphics2D.drawImage(images, player.getX()-16, player.getY()-32, (player.getImageWidth()/2) *player.getScale(), (player.getImageHeight()/2)*player.getScale(), null);
+            graphics2D.drawImage(images, player.getScreenX()-16, player.getScreenY()-32, (player.getImageWidth()/2) *player.getScale(), (player.getImageHeight()/2)*player.getScale(), null);
         }
     }
 

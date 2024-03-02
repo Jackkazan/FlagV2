@@ -105,7 +105,6 @@ public class GameStateManager {
         this.entityList.addAll(this.npcList);
         this.entityList.addAll(this.itemList);
         this.entityList.addAll(this.enemyList);
-        this.entityList.add(player);
         this.entityList.addAll(this.trapList);
 
 

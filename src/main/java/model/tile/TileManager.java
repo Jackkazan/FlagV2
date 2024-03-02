@@ -99,10 +99,11 @@ public class TileManager {
                 }
             }
         }
+        /*
         nearEntityList = nearEntityList.stream()
                 .sorted(Comparator.comparing(Entity::getY))
                 .collect(toList());
-
+         */
         for (Entity entity : nearEntityList) {
             entity.draw(g2d);
         }

@@ -218,7 +218,7 @@ public class HitState implements EntityState {
         if (images != null) {
             int spriteIndex = player.getSpriteNum() % images.length;
 
-            graphics2D.drawImage(images[spriteIndex], player.getX()-16, player.getY()-32, (player.getImageWidth()/2) *player.getScale(), (player.getImageHeight()/2)*player.getScale(), null);
+            graphics2D.drawImage(images[spriteIndex], player.getScreenX()-16, player.getScreenY()-32, (player.getImageWidth()/2) *player.getScale(), (player.getImageHeight()/2)*player.getScale(), null);
         }
     }
 

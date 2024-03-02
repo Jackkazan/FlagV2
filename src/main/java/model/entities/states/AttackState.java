@@ -194,9 +194,9 @@ public class AttackState implements EntityState {
         if (images != null) {
             int spriteIndex = player.getSpriteNum() % images.length;
             if (player.getAttackAnimationCompleted())
-                graphics2D.drawImage(images[images.length-1], player.getX() + offsetX, player.getY() + offsetY, (imageWidth / 2) * player.getScale(), (imageHeight / 2) * player.getScale(), null);
+                graphics2D.drawImage(images[images.length-1], player.getScreenX() + offsetX, player.getScreenY() + offsetY, (imageWidth / 2) * player.getScale(), (imageHeight / 2) * player.getScale(), null);
             else
-                graphics2D.drawImage(images[spriteIndex], player.getX() + offsetX, player.getY() + offsetY, (imageWidth / 2) * player.getScale(), (imageHeight / 2) * player.getScale(), null);
+                graphics2D.drawImage(images[spriteIndex], player.getScreenX() + offsetX, player.getScreenY() + offsetY, (imageWidth / 2) * player.getScale(), (imageHeight / 2) * player.getScale(), null);
         }
 
 

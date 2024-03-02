@@ -98,8 +98,9 @@ public class PlayState implements GameState{
 
         this.graphics2D = (Graphics2D) g;
 
-        mapManager.draw(graphics2D , nearEntityList);
 
+        mapManager.draw(graphics2D , nearEntityList);
+        player.draw(graphics2D);
 
         UI.getInstance().draw(graphics2D);
 
