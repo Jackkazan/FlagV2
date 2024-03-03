@@ -82,7 +82,7 @@ public class EnemyCreator {
                 .setImageDimension(48,48)
                 .setDefaultDirection("left")
                 .setCanRespawn(true)
-                .setContainedMap(mapManager.getTileManagerDungeonSud())
+                .setContainedMap(mapManager.getTileManagerDungeonSud().getNameMap())
                 .setCollisionMap(mapManager.getTileManagerDungeonSud().getCollisionMap())
                 .set16EntityImage(greenSlime1Up_0,greenSlime1Up_1,greenSlime1Up_2,greenSlime1Up_3,
                         greenSlime1Down_0,greenSlime1Down_1,greenSlime1Down_2,greenSlime1Down_3,
@@ -201,7 +201,7 @@ public class EnemyCreator {
                 .setCollisionArea(64,64)
                 .setImageDimension(48,48)
                 .setDefaultDirection("down")
-                .setContainedMap(mapManager.getTileManagerDungeonSud())
+                .setContainedMap(mapManager.getTileManagerDungeonSud().getNameMap())
                 .setCollisionMap(mapManager.getTileManagerDungeonSud().getCollisionMap())
                 .set24EntityImage(greenGoblin1Up_0, greenGoblin1Up_1 ,greenGoblin1Up_2 ,greenGoblin1Up_3 ,greenGoblin1Up_4 ,greenGoblin1Up_5,
                         greenGoblin1Down_0 ,greenGoblin1Down_1 ,greenGoblin1Down_2 ,greenGoblin1Down_3 ,greenGoblin1Down_4 ,greenGoblin1Down_5,

@@ -59,7 +59,7 @@ public class DeadState implements EntityState {
             default -> null;
         };
 
-        if (images != null && enemy.getGsm().getMapManager().getCurrentMap() == enemy.getTileManager()) {
+        if (images != null) {
             switch (enemy.getScale()){
                 case 4:
                     if(enemy.getDeadAnimationCompleted())

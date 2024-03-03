@@ -117,7 +117,7 @@ public class HitState implements EntityState {
 
 
 
-        if (images != null && enemy.getGsm().getMapManager().getCurrentMap() == enemy.getTileManager()) {
+        if (images != null ) {
             switch (enemy.getScale()){
                 case 4:
                     graphics2D.drawImage(images[enemy.getSpriteNum()], enemy.getX()-(enemy.getIdle1().getWidth()/2), enemy.getY()-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);

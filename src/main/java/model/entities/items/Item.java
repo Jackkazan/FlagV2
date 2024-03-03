@@ -36,6 +36,7 @@ public class Item extends Entity implements Prototype {
 
         // animazione se succede evento o altro
         interact();
+
     }
 
     /*private boolean isPlayerNearby() {

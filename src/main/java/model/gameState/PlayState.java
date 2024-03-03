@@ -40,22 +40,14 @@ public class PlayState implements GameState{
             gsm.setState(GameStateManager.State.PAUSE);
 
 
+        for(Entity entity : gsm.getCurrentEntityList())
+            if(entity.getContainedMapName().equals(mapManager.getCurrentMap().getNameMap()))
+                entity.update();
+
         //colleziona solo gli oggetti vicini al player
         nearEntityList = collectNearEntityList(gsm.getCurrentEntityList());
 
-
         System.out.println(nearEntityList);
-
-
-        if(!gsm.isInDialogue())
-            player.update();
-
-
-        for(Entity entity : nearEntityList)
-            if(!entity.equals(gsm.player) && entity.getTileManager().equals(mapManager.getCurrentMap()))
-                entity.update();
-
-
 
         // Gestione delle transizioni della mappa
         mapManager.manageTransitions();
@@ -95,16 +87,17 @@ public class PlayState implements GameState{
     @Override
     public void draw(Graphics g) {
 
-
         this.graphics2D = (Graphics2D) g;
 
-
         mapManager.draw(graphics2D , nearEntityList);
+
         player.draw(graphics2D);
 
         UI.getInstance().draw(graphics2D);
 
         drawToTempScreen();
+
+
     }
 
 //DEBUG

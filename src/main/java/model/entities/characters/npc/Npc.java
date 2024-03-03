@@ -134,7 +134,7 @@ public class Npc extends Characters {
         };
 
 
-        if (images != null && gsm.getMapManager().getCurrentMap() == this.tileManager) {
+        if (images != null ) {
             graphics2D.drawImage(images[spriteNum], this.x, this.y-tileSize, (imageWidth/2)*scale , (imageHeight/2)*scale,null);
         }
     }

@@ -29,6 +29,7 @@ public abstract class Entity{
 
     protected int imageWidth;
     protected int imageHeight;
+    protected String containedMapName;
 
     public Entity(){
         this.gsm = GameStateManager.getInstance();
@@ -89,8 +90,8 @@ public abstract class Entity{
             return (B) this;
         }
 
-        public B setContainedMap(TileManager tileManager) {
-            this.entity.tileManager = tileManager;
+        public B setContainedMap(String pathMap) {
+            this.entity.containedMapName = pathMap;
             return (B) this;
         }
         public B setInteractable(boolean interactable) {
@@ -135,8 +136,23 @@ public abstract class Entity{
         return tileManager;
     }
     public void interact() {
+
+        /*
+        System.out.println("Name: "+this.name +
+                "\nX: "+ this.x +
+                "\nY: "+ this.y +
+                "\nArea di collisione:" +
+                "\nX: "+ this.collisionArea.getX() +
+                "\nY: "+ this.collisionArea.getY() +
+                "\nWidth: "+ this.collisionArea.getWidth() +
+                "\nHeight: "+ this.collisionArea.getHeight());
+
+         */
+
+
+
         // Verifica se il giocatore è nelle vicinanze e ha premuto il tasto "E"
-        if (this.tileManager == gsm.getMapManager().getCurrentMap() && this.isInteractable && !gsm.getPlayer().isAttacking() && isPlayerNearby()) {
+        if (this.containedMapName.equals(gsm.getMapManager().getCurrentMap().getNameMap())  && this.isInteractable && !gsm.getPlayer().isAttacking() && isPlayerNearby()) {
             if(keyH.interactRequest && interactionAction != null && !gsm.isInDialogue()) {
                 //System.out.println("Ho interagito con "+this.name);
                 interactionAction.performAction(this);
@@ -149,6 +165,7 @@ public abstract class Entity{
     protected boolean isPlayerNearby() {
         // puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
         if(this.collisionArea!= null && gsm.getPlayer().getInteractionArea().intersects(this.collisionArea)){
+            System.out.println("Sto collidendo con "+ this.getName());
             return true;
         }
         else return false;
@@ -261,5 +278,11 @@ public abstract class Entity{
         return interactImage;
     }
 
+    public String getContainedMapName() {
+        return containedMapName;
+    }
 
+    public void setContainedMapName(String containedMapName) {
+        this.containedMapName = containedMapName;
+    }
 }

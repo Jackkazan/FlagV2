@@ -40,7 +40,7 @@ public class IdleState implements EntityState {
     }
     private void drawTrap(Graphics2D graphics2D, Trap trap) {
 
-        if(trap.getStaticImage() != null && trap.getGsm().getMapManager().getCurrentMap() == trap.getTileManager())
+        if(trap.getStaticImage() != null )
             graphics2D.drawImage(trap.getStaticImage(), trap.getX(), trap.getY(), ((tileSize*trap.getImageWidth())/16)*trap.getScale(), ((tileSize*trap.getImageHeight())/16)*trap.getScale(), null);
 
     }
@@ -70,7 +70,7 @@ public class IdleState implements EntityState {
             default -> null;
         };
 
-        if (images != null && enemy.getGsm().getMapManager().getCurrentMap() == enemy.getTileManager()) {
+        if (images != null) {
             switch (enemy.getScale()){
                 case 4:
                     graphics2D.drawImage(images[enemy.getSpriteNum()], enemy.getX()-(enemy.getIdle1().getWidth()/2), enemy.getY()-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);

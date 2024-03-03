@@ -39,7 +39,7 @@ public class TrapCreator {
                 .setImageDimension(32,32)
                 .setScale(2)
                 .setAttackArea(24,44,64,64)
-                .setContainedMap(mapManager.getTileManagerDungeonSud())
+                .setContainedMap(mapManager.getTileManagerDungeonSud().getNameMap())
                 .build();
 
         prototypeManager = new TrapPrototype(spike1);

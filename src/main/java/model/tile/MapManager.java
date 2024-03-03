@@ -26,17 +26,19 @@ public class MapManager {
     private TileManager tileManagerPrimoPianoTavernaVillaggio;
     private TileManager tileManagerDungeonSud;
 
-    public MapManager(Player player, TileManager tileManagerCasettaIniziale, TileManager tileManagerZonaIniziale, TileManager tileManagerVillaggioSud,
+    public MapManager(Player player, TileManager tileManagerCasettaIniziale, TileManager tileManagerZonaIniziale , TileManager tileManagerVillaggioSud,
                       TileManager tileManagerNegozioItemsVillaggioSud, TileManager tileManagerPianoTerraTavernaVillaggio, TileManager tileManagerPrimoPianoTavernaVillaggio, TileManager tileManagerDungeonSud) {
         this.player = player;
         this.gsm = GameStateManager.getInstance();
         this.tileManagerZonaIniziale = tileManagerZonaIniziale;//Mappa iniziale
         this.tileManagerCasettaIniziale = tileManagerCasettaIniziale;
+
         this.tileManagerVillaggioSud = tileManagerVillaggioSud;
         this.tileManagerNegozioItemsVillaggioSud = tileManagerNegozioItemsVillaggioSud;
         this.tileManagerPianoTerraTavernaVillaggio = tileManagerPianoTerraTavernaVillaggio;
         this.tileManagerPrimoPianoTavernaVillaggio = tileManagerPrimoPianoTavernaVillaggio;
         this.tileManagerDungeonSud = tileManagerDungeonSud;
+
 
         //da cambiare
         setMap(tileManagerCasettaIniziale);
@@ -51,9 +53,10 @@ public class MapManager {
 
     public void setMap(TileManager nextMap){
         currentMap = nextMap;
+        player.setContainedMapName(currentMap.getNameMap());
         player.setTileManager(nextMap);
         player.setCurrentCollisionMap(nextMap.getCollisionMap());
-        gsm.setCurrentEntityList(gsm.getEntityList().stream().filter(entity -> entity.getTileManager().equals(nextMap)).collect(Collectors.toList()));
+        gsm.setCurrentEntityList(gsm.getEntityList().stream().filter(entity -> entity.getContainedMapName().equals(nextMap.getNameMap())).collect(Collectors.toList()));
     }
 
     public void manageTransitions(){

@@ -85,14 +85,17 @@ public class GameStateManager {
         initializing = true;
         this.player = new Player();
         this.player.setCurrentLife(6);
-        this.tileManagerZonaIniziale = new TileManager(this, "src/main/resources/Map/ZonaIniziale/ZonaIniziale.tmx");
-        this.tileManagerCasettaIniziale = new TileManager(this, "src/main/resources/Map/StanzaIntroduzione/CasettaIniziale.tmx");
-        this.tileManagerVillaggioSud = new TileManager(this, "src/main/resources/Map/VillaggioSud/VillaggioSud.tmx");
-        this.tileManagerNegozioItemsVillaggioSud = new TileManager(this, "src/main/resources/Map/NegozioItemsVillaggioSud/NegozioItemsVillaggioSud.tmx");
-        this.tileManagerPianoTerraTavernaVillaggio = new TileManager(this,"src/main/resources/Map/TavernaVillaggio/PianoTerraTavernaVillaggio.tmx");
-        this.tileManagerPrimoPianoTavernaVillaggio = new TileManager(this,"src/main/resources/Map/TavernaVillaggio/PrimoPianoTavernaVillaggio.tmx");
-        this.tileManagerDungeonSud = new TileManager(this,"src/main/resources/Map/DungeonSud/sud_cave.tmx");
-        this.mapManager = new MapManager(player, tileManagerCasettaIniziale, tileManagerZonaIniziale, tileManagerVillaggioSud, tileManagerNegozioItemsVillaggioSud,tileManagerPianoTerraTavernaVillaggio,tileManagerPrimoPianoTavernaVillaggio, tileManagerDungeonSud);
+        this.tileManagerZonaIniziale = new TileManager(this, "src/main/resources/png Maps/ZonaIniziale.png");
+        this.tileManagerCasettaIniziale = new TileManager(this, "src/main/resources/png Maps/CasettaIniziale.png");
+
+        this.tileManagerVillaggioSud = new TileManager(this, "src/main/resources/png Maps/VillaggioSud.png");
+        this.tileManagerNegozioItemsVillaggioSud = new TileManager(this, "src/main/resources/png Maps/NegozioItemsVillaggioSud.png");
+        this.tileManagerPianoTerraTavernaVillaggio = new TileManager(this,"src/main/resources/png Maps/PianoTerraTavernaVillaggio.png");
+        this.tileManagerPrimoPianoTavernaVillaggio = new TileManager(this,"src/main/resources/png Maps/PrimoPianoTavernaVillaggio.png");
+        this.tileManagerDungeonSud = new TileManager(this,"src/main/resources/png Maps/sud_cave.png");
+
+
+        this.mapManager = new MapManager(player, tileManagerCasettaIniziale, tileManagerZonaIniziale, tileManagerVillaggioSud, tileManagerNegozioItemsVillaggioSud,tileManagerPianoTerraTavernaVillaggio,tileManagerPrimoPianoTavernaVillaggio, tileManagerDungeonSud );
         this.playState = new PlayState(mapManager, player);
         this.pauseState = new PauseState();
         this.dialogueState = new DialogueState();
@@ -102,10 +105,13 @@ public class GameStateManager {
         this.enemyList = EnemyCreator.createEnemies(this, mapManager);
         this.trapList = TrapCreator.createTraps(mapManager);
 
+        this.entityList.add(player);
         this.entityList.addAll(this.npcList);
         this.entityList.addAll(this.itemList);
+
         this.entityList.addAll(this.enemyList);
         this.entityList.addAll(this.trapList);
+
 
 
         this.questManager = questManager.getInstance();
@@ -114,7 +120,8 @@ public class GameStateManager {
         DataInitializer.initializeData();
         playMusicLoop(0);
 
-        this.currentEntityList= entityList.stream().filter(entity -> entity.getTileManager().equals(mapManager.getCurrentMap())).collect(Collectors.toList());
+
+        this.currentEntityList = entityList.stream().filter(entity -> entity.getContainedMapName().equals(mapManager.getCurrentMap().getNameMap())).collect(Collectors.toList());
         initialized = true;
     }
     public boolean isInitialized(){

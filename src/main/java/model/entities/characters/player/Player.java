@@ -89,6 +89,7 @@ public class Player extends Characters {
     }
 
     public void setDefaultValues() {
+        containedMapName = "src/main/resources/png Maps/CasettaIniziale.png";
         x = tileSize*3;  //3
         y = tileSize*4;  //4
         maxLife = 6;
@@ -148,26 +149,36 @@ public class Player extends Characters {
     }
     @Override
     public void update() {
-        updateAttackArea();
-        updateCollisionArea();
-        updateInteractionArea();
-        if (currentLife <= 0) {
-            setState(State.DEAD);
-            // da sistemare l'invincibilità: se il cooldown dell'hit non è finito non può essere hittato
-        } else if (isHitted) {
-            setState(State.HIT);
-        } else if (isAttacking && this.armed) {
-            setState(State.ATTACK);
-        } else if (keyH.spacePressed && isAttackAnimationCompleted && this.armed) {
-            resetAttack();
-            setState(State.ATTACK);
-        } else if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
-            setState(State.MOVEMENT);
-        } else {
-            setState(State.IDLE);
+        if(!gsm.isInDialogue()) {
+            updateAttackArea();
+            updateCollisionArea();
+            updateInteractionArea();
+            System.out.println("Name: " + this.name +
+                    "\nX: " + this.x +
+                    "\nY: " + this.y);
+            System.out.println("Interaction Area:" +
+                    "\nX: " + this.interactionArea.getX() +
+                    "\nY: " + this.interactionArea.getY() +
+                    "\nWidth: " + this.interactionArea.getWidth() +
+                    "\nHeight: " + this.interactionArea.getHeight());
+            if (currentLife <= 0) {
+                setState(State.DEAD);
+                // da sistemare l'invincibilità: se il cooldown dell'hit non è finito non può essere hittato
+            } else if (isHitted) {
+                setState(State.HIT);
+            } else if (isAttacking && this.armed) {
+                setState(State.ATTACK);
+            } else if (keyH.spacePressed && isAttackAnimationCompleted && this.armed) {
+                resetAttack();
+                setState(State.ATTACK);
+            } else if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+                setState(State.MOVEMENT);
+            } else {
+                setState(State.IDLE);
+            }
+            //System.out.println("Stato corrente "+ currentState);
+            currentState.update(this);
         }
-        //System.out.println("Stato corrente "+ currentState);
-        currentState.update(this);
     }
 
     @Override
@@ -203,7 +214,7 @@ public class Player extends Characters {
     public boolean collidesWithNpcs(int nextX, int nextY) {
         // Verifica la collisione con le entità della lista npcList
         for (Npc npc : gsm.getNpcList()) {
-            if (npc.getTileManager().equals(gsm.getMapManager().getCurrentMap()) && checkCollisionRectangle(nextX, nextY, npc.getCollisionArea())) {
+            if (npc.getContainedMapName().equals(gsm.getMapManager().getCurrentMap().getNameMap()) && checkCollisionRectangle(nextX, nextY, npc.getCollisionArea())) {
                 return true; // Collisione rilevata
             }
         }
@@ -211,8 +222,10 @@ public class Player extends Characters {
     }
     public boolean collidesWithItems(int nextX, int nextY) {
         // Verifica la collisione con gli oggetti della lista keyItemsList
+
         for (Item item : gsm.getKeyItemsList()) {
-            if (item.getTileManager().equals(gsm.getMapManager().getCurrentMap()) && item.getCollisionArea()!=null && checkCollisionRectangle(nextX, nextY, item.getCollisionArea())) {
+            if (item.getContainedMapName().equals(gsm.getMapManager().getCurrentMap().getNameMap()) && item.getCollisionArea()!=null && checkCollisionRectangle(nextX, nextY, item.getCollisionArea())) {
+
                 item.interact();
                 return true; // Collisione rilevata
             }
@@ -360,6 +373,11 @@ public class Player extends Characters {
 
     public Rectangle getAttackArea() {
         return attackArea;
+    }
+
+    @Override
+    public String getContainedMapName() {
+        return super.getContainedMapName();
     }
 
 }

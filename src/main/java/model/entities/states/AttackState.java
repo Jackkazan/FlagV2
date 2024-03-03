@@ -65,10 +65,8 @@ public class AttackState implements EntityState {
                                 trap.getAnimateImage5(), trap.getAnimateImage6(), trap.getAnimateImage7(), trap.getAnimateImage8(),
                                 trap.getAnimateImage9(), trap.getAnimateImage10(),trap.getAnimateImage11(), trap.getAnimateImage12()};
 
-        if ( trap.getGsm().getMapManager().getCurrentMap() == trap.getTileManager()) {
-            //perché altrimenti prima di finire disegnava lo sprite 0 da capo
-            graphics2D.drawImage(images[trap.getSpriteNum()], trap.getX(), trap.getY(), ((tileSize*trap.getImageWidth())/16)*trap.getScale(), ((tileSize*trap.getImageHeight())/16)*trap.getScale(), null);
-        }
+        graphics2D.drawImage(images[trap.getSpriteNum()], trap.getX(), trap.getY(), ((tileSize*trap.getImageWidth())/16)*trap.getScale(), ((tileSize*trap.getImageHeight())/16)*trap.getScale(), null);
+
     }
 
     private void updateEnemy(Enemy enemy){
@@ -103,7 +101,7 @@ public class AttackState implements EntityState {
         };
 
 
-        if (images != null && enemy.getGsm().getMapManager().getCurrentMap() == enemy.getTileManager()) {
+        if (images != null) {
             switch (enemy.getScale()){
                 case 4:
                     if(enemy.getAttackAnimationCompleted())

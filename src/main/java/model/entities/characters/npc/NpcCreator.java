@@ -39,7 +39,7 @@ public class NpcCreator {
                 .setIsInteractible(true)
                 .setInteractionAction(new DialogueAction())
                 .setDefaultDirection("left")
-                .setContainedMap(mapManager.getTileManagerZonaIniziale())
+                .setContainedMap(mapManager.getTileManagerZonaIniziale().getNameMap())
                 .set8EntityImage(vecchietta_up1, vecchietta_up2,
                         vecchietta_down1, vecchietta_down2,
                         vecchietta_left1, vecchietta_left2,
@@ -66,7 +66,7 @@ public class NpcCreator {
                 .setIsInteractible(true)
                 .setInteractionAction(new DialogueAction())
                 .setDefaultDirection("right")
-                .setContainedMap(mapManager.getTileManagerZonaIniziale())
+                .setContainedMap(mapManager.getTileManagerZonaIniziale().getNameMap())
                 .set8EntityImage(contadino1_up1, contadino1_up2,
                         contadino1_down1, contadino1_down2,
                         contadino1_left1, contadino1_left2,
@@ -93,7 +93,7 @@ public class NpcCreator {
                 .setIsInteractible(true)
                 .setInteractionAction(new DialogueAction())
                 .setDefaultDirection("down")
-                .setContainedMap(mapManager.getTileManagerZonaIniziale())
+                .setContainedMap(mapManager.getTileManagerZonaIniziale().getNameMap())
                 .set8EntityImage(contadino2_up1, contadino2_up2,
                         contadino2_down1, contadino2_down2,
                         contadino2_left1, contadino2_left2,
@@ -114,7 +114,7 @@ public class NpcCreator {
                 .setIsInteractible(true)
                 .setInteractionAction(new DialogueAction())
                 .setDefaultDirection("down")
-                .setContainedMap(mapManager.getTileManagerPianoTerraTavernaVillaggio())
+                .setContainedMap(mapManager.getTileManagerPianoTerraTavernaVillaggio().getNameMap())
                 .set8EntityImage(cameriera1Down_0, cameriera1Down_1,
                         cameriera1Down_0, cameriera1Down_1,
                         cameriera1Down_0, cameriera1Down_1,
@@ -135,7 +135,7 @@ public class NpcCreator {
                 .setIsInteractible(true)
                 .setInteractionAction(new DialogueAction())
                 .setDefaultDirection("right")
-                .setContainedMap(mapManager.getTileManagerNegozioItemsVillaggioSud())
+                .setContainedMap(mapManager.getTileManagerNegozioItemsVillaggioSud().getNameMap())
                 .set8EntityImage(mercante1Right_0, mercante1Right_1,
                         mercante1Right_0, mercante1Right_1,
                         mercante1Right_0, mercante1Right_1,
@@ -155,7 +155,7 @@ public class NpcCreator {
                 .setIsInteractible(true)
                 .setInteractionAction(new DialogueAction())
                 .setDefaultDirection("down")
-                .setContainedMap(mapManager.getTileManagerVillaggioSud())
+                .setContainedMap(mapManager.getTileManagerVillaggioSud().getNameMap())
                 .set8EntityImage(fabbro1Down_0, fabbro1Down_0,
                         fabbro1Down_0, fabbro1Down_0,
                         fabbro1Down_0, fabbro1Down_0,

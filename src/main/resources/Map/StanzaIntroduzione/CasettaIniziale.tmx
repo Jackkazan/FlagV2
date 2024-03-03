@@ -71,7 +71,7 @@
 0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="7" name="Livello di oggetti 1">
+ <objectgroup id="7" name="Livello di oggetti 1" visible="0">
   <object id="1" x="6.16667" y="5.66665" width="5.0833" height="149.5"/>
   <object id="2" x="141.167" y="5.58365" width="12" height="147.583"/>
   <object id="3" x="13.4167" y="7.66665" width="129.75" height="28.75"/>

@@ -25,7 +25,7 @@ public class ItemCreator {
                 .setImageDimension(16, 16)
                 .setCollisionArea(16, 16)
                 .setScale(2)
-                .setContainedMap(mapManager.getTileManagerCasettaIniziale())
+                .setContainedMap(mapManager.getTileManagerCasettaIniziale().getNameMap())
                 // .setRelatedQuests(questList.get(0))
                 .setInteractable(true)
                 .setInteractionAction(new InteractionAction.DisappearAction())
@@ -36,7 +36,7 @@ public class ItemCreator {
                 .setName("Porta")
                 .setStaticImage("/object/PortaChiusaInterno.png")
                 .setInteractImage("/object/portaAperta.png")
-                .setContainedMap(mapManager.getTileManagerCasettaIniziale())
+                .setContainedMap(mapManager.getTileManagerCasettaIniziale().getNameMap())
                 .setOffsetY(-tileSize)
                 .setInteractable(true)
                 .setImageDimension(32, 48)
@@ -45,6 +45,7 @@ public class ItemCreator {
                 // .setRelatedQuests(questList.get(1))
                 .setInteractionAction(new InteractionAction.DisappearAction())
                 .build();
+
         //System.out.println(QuestManager.getQuestMap().get(portaCasettaInizialeChiusa).getQuestName());
         Item zuccaMarcia1 = new Item.ItemBuilder(39, 44)
                 .setName("ZuccaMarcia1")
@@ -52,7 +53,7 @@ public class ItemCreator {
                 .setInteractImage("/object/spriteInvisibile16x16.png")
                 .setImageDimension(16, 16)
                 .setCollisionArea(16, 16)
-                .setContainedMap(mapManager.getTileManagerZonaIniziale())
+                .setContainedMap(mapManager.getTileManagerZonaIniziale().getNameMap())
                 //.setRelatedQuests(questList.get(0))
                 .setInteractable(false)
                 .setInteractionAction(new InteractionAction.DisappearAction())
@@ -71,7 +72,7 @@ public class ItemCreator {
                 .setCollisionArea(32, 32)
                 .setOffsetY(-48)
                 .setScale(2)
-                .setContainedMap(mapManager.getTileManagerZonaIniziale())
+                .setContainedMap(mapManager.getTileManagerZonaIniziale().getNameMap())
                 // .setRelatedQuests(questList.get(0))
                 .setInteractable(false)
                 .setInteractionAction(new InteractionAction.ChangeImageAction())
@@ -87,18 +88,18 @@ public class ItemCreator {
         Item wall1 = new Item.ItemBuilder(60, 64)
                 .setName("Wall1")
                 .setCollisionArea(256,64)
-                .setContainedMap(mapManager.getTileManagerZonaIniziale())
+                .setContainedMap(mapManager.getTileManagerZonaIniziale().getNameMap())
                         .build();
         Item wall2 = new Item.ItemBuilder(48, 86)
                 .setName("Wall2")
                 .setCollisionArea(92, 16)
-                .setContainedMap(mapManager.getTileManagerVillaggioSud())
+                .setContainedMap(mapManager.getTileManagerVillaggioSud().getNameMap())
                 .build();
 
         Item wall3 = new Item.ItemBuilder(41, 79)
                 .setName("Wall3")
                 .setCollisionArea(tileSize*3, tileSize*5)
-                .setContainedMap(mapManager.getTileManagerDungeonSud())
+                .setContainedMap(mapManager.getTileManagerDungeonSud().getNameMap())
                 .build();
 
         Item chest1 = new Item.ItemBuilder(87,80)
@@ -107,7 +108,7 @@ public class ItemCreator {
                 .setInteractImage("/object/goldenChestAperta.png")
                 .setImageDimension(32, 64)
                 .setCollisionArea(48, 96)
-                .setContainedMap(mapManager.getTileManagerDungeonSud())
+                .setContainedMap(mapManager.getTileManagerDungeonSud().getNameMap())
                 // .setRelatedQuests(questList.get(0))
                 .setInteractable(true)
                 .setInteractionAction(new InteractionAction.ChangeImageAction())

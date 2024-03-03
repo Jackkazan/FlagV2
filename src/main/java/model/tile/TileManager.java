@@ -4,71 +4,72 @@ import model.entities.Entity;
 import model.gameState.GameStateManager;
 import model.tile.toolTMX.TMXReader;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
 import static view.GamePanel.renderDistance;
 import static view.GamePanel.tileSize;
 
 public class TileManager {
     private GameStateManager gsm;
+    /*
     private HashMap<Integer, BufferedImage> mappaSprite;
     private ArrayList<String> listaMatrici;
     private int numLayer;
     private int[][][] mapTileNum;
+    */
+
+    private String nameMap;
 
     private ArrayList<Rectangle2D.Double> collisionMap;
-
     private int maxMapCol;
     private int maxMapRow;
     // int mapWidth = tileSize * maxMapCol;
     // int mapHeigth = tileSize * maxMapRow;
-    private BufferedImage bufferedImage;
+    private BufferedImage image;
 
 
-    public TileManager(GameStateManager gsm, String pathTMXMap){
+    public TileManager(GameStateManager gsm, String pathPngMap){
+
         this.gsm = gsm;
-        TMXReader readMap = new TMXReader(pathTMXMap);
-        this.mappaSprite= readMap.getMappaSprite();
-        this.listaMatrici = readMap.getListaMatrici();
-        this.numLayer=readMap.getNumLayer();
-        this.maxMapCol = readMap.getMapWidth();
-        this.maxMapRow = readMap.getMapHeigth();
-        //matrice a tre livelli che memorizzerà la matrice di ciascun layer
-        this.mapTileNum = new int[numLayer][maxMapRow][maxMapCol];
-        this.collisionMap = readMap.getCollisionObjects();
-        gsm.getPlayer().setCurrentCollisionMap(collisionMap);
-        this.bufferedImage = new BufferedImage(maxMapCol * tileSize, maxMapRow * tileSize, BufferedImage.TYPE_INT_ARGB);
+
+        this.nameMap = pathPngMap;
+
+        // Rimuovi la parte "png Maps/" e ottieni il nome del file senza estensione
+        String filename = pathPngMap.substring(pathPngMap.lastIndexOf("/") + 1, pathPngMap.lastIndexOf("."));
+
+        // Costruisci il percorso della mappa di collisione
+        String collisionPath = pathPngMap.replace("png Maps/", "collisions Maps/").replace(".png",".tmx");
+
+        System.out.println(collisionPath);
+
+        this.collisionMap = new TMXReader(collisionPath).getCollisionObjects();
 
 
-        for(int i=0;i<numLayer;i++)
-            loadMap(listaMatrici.get(i).split("\n"), i);
+        try {
+            // Legge l'immagine da un file
+            File file = new File(pathPngMap);
+            image = ImageIO.read(file);
+            // Controlla se l'immagine è stata letta correttamente
+            if (image != null) {
 
-    }
+                maxMapCol = image.getWidth()/tileSize;
+                maxMapRow = image.getHeight()/tileSize;
+                System.out.println("Dimensioni dell'immagine: " + maxMapCol + "x" + maxMapRow);
 
-    public void loadMap(String[] righeStringa, int layerIndex){
-
-        // Determina il numero di colonne della matrice
-        int colonne = righeStringa[0].split(",").length;
-
-        // Crea la matrice temporanea
-        int[][] matrice = new int[maxMapRow][colonne];
-
-        // Riempire la matrice con i valori convertiti da stringa a int
-        for (int i = 0; i < maxMapRow; i++) {
-            String[] valoriRiga = righeStringa[i].split(",");
-            for (int j = 0; j < colonne; j++) {
-                matrice[i][j] = Integer.parseInt(valoriRiga[j].trim());
+            } else {
+                System.out.println("Impossibile leggere l'immagine.");
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        // Assegna la matrice alla corretta posizione in mapTileNum
-        mapTileNum[layerIndex] = matrice;
+
 
     }
 
@@ -79,34 +80,41 @@ public class TileManager {
 
         createBufferedImage(nearEntityList);
         // Disegna il bufferedImage considerando la posizione del player
-        g2d.drawImage(bufferedImage, playerMapX, playerMapY, null);
+        g2d.drawImage(image, playerMapX, playerMapY, null);
+
+
     }
 
     private void createBufferedImage(List<Entity> nearEntityList) {
-        Graphics2D g2d = bufferedImage.createGraphics();
 
-        g2d.clearRect(0,0,bufferedImage.getWidth(), bufferedImage.getHeight());
+        Graphics2D g2d = image.createGraphics();
+
+        for (Entity entity : nearEntityList)
+            entity.draw(g2d);
+
+        g2d.clearRect(0,0,maxMapCol, maxMapRow);
         
-        for (int layerIndex = 0; layerIndex < numLayer; layerIndex++) {
-            for (int worldRow = 0; worldRow < maxMapRow; worldRow++) {
-                for (int worldCol = 0; worldCol < maxMapCol; worldCol++) {
-                    int tileNum = mapTileNum[layerIndex][worldRow][worldCol];
+        for (int worldRow = 0; worldRow < maxMapRow; worldRow++) {
+            for (int worldCol = 0; worldCol < maxMapCol; worldCol++) {
 
-                    int worldX = worldCol * tileSize;
-                    int worldY = worldRow * tileSize;
-                    if(isTileNearPlayer(worldX,worldY))
-                        g2d.drawImage(mappaSprite.get(tileNum), worldX, worldY, tileSize, tileSize, null);
-                }
-            }
+                int worldX = worldCol * tileSize;
+                int worldY = worldRow * tileSize;
+
+                if(isTileNearPlayer(worldX,worldY)) {
+                    // Ottieni la porzione dell'immagine corrispondente al tile 32x32
+                    BufferedImage tileImage = image.getSubimage(worldCol * tileSize, worldRow * tileSize, tileSize, tileSize);
+
+                    // Disegna il tile
+                    g2d.drawImage(tileImage, worldX, worldY, tileSize, tileSize, null);
+
+
+                }}
         }
         /*
         nearEntityList = nearEntityList.stream()
                 .sorted(Comparator.comparing(Entity::getY))
                 .collect(toList());
          */
-        for (Entity entity : nearEntityList) {
-            entity.draw(g2d);
-        }
 
 
     }
@@ -136,5 +144,10 @@ public class TileManager {
 
     public int getMaxMapRow() {
         return maxMapRow;
+    }
+
+    public String getNameMap() {
+        return nameMap;
+
     }
 }

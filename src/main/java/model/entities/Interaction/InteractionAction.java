@@ -2,6 +2,9 @@ package model.entities.Interaction;
 
 import model.entities.Entity;
 import model.quests.QuestManager;
+
+import java.awt.*;
+
 public class InteractionAction {
     public static boolean questAction(Entity entity) {
         return QuestManager.getInstance().questAction(entity);
@@ -13,7 +16,7 @@ public class InteractionAction {
             if (questAction(entity)) {
                 entity.changeImage();
                 entity.setInteractable(false);
-                entity.setCollisionArea(null);
+                entity.setCollisionArea(new Rectangle(0,0,0,0));
             }
 
         }
