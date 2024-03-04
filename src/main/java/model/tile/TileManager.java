@@ -76,11 +76,24 @@ public class TileManager {
         int playerMapX = -gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
         int playerMapY = -gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
 
+        System.out.println("\n----------------------------------------------" +
+                "\nPlayer getX(): "+ gsm.getPlayer().getX() +
+                "\nPlayer getY(): " + gsm.getPlayer().getY() +
+                "\nPlayer getScreenX(): "+ gsm.getPlayer().getScreenX() +
+                "\nPlayer getScreenY(): "+ gsm.getPlayer().getScreenY() +
+                "\nPlayer MapX: "+ playerMapX +
+                "\nPlayer MapY: "+ playerMapY);
+
         // Calcola gli indici dei tile visibili sulla mappa
-        int startCol = Math.max(0, playerMapX / tileSize);
-        int endCol = Math.min(maxMapCol, (playerMapX + screenWidth) / tileSize + 1);
-        int startRow = Math.max(0, playerMapY / tileSize);
-        int endRow = Math.min(maxMapRow, (playerMapY + screenHeight) / tileSize + 1);
+        int startCol = Math.max(0, (gsm.getPlayer().getX()-playerMapX)/tileSize);
+        int endCol = startCol +10;
+        int startRow = Math.max(0, (gsm.getPlayer().getY()-playerMapY)/tileSize);
+        int endRow = startRow +10;
+
+        System.out.println("start col: "+ startCol +
+                "\nend col: " + endCol +
+                "\nstart row: "+ startRow +
+                "\nend row: "+ endRow);
 
         // Disegna i tile visibili
         for (int row = startRow; row < endRow; row++) {
@@ -90,8 +103,15 @@ public class TileManager {
                 int drawX = worldX + playerMapX;
                 int drawY = worldY + playerMapY;
 
-                BufferedImage tileImage = image.getSubimage(worldX, worldY, tileSize, tileSize);
-                g2d.drawImage(tileImage, drawX, drawY, tileSize, tileSize, null);
+                System.out.println("worldX: "+ worldX +
+                        "\nworldY: "+ worldY +
+                        "\ndrawX: "+ drawX +
+                        "\ndrawY: "+ drawY);
+
+                //if(isTileNearPlayer(drawX,drawY)) {
+                    BufferedImage tileImage = image.getSubimage(worldX, worldY, tileSize, tileSize);
+                    g2d.drawImage(tileImage, drawX, drawY, tileSize, tileSize, null);
+                //}
 
             }
         }
@@ -118,19 +138,19 @@ public class TileManager {
         Graphics2D g2d = image.createGraphics();
 
         g2d.clearRect(0,0,maxMapCol, maxMapRow);
-        
+
         for (int worldRow = 0; worldRow < maxMapRow; worldRow++) {
             for (int worldCol = 0; worldCol < maxMapCol; worldCol++) {
 
                 int worldX = worldCol * tileSize;
                 int worldY = worldRow * tileSize;
 
-                if(isTileNearPlayer(worldX,worldY)) {
+                //if(isTileNearPlayer(worldX,worldY)) {
                     // Ottieni la porzione dell'immagine corrispondente al tile 32x32
                     BufferedImage tileImage = image.getSubimage(worldCol * tileSize, worldRow * tileSize, tileSize, tileSize);
                     // Disegna il tile
                     g2d.drawImage(tileImage, worldX, worldY, tileSize, tileSize, null);
-                }
+                //}
             }
         }
     }
