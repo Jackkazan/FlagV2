@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="11" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="13">
+ <objectgroup id="5" name="Livello di oggetti 1">
+  <object id="1" x="304" y="74" width="9.33333" height="101"/>
+  <object id="2" x="-2.84217e-14" y="124.5" width="268.167" height="50.5"/>
+  <object id="3" x="0.666667" y="0.333333" width="14" height="110"/>
+  <object id="4" x="15.3333" y="-0.333333" width="48.3333" height="15.3333"/>
+  <object id="5" x="64.3333" y="13" width="95.3333" height="36"/>
+  <object id="6" x="206.333" y="61" width="96.6667" height="31.6667"/>
+  <object id="7" x="156.333" y="13" width="51.3333" height="48"/>
+  <object id="8" x="163" y="70.6667" width="24" height="11.6667"/>
+  <object id="9" x="122" y="48.3333" width="24.6667" height="9"/>
+  <object id="10" x="67.1667" y="51.8333" width="26.3333" height="27"/>
+  <object id="11" x="60" y="15.3333" width="5.66667" height="63.3333"/>
+ </objectgroup>
+</map>

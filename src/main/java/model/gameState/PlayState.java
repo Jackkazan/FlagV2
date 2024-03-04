@@ -40,12 +40,12 @@ public class PlayState implements GameState{
             gsm.setState(GameStateManager.State.PAUSE);
 
 
-        for(Entity entity : gsm.getCurrentEntityList())
-            if(entity.getContainedMapName().equals(mapManager.getCurrentMap().getNameMap()))
-                entity.update();
-
         //colleziona solo gli oggetti vicini al player
         nearEntityList = collectNearEntityList(gsm.getCurrentEntityList());
+
+        for(Entity entity : nearEntityList)
+            entity.update();
+
 
         System.out.println(nearEntityList);
 
@@ -100,7 +100,7 @@ public class PlayState implements GameState{
                 .collect(toList());
          */
 
-        player.draw(graphics2D);
+        //player.draw(graphics2D);
 
         UI.getInstance().draw(graphics2D);
 
