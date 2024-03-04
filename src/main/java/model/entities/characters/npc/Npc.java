@@ -133,9 +133,11 @@ public class Npc extends Characters {
             default -> null;
         };
 
+        int screenX = this.x - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
+        int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
 
-        if (images != null ) {
-            graphics2D.drawImage(images[spriteNum], this.x, this.y-tileSize, (imageWidth/2)*scale , (imageHeight/2)*scale,null);
+        if (images != null) {
+            graphics2D.drawImage(images[spriteNum], screenX, screenY-tileSize, (imageWidth/2)*scale , (imageHeight/2)*scale,null);
         }
     }
 

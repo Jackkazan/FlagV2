@@ -69,7 +69,7 @@ public class ItemCreator {
                 .setStaticImage("/object/spaventaPasseri.png")
                 .setInteractImage("/object/spaventaPasseriDritto.png")
                 .setImageDimension(32, 48)
-                .setCollisionArea(32, 32)
+                .setCollisionArea(48, 32)
                 .setOffsetY(-48)
                 .setScale(2)
                 .setContainedMap(mapManager.getTileManagerZonaIniziale().getNameMap())
@@ -79,11 +79,11 @@ public class ItemCreator {
                 .build();
 
         prototypeManager = new ItemPrototype(spaventaPasseri1);
-        Prototype spaventaPasseri2 = prototypeManager.createItem("spaventaPasseri2", 64, 28, 32, 32);
-        Prototype spaventaPasseri3 = prototypeManager.createItem("spaventaPasseri3", 82, 31, 32, 32);
-        Prototype spaventaPasseri4 = prototypeManager.createItem("spaventaPasseri4", 44, 41, 32, 32);
-        Prototype spaventaPasseri5 = prototypeManager.createItem("spaventaPasseri5", 64, 44, 32, 32);
-        Prototype spaventaPasseri6 = prototypeManager.createItem("spaventaPasseri6", 85, 43, 32, 32);
+        Prototype spaventaPasseri2 = prototypeManager.createItem("spaventaPasseri2", 64, 28, 48, 32);
+        Prototype spaventaPasseri3 = prototypeManager.createItem("spaventaPasseri3", 82, 31, 48, 32);
+        Prototype spaventaPasseri4 = prototypeManager.createItem("spaventaPasseri4", 44, 41, 48, 32);
+        Prototype spaventaPasseri5 = prototypeManager.createItem("spaventaPasseri5", 64, 44, 48, 32);
+        Prototype spaventaPasseri6 = prototypeManager.createItem("spaventaPasseri6", 85, 43, 48, 32);
 
         Item wall1 = new Item.ItemBuilder(60, 64)
                 .setName("Wall1")

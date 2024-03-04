@@ -39,13 +39,15 @@ public class IdleState implements EntityState {
 
     }
     private void drawTrap(Graphics2D graphics2D, Trap trap) {
+        int screenX = trap.getX() - trap.getGsm().getPlayer().getX() + trap.getGsm().getPlayer().getScreenX();
+        int screenY = trap.getY() - trap.getGsm().getPlayer().getY() + trap.getGsm().getPlayer().getScreenY();
 
-        if(trap.getStaticImage() != null )
-            graphics2D.drawImage(trap.getStaticImage(), trap.getX(), trap.getY(), ((tileSize*trap.getImageWidth())/16)*trap.getScale(), ((tileSize*trap.getImageHeight())/16)*trap.getScale(), null);
+        if(trap.getStaticImage() != null)
+            graphics2D.drawImage(trap.getStaticImage(), screenX, screenY, ((tileSize*trap.getImageWidth())/16)*trap.getScale(), ((tileSize*trap.getImageHeight())/16)*trap.getScale(), null);
 
     }
 
-    public void updateEnemy(Enemy enemy){
+    public void updateEnemy(Enemy enemy) {
         enemy.getCollisionArea().setLocation(enemy.getX(), enemy.getY());
         if (enemy.getTotalSprite() == 16) {
             // alternatore di sprite
@@ -70,13 +72,16 @@ public class IdleState implements EntityState {
             default -> null;
         };
 
+        int screenX = enemy.getX() - enemy.getGsm().getPlayer().getX() + enemy.getGsm().getPlayer().getScreenX();
+        int screenY = enemy.getY() - enemy.getGsm().getPlayer().getY() + enemy.getGsm().getPlayer().getScreenY();
+
         if (images != null) {
             switch (enemy.getScale()){
                 case 4:
-                    graphics2D.drawImage(images[enemy.getSpriteNum()], enemy.getX()-(enemy.getIdle1().getWidth()/2), enemy.getY()-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+                    graphics2D.drawImage(images[enemy.getSpriteNum()], screenX-(enemy.getIdle1().getWidth()/2), screenY-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
                     break;
                 case 8:
-                    graphics2D.drawImage(images[enemy.getSpriteNum()], enemy.getX()-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -8, enemy.getY()-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -tileSize, (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+                    graphics2D.drawImage(images[enemy.getSpriteNum()], screenX-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -8, screenY-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -tileSize, (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
                     break;
             }
 
@@ -96,9 +101,6 @@ public class IdleState implements EntityState {
         */
     }
     private void drawPlayer(Graphics2D graphics2D, Player player){
-
-
-
         BufferedImage images = switch (player.getDirection()) {
             case "up","up&attack" -> player.getUp1();
             case "down","down&attack" -> player.getDown1();

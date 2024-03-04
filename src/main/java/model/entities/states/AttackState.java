@@ -65,7 +65,11 @@ public class AttackState implements EntityState {
                                 trap.getAnimateImage5(), trap.getAnimateImage6(), trap.getAnimateImage7(), trap.getAnimateImage8(),
                                 trap.getAnimateImage9(), trap.getAnimateImage10(),trap.getAnimateImage11(), trap.getAnimateImage12()};
 
-        graphics2D.drawImage(images[trap.getSpriteNum()], trap.getX(), trap.getY(), ((tileSize*trap.getImageWidth())/16)*trap.getScale(), ((tileSize*trap.getImageHeight())/16)*trap.getScale(), null);
+        int screenX = trap.getX() - trap.getGsm().getPlayer().getX() + trap.getGsm().getPlayer().getScreenX();
+        int screenY = trap.getY() - trap.getGsm().getPlayer().getY() + trap.getGsm().getPlayer().getScreenY();
+
+        //perché altrimenti prima di finire disegnava lo sprite 0 da capo
+        graphics2D.drawImage(images[trap.getSpriteNum()], screenX, screenY, ((tileSize*trap.getImageWidth())/16)*trap.getScale(), ((tileSize*trap.getImageHeight())/16)*trap.getScale(), null);
 
     }
 
@@ -100,20 +104,22 @@ public class AttackState implements EntityState {
             default -> null;
         };
 
+        int screenX = enemy.getX() - enemy.getGsm().getPlayer().getX() + enemy.getGsm().getPlayer().getScreenX();
+        int screenY = enemy.getY() - enemy.getGsm().getPlayer().getY() + enemy.getGsm().getPlayer().getScreenY();
 
         if (images != null) {
             switch (enemy.getScale()){
                 case 4:
                     if(enemy.getAttackAnimationCompleted())
-                        graphics2D.drawImage(images[images.length-1], enemy.getX()-(enemy.getIdle1().getWidth()/2), enemy.getY()-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+                        graphics2D.drawImage(images[images.length-1], screenX-(enemy.getIdle1().getWidth()/2), screenY-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
                     else
-                        graphics2D.drawImage(images[enemy.getSpriteNum()], enemy.getX()-(enemy.getIdle1().getWidth()/2), enemy.getY()-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+                        graphics2D.drawImage(images[enemy.getSpriteNum()], screenX-(enemy.getIdle1().getWidth()/2), screenY-(enemy.getIdle1().getHeight()/2), (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
                     break;
                 case 8:
                     if(enemy.getAttackAnimationCompleted())
-                        graphics2D.drawImage(images[images.length-1], enemy.getX()-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -8, enemy.getY()-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -tileSize, (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+                        graphics2D.drawImage(images[images.length-1], screenX-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -8, screenY-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -tileSize, (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
                     else
-                        graphics2D.drawImage(images[enemy.getSpriteNum()], enemy.getX()-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -8, enemy.getY()-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -tileSize, (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
+                        graphics2D.drawImage(images[enemy.getSpriteNum()], screenX-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -8, screenY-(enemy.getImageHeight() / 2) * enemy.getScale()/3 -tileSize, (enemy.getImageWidth() / 2) * enemy.getScale(), (enemy.getImageHeight() / 2) * enemy.getScale(), null);
                     break;
             }
             //perché altrimenti prima di finire disegnava lo sprite 0

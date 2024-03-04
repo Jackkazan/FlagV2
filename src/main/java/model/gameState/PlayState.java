@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
 import static view.GamePanel.renderDistance;
 import static view.GamePanel.tileSize;
 
@@ -23,14 +24,14 @@ public class PlayState implements GameState{
     private final MapManager mapManager;
     private final BufferedImage buffer;
 
-    private List<Entity> nearEntityList;
+    public static List<Entity> nearEntityList;
     private Graphics2D graphics2D;
 
     public PlayState(MapManager mapManager,Player player) {
         this.mapManager = mapManager;
         this.player = player;
         this.buffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_RGB);
-        this.nearEntityList = collectNearEntityList(gsm.getCurrentEntityList());
+        nearEntityList = collectNearEntityList(gsm.getCurrentEntityList());
     }
 
     @Override
@@ -89,16 +90,10 @@ public class PlayState implements GameState{
 
         this.graphics2D = (Graphics2D) g;
 
-        mapManager.draw(graphics2D , nearEntityList);
+        mapManager.draw(graphics2D);
 
-        for (Entity entity : nearEntityList)
+        for (Entity entity : nearEntityList.stream().sorted(Comparator.comparing(Entity::getY)).toList())
             entity.draw(graphics2D);
-
-        /*
-        nearEntityList = nearEntityList.stream()
-                .sorted(Comparator.comparing(Entity::getY))
-                .collect(toList());
-         */
 
         //player.draw(graphics2D);
 
@@ -160,7 +155,7 @@ public class PlayState implements GameState{
                     return distance < tileSize * renderDistance;
                 })
                 .sorted(Comparator.comparingDouble((Entity entity) -> distanceToPlayer(entity, player)))
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
 
@@ -169,9 +164,5 @@ public class PlayState implements GameState{
         double dx = entity.getX() - player.getX();
         double dy = entity.getY() - player.getY();
         return Math.sqrt(dx * dx + dy * dy);
-    }
-
-    public List<Entity> getNearEntityList() {
-        return nearEntityList;
     }
 }

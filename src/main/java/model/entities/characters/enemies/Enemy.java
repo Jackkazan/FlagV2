@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static model.gameState.PlayState.nearEntityList;
 import static view.GamePanel.tileSize;
 
 public class Enemy extends Characters implements Prototype {
@@ -59,8 +60,8 @@ public class Enemy extends Characters implements Prototype {
         if (!this.isDespawned) {
             // Disegna la barra della vita
             int healthBarWidth = (int) (((double) this.currentLife / this.maxLife) * this.maxHealthBarWidth); //calcola la larghezza della barra della vita in base alla percentuale di vita attuale rispetto alla vita massima
-            int screenX = this.x - this.maxHealthBarWidth / 2 + this.idle1.getWidth() / 2;
-            int screenY = this.y;
+            int screenX = this.x - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX() - this.maxHealthBarWidth / 2 + this.idle1.getWidth() / 2;
+            int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
             graphics2D.setColor(Color.RED);  // Colore della barra
             graphics2D.fillRect(screenX, screenY - tileSize, healthBarWidth, 7);  // Disegna la barra
             graphics2D.setColor(Color.BLACK);  // Colore del bordo della barra
@@ -185,11 +186,12 @@ public class Enemy extends Characters implements Prototype {
     }
 
     public boolean collidesWithEnemies(int nextX, int nextY) {
+
         // Verifica la collisione con le entità della lista npcList
-        for (Enemy enemy : gsm.getEnemyList()) {
+        for (Entity enemy : nearEntityList.stream().filter(entity -> entity instanceof Enemy).toList()) {
             if (enemy.equals(this))
                 return false;
-            if (enemy.getTileManager().equals(gsm.getMapManager().getCurrentMap()) && checkCollisionRectangle(nextX, nextY, enemy.getCollisionArea())) {
+            if (checkCollisionRectangle(nextX, nextY, enemy.getCollisionArea())) {
                 //System.out.println("Sei stato hittato da "+ enemy.getName());
                 return true; // Collisione rilevata
             }

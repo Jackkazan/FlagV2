@@ -1,5 +1,6 @@
 package model.entities.characters.player;
 
+import model.entities.Entity;
 import model.entities.characters.Characters;
 import model.entities.characters.enemies.Enemy;
 import model.entities.items.Item;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static model.gameState.PlayState.nearEntityList;
 import static view.GamePanel.tileSize;
 
 public class Player extends Characters {
@@ -188,7 +190,8 @@ public class Player extends Characters {
     }
 
     public void hitAnEnemy(){
-        for(Enemy enemy: gsm.getEnemyList()) {
+
+        for(Enemy enemy : gsm.getEnemyList().stream().filter( e -> e.getContainedMapName().equals(this.containedMapName)).toList()) {
             if (attackArea.intersects(enemy.getCollisionArea())) {
                 //System.out.println(enemy.getName() + " è stato hittato");
                 if(!enemy.isHitted()) {
@@ -213,7 +216,7 @@ public class Player extends Characters {
     // metodo per verificare la collisione con le entità
     public boolean collidesWithNpcs(int nextX, int nextY) {
         // Verifica la collisione con le entità della lista npcList
-        for (Npc npc : gsm.getNpcList()) {
+        for (Npc npc : gsm.getNpcList().stream().filter(npc -> npc.getContainedMapName().equals(this.containedMapName)).toList()) {
             if (npc.getContainedMapName().equals(gsm.getMapManager().getCurrentMap().getNameMap()) && checkCollisionRectangle(nextX, nextY, npc.getCollisionArea())) {
                 return true; // Collisione rilevata
             }
@@ -223,7 +226,7 @@ public class Player extends Characters {
     public boolean collidesWithItems(int nextX, int nextY) {
         // Verifica la collisione con gli oggetti della lista keyItemsList
 
-        for (Item item : gsm.getKeyItemsList()) {
+        for (Item item : gsm.getKeyItemsList().stream().filter(item -> item.getContainedMapName().equals(this.containedMapName)).toList()) {
             if (item.getContainedMapName().equals(gsm.getMapManager().getCurrentMap().getNameMap()) && item.getCollisionArea()!=null && checkCollisionRectangle(nextX, nextY, item.getCollisionArea())) {
 
                 item.interact();

@@ -1,11 +1,9 @@
 package model.tile;
 
-import model.entities.Entity;
 import model.entities.characters.player.Player;
 import model.gameState.GameStateManager;
 
 import java.awt.*;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class MapManager {
@@ -39,9 +37,8 @@ public class MapManager {
         this.tileManagerPrimoPianoTavernaVillaggio = tileManagerPrimoPianoTavernaVillaggio;
         this.tileManagerDungeonSud = tileManagerDungeonSud;
 
-
         //da cambiare
-        setMap(tileManagerCasettaIniziale);
+        setMap(tileManagerZonaIniziale);
     }
 
     public MapManager() {}
@@ -49,7 +46,6 @@ public class MapManager {
     public void setPlayer(Player player){
         this.player = player;
     }
-
 
     public void setMap(TileManager nextMap){
         currentMap = nextMap;
@@ -60,12 +56,12 @@ public class MapManager {
     }
 
     public void manageTransitions(){
-        if(currentMap==tileManagerCasettaIniziale && player.onTransitionPoint(4, 10, 1)){
+        if(currentMap.getNameMap().equals(tileManagerCasettaIniziale.getNameMap()) && player.onTransitionPoint(4, 10, 1)){
             setMap(tileManagerZonaIniziale);
             player.teleport(18,43);
         }
 
-        if(currentMap == tileManagerZonaIniziale){
+        if(currentMap.getNameMap().equals(tileManagerZonaIniziale.getNameMap())){
             if(player.onTransitionPoint(18,41,1)){
                 setMap(tileManagerCasettaIniziale);
                 player.teleport(4,9);
@@ -75,7 +71,7 @@ public class MapManager {
                 player.teleport(41,11);
             }
         }
-        if(currentMap == tileManagerVillaggioSud) {
+        if(currentMap.getNameMap().equals(tileManagerVillaggioSud.getNameMap())) {
             if (player.onTransitionPoint(41, 7, 3)) {
                 setMap(tileManagerZonaIniziale);
                 player.teleport(64, 62);
@@ -95,14 +91,14 @@ public class MapManager {
 
         }
 
-        if(currentMap == tileManagerNegozioItemsVillaggioSud){
+        if(currentMap.getNameMap().equals(tileManagerNegozioItemsVillaggioSud.getNameMap())){
             if(player.onTransitionPoint(8, 11, 1)) {
                 setMap(tileManagerVillaggioSud);
                 player.teleport(30, 29);
             }
         }
 
-        if(currentMap == tileManagerPianoTerraTavernaVillaggio){
+        if(currentMap.getNameMap().equals(tileManagerPianoTerraTavernaVillaggio.getNameMap())){
             if(player.onTransitionPoint(2, 2, 1)) {
                 setMap(tileManagerPrimoPianoTavernaVillaggio);
                 player.teleport(2, 5);
@@ -114,14 +110,14 @@ public class MapManager {
 
         }
 
-        if (currentMap == tileManagerPrimoPianoTavernaVillaggio) {
+        if (currentMap.getNameMap().equals(tileManagerPrimoPianoTavernaVillaggio.getNameMap())) {
             if(player.onTransitionPoint(1, 8, 1)) {
                 setMap(tileManagerPianoTerraTavernaVillaggio);
                 player.teleport(2, 4);
             }
         }
 
-        if(currentMap == tileManagerDungeonSud) {
+        if(currentMap.getNameMap().equals(tileManagerDungeonSud.getNameMap())) {
             if (player.onTransitionPoint(12, 92, 2)) {
                 setMap(tileManagerVillaggioSud);
                 player.teleport(49, 87);
@@ -129,12 +125,11 @@ public class MapManager {
             if (player.onTransitionPoint(87, 14, 1))
                 player.teleport(63, 35);
 
-
         }
     }
 
-    public void draw(Graphics2D g2, List<Entity> nearEntityList){
-        currentMap.draw(g2, nearEntityList);
+    public void draw(Graphics2D g2){
+        currentMap.draw(g2);
     }
 
     public TileManager getCurrentMap() {

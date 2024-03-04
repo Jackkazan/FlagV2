@@ -46,6 +46,7 @@ public abstract class Entity{
     protected BufferedImage interactImage;
 
 
+
     public static class EntityBuilder<T extends Entity, B extends EntityBuilder<T, B>> {
         protected T entity;
 

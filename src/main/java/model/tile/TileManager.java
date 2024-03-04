@@ -13,8 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static view.GamePanel.renderDistance;
-import static view.GamePanel.tileSize;
+import static view.GamePanel.*;
 
 public class TileManager {
     private GameStateManager gsm;
@@ -72,20 +71,49 @@ public class TileManager {
 
 
     }
-
-    public void draw(Graphics2D g2d, List<Entity> nearEntityList){
+    public void draw(Graphics2D g2d) {
         // Calcola le coordinate del player nella mappa
         int playerMapX = -gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
         int playerMapY = -gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
 
-        createBufferedImage(nearEntityList);
+        // Calcola gli indici dei tile visibili sulla mappa
+        int startCol = Math.max(0, playerMapX / tileSize);
+        int endCol = Math.min(maxMapCol, (playerMapX + screenWidth) / tileSize + 1);
+        int startRow = Math.max(0, playerMapY / tileSize);
+        int endRow = Math.min(maxMapRow, (playerMapY + screenHeight) / tileSize + 1);
+
+        // Disegna i tile visibili
+        for (int row = startRow; row < endRow; row++) {
+            for (int col = startCol; col < endCol; col++) {
+                int worldX = col * tileSize;
+                int worldY = row * tileSize;
+                int drawX = worldX + playerMapX;
+                int drawY = worldY + playerMapY;
+
+                BufferedImage tileImage = image.getSubimage(worldX, worldY, tileSize, tileSize);
+                g2d.drawImage(tileImage, drawX, drawY, tileSize, tileSize, null);
+
+            }
+        }
+    }
+
+
+    /*
+    public void draw(Graphics2D g2d){
+        // Calcola le coordinate del player nella mappa
+        int playerMapX = -gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
+        int playerMapY = -gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
+
+        createBufferedImage();
         // Disegna il bufferedImage considerando la posizione del player
         g2d.drawImage(image, playerMapX, playerMapY, null);
 
 
     }
 
-    private void createBufferedImage(List<Entity> nearEntityList) {
+     */
+
+    private void createBufferedImage() {
 
         Graphics2D g2d = image.createGraphics();
 
@@ -100,16 +128,11 @@ public class TileManager {
                 if(isTileNearPlayer(worldX,worldY)) {
                     // Ottieni la porzione dell'immagine corrispondente al tile 32x32
                     BufferedImage tileImage = image.getSubimage(worldCol * tileSize, worldRow * tileSize, tileSize, tileSize);
-
                     // Disegna il tile
                     g2d.drawImage(tileImage, worldX, worldY, tileSize, tileSize, null);
-
-
-                }}
+                }
+            }
         }
-
-
-
     }
 
     //per memorizzare nel buffer solo ciò che sta attorno al player
