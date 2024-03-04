@@ -89,9 +89,6 @@ public class TileManager {
 
         Graphics2D g2d = image.createGraphics();
 
-        for (Entity entity : nearEntityList)
-            entity.draw(g2d);
-
         g2d.clearRect(0,0,maxMapCol, maxMapRow);
         
         for (int worldRow = 0; worldRow < maxMapRow; worldRow++) {
@@ -110,11 +107,7 @@ public class TileManager {
 
                 }}
         }
-        /*
-        nearEntityList = nearEntityList.stream()
-                .sorted(Comparator.comparing(Entity::getY))
-                .collect(toList());
-         */
+
 
 
     }

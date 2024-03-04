@@ -91,6 +91,15 @@ public class PlayState implements GameState{
 
         mapManager.draw(graphics2D , nearEntityList);
 
+        for (Entity entity : nearEntityList)
+            entity.draw(graphics2D);
+
+        /*
+        nearEntityList = nearEntityList.stream()
+                .sorted(Comparator.comparing(Entity::getY))
+                .collect(toList());
+         */
+
         player.draw(graphics2D);
 
         UI.getInstance().draw(graphics2D);
