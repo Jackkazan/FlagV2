@@ -47,7 +47,7 @@ public class PlayState implements GameState{
         for(Entity entity : nearEntityList)
             entity.update();
 
-
+        nearEntityList = nearEntityList.stream().sorted(Comparator.comparing(Entity::getY)).toList();
         //System.out.println(nearEntityList);
 
         // Gestione delle transizioni della mappa
@@ -92,7 +92,7 @@ public class PlayState implements GameState{
 
         mapManager.draw(graphics2D);
 
-        for (Entity entity : nearEntityList.stream().sorted(Comparator.comparing(Entity::getY)).toList())
+        for (Entity entity : nearEntityList)
 
         //for (Entity entity : nearEntityList)
             entity.draw(graphics2D);
