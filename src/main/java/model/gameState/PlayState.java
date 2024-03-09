@@ -48,7 +48,7 @@ public class PlayState implements GameState{
             entity.update();
 
 
-        System.out.println(nearEntityList);
+        //System.out.println(nearEntityList);
 
         // Gestione delle transizioni della mappa
         mapManager.manageTransitions();

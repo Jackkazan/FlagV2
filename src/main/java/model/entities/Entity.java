@@ -166,7 +166,7 @@ public abstract class Entity{
     protected boolean isPlayerNearby() {
         // puoi definire la logica per verificare se il giocatore è nelle vicinanze in base alle coordinate e alla dimensione dell'oggetto
         if(this.collisionArea!= null && gsm.getPlayer().getInteractionArea().intersects(this.collisionArea)){
-            System.out.println("Sto collidendo con "+ this.getName());
+            //System.out.println("Sto collidendo con "+ this.getName());
             return true;
         }
         else return false;

@@ -157,6 +157,7 @@ public class Player extends Characters {
             updateAttackArea();
             updateCollisionArea();
             updateInteractionArea();
+            /*
             System.out.println("Name: " + this.name +
                     "\nX: " + this.x +
                     "\nY: " + this.y);
@@ -165,6 +166,8 @@ public class Player extends Characters {
                     "\nY: " + this.interactionArea.getY() +
                     "\nWidth: " + this.interactionArea.getWidth() +
                     "\nHeight: " + this.interactionArea.getHeight());
+
+             */
             if (currentLife <= 0) {
                 setState(State.DEAD);
                 // da sistemare l'invincibilità: se il cooldown dell'hit non è finito non può essere hittato

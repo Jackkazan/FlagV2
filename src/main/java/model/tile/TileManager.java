@@ -29,6 +29,8 @@ public class TileManager {
     private String nameMap;
 
     private ArrayList<Rectangle2D.Double> collisionMap;
+
+    private BufferedImage[][] matrixImage;
     private int maxMapCol;
     private int maxMapRow;
     // int mapWidth = tileSize * maxMapCol;
@@ -42,13 +44,8 @@ public class TileManager {
 
         this.nameMap = pathPngMap;
 
-        // Rimuovi la parte "png Maps/" e ottieni il nome del file senza estensione
-        String filename = pathPngMap.substring(pathPngMap.lastIndexOf("/") + 1, pathPngMap.lastIndexOf("."));
-
         // Costruisci il percorso della mappa di collisione
         String collisionPath = pathPngMap.replace("png Maps/", "collisions Maps/").replace(".png",".tmx");
-
-        System.out.println(collisionPath);
 
         this.collisionMap = new TMXReader(collisionPath).getCollisionObjects();
 
@@ -62,7 +59,14 @@ public class TileManager {
 
                 maxMapCol = image.getWidth()/tileSize;
                 maxMapRow = image.getHeight()/tileSize;
-                System.out.println("Dimensioni dell'immagine: " + maxMapCol + "x" + maxMapRow);
+                //System.out.println("Dimensioni dell'immagine: " + maxMapCol + "x" + maxMapRow);
+
+                matrixImage = new BufferedImage[maxMapRow][maxMapCol];
+
+                for(int i=0;i<maxMapRow;i++)
+                    for(int j = 0; j<maxMapCol; j++)
+                        matrixImage[i][j] = image.getSubimage(j*tileSize, i*tileSize, tileSize, tileSize);
+
 
             } else {
                 System.out.println("Impossibile leggere l'immagine.");
@@ -78,29 +82,15 @@ public class TileManager {
         int playerMapX = -gsm.getPlayer().getX() + screenX;
         int playerMapY = -gsm.getPlayer().getY() + screenY;
 
-        System.out.println("\n----------------------------------------------" +
-                "\nPlayer getX(): "+ gsm.getPlayer().getX() +
-                "\nPlayer getY(): " + gsm.getPlayer().getY() +
-                "\nPlayer getScreenX(): "+ gsm.getPlayer().getScreenX() +
-                "\nPlayer getScreenY(): "+ gsm.getPlayer().getScreenY() +
-                "\nPlayer MapX: "+ playerMapX +
-                "\nPlayer MapY: "+ playerMapY);
-
-
         //------------------------------------------------------------------------------
         //DA MODIFICARE PER CENTRARE L'IMMAGINE
         // Calcola gli indici dei tile visibili sulla mappa
-        int startCol = Math.max(0, (gsm.getPlayer().getX()-100)/tileSize-8);
-        int endCol = Math.min(maxMapCol,startCol +24);
-        int startRow = Math.max(0, (gsm.getPlayer().getY()-76)/tileSize-6);
-        int endRow = Math.min(maxMapRow,startRow +19);
+        int startCol = Math.max(0, (gsm.getPlayer().getX()-100)/tileSize-9);
+        int endCol = Math.min(maxMapCol,startCol +26);
+        int startRow = Math.max(0, (gsm.getPlayer().getY()-76)/tileSize-7);
+        int endRow = Math.min(maxMapRow,startRow +21);
 
         //--------------------------------------------------------------------------------
-
-        System.out.println("start col: "+ startCol +
-                "\nend col: " + endCol +
-                "\nstart row: "+ startRow +
-                "\nend row: "+ endRow);
 
         // Disegna i tile visibili
         for (int row = startRow; row < endRow; row++) {
@@ -110,13 +100,15 @@ public class TileManager {
                 int drawX = worldX + playerMapX;
                 int drawY = worldY + playerMapY;
 
-                System.out.println("worldX: "+ worldX +
+                /*System.out.println("worldX: "+ worldX +
                         "\nworldY: "+ worldY +
                         "\ndrawX: "+ drawX +
                         "\ndrawY: "+ drawY);
 
+                 */
+
                 //if(isTileNearPlayer(drawX,drawY)) {
-                    g2d.drawImage(image.getSubimage(worldX, worldY, tileSize, tileSize), drawX, drawY, tileSize, tileSize, null);
+                    g2d.drawImage(matrixImage[row][col], drawX, drawY, tileSize, tileSize, null);
                 //}
 
             }
@@ -139,6 +131,7 @@ public class TileManager {
 
      */
 
+    /*
     private void createBufferedImage() {
 
         Graphics2D g2d = image.createGraphics();
@@ -175,6 +168,8 @@ public class TileManager {
                 worldY  + bufferRendering > playerMapY  &&
                 worldY  - bufferRendering < playerMapY ;
     }
+
+     */
 
     public ArrayList<Rectangle2D.Double> getCollisionMap() {
         return this.collisionMap;
