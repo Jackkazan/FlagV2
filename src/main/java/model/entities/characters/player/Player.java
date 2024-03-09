@@ -18,11 +18,15 @@ import static model.gameState.PlayState.nearEntityList;
 import static view.GamePanel.tileSize;
 
 public class Player extends Characters {
-    private final int screenX;
-    private final int screenY;
     private int balance;
 
     private TileManager currentTile;
+
+    public static final int screenX = GamePanel.screenWidth/2 - (tileSize/2);
+    public static final int screenY = GamePanel.screenHeight/2 - (tileSize/2);
+
+    public static int playerX;
+    public static int playerY;
 
     private String enemyHitDirection;
     private int enemyHitDamage;
@@ -68,8 +72,6 @@ public class Player extends Characters {
     public Player(int x, int y){
         super();
         this.name = "Player";
-        screenX = GamePanel.screenWidth/2 - (tileSize/2);
-        screenY = GamePanel.screenHeight/2 - (tileSize/2);
         setDefaultValues();
         getEntityImage();
         getHitImage();
@@ -81,8 +83,6 @@ public class Player extends Characters {
     public Player() {
         super();
         this.name = "Player";
-        screenX = GamePanel.screenWidth/2 - (tileSize/2);
-        screenY = GamePanel.screenHeight/2 - (tileSize/2);
         setDefaultValues();
         getEntityImage();
         getHitImage();
@@ -94,6 +94,8 @@ public class Player extends Characters {
         containedMapName = "src/main/resources/png Maps/CasettaIniziale.png";
         x = tileSize*3;  //3
         y = tileSize*4;  //4
+        playerX = this.x-screenX;
+        playerY = this.y-screenY;
         maxLife = 6;
         currentLife = maxLife;
         speed = 4;
@@ -180,6 +182,8 @@ public class Player extends Characters {
             }
             //System.out.println("Stato corrente "+ currentState);
             currentState.update(this);
+            playerX = this.x-screenX;
+            playerY = this.y-screenY;
         }
     }
 

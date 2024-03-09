@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static model.entities.characters.player.Player.screenX;
+import static model.entities.characters.player.Player.screenY;
 import static view.GamePanel.*;
 
 public class TileManager {
@@ -73,8 +75,8 @@ public class TileManager {
     }
     public void draw(Graphics2D g2d) {
         // Calcola le coordinate del player nella mappa
-        int playerMapX = -gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
-        int playerMapY = -gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
+        int playerMapX = -gsm.getPlayer().getX() + screenX;
+        int playerMapY = -gsm.getPlayer().getY() + screenY;
 
         System.out.println("\n----------------------------------------------" +
                 "\nPlayer getX(): "+ gsm.getPlayer().getX() +
@@ -84,11 +86,16 @@ public class TileManager {
                 "\nPlayer MapX: "+ playerMapX +
                 "\nPlayer MapY: "+ playerMapY);
 
+
+        //------------------------------------------------------------------------------
+        //DA MODIFICARE PER CENTRARE L'IMMAGINE
         // Calcola gli indici dei tile visibili sulla mappa
-        int startCol = Math.max(0, (gsm.getPlayer().getX()-playerMapX)/tileSize);
-        int endCol = startCol +10;
-        int startRow = Math.max(0, (gsm.getPlayer().getY()-playerMapY)/tileSize);
-        int endRow = startRow +10;
+        int startCol = Math.max(0, (gsm.getPlayer().getX()-100)/tileSize-8);
+        int endCol = Math.min(maxMapCol,startCol +24);
+        int startRow = Math.max(0, (gsm.getPlayer().getY()-76)/tileSize-6);
+        int endRow = Math.min(maxMapRow,startRow +19);
+
+        //--------------------------------------------------------------------------------
 
         System.out.println("start col: "+ startCol +
                 "\nend col: " + endCol +
@@ -109,8 +116,7 @@ public class TileManager {
                         "\ndrawY: "+ drawY);
 
                 //if(isTileNearPlayer(drawX,drawY)) {
-                    BufferedImage tileImage = image.getSubimage(worldX, worldY, tileSize, tileSize);
-                    g2d.drawImage(tileImage, drawX, drawY, tileSize, tileSize, null);
+                    g2d.drawImage(image.getSubimage(worldX, worldY, tileSize, tileSize), drawX, drawY, tileSize, tileSize, null);
                 //}
 
             }

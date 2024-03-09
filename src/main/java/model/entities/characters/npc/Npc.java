@@ -133,6 +133,7 @@ public class Npc extends Characters {
             default -> null;
         };
 
+
         int screenX = this.x - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
         int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
 

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static model.entities.characters.player.Player.playerX;
+import static model.entities.characters.player.Player.playerY;
 import static view.GamePanel.tileSize;
 
 public class Item extends Entity implements Prototype {
@@ -26,11 +28,8 @@ public class Item extends Entity implements Prototype {
     @Override
     public void draw(Graphics2D graphics2D){
 
-        int screenX = this.x - gsm.getPlayer().getX() + gsm.getPlayer().getScreenX();
-        int screenY = this.y - gsm.getPlayer().getY() + gsm.getPlayer().getScreenY();
-
         if(staticImage != null)
-            graphics2D.drawImage(this.staticImage, screenX, screenY+ this.offsetY, (tileSize*this.imageWidth)/16, (tileSize*this.imageHeight)/16, null);
+            graphics2D.drawImage(this.staticImage, this.x - playerX , this.y - playerY+ this.offsetY, this.imageWidth*2, this.imageHeight*2, null);
 
     }
     @Override

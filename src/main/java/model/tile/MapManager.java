@@ -38,7 +38,7 @@ public class MapManager {
         this.tileManagerDungeonSud = tileManagerDungeonSud;
 
         //da cambiare
-        setMap(tileManagerZonaIniziale);
+        setMap(tileManagerCasettaIniziale);
     }
 
     public MapManager() {}
